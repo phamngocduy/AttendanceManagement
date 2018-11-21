@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication.Tests", "WebApplication.Tests\WebApplication.Tests.csproj", "{D0C187E6-C985-4F13-9818-04F9B571CD11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Owin.Security.VanLang", "Microsoft.Owin.Security.VanLang\Microsoft.Owin.Security.VanLang.csproj", "{5CACFEDD-6577-4E5F-A047-0E320A17A353}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManagement", "LoginManagement\LoginManagement.csproj", "{A9E8A398-ABC7-425D-9BBF-279F8312D4D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{D0C187E6-C985-4F13-9818-04F9B571CD11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0C187E6-C985-4F13-9818-04F9B571CD11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0C187E6-C985-4F13-9818-04F9B571CD11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CACFEDD-6577-4E5F-A047-0E320A17A353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CACFEDD-6577-4E5F-A047-0E320A17A353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CACFEDD-6577-4E5F-A047-0E320A17A353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CACFEDD-6577-4E5F-A047-0E320A17A353}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9E8A398-ABC7-425D-9BBF-279F8312D4D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E8A398-ABC7-425D-9BBF-279F8312D4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E8A398-ABC7-425D-9BBF-279F8312D4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E8A398-ABC7-425D-9BBF-279F8312D4D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
