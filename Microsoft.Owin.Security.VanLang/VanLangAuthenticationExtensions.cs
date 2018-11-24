@@ -41,16 +41,15 @@ namespace Owin
         /// <param name="appSecret">The appSecret assigned by VanLang</param>
         /// <returns>The updated <see cref="IAppBuilder"/></returns>
         public static IAppBuilder UseVanLangAuthentication(
-            this IAppBuilder app,
-            string appId,
-            string appSecret)
+            this IAppBuilder app, string baseUrl)
         {
             return UseVanLangAuthentication(
                 app,
                 new VanLangAuthenticationOptions
                 {
-                    AppId = appId,
-                    AppSecret = appSecret,
+                    BaseUrl = baseUrl,
+                    AppId = "appId",
+                    AppSecret = "appSecret",
                 });
         }
     }

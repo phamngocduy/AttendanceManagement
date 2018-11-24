@@ -7,7 +7,7 @@ namespace Microsoft.Owin.Security.VanLang
     {
         public const string DefaultAuthenticationType = "VanLang";
 
-        internal const string AuthorizationEndpoint = "http://localhost:56926/Account/LoginVL";
-        internal const string UserInformationEndpoint = "http://localhost:56926/Account/GetInfo";
+        internal const string AuthorizationEndpoint = "/Account/LoginVL";
+        internal const string UserInformationEndpoint = "/Account/GetInfo";
     }
 }

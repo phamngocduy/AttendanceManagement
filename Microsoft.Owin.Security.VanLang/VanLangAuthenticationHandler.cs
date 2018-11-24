@@ -84,7 +84,7 @@ namespace Microsoft.Owin.Security.VanLang
                     new KeyValuePair<string, string>("code", Uri.EscapeDataString(code))
                 });
 
-                HttpResponseMessage tokenResponse = await _httpClient.PostAsync(Options.AuthorizationEndpoint, formContent, Request.CallCancelled);
+                HttpResponseMessage tokenResponse = await _httpClient.PostAsync(Options.BaseUrl + Options.UserInformationEndpoint, formContent, Request.CallCancelled);
                 tokenResponse.EnsureSuccessStatusCode();
                 string user = await tokenResponse.Content.ReadAsStringAsync();
                 JObject response = JObject.Parse(user);
@@ -105,10 +105,6 @@ namespace Microsoft.Owin.Security.VanLang
                     Options.AuthenticationType,
                     ClaimsIdentity.DefaultNameClaimType,
                     ClaimsIdentity.DefaultRoleClaimType);
-                //                if (!string.IsNullOrEmpty(context.Id))
-                //                {
-                //                    context.Identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, context.Id, XmlSchemaString, Options.AuthenticationType));
-                //                }
                 context.Identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, accessToken, XmlSchemaString, Options.AuthenticationType));
                 if (!string.IsNullOrEmpty(defaultUserName))
                 {
@@ -118,20 +114,6 @@ namespace Microsoft.Owin.Security.VanLang
                 {
                     context.Identity.AddClaim(new Claim(ClaimTypes.Email, email, XmlSchemaString, Options.AuthenticationType));
                 }
-//                if (!string.IsNullOrEmpty(context.Name))
-//                {
-//                    context.Identity.AddClaim(new Claim("urn:VanLang:name", context.Name, XmlSchemaString, Options.AuthenticationType));
-
-                    // Many VanLang accounts do not set the UserName field.  Fall back to the Name field instead.
-//                    if (string.IsNullOrEmpty(context.UserName))
-//                    {
-//                        context.Identity.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, context.Name, XmlSchemaString, Options.AuthenticationType));
-//                    }
-//                }
-//                if (!string.IsNullOrEmpty(context.Link))
-//                {
-//                    context.Identity.AddClaim(new Claim("urn:VanLang:link", context.Link, XmlSchemaString, Options.AuthenticationType));
-//                }
                 context.Properties = properties;
 
                 await Options.Provider.Authenticated(context);
@@ -186,7 +168,7 @@ namespace Microsoft.Owin.Security.VanLang
                 string state = Options.StateDataFormat.Protect(properties);
 
                 string authorizationEndpoint =
-                    Options.AuthorizationEndpoint +
+                    Options.BaseUrl + Options.AuthorizationEndpoint +
                         "?response_type=code" +
                         "&client_id=" + Uri.EscapeDataString(Options.AppId) +
                         "&redirect_uri=" + Uri.EscapeDataString(redirectUri) +

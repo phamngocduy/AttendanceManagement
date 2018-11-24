@@ -64,7 +64,7 @@ namespace WebApplication
             //    ClientSecret = ""
             //});
 
-            app.UseVanLangAuthentication("123", "456");
+            app.UseVanLangAuthentication("http://localhost:56926");
         }
     }
 }

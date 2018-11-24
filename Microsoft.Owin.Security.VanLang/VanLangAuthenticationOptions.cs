@@ -44,6 +44,8 @@ namespace Microsoft.Owin.Security.VanLang
             Fields.Add("last_name");
         }
 
+        public string BaseUrl { get; set; }
+
         /// <summary>
         /// Gets or sets the VanLang-assigned appId
         /// </summary>
