@@ -14,57 +14,26 @@ namespace Microsoft.Owin.Security.VanLang
     /// </summary>
     public class VanLangAuthenticationOptions : AuthenticationOptions
     {
-        private ICollection<string> _fields;
-
         /// <summary>
         /// Initializes a new <see cref="VanLangAuthenticationOptions"/>
         /// </summary>
         [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters",
             MessageId = "Microsoft.Owin.Security.VanLang.VanLangAuthenticationOptions.set_Caption(System.String)", Justification = "Not localizable.")]
-        public VanLangAuthenticationOptions()
+        public VanLangAuthenticationOptions(string baseUrl)
             : base(Constants.DefaultAuthenticationType)
         {
-            Caption = Constants.DefaultAuthenticationType;
+            Caption = Constants.DefaultAuthenticationName;
             CallbackPath = new PathString("/signin-vanlang");
             AuthenticationMode = AuthenticationMode.Passive;
-            Scope = new List<string>();
-            BackchannelTimeout = TimeSpan.FromSeconds(60);
-            SendAppSecretProof = true;
-            _fields = new HashSet<string>();
-//            CookieManager = new CookieManager();
-
-            AuthorizationEndpoint = Constants.AuthorizationEndpoint;
-            UserInformationEndpoint = Constants.UserInformationEndpoint;
-
-            Scope.Add("public_profile");
-            Scope.Add("email");
-            Fields.Add("name");
-            Fields.Add("email");
-            Fields.Add("first_name");
-            Fields.Add("last_name");
+            baseUrl = baseUrl.TrimEnd('/');
+            AuthorizationEndpoint = baseUrl + Constants.AuthorizationEndpoint;
+            UserInformationEndpoint = baseUrl + Constants.UserInformationEndpoint;
         }
-
-        public string BaseUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the VanLang-assigned appId
-        /// </summary>
-        public string AppId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the VanLang-assigned app secret
-        /// </summary>
-        public string AppSecret { get; set; }
 
         /// <summary>
         /// Gets or sets the URI where the client will be redirected to authenticate.
         /// </summary>
         public string AuthorizationEndpoint { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URI the middleware will access to exchange the OAuth token.
-        /// </summary>
-        public string TokenEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets the URI the middleware will access to obtain the user information.
@@ -127,30 +96,5 @@ namespace Microsoft.Owin.Security.VanLang
         /// Gets or sets the type used to secure data handled by the middleware.
         /// </summary>
         public ISecureDataFormat<AuthenticationProperties> StateDataFormat { get; set; }
-
-        /// <summary>
-        /// A list of permissions to request.
-        /// </summary>
-        public IList<string> Scope { get; private set; }
-
-        /// <summary>
-        /// Gets or sets if the appsecret_proof should be generated and sent with VanLang API calls.
-        /// This is enabled by default.
-        /// </summary>
-        public bool SendAppSecretProof { get; set; }
-
-        /// <summary>
-        /// The list of fields to retrieve from the UserInformationEndpoint.
-        /// https://developers.VanLang.com/docs/graph-api/reference/user
-        /// </summary>
-        public ICollection<string> Fields
-        {
-            get { return _fields; }
-        }
-
-        /// <summary>
-        /// An abstraction for reading and setting cookies during the authentication process.
-        /// </summary>
-        public ICookieManager CookieManager { get; set; }
     }
 }

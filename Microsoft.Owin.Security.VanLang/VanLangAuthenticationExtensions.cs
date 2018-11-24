@@ -44,13 +44,7 @@ namespace Owin
             this IAppBuilder app, string baseUrl)
         {
             return UseVanLangAuthentication(
-                app,
-                new VanLangAuthenticationOptions
-                {
-                    BaseUrl = baseUrl,
-                    AppId = "appId",
-                    AppSecret = "appSecret",
-                });
+                app, new VanLangAuthenticationOptions(baseUrl));
         }
     }
 }

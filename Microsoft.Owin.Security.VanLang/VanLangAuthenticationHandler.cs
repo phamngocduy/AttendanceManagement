@@ -64,12 +64,6 @@ namespace Microsoft.Owin.Security.VanLang
                     return null;
                 }
 
-                // OAuth2 10.12 CSRF
-//                if (!ValidateCorrelationId(Options.CookieManager, properties, _logger))
-//                {
-//                    return new AuthenticationTicket(null, properties);
-//                }
-
                 if (code == null)
                 {
                     // Null if the remote server returns an error.
@@ -84,7 +78,7 @@ namespace Microsoft.Owin.Security.VanLang
                     new KeyValuePair<string, string>("code", Uri.EscapeDataString(code))
                 });
 
-                HttpResponseMessage tokenResponse = await _httpClient.PostAsync(Options.BaseUrl + Options.UserInformationEndpoint, formContent, Request.CallCancelled);
+                HttpResponseMessage tokenResponse = await _httpClient.PostAsync(Options.UserInformationEndpoint, formContent, Request.CallCancelled);
                 tokenResponse.EnsureSuccessStatusCode();
                 string user = await tokenResponse.Content.ReadAsStringAsync();
                 JObject response = JObject.Parse(user);
@@ -159,20 +153,10 @@ namespace Microsoft.Owin.Security.VanLang
                     properties.RedirectUri = currentUri;
                 }
 
-                // OAuth2 10.12 CSRF
-//                GenerateCorrelationId(Options.CookieManager, properties);
-
-                // comma separated
-                string scope = string.Join(",", Options.Scope);
-
                 string state = Options.StateDataFormat.Protect(properties);
 
-                string authorizationEndpoint =
-                    Options.BaseUrl + Options.AuthorizationEndpoint +
-                        "?response_type=code" +
-                        "&client_id=" + Uri.EscapeDataString(Options.AppId) +
-                        "&redirect_uri=" + Uri.EscapeDataString(redirectUri) +
-                        "&scope=" + Uri.EscapeDataString(scope) +
+                string authorizationEndpoint = Options.AuthorizationEndpoint +
+                        "?redirect_uri=" + Uri.EscapeDataString(redirectUri) +
                         "&state=" + Uri.EscapeDataString(state);
 
                 var redirectContext = new VanLangApplyRedirectContext(
@@ -236,20 +220,6 @@ namespace Microsoft.Owin.Security.VanLang
                 return context.IsRequestCompleted;
             }
             return false;
-        }
-
-        private string GenerateAppSecretProof(string accessToken)
-        {
-            using (HMACSHA256 algorithm = new HMACSHA256(Encoding.ASCII.GetBytes(Options.AppSecret)))
-            {
-                byte[] hash = algorithm.ComputeHash(Encoding.ASCII.GetBytes(accessToken));
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < hash.Length; i++)
-                {
-                    builder.Append(hash[i].ToString("x2", CultureInfo.InvariantCulture));
-                }
-                return builder.ToString();
-            }
         }
     }
 }

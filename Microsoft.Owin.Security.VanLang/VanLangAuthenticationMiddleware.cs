@@ -34,15 +34,6 @@ namespace Microsoft.Owin.Security.VanLang
             VanLangAuthenticationOptions options)
             : base(next, options)
         {
-            if (string.IsNullOrWhiteSpace(Options.AppId))
-            {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Exception_OptionMustBeProvided, "AppId"));
-            }
-            if (string.IsNullOrWhiteSpace(Options.AppSecret))
-            {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Exception_OptionMustBeProvided, "AppSecret"));
-            }
-
             _logger = app.CreateLogger<VanLangAuthenticationMiddleware>();
 
             if (Options.Provider == null)
@@ -62,7 +53,7 @@ namespace Microsoft.Owin.Security.VanLang
             }
 
             _httpClient = new HttpClient();//ResolveHttpMessageHandler(Options));
-            _httpClient.Timeout = Options.BackchannelTimeout;
+            _httpClient.Timeout = TimeSpan.FromSeconds(60);
             _httpClient.MaxResponseContentBufferSize = 1024 * 1024 * 10; // 10 MB
         }
 
