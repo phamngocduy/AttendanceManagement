@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Net;
 using System.Net.Http;
 using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security.DataHandler;
@@ -52,7 +53,9 @@ namespace Microsoft.Owin.Security.VanLang
                 Options.SignInAsAuthenticationType = app.GetDefaultSignInAsAuthenticationType();
             }
 
-            _httpClient = new HttpClient();//ResolveHttpMessageHandler(Options));
+			ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
+			_httpClient = new HttpClient();//ResolveHttpMessageHandler(Options));
             _httpClient.Timeout = TimeSpan.FromSeconds(60);
             _httpClient.MaxResponseContentBufferSize = 1024 * 1024 * 10; // 10 MB
         }
