@@ -17,6 +17,7 @@ namespace WebApplication.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+		cap21t4Entities db = new cap21t4Entities();
 
         public AccountController()
         {
@@ -58,12 +59,13 @@ namespace WebApplication.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
+			return new ChallengeResult("Văn Lang", Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
 
-        //
-        // POST: /Account/Login
-        [HttpPost]
+		}
+
+		//
+		// POST: /Account/Login
+		[HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
@@ -157,7 +159,7 @@ namespace WebApplication.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -209,7 +211,7 @@ namespace WebApplication.Controllers
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
@@ -327,9 +329,14 @@ namespace WebApplication.Controllers
             {
                 return RedirectToAction("Login");
             }
-
+			//var result = SignInStatus.Failure;
+			//var user = db.AspNetUsers.FirstOrDefault(x => x.Email == loginInfo.Email);
+			//if(user == null)
+			//{
+				var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+			//}
             // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+         
             switch (result)
             {
                 case SignInStatus.Success:
@@ -365,20 +372,34 @@ namespace WebApplication.Controllers
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
+					
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
+				var user1 = await UserManager.FindByNameAsync(info.Email);
+				if (user1 != null)
+				{
+					var addLoginResult = await UserManager.AddLoginAsync(user1.Id, info.Login);
+					if (addLoginResult.Succeeded)
+					{
+						await SignInManager.SignInAsync(user1, isPersistent: false, rememberBrowser: false);
+						return RedirectToLocal(returnUrl);
+					}
+				}else
+				{
+					var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+					var result = await UserManager.CreateAsync(user);
+					if (result.Succeeded)
+					{
+						result = await UserManager.AddLoginAsync(user.Id, info.Login);
+						if (result.Succeeded)
+						{
+							await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+							return RedirectToLocal(returnUrl);
+						}
+					}
+					AddErrors(result);
+				}
+				
             }
 
             ViewBag.ReturnUrl = returnUrl;

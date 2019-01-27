@@ -1,0 +1,80 @@
+﻿
+@{
+	ViewBag.Title = "Import";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+	.tableData {
+		border-left: solid 1px #D8C3C3;
+		border-top: solid 1px #D8C3C3;
+	}
+
+		.tableData tr {
+		}
+
+		.tableData td, .tableData th {
+			border-right: solid 1px #D8C3C3;
+			border-bottom: solid 1px #D8C3C3;
+			text-align: left;
+			padding: 5px;
+		}
+
+		.tableData td {
+		}
+
+		.tableData th {
+			background-color: #FAFAFA;
+			padding: 7px 5px;
+			border-bottom-color: #9C9C9C;
+		}
+
+	.odd {
+		background-color: #f3f3f3;
+	}
+
+	.even {
+		background-color: #ffffff;
+	}
+</style>
+
+<h2>ExcelFile Upload</h2>
+<div ng-app="MyApp">
+	<div ng-controller="ExcelCtrl" class="container">
+		<div class="loading-icon" id="loading" ng-show="showLoader">
+		</div>
+		<div class="form-inline">
+			<input type="file" class="form-control" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="angular.element(this).scope().UploadFiles(this.files)" />
+			<input type="button" value="Preview" class="btn btn-primary" ng-disabled="!SelectedFileForUpload" ng-click="ParseExcel() " />
+			<input type="button" value="Insert" style="margin-left: 15px;" class="btn btn-success" ng-show="IsVisible" ng-click="InsertData()" />
+			<input type="button" value="Back" style="margin-left: 15px;" class="btn btn-default" onclick="window.location='/Group/Detail/@Session["GroupID"]';" />
+
+		</div>
+		<br />
+		<span style="color:red">
+			{{Message}}
+		</span>
+		<table class="tableData" ng-show="IsVisible" style="margin-left: 0px;margin-top: 40px;">
+			<tr>
+				<th>StudentID</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>DoB</th>
+
+			</tr>
+			<tr ng-repeat="s in  BindData" ng-class-odd="'odd'" ng-class-even="'even'">
+				<td>{{s.StID}}</td>
+				<td>{{s.FirstName}}</td>
+				<td>{{s.LastName}}</td>
+				<td>{{s.Email}}</td>
+				<td>{{s.DoB}}</td>
+
+			</tr>
+		</table>
+	</div>
+</div>
+@section scripts
+{
+	<script src="~/Scripts/AngularCtrl.js"></script>
+}
