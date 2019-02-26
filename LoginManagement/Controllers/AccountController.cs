@@ -16,6 +16,13 @@ namespace LoginManagement.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+
+		[AllowAnonymous]
+		public ActionResult Index()
+		{
+			return View();
+		}
+
         static Hashtable Hashtable;
 
         static AccountController()

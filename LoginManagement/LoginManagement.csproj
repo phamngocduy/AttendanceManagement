@@ -181,12 +181,49 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\responsive.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\jquery-3.3.1.min.js" />
+    <Content Include="Content\js\jquery.ajaxchimp.min.js" />
+    <Content Include="Content\js\mail-script.js" />
+    <Content Include="Content\js\popper.js" />
+    <Content Include="Content\js\stellar.js" />
+    <Content Include="Content\js\theme.js" />
+    <Content Include="Content\vendors\animate-css\animate.css" />
+    <Content Include="Content\vendors\counter-up\jquery.counterup.min.js" />
+    <Content Include="Content\vendors\counter-up\jquery.waypoints.min.js" />
+    <Content Include="Content\vendors\isotope\imagesloaded.pkgd.min.js" />
+    <Content Include="Content\vendors\isotope\isotope.pkgd.min.js" />
+    <Content Include="Content\vendors\lightbox\simpleLightbox.css" />
+    <Content Include="Content\vendors\lightbox\simpleLightbox.min.js" />
+    <Content Include="Content\vendors\linericon\fonts\Linearicons-Free.svg" />
+    <Content Include="Content\vendors\linericon\style.css" />
+    <Content Include="Content\vendors\nice-select\css\nice-select.css" />
+    <Content Include="Content\vendors\nice-select\js\jquery.nice-select.min.js" />
+    <Content Include="Content\vendors\owl-carousel\owl.carousel.min.css" />
+    <Content Include="Content\vendors\owl-carousel\owl.carousel.min.js" />
+    <Content Include="Content\vendors\popup\jquery.magnific-popup.min.js" />
+    <Content Include="Content\vendors\popup\magnific-popup.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\user.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\vendors\linericon\fonts\Linearicons-Free.eot" />
+    <Content Include="Content\vendors\linericon\fonts\Linearicons-Free.ttf" />
+    <Content Include="Content\vendors\linericon\fonts\Linearicons-Free.woff" />
+    <Content Include="Content\vendors\linericon\fonts\Linearicons-Free.woff2" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -227,6 +264,7 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
