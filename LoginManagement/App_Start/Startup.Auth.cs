@@ -34,7 +34,7 @@ namespace LoginManagement
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -45,24 +45,25 @@ namespace LoginManagement
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-			// Uncomment the following lines to enable logging in with third party login providers
-			app.UseMicrosoftAccountAuthentication(
-				clientId: "ea2300f8-22a5-4f18-86d4-78316fb2c5e9",
-				clientSecret: "bscdgBMLJW11?![vcST867-");
+            // Uncomment the following lines to enable logging in with third party login providers
+            app.UseMicrosoftAccountAuthentication(
 
-			//app.UseTwitterAuthentication(
-			//   consumerKey: "",
-			//   consumerSecret: "");
+                clientId: "adcfd7da-eda7-4140-9528-eac96c3e2e29",
+                clientSecret: "cvqTZRWU50#)dxftRV538=(");
 
-			//app.UseFacebookAuthentication(
-			//   appId: "",
-			//   appSecret: "");
+            //app.UseTwitterAuthentication(
+            //   consumerKey: "",
+            //   consumerSecret: "");
 
-			//app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-			//{
-			//    ClientId = "374698774090-9of3jcftva6j4u72nuordtkmhara9pvu.apps.googleusercontent.com",
-			//    ClientSecret = "dd40t6yTCmlX7eSVpRa3I_uK"
-			//});
-		}
+            //app.UseFacebookAuthentication(
+            //   appId: "",
+            //   appSecret: "");
+
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+            //    ClientId = "374698774090-9of3jcftva6j4u72nuordtkmhara9pvu.apps.googleusercontent.com",
+            //    ClientSecret = "dd40t6yTCmlX7eSVpRa3I_uK"
+            //});
+        }
     }
 }

@@ -191,6 +191,7 @@ namespace Microsoft.Owin.Security.VanLang
                 var context = new VanLangReturnEndpointContext(Context, ticket);
                 context.SignInAsAuthenticationType = Options.SignInAsAuthenticationType;
                 context.RedirectUri = ticket.Properties.RedirectUri;
+                
 
                 await Options.Provider.ReturnEndpoint(context);
 

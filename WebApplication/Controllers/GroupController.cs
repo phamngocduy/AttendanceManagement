@@ -19,7 +19,6 @@ namespace WebApplication.Controllers
 	public class GroupController : Controller
 	{
 		cap21t4Entities db = new cap21t4Entities();
-		private List<Group> _groupList = new List<Group>();
 		// GET: Group
 		public ActionResult Index()
 		{
@@ -272,8 +271,8 @@ namespace WebApplication.Controllers
 				User us = new User();
 
 				us.StID = row[1].ToString();
-				us.FirstName = row[2].ToString();
-				us.LastName = row[3].ToString();
+				us.FullName = row[2].ToString()+ row[3].ToString();
+				//us.PhoneNumber = row[3].ToString();
 				string s = row[4].ToString();
 				us.DoB = DateTime.ParseExact(row[4].ToString(),"d/M/yyyy", null);
 				us.Email = row[5].ToString();
@@ -352,7 +351,6 @@ namespace WebApplication.Controllers
 				group.ModifiedDate = DateTime.Now.Date;
 				db.SaveChanges();
 			}
-
 			return RedirectToAction("Index");
 		}
 	}
