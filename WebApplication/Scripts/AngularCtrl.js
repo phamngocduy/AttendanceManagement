@@ -55,7 +55,7 @@ app.service("Excelservice", function ($http) {
         var request = $http({
             method: "post",
             withCredentials: true,
-            url: '/Group/ReadExcel',
+			url: '/Group/ReadExcel',
             data: data,
             headers: {
                 'Content-Type': undefined

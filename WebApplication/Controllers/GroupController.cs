@@ -1,4 +1,4 @@
-﻿using Excel;
+﻿using ExcelDataReader;
 using WebApplication.Models;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -170,8 +170,15 @@ namespace WebApplication.Controllers
 							ModelState.AddModelError("File", "This file format is not supported");
 							return RedirectToAction("Index");
 						}
-						reader.IsFirstRowAsColumnNames = true;
-						DataSet result = reader.AsDataSet();
+						var result = reader.AsDataSet(new ExcelDataSetConfiguration()
+						{
+							ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+							{
+								UseHeaderRow = true
+							}
+						});
+						//reader.IsFirstRowAsColumnNames = true;
+						//DataSet result = reader.AsDataSet();
 						reader.Close();
 						//delete the file from physical path after reading 
 						string filedetails = path + fileName;
@@ -271,7 +278,7 @@ namespace WebApplication.Controllers
 				User us = new User();
 
 				us.StID = row[1].ToString();
-				us.FullName = row[2].ToString()+ row[3].ToString();
+				us.FullName = row[2].ToString()+" "+ row[3].ToString();
 				//us.PhoneNumber = row[3].ToString();
 				string s = row[4].ToString();
 				us.DoB = DateTime.ParseExact(row[4].ToString(),"d/M/yyyy", null);
