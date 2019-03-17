@@ -13,29 +13,24 @@
         <h3>Welcome to SIMS,<strong> Ninh</strong>!</h3>
     </div>
     <div class="col-md-8 col-xs-6 add-class">
-        <i class="fa fa-plus"></i>
+        <i type="button" class="fa fa-plus" data-toggle="modal" data-target="#myModal"></i>
+
     </div>
 </div>
 <div class="attendance-content">
     <div class="row">
-        <div class="col-md-7 col-xs-6">
-            <h4 class="text-left"><strong>Import class list with file excel</strong></h4>
-            <div class="flat-mb-green-open"><i class="material-icons"></i>Excel</div>
-        </div>
-        <div class="col-md-5 col-xs-6 ">
-            <form class="navbar-form navbar-left">
-                <div class="form-group ">
-                    <input style="border-radius:5px" type="text" class="form-control" placeholder="Search">
-                </div>
-            </form>
-        </div>
+        <form class="navbar-form navbar-left">
+            <div class="form-group ">
+                <input style="border-radius:5px" type="text" class="form-control" placeholder="Search ...">
+            </div>
+        </form>
     </div>
     <hr />
     <div class="row">
         <div class="col-sm-4 col-md-3 col-xs-6">
             <div class="thumbnail">
                 <div class="caption">
-                    <h3><strong>Capston Team 04</strong></h3>
+                    <h3><strong><a href="~/Attendance/manageClass">Capston Team 04</a></strong></h3>
                     <small>27-11-2018</small>
                     <p>Khoa công nghệ thông tin</p>
                     <br />
@@ -94,6 +89,97 @@
             </li>
         </ul>
     </nav>
+</div>
+
+<!--Dialog create new class-->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Welcome to <strong>Ninh</strong>!</h4>
+                <p>Let's set up  your first semester!</p>
+            </div>
+            <div class="modal-body">
+                <!--Name-->
+                <div>
+                    <p class="clearfix">
+                        <i class="fa fa-book fa-3x text-primary pull-left"></i> "All we need to get going is your first Semester name !"
+                    </p>
+                </div>
+                <div class="row">
+                    <label class="col-md-3 control-label" style="text-align:center"> Name</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control ui-wizard-content" placeholder="Your class">
+                    </div>
+                </div>
+                <hr />
+                <!--Calendar-->
+                <div>
+                    <p class="clearfix">
+                        <i class="glyphicon glyphicon-calendar fa-3x text-primary pull-left"></i>"Now, just select <strong>start date</strong> and <strong>end date</strong>"
+                    </p>
+                </div>
+                <div class="row">
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker6'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker7'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Script calender-->
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker6').datetimepicker();
+                            $('#datetimepicker7').datetimepicker({
+                                useCurrent: false //Important! See issue #1075
+                            });
+                            $("#datetimepicker6").on("dp.change", function (e) {
+                                $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+                            });
+                            $("#datetimepicker7").on("dp.change", function (e) {
+                                $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+                            });
+                        });
+                    </script>
+                </div>
+                <hr />
+                <!--submit-->
+                <div>
+                    <p class="clearfix">
+                        <i class="fa fa-check fa-3x text-primary pull-left"></i>
+                        "Click Submit to create your <strong>semester</strong> and students!
+                        Then you'll be ready to immediately take attendance!
+                        Or continue managing your <strong>semester</strong> and students!"
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 col-md-offset-5">
+                        <button type="button" class="btn btn-sm btn-primary ui-wizard-content"> Clean</button>
+                        <button type="button" class="btn btn-sm btn-primary ui-wizard-content"> Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 
