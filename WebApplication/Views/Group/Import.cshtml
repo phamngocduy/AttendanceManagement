@@ -57,18 +57,18 @@
 		<table class="tableData" ng-show="IsVisible" style="margin-left: 0px;margin-top: 40px;">
 			<tr>
 				<th>StudentID</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
+				<th>Full Name</th>
 				<th>DoB</th>
+				<th>Email</th>
+				<th>Note</th>
 
 			</tr>
 			<tr ng-repeat="s in  BindData" ng-class-odd="'odd'" ng-class-even="'even'">
 				<td>{{s.StID}}</td>
-				<td>{{s.FirstName}}</td>
-				<td>{{s.LastName}}</td>
-				<td>{{s.Email}}</td>
+				<td>{{s.FullName}}</td>
 				<td>{{s.DoB}}</td>
+				<td>{{s.Email}}</td>
+				<td>{{s.Note}}</td>
 
 			</tr>
 		</table>
