@@ -463,6 +463,7 @@
     <Content Include="Views\Attendance\Index.cshtml" />
     <Content Include="Views\Attendance\Demo.cshtml" />
     <Content Include="Views\Attendance\manageClass.cshtml" />
+    <Content Include="Views\Attendance\ManageStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
