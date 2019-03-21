@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -10,6 +11,9 @@ using WebApplication;
 using WebApplication.Controllers;
 using WebApplication.Models;
 using System.Transactions;
+using Moq;
+using System.Web;
+using System.Web.Routing;
 
 namespace WebApplication.Tests.Controllers
 {
@@ -189,6 +193,41 @@ namespace WebApplication.Tests.Controllers
                 System.Diagnostics.Trace.WriteLine("Error data format, please try again");
 
             }
+        }
+
+        [TestMethod]
+        public void TestReadExcel()
+        {
+            var controller = new GroupController();
+            var context = new Mock<HttpContextBase>();
+            var request = new Mock<HttpRequestBase>();
+            var files = new Mock<HttpFileCollectionBase>();
+            var file = new Mock<HttpPostedFileBase>();
+            var server = new Mock<HttpServerUtilityBase>();
+            controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
+            context.Setup(c => c.Request).Returns(request.Object);
+            request.Setup(r => r.Files).Returns(files.Object);
+            files.Setup(f => f["file"]).Returns(file.Object);
+            context.Setup(c => c.Server).Returns(server.Object);
+            file.Setup(f => f.ContentLength).Returns(1);
+            file.Setup(f => f.ContentType).Returns("Excel");
+            server.Setup(s => s.MapPath("~/Uploads/")).Returns("./Uploads/");
+
+            var case1 = "ReadExcel.xls";
+            file.Setup(f => f.FileName).Returns(case1);
+            var reader = new StreamReader(case1);
+            file.Setup(f => f.InputStream).Returns(reader.BaseStream);
+            var result = controller.ReadExcel() as JsonResult;
+            Assert.IsInstanceOfType(result.Data, typeof(List<User>));
+            Assert.AreEqual(2, ((List<User>)result.Data).Count);
+
+            var case2 = "ReadExcel.xlsx";
+            file.Setup(f => f.FileName).Returns(case2);
+            reader = new StreamReader(case2);
+            file.Setup(f => f.InputStream).Returns(reader.BaseStream);
+            result = controller.ReadExcel() as JsonResult;
+            Assert.IsInstanceOfType(result.Data, typeof(List<User>));
+            Assert.AreEqual(2, ((List<User>)result.Data).Count);
         }
     }
 }
