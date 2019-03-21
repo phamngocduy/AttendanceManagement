@@ -281,7 +281,7 @@ namespace WebApplication.Controllers
 				us.FullName = row[2].ToString()+" "+ row[3].ToString();
 				//us.PhoneNumber = row[3].ToString();
 				string s = row[4].ToString();
-				us.DoB = DateTime.ParseExact(row[4].ToString(),"d/M/yyyy", null);
+				us.DoB = DateTime.ParseExact(row[4].ToString(),"dd/mm/yyyy", null);
 				us.Email = row[5].ToString();
 				us.Note = row[6].ToString();
 				data.Add(us);

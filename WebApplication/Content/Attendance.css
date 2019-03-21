@@ -30,7 +30,8 @@
     padding:7px;
     margin-top:20px;
     border-radius:10px;
-    height:130px;
+    height:100px;
+    text-align:center;
 }
 .attendance-content{
     background-color:#ffffff;
