@@ -25,5 +25,9 @@ namespace WebApplication.Controllers
             ViewBag.User = user;
             return View();
         }
+        public ActionResult manageSession()
+        {
+            return View();
+        }
     }
 }

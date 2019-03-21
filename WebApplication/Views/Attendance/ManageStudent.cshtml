@@ -3,12 +3,7 @@
 
     ViewBag.Title = "ManageStudent";
 }
-@*<style>
-        tbody tr td {
-            color: black;
-            font-weight:bold;
-        }
-    </style>*@
+
 <style>
     #label {
         font-size: 20px;
@@ -36,12 +31,17 @@
     });
 </script>
 <link href="~/Content/Attendance.css" rel="stylesheet" />
+<div class="fixed-header row">
+    <div class="col-md-4 col-xs-6 header-left">
+        <h3><strong>My Students</strong></h3>
+    </div>
+</div>
 <div class="attendance-content">
     <div style="font-weight:bold" class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-2 col-md-2">
             <h4 class="text-left"><strong>Short Class List By:</strong></h4>
         </div>
-        <div class="col-sm-1">
+        <div class="col-sm-1 col-md-4">
             <div class="dropdown">
 
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
@@ -65,12 +65,10 @@
                 </ul>
             </div>
         </div>
-        <div class="col-lg-5" style="float:right; font-size:30px">
+        <div class="col-lg-5 col-md-6" style="float:right; font-size:30px">
             <div class="row" style="padding:20px">
-                <div  style="color: blue;border: 1px solid blue" class="flat-mb-green-open col-md-4 col-sm-12 col-xs-12"><i class="material-icons"></i>PRINT ROSTER</div>
-                
-                
-                <button  type="button" class="flat-mb-green-open col-md-4 col-sm-12 col-xs-12" data-toggle="modal" data-target="#myModal"><i class="material-icons"></i>ENROLL STUDENT</button>
+                <div style="color: blue;border: 1px solid blue" class="flat-mb-green-open col-md-6 col-sm-12 col-xs-12"><i class="material-icons"></i>PRINT ROSTER</div>
+                <button type="button" class="flat-mb-green-open col-md-6 col-sm-12 col-xs-12" data-toggle="modal" data-target="#myModal"><i class="material-icons"></i>ENROLL STUDENT</button>
 
                 <!-- Modal Of Create -->
                 <div class="col-lg-12">
@@ -134,11 +132,11 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
-    
+
 
 
     <div class="text-center">
@@ -155,7 +153,7 @@
                                 <b style="float:left;color:black">@item.FullName</b>
                                 <br /><div style="float:left">Student ID:@item.StID</div>
                             </td>
-                            
+
                             <td class="col-lg-1">
                                 <div style="color:#7a7a52;border: 1px solid #ccccb3" class="flat-mb-green-open"><i class="material-icons"></i>UNENROLL</div>
                             </td>
@@ -184,3 +182,4 @@
             </ul>
         </nav>
     </div>
+</div>
