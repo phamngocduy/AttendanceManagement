@@ -7,7 +7,8 @@
 
 
 <link href="~/Content/Attendance.css" rel="stylesheet" />
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <div class="fixed-header row">
     <div class="col-md-4 col-xs-6 header-left">
         <h3>Welcome to SIMS,<strong> Ninh</strong>!</h3>
@@ -24,12 +25,12 @@
         </div>
         <form class="navbar-form navbar-left">
             <div class="form-group ">
-                <input style="border-radius:5px" type="text" class="form-control" placeholder="Search ...">
+                <input style="border-radius:5px" type="text" id="myInput" class="form-control" placeholder="Search ...">
             </div>
         </form>
     </div>
     <hr />
-    <div class="row">
+    <div class="row" id="myList">
         <div class="col-sm-4 col-md-3 col-xs-6">
             <div class="thumbnail">
                 <div class="caption">
@@ -43,7 +44,7 @@
         <div class="col-sm-4 col-md-3 col-xs-6">
             <div class="thumbnail">
                 <div class="caption">
-                    <h3><strong><a href="~/Attendance/manageClass">Capston Team 04</a></strong></h3>
+                    <h3><strong><a href="~/Attendance/manageClass">Capston Team 05</a></strong></h3>
                     <small>Start day: 27-11-2018</small>
                     <p>Description: ....</p>
                     <br />
@@ -53,7 +54,7 @@
         <div class="col-sm-4 col-md-3 col-xs-6">
             <div class="thumbnail">
                 <div class="caption">
-                    <h3><strong><a href="~/Attendance/manageClass">Capston Team 04</a></strong></h3>
+                    <h3><strong><a href="~/Attendance/manageClass">Capston Team 07</a></strong></h3>
                     <small>Start day: 27-11-2018</small>
                     <p>Description: ....</p>
                     <br />
@@ -63,7 +64,7 @@
         <div class="col-sm-4 col-md-3 col-xs-6">
             <div class="thumbnail">
                 <div class="caption">
-                    <h3><strong><a href="~/Attendance/manageClass">Capston Team 04</a></strong></h3>
+                    <h3><strong><a href="~/Attendance/manageClass">Capston Team 06</a></strong></h3>
                     <small>Start day: 27-11-2018</small>
                     <p>Description: ....</p>
                     <br />
@@ -72,6 +73,7 @@
         </div>
 
     </div>
+
 </div>
 <div class="text-center">
     <nav aria-label="Page navigation">
@@ -144,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-                
+
 
                 <hr />
                 <!--Submit-->
@@ -170,6 +172,17 @@
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myList *").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
 
 
