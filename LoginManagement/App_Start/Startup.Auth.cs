@@ -48,8 +48,8 @@ namespace LoginManagement
             // Uncomment the following lines to enable logging in with third party login providers
             app.UseMicrosoftAccountAuthentication(
 
-                clientId: "adcfd7da-eda7-4140-9528-eac96c3e2e29",
-                clientSecret: "cvqTZRWU50#)dxftRV538=(");
+                clientId: "ea2300f8-22a5-4f18-86d4-78316fb2c5e9",
+                clientSecret: "bscdgBMLJW11?![vcST867-");
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
