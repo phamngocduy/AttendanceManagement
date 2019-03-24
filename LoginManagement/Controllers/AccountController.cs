@@ -29,12 +29,12 @@ namespace IdentificationManagement.Controllers
 
         static Hashtable Hashtable;
 		cap21t4Entities db = new cap21t4Entities();
-		static UserProfile user;
+		static User user;
 
 		static AccountController()
         {
             Hashtable = new Hashtable();
-			user  = new UserProfile();
+			user  = new User();
 		}
 		[AllowAnonymous]
 		public ActionResult Help()
@@ -45,13 +45,31 @@ namespace IdentificationManagement.Controllers
 		public ActionResult Index()
 		{
 		
-			var user = db.Users.First(x => x.Email == "duykhau1@vanlanguni.vn");
+			user = db.Users.First(x => x.Email == "duykhau1@vanlanguni.vn");
 			return View(user);
 		}
 		[AllowAnonymous]
-		public ActionResult Edit()
+		public ActionResult Edit(string id)
 		{
-			return View();
+			int userID = int.Parse(id);
+			var user = db.Users.FirstOrDefault(x => x.ID == userID);
+			return View(user);
+		}
+		[AllowAnonymous]
+		[HttpPost]
+		public ActionResult Edit(User user)
+		{
+
+			User nUser = db.Users.FirstOrDefault(x => x.ID == user.ID);
+			if (ModelState.IsValid)
+			{
+				nUser.DoB = user.DoB;
+				
+				nUser.PhoneNumber = user.PhoneNumber;
+				db.SaveChanges();
+			}
+			return RedirectToAction("Index");
+			
 		}
 		/// <summary>
 		/// Avatar Controler

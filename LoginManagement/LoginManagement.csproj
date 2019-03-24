@@ -265,6 +265,7 @@
     <Content Include="img\2.png" />
     <Content Include="img\3.png" />
     <Content Include="img\avatarnull.png" />
+    <Content Include="img\icon.png" />
     <Content Include="img\user.png" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
@@ -351,6 +352,7 @@
     <Content Include="Views\Account\_Upload.cshtml" />
     <Content Include="Views\Account\Help.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

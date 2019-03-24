@@ -1,19 +1,18 @@
-﻿.container {
+﻿.d-flex .container {
 	position: relative;
 	width: 100%;
-	height: 100%
+	height: 100%;
 }
-
 	/* Make the image responsive */
-	.container img {
-		width: 100%;
-		height: auto;
+	.d-flex .container img {
+		width: 400px;
+		height: 400px;
 	}
 
 	/* Style the button and place it in the middle of the container/image */
-	.container .btn {
+	.d-flex .container .btn {
 		position: absolute;
-		top: 70%;
+		top: 80%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 		-ms-transform: translate(-50%, -50%);
@@ -26,7 +25,7 @@
 		border-radius: 10px;
 	}
 
-		.container .btn:hover {
+		.d-flex .container .btn:hover {
 			background-color: black;
 		}
 .btnhover button{
