@@ -72,67 +72,105 @@
 	<section class="home_banner_area">
 		<div class="container box_1620">
 			<div class="banner_inner d-flex align-items-center">
-				<div class="banner_content" >
-					<div class="section-top-border" >
-						<div class="row">
-							<div class="col-lg-8 col-md-8">
-								<h3 class="mb-30 title_color">Update Infomation</h3>
-								<form method="post" action="~/Account/Edit">
-									<div class="col-lg-12" hidden="hidden">
-										<p>
-											ID
-											<input type="text" name="ID" value="@Model.ID">
-										</p>
+				<div class="banner_content">
+					<div class="media">
+						@if (Model.AvatarLink != null)
+						{
+							<div class="d-flex">
+								<div class="container">
+									<div class="btnhover">
+										<div class="h_gallery_item">
+											<div class="g_img_item">
+
+												<img class="img-fluid" src="@(Model.AvatarLink)" alt="">
+												<a class="light" href="@(Model.AvatarLink)"><img src="" alt=""></a>
+												<button onclick="window.location='/Account/Upload'" class="btn">Change Avatar</button>
+											</div>
+										</div>
 									</div>
-									<div class="col-lg-12">
-										<p>
-											Student ID
-											<input type="text" name="StID" value="@Model.StID">
-										</p>
+								</div>
+							</div>
+						}
+						else
+						{
+							<div class="d-flex">
+								<div class="container">
+									<div class="btnhover">
+										<div class="h_gallery_item">
+											<div class="g_img_item">
+												<img class="img-fluid" src="~/img/avatarnull.png" alt="">
+												<a class="light" href="~/img/avatarnull.png"><img src="" alt=""></a>
+												<button onclick="window.location='/Account/Upload'" class="btn">Change Avatar</button>
+											</div>
+										</div>
 									</div>
-									<div class="col-lg-12">
-										<p>
-											Full Name
-											<input type="text" name="FullName" value="@Model.FullName">
-										</p>
-									</div>
-									<div class="col-lg-12">
-										<p>
-											Phone Number
-											<input type="text" name="PhoneNumber" value="@Model.PhoneNumber">
-										</p>
-									</div>
-									<div class="col-lg-12">
-										<p>
-											Email
-											<input type="text" name="Email" value="@Model.Email">
-										</p>
-									</div>
-									<div class="col-lg-12">
-										<p>
-											DoB
-											<input type="text" name="DoB" value="@Model.DoB.Value.ToShortDateString()">
-										</p>
-									</div>
+								</div>
+							</div>
+						}
+						<div class="media-body">
+							<div class="personal_text">
+								<div class="section-top-border">
 									<div class="row">
-										<div class="col-lg-6">
-											<input type="button" onclick="window.location='/Account/Index'" class="genric-btn success circle" value="Cancel" />
-										</div>
-										<div class="col-lg-6">
+										<div class="col-lg-12 col-md-12">
+											<h3 class="mb-30 title_color">Update Infomation</h3>
+											<form class="form-horizontal form-label-left input_mask" method="post" action="~/Account/Edit">
+												<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" hidden="hidden">
+													<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+													<input type="text" class="form-control has-feedback-left" name="ID" value="@Model.ID">
+												</div>
 
-											<input type="submit" class="genric-btn info circle" value="Update" />
+												<div class="form-group">
+													<div class="col-md-9 col-sm-9 col-xs-12">
+
+														<span class="fa fa-heart-o form-control-feedback left" aria-hidden="true"> StudentID</span>
+														<input type="text" class="form-control" name="StID" readonly="readonly" value="@Model.StID">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-md-9 col-sm-9 col-xs-12">
+														<span class="fa fa-user form-control-feedback left" aria-hidden="true"> Full Name</span>
+														<input type="text" class="form-control" name="FullName" readonly="readonly" value="@Model.FullName">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-md-9 col-sm-9 col-xs-12">
+														<span class="fa fa-phone form-control-feedback right" aria-hidden="true"> PhoneNumber</span>
+														<input type="text" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber">
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="col-md-9 col-sm-9 col-xs-12">
+														<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"> Email</span>
+														<input type="text" class="form-control" readonly="readonly" name="Email" value="@Model.Email">
+													</div>
+												</div>
+											
+												<div class="form-group">
+													<div class="col-md-9 col-sm-9 col-xs-12">
+														<span class="fa fa-birthday-cake form-control-feedback left" aria-hidden="true"> Date Of Birth</span>
+														<input type="text" class="form-control" name="DoB" value="@Model.DoB.Value.ToShortDateString()">
+													</div>
+												</div>
+												<div class="ln_solid"></div>
+												<div class="form-group" style="text-align:center">
+													<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+														<button type="button" class="btn btn-primary" onclick="window.location='/Account/Index'">Cancel</button>
+														<button type="submit" class="btn btn-success">Submit</button>
+													</div>
+												</div>
+											</form>
 										</div>
 									</div>
 
-								</form>
+								</div>
 							</div>
 						</div>
-						</div>
-						
-						</div>
+					</div>
 				</div>
 			</div>
-		
+		</div>
+
 	</section>
 	<!--================End Home Banner Area =================-->
 	<!--================Footer Area =================-->

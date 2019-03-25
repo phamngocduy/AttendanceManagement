@@ -44,7 +44,6 @@ namespace IdentificationManagement.Controllers
 		[AllowAnonymous]
 		public ActionResult Index()
 		{
-		
 			user = db.Users.First(x => x.Email == "duykhau1@vanlanguni.vn");
 			return View(user);
 		}
@@ -77,7 +76,7 @@ namespace IdentificationManagement.Controllers
 
 		private const string _tempFolder = "/Temp";
 		private const string _mapTempFolder = "~" + _tempFolder;
-		private  string _avatarPath = "~/App_Data/Avatars";
+		private  string _avatarPath = "~/Avatars";
 
 		private readonly string[] _imageFileExtensions = { ".jpg", ".png", ".gif", ".jpeg" };
 		[AllowAnonymous]
@@ -129,8 +128,26 @@ namespace IdentificationManagement.Controllers
 				System.IO.File.Delete(fn);
 
 				_avatarPath = _avatarPath + "/Avatars" + user.StID.ToString();
+				var serverPath = HttpContext.Server.MapPath(_avatarPath);
+				//...delte all file in folder
+				if (Directory.Exists(Path.GetDirectoryName(serverPath)) == true)
+				{
+					var fileEntries = Directory.GetFiles(serverPath);
+					if (fileEntries != null)
+					{
+						foreach (var fileEntry in fileEntries)
+						{
+							{
+								System.IO.File.Delete(fileEntry);
+							}
+						}
+					}
+				}
+				
+				
 				// ... and save the new one.
 				var newFileName = Path.Combine(_avatarPath, Path.GetFileName(fn));
+
 				var newFileLocation = HttpContext.Server.MapPath(newFileName);
 				if (Directory.Exists(Path.GetDirectoryName(newFileLocation)) == false)
 				{
@@ -138,11 +155,15 @@ namespace IdentificationManagement.Controllers
 				}
 				
 				img.Save(newFileLocation);
-				user.Avatar = newFileName;
 
+				img.Resize(32, 32);
+				string base64String = Convert.ToBase64String(img.GetBytes());
 
-				string imageBase64 = ImageToBase64(newFileLocation);
-
+				string filename = newFileName.Replace("~", string.Empty);
+				User editUser = db.Users.FirstOrDefault(x => x.ID == user.ID);
+				editUser.AvatarBase64 = base64String;
+				editUser.AvatarLink = filename;
+				db.SaveChanges();
 				return Json(new { success = true, avatarFileLocation = newFileName });				
 			}
 			catch (Exception ex)
