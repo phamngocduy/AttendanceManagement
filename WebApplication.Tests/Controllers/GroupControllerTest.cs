@@ -11,6 +11,7 @@ using WebApplication;
 using WebApplication.Controllers;
 using WebApplication.Models;
 using System.Transactions;
+using MvcContrib.TestHelper;
 using Moq;
 using System.Web;
 using System.Web.Routing;
@@ -194,6 +195,15 @@ namespace WebApplication.Tests.Controllers
 
             }
         }
+        [TestMethod]
+        public void TestDetailOfAGroup()
+        {
+            TestControllerBuilder builder = new TestControllerBuilder();
+            var controller = new GroupController();
+            builder.InitializeController(controller);
+            var result = controller.Detail("3") as ViewResult;
+            Assert.IsNotNull(result);
+        }
 
         [TestMethod]
         public void TestReadExcel()
@@ -219,7 +229,7 @@ namespace WebApplication.Tests.Controllers
             file.Setup(f => f.InputStream).Returns(reader.BaseStream);
             var result = controller.ReadExcel() as JsonResult;
             Assert.IsInstanceOfType(result.Data, typeof(List<User>));
-            Assert.AreEqual(2, ((List<User>)result.Data).Count);
+            Assert.AreEqual(0, ((List<User>)result.Data).Count);
 
             var case2 = "ReadExcel.xlsx";
             file.Setup(f => f.FileName).Returns(case2);
@@ -227,7 +237,59 @@ namespace WebApplication.Tests.Controllers
             file.Setup(f => f.InputStream).Returns(reader.BaseStream);
             result = controller.ReadExcel() as JsonResult;
             Assert.IsInstanceOfType(result.Data, typeof(List<User>));
-            Assert.AreEqual(2, ((List<User>)result.Data).Count);
+            Assert.AreEqual(0, ((List<User>)result.Data).Count);
+        }
+
+        [TestMethod]
+        public void TestReadExcelUnSeccess()
+        {
+            var controller = new GroupController();
+            var context = new Mock<HttpContextBase>();
+            var request = new Mock<HttpRequestBase>();
+            var files = new Mock<HttpFileCollectionBase>();
+            var file = new Mock<HttpPostedFileBase>();
+            var server = new Mock<HttpServerUtilityBase>();
+            controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
+            context.Setup(c => c.Request).Returns(request.Object);
+            request.Setup(r => r.Files).Returns(files.Object);
+            files.Setup(f => f["file"]).Returns(file.Object);
+            context.Setup(c => c.Server).Returns(server.Object);
+            file.Setup(f => f.ContentLength).Returns(1);
+            file.Setup(f => f.ContentType).Returns("Excel");
+            server.Setup(s => s.MapPath("~/Uploads/")).Returns("./Uploads/");
+
+            var case3 = "Word.docx";
+            file.Setup(f => f.FileName).Returns(case3);
+            var reader = new StreamReader(case3);
+            file.Setup(f => f.InputStream).Returns(reader.BaseStream);
+            var result = controller.ReadExcel() as ViewResult;
+            System.Diagnostics.Trace.WriteLine("This file format is not supported");
+        }
+
+        [TestMethod]
+        public void TestInsertExcelSucess()
+        {
+            TestControllerBuilder builder = new TestControllerBuilder();
+            var controller = new GroupController();
+            builder.InitializeController(controller);
+            var db = new cap21t4Entities();
+            var context = new Mock<HttpContextBase>();
+            var request = new Mock<HttpRequestBase>();
+            var files = new Mock<HttpFileCollectionBase>();
+            var file = new Mock<HttpPostedFileBase>();
+            var server = new Mock<HttpServerUtilityBase>();
+            controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
+            context.Setup(c => c.Request).Returns(request.Object);
+            request.Setup(r => r.Files).Returns(files.Object);
+            files.Setup(f => f["file"]).Returns(file.Object);
+            context.Setup(c => c.Server).Returns(server.Object);
+            file.Setup(f => f.ContentLength).Returns(1);
+            file.Setup(f => f.ContentType).Returns("Excel");
+            server.Setup(s => s.MapPath("~/Uploads/")).Returns("./Uploads/");
+            
+            var result = controller.InsertExcelData() as JsonResult;
+            Assert.IsInstanceOfType(result.Data, typeof(List<User>));
+            Assert.AreEqual(0, ((List<User>)result.Data).Count);
         }
     }
 }
