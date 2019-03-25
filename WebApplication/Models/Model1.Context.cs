@@ -32,6 +32,7 @@ namespace WebApplication.Models
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<Class> Classes { get; set; }
+        public virtual DbSet<ClassMember> ClassMembers { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<Session> Sessions { get; set; }

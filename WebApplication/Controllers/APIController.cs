@@ -31,7 +31,7 @@ namespace WebApplication.Controllers
 						PhoneNumber = item.PhoneNumber,
 						Email = item.Email,
 						DoB = item.DoB,
-						Avatar = item.Avatar
+						Avatar = item.AvatarLink
 					};
 					list.Add(us);
 				}
@@ -78,7 +78,7 @@ namespace WebApplication.Controllers
 			newUser = JsonConvert.DeserializeObject<IEnumerable<UserProfile>>(stringUser).First();
 			var oldUser = db.Users.FirstOrDefault(x => x.StID == newUser.StID);
 			oldUser.PhoneNumber = newUser.PhoneNumber;
-			oldUser.Avatar = newUser.Avatar;
+			oldUser.AvatarLink = newUser.Avatar;
 			oldUser.DoB = newUser.DoB;
 			try
 			{

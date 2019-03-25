@@ -12,15 +12,9 @@ namespace WebApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Attendance
+    public partial class ClassMember
     {
-        public int ID { get; set; }
-        public Nullable<int> MemberID { get; set; }
-        public Nullable<int> SessionID { get; set; }
-        public Nullable<bool> Status { get; set; }
-        public string Note { get; set; }
-    
-        public virtual Member Member { get; set; }
-        public virtual Session Session { get; set; }
+        public int ClassID { get; set; }
+        public int MemberID { get; set; }
     }
 }

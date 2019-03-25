@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fad8f79292df423896c09e84de07a3f7" Name="Diagram1">
-        <EntityTypeShape EntityType="cap21t4Model.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+      <Diagram DiagramId="3f727215a5ca4185b076c383c83050ae" Name="Diagram1">
+        <EntityTypeShape EntityType="cap21t4Model.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.AspNetRole" Width="1.5" PointX="1.5" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.AspNetUserClaim" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.AspNetUserLogin" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.AspNetUser" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Attendance" Width="1.5" PointX="8" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Class" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Attendance" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Class" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.ClassMember" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.Group" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Member" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Session" Width="1.5" PointX="5.75" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.sysdiagram" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Member" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Session" Width="1.5" PointX="5.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.sysdiagram" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.User" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_User_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_Attendance_Class" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_Attendance_Member" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_Attendance_Session" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_Group_Group" ManuallyRouted="false" />

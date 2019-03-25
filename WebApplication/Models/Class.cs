@@ -14,12 +14,6 @@ namespace WebApplication.Models
     
     public partial class Class
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Class()
-        {
-            this.Attendances = new HashSet<Attendance>();
-        }
-    
         public int ID { get; set; }
         public string ClassName { get; set; }
         public string Description { get; set; }
@@ -31,8 +25,5 @@ namespace WebApplication.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

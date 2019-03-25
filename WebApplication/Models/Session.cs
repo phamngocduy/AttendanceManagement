@@ -23,7 +23,6 @@ namespace WebApplication.Models
         public int ID { get; set; }
         public Nullable<int> ClassID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> Count { get; set; }
         public string Note { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
