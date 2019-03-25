@@ -128,19 +128,22 @@ namespace IdentificationManagement.Controllers
 				System.IO.File.Delete(fn);
 
 				_avatarPath = _avatarPath + "/Avatars" + user.StID.ToString();
-
-				//...delte all file in folder
 				var serverPath = HttpContext.Server.MapPath(_avatarPath);
-				var fileEntries = Directory.GetFiles(serverPath);
-				if(fileEntries !=null)
+				//...delte all file in folder
+				if (Directory.Exists(Path.GetDirectoryName(serverPath)) == true)
 				{
-					foreach (var fileEntry in fileEntries)
+					var fileEntries = Directory.GetFiles(serverPath);
+					if (fileEntries != null)
 					{
+						foreach (var fileEntry in fileEntries)
 						{
-							System.IO.File.Delete(fileEntry);
+							{
+								System.IO.File.Delete(fileEntry);
+							}
 						}
 					}
 				}
+				
 				
 				// ... and save the new one.
 				var newFileName = Path.Combine(_avatarPath, Path.GetFileName(fn));
