@@ -12,30 +12,22 @@ namespace LoginManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Member
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Member()
         {
-            this.Groups = new HashSet<Group>();
-            this.Groups1 = new HashSet<Group>();
+            this.Attendances = new HashSet<Attendance>();
         }
     
         public int ID { get; set; }
-        public string UserID { get; set; }
-        public string StID { get; set; }
-        public string FullName { get; set; }
-        public string PhoneNumber { get; set; }
+        public string StudentID { get; set; }
+        public string Name { get; set; }
         public string Email { get; set; }
         public Nullable<System.DateTime> DoB { get; set; }
-        public string AvatarLink { get; set; }
-        public string AvatarBase64 { get; set; }
-        public string Note { get; set; }
+        public string Avatar { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Group> Groups { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Group> Groups1 { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

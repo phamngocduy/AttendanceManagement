@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="~/Content/vendors/popup/magnific-popup.css">
 	<link rel="stylesheet" href="~/Content/vendors/flaticon/flaticon.css">
 	<!-- main css -->
-	
+
 	<link rel="stylesheet" href="~/Content/css/style.css">
 	<link rel="stylesheet" href="~/Content/css/responsive.css">
 	<link href="~/Content/button.css" rel="stylesheet" />
@@ -74,22 +74,22 @@
 			<div class="banner_inner d-flex align-items-center">
 				<div class="banner_content">
 					<div class="media">
-
-						@if (@Model.Avatar != null)
+						@if (Model.AvatarLink != null)
 						{
-						<div class="d-flex">
-							<div class="container">
-								<div class="btnhover">
-									<div class="h_gallery_item">
-										<div class="g_img_item">
-											<img class="img-fluid" src="~/img/avatarnull.png" alt="">
-											<a class="light" href="@Model.Avatar"><img src="" alt=""></a>
-											<button class="btn">Change Avatar</button>
+							<div class="d-flex">
+								<div class="container">
+									<div class="btnhover">
+										<div class="h_gallery_item">
+											<div class="g_img_item">
+
+												<img class="img-fluid" src="@(Model.AvatarLink)" alt="">
+												<a class="light" href="@(Model.AvatarLink)"><img src="" alt=""></a>
+												<button onclick="window.location='/Account/Upload'" class="btn">Change Avatar</button>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
 						}
 						else
 						{
@@ -106,36 +106,36 @@
 									</div>
 								</div>
 							</div>
-								}
-								<div class="media-body">
-									<div class="personal_text">
-										<h4>WELCOME</h4>
-										<h3>
-											@Model.FullName
-										</h3>
-										<h4>@Model.StID</h4>
-										<ul class="list basic_info">
-											<li><a><i class="lnr lnr-calendar-full"></i>  @Model.DoB.Value.ToShortDateString()</a></li>
-											<li><a><i class="lnr lnr-phone-handset"></i> @Model.PhoneNumber</a></li>
-											<li><a><i class="lnr lnr-envelope"></i> @Model.Email</a></li>
+						}
+						<div class="media-body">
+							<div class="personal_text">
+								<h4>WELCOME</h4>
+								<h3>
+									@Model.FullName
+								</h3>
+								<h4>@Model.StID</h4>
+								<ul class="list basic_info">
+									<li><a><i class="lnr lnr-calendar-full"></i>  @Model.DoB.Value.ToShortDateString()</a></li>
+									<li><a><i class="lnr lnr-phone-handset"></i> @Model.PhoneNumber</a></li>
+									<li><a><i class="lnr lnr-envelope"></i> @Model.Email</a></li>
 
-										</ul>
-										<ul class="list personal_social">
-											<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-											<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-											<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-										</ul>
-										<br />
-										<ul class="list">
-											<li>
-												<a href="~/Account/Edit/@Model.ID" class="genric-btn info circle" style="font-size:20px;text-align:center"><i class="fa fa-pencil-square-o"></i>  Update Profile</a>
-											</li>
-											
-										</ul>
-									</div>
-								</div>
+								</ul>
+								<ul class="list personal_social">
+									<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+								</ul>
+								<br />
+								<ul class="list">
+									<li>
+										<a href="~/Account/Edit/@Model.ID" class="genric-btn info circle" style="font-size:20px;text-align:center"><i class="fa fa-pencil-square-o"></i>  Update Profile</a>
+									</li>
+
+								</ul>
 							</div>
 						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
