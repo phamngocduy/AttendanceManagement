@@ -13,7 +13,6 @@ namespace WebApplication.Models
         public string Email { get; set; }
         public Nullable<System.DateTime> DoB { get; set; }
 		public string Avatar { get; set; }
-		public string Note { get; set; }
 
     }
 }

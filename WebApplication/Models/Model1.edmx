@@ -72,7 +72,6 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MemberID" Type="int" />
-          <Property Name="ClassID" Type="int" />
           <Property Name="SessionID" Type="int" />
           <Property Name="Status" Type="bit" />
           <Property Name="Note" Type="nvarchar" MaxLength="500" />
@@ -92,6 +91,14 @@
           <Property Name="ModifiedDate" Type="date" />
           <Property Name="DeletedBy" Type="nvarchar" MaxLength="500" />
           <Property Name="DeletedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="ClassMember">
+          <Key>
+            <PropertyRef Name="ClassID" />
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -143,7 +150,6 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClassID" Type="int" />
           <Property Name="Date" Type="datetime" />
-          <Property Name="Count" Type="int" />
           <Property Name="Note" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -161,27 +167,16 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" />
           <Property Name="StID" Type="nvarchar" MaxLength="50" />
           <Property Name="FullName" Type="nvarchar" MaxLength="200" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
           <Property Name="Email" Type="nvarchar" MaxLength="200" />
           <Property Name="DoB" Type="date" />
+          <Property Name="AvatarLink" Type="nvarchar" MaxLength="500" />
+          <Property Name="AvatarBase64" Type="varchar(max)" />
           <Property Name="Note" Type="nvarchar" MaxLength="500" />
-          <Property Name="Avatar" Type="nvarchar" MaxLength="500" />
-          <Property Name="UserID" Type="nvarchar" MaxLength="128" />
         </EntityType>
-        <Association Name="FK_Attendance_Class">
-          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
-          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Class">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Attendance">
-              <PropertyRef Name="ClassID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Attendance_Member">
           <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
           <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
@@ -343,6 +338,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassMember" EntityType="Self.ClassMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupMember" EntityType="Self.GroupMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupOwner" EntityType="Self.GroupOwner" Schema="dbo" store:Type="Tables" />
@@ -350,10 +346,6 @@
           <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Attendance_Class" Association="Self.FK_Attendance_Class">
-            <End Role="Class" EntitySet="Class" />
-            <End Role="Attendance" EntitySet="Attendance" />
-          </AssociationSet>
           <AssociationSet Name="FK_Attendance_Member" Association="Self.FK_Attendance_Member">
             <End Role="Member" EntitySet="Member" />
             <End Role="Attendance" EntitySet="Attendance" />
@@ -474,11 +466,9 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MemberID" Type="Int32" />
-          <Property Name="ClassID" Type="Int32" />
           <Property Name="SessionID" Type="Int32" />
           <Property Name="Status" Type="Boolean" />
           <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Class" Relationship="Self.FK_Attendance_Class" FromRole="Attendance" ToRole="Class" />
           <NavigationProperty Name="Member" Relationship="Self.FK_Attendance_Member" FromRole="Attendance" ToRole="Member" />
           <NavigationProperty Name="Session" Relationship="Self.FK_Attendance_Session" FromRole="Attendance" ToRole="Session" />
         </EntityType>
@@ -497,7 +487,14 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="0" />
           <Property Name="DeletedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DeletedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Class" FromRole="Class" ToRole="Attendance" />
+        </EntityType>
+        <EntityType Name="ClassMember">
+          <Key>
+            <PropertyRef Name="ClassID" />
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -538,7 +535,6 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClassID" Type="Int32" />
           <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="Count" Type="Int32" />
           <Property Name="Note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Session" FromRole="Session" ToRole="Attendance" />
         </EntityType>
@@ -557,14 +553,15 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="StID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DoB" Type="DateTime" Precision="0" />
+          <Property Name="AvatarLink" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AvatarBase64" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Avatar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_User_AspNetUsers" FromRole="User" ToRole="AspNetUsers" />
           <NavigationProperty Name="Groups" Relationship="Self.GroupMember" FromRole="User" ToRole="Group" />
           <NavigationProperty Name="Groups1" Relationship="Self.GroupOwner" FromRole="User" ToRole="Group" />
@@ -606,18 +603,6 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Attendance_Class">
-          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
-          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Class">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Attendance">
-              <PropertyRef Name="ClassID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -677,6 +662,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Attendances" EntityType="Self.Attendance" />
           <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="ClassMembers" EntityType="Self.ClassMember" />
           <EntitySet Name="Groups" EntityType="Self.Group" />
           <EntitySet Name="Members" EntityType="Self.Member" />
           <EntitySet Name="Sessions" EntityType="Self.Session" />
@@ -693,10 +679,6 @@
           <AssociationSet Name="FK_User_AspNetUsers" Association="Self.FK_User_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Attendance_Class" Association="Self.FK_Attendance_Class">
-            <End Role="Class" EntitySet="Classes" />
-            <End Role="Attendance" EntitySet="Attendances" />
           </AssociationSet>
           <AssociationSet Name="FK_Attendance_Member" Association="Self.FK_Attendance_Member">
             <End Role="Member" EntitySet="Members" />
@@ -789,7 +771,6 @@
               <MappingFragment StoreEntitySet="Attendance">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="MemberID" ColumnName="MemberID" />
-                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
                 <ScalarProperty Name="SessionID" ColumnName="SessionID" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
@@ -810,6 +791,14 @@
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassMembers">
+            <EntityTypeMapping TypeName="cap21t4Model.ClassMember">
+              <MappingFragment StoreEntitySet="ClassMember">
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -848,7 +837,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClassID" ColumnName="ClassID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -868,14 +856,15 @@
             <EntityTypeMapping TypeName="cap21t4Model.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="StID" ColumnName="StID" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="DoB" ColumnName="DoB" />
+                <ScalarProperty Name="AvatarLink" ColumnName="AvatarLink" />
+                <ScalarProperty Name="AvatarBase64" ColumnName="AvatarBase64" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
