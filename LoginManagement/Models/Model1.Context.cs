@@ -13,10 +13,10 @@ namespace LoginManagement.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LoginManagementEntities : DbContext
+    public partial class cap21t4Entities : DbContext
     {
-        public LoginManagementEntities()
-            : base("name=LoginManagementEntities")
+        public cap21t4Entities()
+            : base("name=cap21t4Entities")
         {
         }
     
@@ -30,5 +30,8 @@ namespace LoginManagement.Models
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

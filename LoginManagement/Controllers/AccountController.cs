@@ -11,6 +11,15 @@ using Microsoft.Owin.Security;
 using System.Collections;
 using LoginManagement.Models;
 using LoginManagement;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Net;
+using System.Web.Helpers;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Drawing;
 
 namespace IdentificationManagement.Controllers
 {
@@ -19,25 +28,254 @@ namespace IdentificationManagement.Controllers
     {
 
         static Hashtable Hashtable;
+		cap21t4Entities db = new cap21t4Entities();
+		static User user;
 
-        static AccountController()
+		static AccountController()
         {
             Hashtable = new Hashtable();
-        }
+			user  = new User();
+		}
+		[AllowAnonymous]
+		public ActionResult Help()
+		{
+			return View();
+		}
+		[AllowAnonymous]
+		public ActionResult Index()
+		{
+		
+			user = db.Users.First(x => x.Email == "duykhau1@vanlanguni.vn");
+			return View(user);
+		}
+		[AllowAnonymous]
+		public ActionResult Edit(string id)
+		{
+			int userID = int.Parse(id);
+			var user = db.Users.FirstOrDefault(x => x.ID == userID);
+			return View(user);
+		}
+		[AllowAnonymous]
+		[HttpPost]
+		public ActionResult Edit(User user)
+		{
 
-        [AllowAnonymous]
-        public ActionResult LoginVL(string redirect_uri, string state)
-        {
-            if (state != null)
-                Hashtable[state] = redirect_uri;
-            ViewBag.ReturnUrl = state;
-            string provider = "Microsoft";
-            string returnUrl = state;
-            //return View("Login");
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        }
+			User nUser = db.Users.FirstOrDefault(x => x.ID == user.ID);
+			if (ModelState.IsValid)
+			{
+				nUser.DoB = user.DoB;
+				
+				nUser.PhoneNumber = user.PhoneNumber;
+				db.SaveChanges();
+			}
+			return RedirectToAction("Index");
+			
+		}
+		/// <summary>
+		/// Avatar Controler
+		/// </summary>
 
-        [AllowAnonymous, HttpPost]
+		private const string _tempFolder = "/Temp";
+		private const string _mapTempFolder = "~" + _tempFolder;
+		private  string _avatarPath = "~/App_Data/Avatars";
+
+		private readonly string[] _imageFileExtensions = { ".jpg", ".png", ".gif", ".jpeg" };
+		[AllowAnonymous]
+		[HttpGet]
+		public ActionResult Upload()
+		{
+			return View();
+		}
+		[AllowAnonymous]
+		[HttpGet]
+		public ActionResult _Upload()
+		{
+			return PartialView();
+		}
+		[AllowAnonymous]
+		[ValidateAntiForgeryToken]
+		public ActionResult _Upload(IEnumerable<HttpPostedFileBase> files)
+		{
+			if (files == null || !files.Any())
+				return Json(new { success = false, errorMessage = "No file uploaded." });
+
+			var file = files.FirstOrDefault();  // get ONE only
+			if (file == null || !IsImage(file))
+				return Json(new { success = false, errorMessage = "File is of wrong format." });
+
+			if (file.ContentLength <= 0)
+				return Json(new { success = false, errorMessage = "File cannot be zero length." });
+
+			var webPath = GetTempSavedFilePath(file);
+
+			return Json(new { success = true, fileName = webPath.Replace("\\", "/") }); // success
+		}
+		[AllowAnonymous]
+		[HttpPost]
+		public async Task<ActionResult> Save(string fileName)
+		{
+			try
+			{
+				// Get file from temporary folder, ...
+				var fn = Path.Combine(Server.MapPath(_mapTempFolder), Path.GetFileName(fileName));
+
+				// ... get the image, ...
+				var img = new WebImage(fn);
+
+				// ... scale it, ...
+				img.Resize(256, 256);
+
+				// ... delete the temporary file,...
+				System.IO.File.Delete(fn);
+
+				_avatarPath = _avatarPath + "/Avatars" + user.StID.ToString();
+				// ... and save the new one.
+				var newFileName = Path.Combine(_avatarPath, Path.GetFileName(fn));
+				var newFileLocation = HttpContext.Server.MapPath(newFileName);
+				if (Directory.Exists(Path.GetDirectoryName(newFileLocation)) == false)
+				{
+					Directory.CreateDirectory(Path.GetDirectoryName(newFileLocation));
+				}
+				
+				img.Save(newFileLocation);
+				user.Avatar = newFileName;
+
+
+				string imageBase64 = ImageToBase64(newFileLocation);
+
+				return Json(new { success = true, avatarFileLocation = newFileName });				
+			}
+			catch (Exception ex)
+			{
+				return Json(new { success = false, errorMessage = "Unable to upload file.\nERRORINFO: " + ex.Message });
+			}
+		}
+		
+	
+	[AllowAnonymous]
+		private bool IsImage(HttpPostedFileBase file)
+		{
+			if (file == null) return false;
+			return file.ContentType.Contains("image") ||
+				_imageFileExtensions.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
+		}
+		[AllowAnonymous]
+		private string GetTempSavedFilePath(HttpPostedFileBase file)
+		{
+			// Define destination
+			var serverPath = HttpContext.Server.MapPath(_tempFolder);
+			if (Directory.Exists(serverPath) == false)
+			{
+				Directory.CreateDirectory(serverPath);
+			}
+
+			// Generate unique file name
+			var fileName = Path.GetFileName(file.FileName);
+			fileName = SaveTemporaryAvatarFileImage(file, serverPath, fileName);
+
+			// Clean up old files after every save
+			CleanUpTempFolder(1);
+			return Path.Combine(_tempFolder, fileName);
+		}
+		[AllowAnonymous]
+		private static string SaveTemporaryAvatarFileImage(HttpPostedFileBase file, string serverPath, string fileName)
+		{
+			var img = new WebImage(file.InputStream);
+			var ratio = img.Height / (double)img.Width;
+			img.Resize(256, 256);
+
+			var fullFileName = Path.Combine(serverPath, fileName);
+			if (System.IO.File.Exists(fullFileName))
+			{
+				System.IO.File.Delete(fullFileName);
+			}
+
+			img.Save(fullFileName);
+			return Path.GetFileName(img.FileName);
+		}
+
+		private void CleanUpTempFolder(int hoursOld)
+		{
+			try
+			{
+				var currentUtcNow = DateTime.UtcNow;
+				var serverPath = HttpContext.Server.MapPath("/Temp");
+				if (!Directory.Exists(serverPath)) return;
+				var fileEntries = Directory.GetFiles(serverPath);
+				foreach (var fileEntry in fileEntries)
+				{
+					var fileCreationTime = System.IO.File.GetCreationTimeUtc(fileEntry);
+					var res = currentUtcNow - fileCreationTime;
+					if (res.TotalHours > hoursOld)
+					{
+						System.IO.File.Delete(fileEntry);
+					}
+				}
+			}
+			catch
+			{
+				// Deliberately empty.
+			}
+		}
+
+
+		//Convert image to base64
+		[AllowAnonymous]
+		public string ImageToBase64(string imagepath)
+		{
+			using (System.Drawing.Image image = System.Drawing.Image.FromFile(imagepath))
+			{
+				using (MemoryStream ms = new MemoryStream())
+				{
+					string base64String;
+					image.Save(ms, image.RawFormat);
+					byte[] imageBytes = ms.ToArray();
+					base64String = Convert.ToBase64String(imageBytes);
+					return base64String;
+				}
+			}
+		}
+	
+		//Convert base64 to image
+		public System.Drawing.Image Base64ToImage(string base64String)
+		{
+			byte[] imageBytes = Convert.FromBase64String(base64String);
+			MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+			ms.Write(imageBytes, 0, imageBytes.Length);
+			System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
+			return image;
+		}
+
+		[AllowAnonymous]
+		public HttpResponseMessage getStatus()
+		{
+			try
+			{
+				var response = new HttpResponseMessage(HttpStatusCode.OK);
+				response.Content = new StringContent(JsonConvert.SerializeObject(new { status = "Sucess" }));
+				response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+				return response;
+			}
+			catch
+			{
+				return new HttpResponseMessage(HttpStatusCode.BadRequest);
+			}
+		}
+
+		[AllowAnonymous]
+		public ActionResult LoginVL(string redirect_uri, string state)
+		{
+			if (state != null)
+				Hashtable[state] = redirect_uri;
+			ViewBag.ReturnUrl = state;
+			string provider = "Microsoft";
+			string returnUrl = state;
+			//return View("Login");
+			return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+		}
+
+
+		[AllowAnonymous, HttpPost]
         public JsonResult GetInfo(string code)
         {
             var loginInfo = Hashtable[code] as ExternalLoginInfo;
@@ -363,6 +601,7 @@ namespace IdentificationManagement.Controllers
         {
             ApplicationUser user = null;
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+			
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
@@ -463,7 +702,7 @@ namespace IdentificationManagement.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+           if (disposing)
             {
                 if (_userManager != null)
                 {

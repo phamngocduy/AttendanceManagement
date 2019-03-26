@@ -3,72 +3,181 @@
     ViewBag.Title = "manageClass";
 }
 <link href="~/Content/Attendance.css" rel="stylesheet" />
+
 <div class="fixed-header row">
     <div class="col-md-4 col-xs-6 header-left">
         <h3><strong>Capston Team 04</strong></h3>
     </div>
 </div>
 <div class="row">
-    <!--Take Attendance-->
+    <!--Dashboard-->
     <div class="col-sm-6 col-lg-3">
         <div class="widget">
             <a href="#">
-                <div>
+                <div class="row">
+                    <div class="col-md-3" style="padding:10px">
+                        <span class="themed" style="background-color:#e74c3c !important;"> <i class="fa fa-book"></i></span>
+                    </div>
+                    <div class="col-md-9" style="padding:15px">
+                        <h3 class="widget-content">
+                            <strong>Dashboard</strong><br />
+                        </h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--My Student-->
+    <div class="col-sm-6 col-lg-3">
+        <div class="widget">
+            <a href="~/Attendance/ManageStudent">
+                <div class="row">
+                    <div class="col-md-3" style="padding:10px">
+                        <span class="themed" style="background-color:#27ae60 !important"> <i class="fa fa-user"></i></span>
+                    </div>
+                    <div class="col-md-9" style="padding:15px">
+                        <h3 class="widget-content">
+                            <strong>My Students</strong>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--My Session-->
+    <div class="col-sm-6 col-lg-3">
+        <div class="widget">
+            <a href="#" data-toggle="modal" data-target="#myModal">
+                <div class="row">
+                    <div class="col-md-3" style="padding:10px">
+                        <span class="themed" style="background-color:#af64aa !important"> <i class="fa fa-check-square-o"></i></span>
+                    </div>
+                    <div class="col-md-9" style="padding:15px">
+                        <h3 class="widget-content">
+                            <strong>My Sessions</strong>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!--Check Attendance-->
+    <div class="col-sm-6 col-lg-3">
+        <div class="widget">
+            <div class="row">
+                <div class="col-md-3" style="padding:10px">
                     <span class="themed" style="background-color:#e67e22 !important;"> <i class="fa fa-pencil-square-o"></i></span>
-                    <h3 class="widget-content">
-                        Take
-                        <strong>Attendance</strong><br />
-                        <small>Quick add</small>
-                    </h3>
                 </div>
-            </a>
-        </div>
-    </div>
-    <!--Manage your classes-->
-    <div class="col-sm-6 col-lg-3">
-        <div class="widget">
-            <a href="#">
-                <div>
-                    <span class="themed" style="background-color:#e74c3c !important;"> <i class="fa fa-book"></i></span>
+                <div class="col-md-9">
                     <h3 class="widget-content">
-                        Manage Your
-                        <strong>Classes</strong><br />
-                        <small>Class Dashboard</small>
+                        <strong> Check Attendance</strong>
                     </h3>
+                    <div class="row">
+                        <!--excel-->
+                        <div class="col-md-3">
+                            <a href="#">
+                                <p class="clearfix">
+                                    <i class="fa fa-file-text fa-2x text-primary pull-left"></i>
+                                </p>
+                            </a>
+                        </div>
+                        <!--Internet-->
+                        <div class="col-md-3">
+                            <a href="#">
+                                <p class="clearfix">
+                                    <i class="fa fa-internet-explorer fa-2x text-primary pull-left"></i>
+                                </p>
+                            </a>
+                        </div>
+                        <!--Barcode-->
+                        <div class="col-md-3">
+                            <a href="#">
+                                <p class="clearfix">
+                                    <i class="fa fa-barcode fa-2x text-primary pull-left"></i>
+                                </p>
+                            </a>
+                        </div>
+                        <!--QR code-->
+                        <div class="col-md-3">
+                            <a href="#">
+                                <p class="clearfix">
+                                    <i class="fa fa-qrcode fa-2x text-primary pull-left"></i>
+                                </p>
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
-            </a>
-        </div>
-    </div>
-    <!--Add Edit your Student-->
-    <div class="col-sm-6 col-lg-3">
-        <div class="widget">
-            <a href="#">
-                <div>
-                    <span class="themed" style="background-color:#27ae60 !important"> <i class="fa fa-user"></i></span>
-                    <h3 class="widget-content">
-                        Add/Edit Your
-                        <strong>Students</strong><br />
-                        <small>Student Center</small>
-                    </h3>
-                </div>
-            </a>
-        </div>
-    </div>
-    <!--Record Grades-->
-    <div class="col-sm-6 col-lg-3">
-        <div class="widget">
-            <a href="#">
-                <div>
-                    <span class="themed" style="background-color:#af64aa !important"> <i class="fa fa-check-square-o"></i></span>
-                    <h3 class="widget-content">
-                        Record
-                        <strong>Grades</strong><br />
-                        <small>MyAT Gradebook</small>
-                    </h3>
-                </div>
-            </a>
+            </div>
         </div>
     </div>
 </div>
+
+<!--Dialog manage session-->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><strong>Configuration for Session</strong></h4>
+            </div>
+            <div class="modal-body">
+                <!--Total week-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="clearfix">
+                            <i class="fa fa-calendar fa-2x text-primary pull-left"></i> Total week
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control ui-wizard-content" placeholder="Total week...">
+                    </div>
+                </div>
+                
+                <hr />
+                <!--Choose session for a week-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="clearfix">
+                            <i class=" fa fa-calendar-check-o fa-2x text-primary pull-left"></i> Choose session for a week
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="weekDays-selector">
+                            <input type="checkbox" id="weekday-mon" class="weekday" />
+                            <label for="weekday-mon">T2</label>
+                            <input type="checkbox" id="weekday-tue" class="weekday" />
+                            <label for="weekday-tue">T3</label>
+                            <input type="checkbox" id="weekday-wed" class="weekday" />
+                            <label for="weekday-wed">T4</label>
+                            <input type="checkbox" id="weekday-thu" class="weekday" />
+                            <label for="weekday-thu">T5</label>
+                            <input type="checkbox" id="weekday-fri" class="weekday" />
+                            <label for="weekday-fri">T6</label>
+                            <input type="checkbox" id="weekday-sat" class="weekday" />
+                            <label for="weekday-sat">T7</label>
+                            
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <!--Submit-->
+                
+                <div class="row">
+                    <div class="col-md-7 col-md-offset-5">
+                        <button type="button" class="btn btn-sm btn-primary ui-wizard-content"> Clean</button>
+                        <button type="button" class="btn btn-sm btn-primary ui-wizard-content"> Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 

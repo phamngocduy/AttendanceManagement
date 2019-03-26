@@ -1,0 +1,40 @@
+﻿@{
+	ViewBag.Title = "Help";
+}
+
+<div class="jumbotron">
+	<h1>Văn Lang Authentication</h1>
+	<p> Link Source:<a href="https://github.com/DuyKhau/UseVanLangAuthentication.git"> https://github.com/DuyKhau/UseVanLangAuthentication.git  </a></p>
+	<p> Link Nuget:<a href="https://www.nuget.org/packages/Vanlanguni.Authentication.VanlangAccount/"> https://www.nuget.org/packages/Vanlanguni.Authentication.VanlangAccount/ </a></p>
+
+	<p><a href="https://www.mutuallyhuman.com/blog/2013/05/09/choosing-an-sso-strategy-saml-vs-oauth2/" class="btn btn-primary btn-lg">Learn more about Single Sign On &raquo;</a></p>
+</div>
+<div class="row">
+	<h1 style="text-align:center;font-size:100px"> ASP.NET</h1>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<h2>Step 1</h2>
+		<p>
+			Manage NuGet Packages >> Browse >> Search >> Vanlanguni.Authentication.VanlangAccount >> Install
+		</p>
+		<img src="~/img/1.png" alt="Step 1" style="width:80%;height:80%;">
+		@*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<h2>Step 2</h2>
+		<p>Go to App_Start >> Startup.Auth >> Add code: app.UseVanLangAuthentication("https://cntttest.vanlanguni.edu.vn:18081/Cap21T4/LoginManagement/"); </p>
+		<img src="~/img/2.png" alt="Step 1" style="width:80%;height:80%;">
+		@*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>*@
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<h2>Step 3</h2>
+		<p>Build >> Run</p>
+		<img src="~/img/3.png" alt="Step 1" style="width:80%;height:80%;">
+		@*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>*@
+	</div>
+</div>
