@@ -11,7 +11,8 @@ namespace WebApplication.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Group
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,7 +24,9 @@ namespace WebApplication.Models
         }
     
         public int ID { get; set; }
+        [Required(ErrorMessage = "Group name cannot be empty")]
         public string GroupName { get; set; }
+        [Required(ErrorMessage = "Group description cannot be empty")]
         public string GroupDescription { get; set; }
         public Nullable<bool> GroupType { get; set; }
         public Nullable<int> GroupParent { get; set; }

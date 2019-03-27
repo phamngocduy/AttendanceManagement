@@ -51,10 +51,13 @@ namespace WebApplication.Controllers
 				nGroup.CreatedBy = User.Identity.Name;
 				db.Groups.Add(nGroup);
 				db.SaveChanges();
-				return RedirectToAction("Index");
-			}
-			return View(group);
-		}
+                TempData["SuccessMessage"] = "Created a new group successfully!";
+                return RedirectToAction("Index");
+            }
+            TempData["ErrorMessage"] = "Group name or Group description cannot be empty!";
+            return RedirectToAction("Create");
+
+        }
 		[Authorize]
 		// GET: Groups/Create
 		[HttpGet]
@@ -357,8 +360,11 @@ namespace WebApplication.Controllers
 				group.ModifiedBy = User.Identity.Name;
 				group.ModifiedDate = DateTime.Now.Date;
 				db.SaveChanges();
-			}
-			return RedirectToAction("Index");
-		}
+                TempData["SuccessMessage"] = "Edited a group successfully!";
+                return RedirectToAction("Index");
+            }
+            TempData["ErrorMessage"] = "Group name or Group description cannot be empty!";
+            return RedirectToAction("Edit");
+        }
 	}
 }
