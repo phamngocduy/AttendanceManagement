@@ -586,6 +586,7 @@
     <Content Include="Views\Attendance\manageClass.cshtml" />
     <Content Include="Views\Attendance\ManageStudent.cshtml" />
     <Content Include="Views\Attendance\CreateClassView.cshtml" />
+    <Content Include="Views\Attendance\EditClassView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

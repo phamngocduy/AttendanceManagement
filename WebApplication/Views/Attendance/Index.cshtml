@@ -41,13 +41,13 @@
             {
                 <div class="col-sm-4 col-md-3 col-xs-6">
                     <div class="thumbnail">
-                        <div class="caption">
-                            <h3><strong><a href="~/Attendance/manageClass/@item.ID">@item.ClassName</a></strong></h3>
-                            <small>Start day: @item.StartDate</small>
-                            <p>Description: @item.Description</p>
-                            <br />
-                            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#editClass">Edit Class</a></p>
-                        </div>
+						<div class="caption">
+							<h3><strong><a href="~/Attendance/manageClass/@item.ID">@item.ClassName</a></strong></h3>
+							<small>Start day: @item.StartDate</small>
+							<p>Description: @item.Description</p>
+							<br />
+							<i type="button" class="btn btn-primary" onclick="Edit(@item.ID)">Edit Class</i>
+						</div>
                     </div>
                 </div>
             }
@@ -79,7 +79,7 @@
 </div>
 
 <!--Dialog create new class-->
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="myCreateClass" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -98,78 +98,21 @@
 </div>
 
 <!--Dialog edit class-->
-<div class="modal fade" id="editClass" role="dialog">
+<div class="modal fade" id="myEditClass" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit <strong>Class</strong></h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="clearfix">
-                            <i class="fa fa-book fa-2x text-primary pull-left"></i> Class name
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" name="ClassName" class="form-control ui-wizard-content" placeholder="Your class">
-                    </div>
-                </div>
-                <hr />
-                <!--Calendar-->
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="clearfix">
-                            <i class=" fa fa-calendar fa-2x text-primary pull-left"></i> Start date
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group date" data-date-format="dd.mm.yyyy">
-                            <input type="text" class="form-control" placeholder="dd.mm.yyyy">
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
-                            </div>
-                        </div>
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Edit <strong>Class</strong></h4>
+			</div>
+			<div class="modal-body" id="ModalEditClass">
 
-                    </div>
-                </div>
-
-                <hr />
-                <!--Description-->
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="clearfix">
-                            <i class=" fa fa-pencil-square-o fa-2x text-primary pull-left"></i> Description
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <textarea class="form-control" rows="3" name="Description" placeholder="Description...."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-
-                <hr />
-                <!--Submit-->
-
-                <div class="row">
-                    <div class="col-md-7 col-md-offset-5">
-                        <button type="button" class="btn btn-sm btn-primary ui-wizard-content" onclick="Clean"> Clean</button>
-
-                        <input type="submit" class="btn btn-sm btn-primary ui-wizard-content" value="Edit" />
-                    </div>
-                </div>
-            </div>
-        </div>
+			</div>
+		</div>
         <div class="modal-footer">
-
         </div>
     </div>
-
 </div>
 
 <!--Create class-->
@@ -177,11 +120,18 @@
     function Create() {
         var url = "/Attendance/CreateClassView";
         $("#ModalCreateClass").load(url, function () {
-            $("#myModal").modal("show");
+			$("#myCreateClass").modal("show");
         })
     }
 </script>
-
+<script>
+	function Edit(id) {
+		var url = "/Attendance/Edit?id=" + id;
+		$("#ModalEditClass").load(url, function () {
+			$("#myEditClass").modal("show");
+		})
+	}
+</script>
 <script>
     function Clean() {
 
@@ -206,13 +156,7 @@
         });
     });
 </script>
-<!--datepicker-->
-<script>
-    $('.input-group.date').datepicker({
-        format: "dd.mm.yyyy",
-        autoclose: true    }); 
 
-</script>
 
 
 

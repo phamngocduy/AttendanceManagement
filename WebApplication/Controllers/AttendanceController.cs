@@ -41,6 +41,13 @@ namespace WebApplication.Controllers
 
 		}
 
+		public ActionResult Edit(string id)
+		{
+			var ClassID = int.Parse(id);
+			var editClass = db.Classes.FirstOrDefault(x => x.ID == ClassID);
+			return PartialView("EditClassView",editClass);
+		}
+
         public ActionResult manageClass()
         {
             return View();

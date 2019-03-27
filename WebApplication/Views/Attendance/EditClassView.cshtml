@@ -12,7 +12,7 @@
 				</p>
 			</div>
 			<div class="col-md-6">
-				<input type="text" name="ClassName" class="form-control ui-wizard-content" placeholder="Your class">
+				<input type="text" name="ClassName" class="form-control ui-wizard-content" value="@Model.ClassName">
 			</div>
 		</div>
 		<hr />
@@ -25,7 +25,7 @@
 			</div>
 			<div class="col-md-6">
 				<div class="input-group date" data-date-format="dd.mm.yyyy">
-					<input type="text" name="StartDate" class="form-control" placeholder="dd.mm.yyyy">
+					<input type="text" name="StartDate" class="form-control" value="@(Model.StartDate.HasValue ? Model.StartDate.Value.ToShortDateString() : string.Empty)">
 					<div class="input-group-addon">
 						<span class="glyphicon glyphicon-th"></span>
 					</div>
@@ -43,7 +43,7 @@
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
-					<textarea class="form-control" rows="3" name="Description" placeholder="Description...."></textarea>
+					<textarea class="form-control" rows="3" name="Description" value="@Model.Description"></textarea>
 				</div>
 			</div>
 		</div>
@@ -51,19 +51,12 @@
 
 		<hr />
 		<!--Submit-->
-		<div>
-			<p class="clearfix">
-				<i class="fa fa-check fa-3x text-primary pull-left"></i>
-				"Click Submit to create your <strong>class</strong><br />
-				Then you'll be ready to immediately take attendance!<br />
-				Or continue managing your <strong>class</strong>
-			</p>
-		</div>
+
 		<div class="row">
 			<div class="col-md-7 col-md-offset-5">
-				<button type="button" class="btn btn-sm btn-primary ui-wizard-content" onclick="Clean"> Clean</button>
+				<button type="button" class="btn btn-sm btn-primary ui-wizard-content"> Cancal</button>
 
-				<input type="submit" class="btn btn-sm btn-primary ui-wizard-content" value="Create" />
+				<input type="submit" class="btn btn-sm btn-primary ui-wizard-content" value="Edit" />
 			</div>
 		</div>
 	</form>
