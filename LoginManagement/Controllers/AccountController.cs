@@ -66,7 +66,9 @@ namespace IdentificationManagement.Controllers
 				
 				nUser.PhoneNumber = user.PhoneNumber;
 				db.SaveChanges();
-			}
+                TempData["SuccessMessage"] = "Update user profile successfully ! ";
+                return RedirectToAction("Index");
+            }
 			return RedirectToAction("Index");
 			
 		}
