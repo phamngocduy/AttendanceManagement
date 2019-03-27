@@ -8,21 +8,21 @@ using System.Web.Mvc;
 namespace WebApplication.Controllers
 {
 	[Authorize]
-    public class AttendanceController : Controller
-    {
-        cap21t4Entities db = new cap21t4Entities();
-        // GET: Attendance
-        public ActionResult Index()
-        {
+	public class AttendanceController : Controller
+	{
+		cap21t4Entities db = new cap21t4Entities();
+		// GET: Attendance
+		public ActionResult Index()
+		{
 			var classlist = db.Classes.ToList();
-            return View(classlist);
-        }
+			return View(classlist);
+		}
 
 		public ActionResult CreateClassView()
 		{
 			return PartialView("CreateClassView");
 		}
-		
+
 		[HttpPost]
 		public ActionResult CreateClass(Class Class)
 		{
@@ -45,22 +45,38 @@ namespace WebApplication.Controllers
 		{
 			var ClassID = int.Parse(id);
 			var editClass = db.Classes.FirstOrDefault(x => x.ID == ClassID);
-			return PartialView("EditClassView",editClass);
+			return PartialView("EditClassView", editClass);
 		}
 
-        public ActionResult manageClass()
-        {
-            return View();
-        }
-        public ActionResult ManageStudent()
-        {
-            var user = db.Users.ToList();
-            ViewBag.User = user;
-            return View();
-        }
-        public ActionResult manageSession()
-        {
-            return View();
-        }
-    }
+		[HttpPost]
+		public ActionResult Edit(Class editClass)
+		{
+			var eClass = db.Classes.FirstOrDefault(x => x.ID == editClass.ID);
+
+			if (ModelState.IsValid)
+			{
+				eClass.StartDate = editClass.StartDate;
+				eClass.Description = editClass.Description;
+				eClass.ModifiedBy = User.Identity.Name;
+				eClass.ModifiedDate = DateTime.Now.Date;
+				db.SaveChanges();
+			}
+			return RedirectToAction("Index");
+
+		}
+		public ActionResult manageClass()
+		{
+			return View();
+		}
+		public ActionResult ManageStudent()
+		{
+			var user = db.Users.ToList();
+			ViewBag.User = user;
+			return View();
+		}
+		public ActionResult manageSession()
+		{
+			return View();
+		}
+	}
 }
