@@ -291,7 +291,7 @@ namespace IdentificationManagement.Controllers
 			ViewBag.ReturnUrl = state;
 			string provider = "Microsoft";
 			string returnUrl = state;
-			//return View("Login");
+			ControllerContext.HttpContext.Session.RemoveAll();
 			return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
 		}
 
