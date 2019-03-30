@@ -71,11 +71,14 @@
 	<!--================Home Banner Area =================-->
 	<section class="home_banner_area">
 		<div class="container box_1620">
+            <div>
+                <span class="label label-success" style="font-size: 40px;color:forestgreen">@TempData["SuccessMessage"]</span>
+            </div>
 			<div class="banner_inner d-flex align-items-center">
 				<div class="banner_content">
 					<div class="media">
 						@if (Model.AvatarLink != null)
-						{
+                        {
 							<div class="d-flex">
 								<div class="container">
 									<div class="btnhover">

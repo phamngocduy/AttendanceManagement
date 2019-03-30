@@ -135,7 +135,7 @@
 												<div class="form-group">
 													<div class="col-md-9 col-sm-9 col-xs-12">
 														<span class="fa fa-phone form-control-feedback right" aria-hidden="true"> PhoneNumber</span>
-														<input type="text" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber">
+														<input type="text" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Enter your phone" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" > 
 													</div>
 												</div>
 
@@ -149,7 +149,7 @@
 												<div class="form-group">
 													<div class="col-md-9 col-sm-9 col-xs-12">
 														<span class="fa fa-birthday-cake form-control-feedback left" aria-hidden="true"> Date Of Birth</span>
-														<input type="text" class="form-control" name="DoB" value="@(Model.DoB.HasValue ? Model.DoB.Value.ToShortDateString() : string.Empty)">
+														<input type="date" class="form-control" name="DoB" value="@(Model.DoB.HasValue ? Model.DoB.Value.ToShortDateString() : string.Empty)"  placeholder="Enter your Date Of Birth" required >
 													</div>
 												</div>
 												<div class="ln_solid"></div>
