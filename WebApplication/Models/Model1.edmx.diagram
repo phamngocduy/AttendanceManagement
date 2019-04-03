@@ -27,6 +27,7 @@
         <AssociationConnector Association="cap21t4Model.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.GroupMember" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.GroupOwner" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="cap21t4Model.Faculty" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

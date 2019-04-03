@@ -66,11 +66,8 @@ namespace WebApplication.Controllers
 		}
 		public ActionResult manageClass()
 		{
-            //var user = db.Users.ToList();
-            //ViewBag.User = user;
-            return View();
-            
-        }
+			return View();
+		}
 		public ActionResult ManageStudent()
 		{
 			var user = db.Users.ToList();
@@ -82,12 +79,31 @@ namespace WebApplication.Controllers
 			return View();
 		}
 
+        public ActionResult CreateFaculty()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFaculty([Bind(Include = "Id,FacultyName,Description")] Faculty faculty)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Faculties.Add(faculty);
+                db.SaveChanges();
+                return RedirectToAction("ManageFaculty");
+            }
+
+            return View(faculty);
+        }
+
         public ActionResult ManageFaculty()
         {
             return View();
         }
 
-        public ActionResult AttendanceExcel()
+        public ActionResult DetailFaculty()
         {
             return View();
         }
