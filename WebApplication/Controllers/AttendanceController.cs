@@ -66,8 +66,11 @@ namespace WebApplication.Controllers
 		}
 		public ActionResult manageClass()
 		{
-			return View();
-		}
+            //var user = db.Users.ToList();
+            //ViewBag.User = user;
+            return View();
+            
+        }
 		public ActionResult ManageStudent()
 		{
 			var user = db.Users.ToList();
@@ -78,5 +81,15 @@ namespace WebApplication.Controllers
 		{
 			return View();
 		}
-	}
+
+        public ActionResult ManageFaculty()
+        {
+            return View();
+        }
+
+        public ActionResult AttendanceExcel()
+        {
+            return View();
+        }
+    }
 }

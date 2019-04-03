@@ -138,6 +138,10 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="WebApplication, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DownloadFiles\AttendanceManagement-master\WebApplication\bin\WebApplication.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -581,6 +585,8 @@
     <Content Include="Views\Attendance\ManageStudent.cshtml" />
     <Content Include="Views\Attendance\CreateClassView.cshtml" />
     <Content Include="Views\Attendance\EditClassView.cshtml" />
+    <Content Include="Views\Attendance\ManageFaculty.cshtml" />
+    <Content Include="Views\Attendance\AttendanceExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
