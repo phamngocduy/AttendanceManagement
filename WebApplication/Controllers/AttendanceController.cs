@@ -122,7 +122,11 @@ namespace WebApplication.Controllers
         }
         public ActionResult AttendanceExcel()
         {
-            https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/ThoiKhoaBieu/Template_TKB
+            return View();
+        }
+
+        public ActionResult Import(string id)
+        {
             return View();
         }
 

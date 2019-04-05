@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Import";
+﻿
+@{
+    ViewBag.Title = "Import Template";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -37,7 +38,7 @@
     }
 </style>
 
-<h2>ExcelFile Upload</h2>
+<h2>Excel File Upload</h2>
 <div ng-app="MyApp">
     <div ng-controller="ExcelCtrl" class="container">
         <div class="loading-icon" id="loading" ng-show="showLoader">
@@ -46,11 +47,11 @@
             <input type="file" class="form-control" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="angular.element(this).scope().UploadFiles(this.files)" />
             <input type="button" value="Preview" class="btn btn-primary" ng-disabled="!SelectedFileForUpload" ng-click="ParseExcel() " />
             <input type="button" value="Insert" style="margin-left: 15px;" class="btn btn-success" ng-show="IsVisible" ng-click="InsertData()" />
-            <input type="button" value="Back" style="margin-left: 15px;" class="btn btn-default" onclick="window.location='/Group/Detail/@Session["GroupID"]';" />
+            <input type="button" value="Back" style="margin-left: 15px;" class="btn btn-default" onclick="window.location='/ATtendance';" />
 
         </div>
         <br />
-        <span style="color:red">
+        <span style="color:black">
             {{Message}}
         </span>
         <table class="tableData" ng-show="IsVisible" style="margin-left: 0px;margin-top: 40px;">
@@ -75,4 +76,5 @@
 </div>
 @section scripts
 {
-    <script src="~/Scripts/AngularCtrl.js"></script>}
+    <script src="~/Scripts/AngularCtrl.js"></script>
+}
