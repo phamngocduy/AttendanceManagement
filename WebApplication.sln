@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 14 for Web
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{07253FA2-38B3-4CC7-9588-5BF3B6CB599E}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Owin.Security.VanLang", "Microsoft.Owin.Security.VanLang\Microsoft.Owin.Security.VanLang.csproj", "{5CACFEDD-6577-4E5F-A047-0E320A17A353}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManagement", "LoginManagement\LoginManagement.csproj", "{A9E8A398-ABC7-425D-9BBF-279F8312D4D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManagementTest", "LoginManagementTest\LoginManagementTest.csproj", "{CF3B039D-16EA-4778-95F1-8EE602E9BC74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{A9E8A398-ABC7-425D-9BBF-279F8312D4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9E8A398-ABC7-425D-9BBF-279F8312D4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9E8A398-ABC7-425D-9BBF-279F8312D4D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7474B20E-D79F-43BD-9B38-58C88A83629C}
 	EndGlobalSection
 EndGlobal

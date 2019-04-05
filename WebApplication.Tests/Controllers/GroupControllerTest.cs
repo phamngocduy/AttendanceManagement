@@ -57,7 +57,8 @@ namespace WebApplication.Tests.Controllers
 
             using (var scope = new TransactionScope())
             {
-
+                Assert.IsTrue(edit.GroupName.ToString().Equals("Nhóm 1.5"));
+                Assert.IsTrue(edit.GroupDescription.ToString().Equals("Mobile App"));
                 var result1 = controller.Edit(db.Groups.First().ID.ToString()) as ViewResult;
                 Assert.IsNotNull(result1);
 
@@ -80,7 +81,9 @@ namespace WebApplication.Tests.Controllers
             {
 
                 var result1 = controller.Edit(db.Groups.First().ID.ToString()) as ViewResult;
-                //Assert.IsNotNull(result1);
+                Assert.IsTrue(edit.GroupName.ToString().Equals(""));
+                Assert.IsTrue(edit.GroupDescription.ToString().Equals("Mobile App"));
+                Assert.IsNotNull(result1);
                 System.Diagnostics.Trace.WriteLine("Error data format, please try again");
             }
         }
@@ -99,7 +102,8 @@ namespace WebApplication.Tests.Controllers
 
             using (var scope = new TransactionScope())
             {
-
+                Assert.IsTrue(edit.GroupName.ToString().Equals("&^%$%$"));
+                Assert.IsTrue(edit.GroupDescription.ToString().Equals("Mobile App"));
                 var result1 = controller.Edit(db.Groups.First().ID.ToString()) as ViewResult;
                 Assert.IsNotNull(result1);
 
@@ -121,12 +125,11 @@ namespace WebApplication.Tests.Controllers
 
             using (var scope = new TransactionScope())
             {
-
+                Assert.IsTrue(edit.GroupName.ToString().Equals(" "));
+                Assert.IsTrue(edit.GroupDescription.ToString().Equals("Mobile App"));
                 var result1 = controller.Edit(db.Groups.First().ID.ToString()) as ViewResult;
                 Assert.IsNotNull(result1);
-
                 System.Diagnostics.Trace.WriteLine("Error data format, please try again");
-
             }
         }
         [TestMethod]
@@ -143,7 +146,8 @@ namespace WebApplication.Tests.Controllers
 
             using (var scope = new TransactionScope())
             {
-
+                Assert.IsTrue(edit.GroupName.ToString().Equals("Nhóm 1.5"));
+                Assert.IsTrue(edit.GroupDescription.ToString().Equals(""));
                 var result1 = controller.Edit(db.Groups.First().ID.ToString()) as ViewResult;
                 Assert.IsNotNull(result1);
 
@@ -165,7 +169,8 @@ namespace WebApplication.Tests.Controllers
 
             using (var scope = new TransactionScope())
             {
-
+                Assert.IsTrue(edit.GroupName.ToString().Equals("Nhóm 1.5"));
+                Assert.IsTrue(edit.GroupDescription.ToString().Equals("&^%$%$"));
                 var result1 = controller.Edit(db.Groups.First().ID.ToString()) as ViewResult;
                 Assert.IsNotNull(result1);
 
@@ -267,10 +272,10 @@ namespace WebApplication.Tests.Controllers
         }
 
         [TestMethod]
-        public void TestInsertExcelSucess()
+        public async Task TestInsertExcelSucess()
         {
             TestControllerBuilder builder = new TestControllerBuilder();
-            var controller = new GroupController();
+            GroupController controller = new GroupController();
             builder.InitializeController(controller);
             var db = new cap21t4Entities();
             var context = new Mock<HttpContextBase>();
@@ -278,6 +283,7 @@ namespace WebApplication.Tests.Controllers
             var files = new Mock<HttpFileCollectionBase>();
             var file = new Mock<HttpPostedFileBase>();
             var server = new Mock<HttpServerUtilityBase>();
+            var session = new Mock<HttpSessionStateBase>();
             controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
             context.Setup(c => c.Request).Returns(request.Object);
             request.Setup(r => r.Files).Returns(files.Object);
@@ -286,10 +292,9 @@ namespace WebApplication.Tests.Controllers
             file.Setup(f => f.ContentLength).Returns(1);
             file.Setup(f => f.ContentType).Returns("Excel");
             server.Setup(s => s.MapPath("~/Uploads/")).Returns("./Uploads/");
-            
-            //var result = controller.InsertExcelData() as JsonResult;
-            //Assert.IsInstanceOfType(result.Data, typeof(List<User>));
-            //Assert.AreEqual(0, ((List<User>)result.Data).Count);
+            context.Setup(ctx => ctx.Session).Returns(session.Object);
+            await controller.InsertExcelData();
+
         }
     }
 }

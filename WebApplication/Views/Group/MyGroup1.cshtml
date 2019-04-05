@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "MyGroup1";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<link href="~/Content/newVersion/jquery-nestable.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>
+            GROUP MANAGEMENT
+        </h2>
+    </div>
+    <div class="row clearfix">
+        <!-- Default Example -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        MY GROUP
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="javascript:void(0);">Action</a></li>
+                                <li><a href="javascript:void(0);">Another action</a></li>
+                                <li><a href="javascript:void(0);">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <div class="clearfix m-b-20">
+                        <div class="dd">
+                            <ol class="dd-list">
+                                <li class="dd-item" data-id="1">
+                                    <div class="dd-handle">Group Public</div>
+                                    <ol class="dd-list">
+                                        <li class="dd-item" data-id="3">
+                                            <div class="dd-handle">Khoa công nghệ thông tin</div>
+                                        </li>
+                                        <li class="dd-item" data-id="4">
+                                            <div class="dd-handle">Khoa quản trị kinh doanh</div>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="dd-item" data-id="2">
+                                    <div class="dd-handle">Group Private</div>
+                                    <ol class="dd-list">
+                                        <li class="dd-item" data-id="3">
+                                            <div class="dd-handle">IT</div>
+                                        </li>
+                                        <li class="dd-item" data-id="4">
+                                            <div class="dd-handle">Capston 7</div>
+                                        </li>
+                                        <li class="dd-item" data-id="5">
+                                            <div class="dd-handle">Sinh viên học lại</div>
+                                            <ol class="dd-list">
+                                                <li class="dd-item" data-id="6">
+                                                    <div class="dd-handle">Toán 1</div>
+                                                </li>
+                                                <li class="dd-item" data-id="7">
+                                                    <div class="dd-handle">Toán 2</div>
+                                                </li>
+                                                <li class="dd-item" data-id="8">
+                                                    <div class="dd-handle">Vậy lý 2</div>
+                                                </li>
+                                            </ol>
+                                        </li>
+                                        <li class="dd-item" data-id="9">
+                                            <div class="dd-handle">K21T1</div>
+                                        </li>
+                                        <li class="dd-item" data-id="10">
+                                            <div class="dd-handle">K21T2</div>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Default Example -->
+    </div>
+</div>
+
+
+<script src="~/Scripts/newVersion/jquery.nestable.js"></script>
+

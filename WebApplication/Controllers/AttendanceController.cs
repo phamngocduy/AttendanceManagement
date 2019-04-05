@@ -78,5 +78,34 @@ namespace WebApplication.Controllers
 		{
 			return View();
 		}
-	}
+
+        public ActionResult CreateFaculty()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFaculty([Bind(Include = "Id,FacultyName,Description")] Faculty faculty)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Faculties.Add(faculty);
+                db.SaveChanges();
+                return RedirectToAction("ManageFaculty");
+            }
+
+            return View(faculty);
+        }
+
+        public ActionResult ManageFaculty()
+        {
+            return View();
+        }
+
+        public ActionResult DetailFaculty()
+        {
+            return View();
+        }
+    }
 }
