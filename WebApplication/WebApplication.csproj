@@ -635,6 +635,7 @@
     <Content Include="Views\Group\MyGroup1.cshtml" />
     <Content Include="Views\Attendance\Index1.cshtml" />
     <Content Include="Views\Attendance\EditClass1.cshtml" />
+    <Content Include="Views\Attendance\AttendanceExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

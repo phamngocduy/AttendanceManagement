@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using WebApplication.Models;
 using System.Web.Mvc;
+using System.IO;
+using System.Data;
+using ExcelDataReader;
 
 namespace WebApplication.Controllers
 {
@@ -103,7 +106,7 @@ namespace WebApplication.Controllers
             return View(faculty);
         }
 
-        public ActionResult ManageFaculty()
+        public ActionResult ManageFaculty() 
         {
             return View();
         }
@@ -117,5 +120,80 @@ namespace WebApplication.Controllers
         {
             return View();
         }
+        public ActionResult AttendanceExcel()
+        {
+            https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/ThoiKhoaBieu/Template_TKB
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ReadExcel()
+        {
+            
+            if (ModelState.IsValid)
+            {
+
+                string filePath = string.Empty;
+                if (Request != null)
+                {
+                    HttpPostedFileBase file = Request.Files["file"];
+                    if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                    {
+
+                        string fileName = file.FileName;
+                        string fileContentType = file.ContentType;
+                        string path = Server.MapPath("~/Uploads/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        filePath = path + Path.GetFileName(file.FileName);
+                        string extension = Path.GetExtension(file.FileName);
+                        file.SaveAs(filePath);
+                        Stream stream = file.InputStream;
+                        // We return the interface, so that
+                        IExcelDataReader reader = null;
+                        if (file.FileName.EndsWith(".xls"))
+                        {
+                            reader = ExcelReaderFactory.CreateBinaryReader(stream);
+                        }
+                        else if (file.FileName.EndsWith(".xlsx"))
+                        {
+                            reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("File", "This file format is not supported");
+                            return RedirectToAction("Index");
+                        }
+                        var result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                        {
+                            ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                            {
+                                UseHeaderRow = true
+                            }
+                        });
+                        //reader.IsFirstRowAsColumnNames = true;
+                        //DataSet result = reader.AsDataSet();
+                        reader.Close();
+                        //delete the file from physical path after reading 
+                        string filedetails = path + fileName;
+                        FileInfo fileinfo = new FileInfo(filedetails);
+                        if (fileinfo.Exists)
+                        {
+                            fileinfo.Delete();
+                        }
+                        DataTable dt = result.Tables[0];
+                        
+                        //TempData["Excelstudent"] = ;
+                    }
+                }
+
+            }
+            // var files = Request.Files;
+            return View();
+            //return new JsonResult { Data = , JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
     }
 }
