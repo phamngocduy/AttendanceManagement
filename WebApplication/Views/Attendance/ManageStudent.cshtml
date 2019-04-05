@@ -69,75 +69,61 @@
             <div class="row" style="padding:20px">
                 <div style="color: blue;border: 1px solid blue" class="flat-mb-green-open col-md-6 col-sm-12 col-xs-12"><i class="material-icons"></i>PRINT ROSTER</div>
                 <button type="button" class="flat-mb-green-open col-md-6 col-sm-12 col-xs-12" data-toggle="modal" data-target="#myModal"><i class="material-icons"></i>ENROLL STUDENT</button>
-
                 <!-- Modal Of Create -->
                 <div class="col-lg-12">
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
-
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title" style="color:black;font-weight:bold">Student Infomation</h4>
-
                                 </div>
+								<div class="col-lg-12">
+									<div class="modal-body" id="ModalAddStudent">
 
-                                <div class="col-lg-12">
-                                    <div class="modal-body">
-                                        <div class="container">
-                                            <div class="col-6">
-                                                <form role="form">
+									</div>
+									<div class="modal-body">
+										<div class="container">
+											<div class="col-6">
+												<form role="form">
+													<div class="form-group float-label-control">
+														<input type="text" id="Name" class="form-control">
+														<label id="label">Fullname</label>
+													</div>
+													<div style="float:left" class="form-group float-label-control">
+														<input type="text" id="Name" class="form-control">
+														<label id="label">StudentID</label>
+													</div>
+													<div style="color:#7a7a52;border: 1px solid #ccccb3" class="flat-mb-green-open"><i class="material-icons"></i><span class="glyphicon glyphicon-trash"></span>  DELETE STUDENT</div>
 
-
-                                                    <div class="form-group float-label-control">
-
-                                                        <input type="text" id="Name" class="form-control">
-                                                        <label id="label">Fullname</label>
-
-                                                    </div>
-                                                    <div style="float:left" class="form-group float-label-control">
-
-                                                        <input type="text" id="Name" class="form-control">
-                                                        <label id="label">StudentID</label>
-                                                    </div>
-
-                                                    <div style="color:#7a7a52;border: 1px solid #ccccb3" class="flat-mb-green-open"><i class="material-icons"></i><span class="glyphicon glyphicon-trash"></span>  DELETE STUDENT</div>
-
-                                                    <div style="padding-top:80px">
-                                                        <h5>CLASSES ENROLLED IN</h5>
-                                                    </div>
-                                                    <hr />
-                                                    <div id="label" style="float:left">
-                                                        <span style="color:red" class="glyphicon glyphicon-education"></span> Capstone
-                                                    </div>
-                                                    <div style="padding-left:50% ">
-                                                        <div style="height:32px;color:#7a7a52;border: 1px solid #ccccb3" class="flat-mb-green-open"><i class="material-icons"></i>UNENROLL</div>
-                                                    </div>
-                                                    <div style="padding-left:15%">
-                                                        <button type="button" class="flat-mb-green-open" data-toggle="modal" data-target="#myModal"><i class="material-icons"></i>ENROLL IN A CLASS</button>
-                                                    </div>
-
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+													<div style="padding-top:80px">
+														<h5>CLASSES ENROLLED IN</h5>
+													</div>
+													<hr />
+													<div id="label" style="float:left">
+														<span style="color:red" class="glyphicon glyphicon-education"></span> Capstone
+													</div>
+													<div style="padding-left:50% ">
+														<div style="height:32px;color:#7a7a52;border: 1px solid #ccccb3" class="flat-mb-green-open"><i class="material-icons"></i>UNENROLL</div>
+													</div>
+													<div style="padding-left:15%">
+														<button type="button" class="flat-mb-green-open" data-toggle="modal" data-target="#myModal"><i class="material-icons"></i>ENROLL IN A CLASS</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
                                 <div class="modal-footer">
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-
 
     <div class="text-center">
         <div class="table-responsive" style="padding: 20px">
