@@ -633,6 +633,8 @@
     <Content Include="Views\Attendance\ManageFaculty.cshtml" />
     <Content Include="Views\Group\CreateGroup1.cshtml" />
     <Content Include="Views\Group\MyGroup1.cshtml" />
+    <Content Include="Views\Attendance\Index1.cshtml" />
+    <Content Include="Views\Attendance\EditClass1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

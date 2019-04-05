@@ -18,6 +18,11 @@ namespace WebApplication.Controllers
 			return View(classlist);
 		}
 
+        public ActionResult Index1()
+        {
+            return View();
+        }
+
 		public ActionResult CreateClassView()
 		{
 			return PartialView("CreateClassView");
@@ -104,6 +109,11 @@ namespace WebApplication.Controllers
         }
 
         public ActionResult DetailFaculty()
+        {
+            return View();
+        }
+
+        public ActionResult EditClass1()
         {
             return View();
         }
