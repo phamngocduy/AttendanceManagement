@@ -300,6 +300,7 @@
     <Content Include="Content\newVersion\bootstrap-spinner.css" />
     <Content Include="Content\newVersion\bootstrap-tagsinput.css" />
     <Content Include="Content\newVersion\bootstrap.css" />
+    <Content Include="Content\newVersion\dataTables.bootstrap.css" />
     <Content Include="Content\newVersion\dropzone.css" />
     <Content Include="Content\newVersion\favicon.ico" />
     <Content Include="Content\newVersion\img\user-img-background.jpg" />
@@ -553,11 +554,17 @@
     <Content Include="Scripts\newVersion\bootstrap-notify.js" />
     <Content Include="Scripts\newVersion\bootstrap-select.js" />
     <Content Include="Scripts\newVersion\bootstrap.js" />
+    <Content Include="Scripts\newVersion\buttons.flash.min.js" />
+    <Content Include="Scripts\newVersion\buttons.html5.min.js" />
+    <Content Include="Scripts\newVersion\buttons.print.min.js" />
     <Content Include="Scripts\newVersion\Chart.bundle.js" />
+    <Content Include="Scripts\newVersion\dataTables.bootstrap.js" />
+    <Content Include="Scripts\newVersion\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\newVersion\demo.js" />
     <Content Include="Scripts\newVersion\dialogs.js" />
     <Content Include="Scripts\newVersion\index.js" />
     <Content Include="Scripts\newVersion\jquery.countTo.js" />
+    <Content Include="Scripts\newVersion\jquery.dataTables.js" />
     <Content Include="Scripts\newVersion\jquery.flot.categories.js" />
     <Content Include="Scripts\newVersion\jquery.flot.js" />
     <Content Include="Scripts\newVersion\jquery.flot.pie.js" />
@@ -567,10 +574,14 @@
     <Content Include="Scripts\newVersion\jquery.nestable.js" />
     <Content Include="Scripts\newVersion\jquery.slimscroll.js" />
     <Content Include="Scripts\newVersion\jquery.sparkline.js" />
+    <Content Include="Scripts\newVersion\jszip.min.js" />
     <Content Include="Scripts\newVersion\mindmup-editabletable.js" />
     <Content Include="Scripts\newVersion\morris.js" />
+    <Content Include="Scripts\newVersion\pdfmake.min.js" />
     <Content Include="Scripts\newVersion\raphael.min.js" />
     <Content Include="Scripts\newVersion\sweetalert.min.js" />
+    <Content Include="Scripts\newVersion\vfs_fonts.js" />
+    <Content Include="Scripts\newVersion\waitMe.js" />
     <Content Include="Scripts\newVersion\waves.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -635,6 +646,8 @@
     <Content Include="Views\Group\MyGroup1.cshtml" />
     <Content Include="Views\Attendance\Index1.cshtml" />
     <Content Include="Views\Attendance\EditClass1.cshtml" />
+    <Content Include="Views\Attendance\CreateClass1.cshtml" />
+    <Content Include="Views\Attendance\DetailClass1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

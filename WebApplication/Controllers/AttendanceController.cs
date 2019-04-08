@@ -117,5 +117,14 @@ namespace WebApplication.Controllers
         {
             return View();
         }
+
+        public ActionResult CreateClass1()
+        {
+            return View();
+        }
+        public ActionResult DetailClass1()
+        {
+            return View();
+        }
     }
 }
