@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApplication.Models
 {
-	public class MajorModel
+	public class MajorsModel
 	{
 		public string code { get; set; }
 		public string name { get; set; }

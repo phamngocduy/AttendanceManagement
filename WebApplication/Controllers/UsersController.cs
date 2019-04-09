@@ -7,7 +7,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
-	public class UserController : Controller
+	public class UsersController : Controller
 	{
 		cap21t4Entities db = new cap21t4Entities();
 		// GET: User
@@ -21,7 +21,7 @@ namespace WebApplication.Controllers
 		{
 			var memberlist = db.Users.Where(x => x.AspNetUser.AspNetRoles.Count() > 0);
 			List<User> users = memberlist.ToList();
-			List<UserRoleView> userRole = new List<UserRoleView>();
+			List<UsersRoleView> userRole = new List<UsersRoleView>();
 			//1 nguoi 1 role
 			//foreach (var item in users)
 			//{
@@ -48,7 +48,7 @@ namespace WebApplication.Controllers
 				{
 					foreach (var role in uRole)
 					{
-						UserRoleView u = new UserRoleView();
+						UsersRoleView u = new UsersRoleView();
 						u.Email = item.Email;
 						u.FullName = item.FullName;
 						u.Avatar = item.AvatarBase64;
@@ -60,7 +60,7 @@ namespace WebApplication.Controllers
 				}
 				else
 				{
-					UserRoleView u = new UserRoleView();
+					UsersRoleView u = new UsersRoleView();
 					u.Email = item.Email;
 					u.FullName = item.FullName;
 					u.Avatar = item.AvatarBase64;

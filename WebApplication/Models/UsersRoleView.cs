@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApplication.Models
 {
-	public class UserRoleView
+	public class UsersRoleView
 	{
 		public string FullName { get; set; }
 		public string Email { get; set; }
