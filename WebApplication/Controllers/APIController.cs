@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using WebApplication.Models;
 using System.Text;
+using System.IO;
 
 namespace WebApplication.Controllers
 {
@@ -89,6 +90,19 @@ namespace WebApplication.Controllers
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
         }
+		public string ReadData(string url)
+		{
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-    }
+			Stream receiveStream = response.GetResponseStream();
+			StreamReader readStream = null;
+			readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+			string data = readStream.ReadToEnd().ToString();
+			response.Close();
+			readStream.Close();
+			return data;
+		}
+
+	}
 }

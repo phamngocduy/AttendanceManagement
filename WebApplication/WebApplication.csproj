@@ -222,7 +222,7 @@
     <Compile Include="Models\Class.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClassMember.cs">
+    <Compile Include="Models\Course.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
@@ -235,6 +235,10 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Major.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MajorModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Member.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -312,6 +316,8 @@
     <Content Include="Content\newVersion\style.css" />
     <Content Include="Content\newVersion\sweetalert.css" />
     <Content Include="Content\newVersion\waves.css" />
+    <Content Include="Content\select2\select2.min.css" />
+    <Content Include="Content\select2\select2.min.js" />
     <Content Include="Content\Tree.css" />
     <Content Include="Content\vendors\bootstrap-daterangepicker\daterangepicker.css" />
     <Content Include="Content\vendors\bootstrap-daterangepicker\daterangepicker.js" />
@@ -438,6 +444,10 @@
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Content\bootstrap-datepicker3.css.map" />
+    <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
+    <Content Include="Content\bootstrap-datepicker.css.map" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -445,10 +455,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
-    <Content Include="Content\bootstrap-datepicker3.css.map" />
-    <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
-    <Content Include="Content\bootstrap-datepicker.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -633,6 +639,8 @@
     <Content Include="Views\Attendance\ManageFaculty.cshtml" />
     <Content Include="Views\Group\CreateGroup1.cshtml" />
     <Content Include="Views\Group\MyGroup1.cshtml" />
+    <Content Include="Views\Group\AddGroupOwner.cshtml" />
+    <Content Include="Views\Attendance\MajorList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

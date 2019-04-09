@@ -18,6 +18,7 @@ namespace WebApplication.Models
         public Group()
         {
             this.Group1 = new HashSet<Group>();
+            this.Group11 = new HashSet<Group>();
             this.Users = new HashSet<User>();
             this.Users1 = new HashSet<User>();
         }
@@ -26,6 +27,7 @@ namespace WebApplication.Models
         public string GroupName { get; set; }
         public string GroupDescription { get; set; }
         public Nullable<bool> GroupType { get; set; }
+        public Nullable<int> GroupManager { get; set; }
         public Nullable<int> GroupParent { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -37,6 +39,9 @@ namespace WebApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Group> Group1 { get; set; }
         public virtual Group Group2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Group> Group11 { get; set; }
+        public virtual Group Group3 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -86,31 +86,34 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateGroup(Group group)
         {
-            if (ModelState.IsValid)
-            {
-                Group nGroup = new Group();
-                nGroup.GroupName = group.GroupName;
-                nGroup.GroupDescription = group.GroupDescription;
-                nGroup.GroupType = group.GroupType;
-                nGroup.GroupParent = group.GroupParent;
-                nGroup.CreatedDate = DateTime.Now.Date;
-                nGroup.CreatedBy = User.Identity.Name;
-                db.Groups.Add(nGroup);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(group);
-        }
+			if (ModelState.IsValid)
+			{
+				Group nGroup = new Group();
+				nGroup.GroupName = group.GroupName;
+				nGroup.GroupDescription = group.GroupDescription;
+				nGroup.GroupType = group.GroupType;
+				nGroup.GroupParent = group.GroupParent;
+				nGroup.CreatedDate = DateTime.Now.Date;
+				nGroup.CreatedBy = User.Identity.Name;
+				db.Groups.Add(nGroup);
+				//add owner
+				var owner = db.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+				nGroup.Users1.Add(owner);
+
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View(group);
+		}
         public ActionResult Detail(string id)
         {
-            int groupID = int.Parse(id);
-            Session["GroupID"] = id;
-            var memberlist = (from us in db.Users
-                              from gr in us.Groups.Where(x => x.ID == groupID)
-                              select us);
-            List<User> users = memberlist.ToList();
-            return View(memberlist);
-        }
+			int groupID = int.Parse(id);
+			Session["GroupID"] = id;
+			var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
+			var memberlist = group.Users.ToList();
+			ViewBag.Owner = group.Users1.ToList();
+			return View(memberlist);
+		}
 
         public async System.Threading.Tasks.Task InsertUserAsync(string sEmail)
         {
@@ -202,56 +205,63 @@ namespace WebApplication.Controllers
             return new JsonResult { Data = lstStudent, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public async System.Threading.Tasks.Task<ActionResult> InsertExcelData()
-        {
-            int groupID = int.Parse(Session["GroupID"].ToString());
-            int length = 0;
-            try
-            {
-                if (TempData["Excelstudent"] != null)
-                {
-                    List<User> lstStudent = (List<User>)TempData["Excelstudent"];
-                    using (cap21t4Entities db = new cap21t4Entities())
-                    {
-                        foreach (var s in lstStudent)
-                        {
-                            var userid = db.AspNetUsers.FirstOrDefault(x => x.Email == s.Email);
-                            if (userid == null)
-                            {
-                                await InsertUserAsync(s.Email);
-                            }
-                            var uID = db.AspNetUsers.FirstOrDefault(x => x.Email == s.Email).Id;
+		public async System.Threading.Tasks.Task<ActionResult> InsertExcelData()
+		{
+			int groupID = int.Parse(Session["GroupID"].ToString());
+			int length = 0;
+			try
+			{
+				if (TempData["Excelstudent"] != null)
+				{
+					List<User> lstStudent = (List<User>)TempData["Excelstudent"];
+					using (cap21t4Entities db = new cap21t4Entities())
+					{
+						foreach (var s in lstStudent)
+						{
+							var aspUser = db.AspNetUsers.FirstOrDefault(x => x.Email == s.Email);
+							if (aspUser == null)
+							{
+								await InsertUserAsync(s.Email);
+							}
+							var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
+							var user = db.Users.FirstOrDefault(x => x.StID == s.StID);
+							if (user == null)
+							{
+								s.UserID = aspUser.Id;
+								db.Users.Add(s);
+								db.SaveChanges();
+								group.Users.Add(s);
+								AddParentGroup(group, s);
+								db.SaveChanges();
+								length++;
+							}
+							else
+							{
+								if ((group.Users.FirstOrDefault(x => x.StID == s.StID)) == null)
+								{
+									group.Users.Add(user);
+									AddParentGroup(group, user);
+									db.SaveChanges();
+									length++;
+								}
+							}
+						}
+						db.SaveChanges();
 
-                            if (db.Users.FirstOrDefault(x => x.StID == s.StID) == null)
-                            {
-                                s.UserID = uID;
-                                db.Users.Add(s);
-                                db.SaveChanges();
-                            }
-                            Group group = db.Groups.FirstOrDefault(x => x.ID == groupID);
-                            if (group.Users.Where(x => x.StID == s.StID) == null)
-                            {
-                                group.Users.Add(s);
-                                AddParentGroup(group, s);
-                                db.SaveChanges();
-                                length++;
-                            }
+					}
+					//return RedirectToAction("Detail", new { id = groupID });
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ToString();
+			}
+			return new JsonResult { Data = length, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+		}
+		//Users : Sinh vien
+		//User1 : groupowner
 
-                        }
-                        db.SaveChanges();
-
-                    }
-                    //return RedirectToAction("Detail", new { id = groupID });
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.ToString();
-            }
-            return new JsonResult { Data = length, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        public void AddParentGroup(Group g, User u)
+		public void AddParentGroup(Group g, User u)
         {
             if (g.Group2 != null && g.Group2.ID != 2)
             {
@@ -375,5 +385,22 @@ namespace WebApplication.Controllers
         {
             return View();
         }
-    }
+
+		[HttpGet]
+		public ActionResult AddGroupOwner()
+		{
+			var user = db.Users.ToList();
+			return View(user);
+		}
+		[HttpPost]
+		public ActionResult AddGroupOwner(string email)
+		{
+			var user = db.Users.FirstOrDefault(x=>x.Email==email);
+			int groupID = int.Parse(Session["GroupID"].ToString());
+			var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
+			group.Users1.Add(user);
+			db.SaveChanges();
+			return RedirectToAction("Detail", new { id = groupID });
+		}
+	}
 }
