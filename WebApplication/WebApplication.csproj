@@ -184,9 +184,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\FilterConfig2.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\RouteConfig2.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -195,6 +198,7 @@
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Extension\HtmlHelperExtensions.cs" />
     <Compile Include="Extension\HtmlRequestHelper.cs" />
     <Compile Include="Extension\LocalizedControllerActivator.cs" />
@@ -648,6 +652,9 @@
     <Content Include="Views\Attendance\EditClass1.cshtml" />
     <Content Include="Views\Attendance\CreateClass1.cshtml" />
     <Content Include="Views\Attendance\DetailClass1.cshtml" />
+    <Content Include="Views\Users\CreateNewRole.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\UserRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
