@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using WebApplication.Models;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 
 namespace WebApplication.Controllers
 {
@@ -18,6 +17,11 @@ namespace WebApplication.Controllers
 			var classlist = db.Classes.ToList();
 			return View(classlist);
 		}
+
+        public ActionResult Index1()
+        {
+            return View();
+        }
 
 		public ActionResult CreateClassView()
 		{
@@ -109,29 +113,18 @@ namespace WebApplication.Controllers
             return View();
         }
 
-		public ActionResult MajorList()
-		{
-			SynMajor();
-			var major = db.Majors.ToList();
-			return View(major);
-		}
-		public void SynMajor()
-		{
-			APIController api = new APIController();
-			string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getMajors");
+        public ActionResult EditClass1()
+        {
+            return View();
+        }
 
-			List<MajorModel> major = JsonConvert.DeserializeObject<List<MajorModel>>(data);
-			foreach (var item in major)
-			{
-				if (db.Majors.FirstOrDefault(x => x.Code == item.code) == null)
-				{
-					Major newMajor = new Major();
-					newMajor.Code = item.code;
-					newMajor.Name = item.name;
-					db.Majors.Add(newMajor);
-					db.SaveChanges();
-				}
-			}
-		}
+        public ActionResult CreateClass1()
+        {
+            return View();
+        }
+        public ActionResult DetailClass1()
+        {
+            return View();
+        }
     }
 }

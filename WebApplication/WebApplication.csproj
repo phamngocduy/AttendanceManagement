@@ -222,7 +222,7 @@
     <Compile Include="Models\Class.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Course.cs">
+    <Compile Include="Models\ClassMember.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
@@ -235,10 +235,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Major.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MajorModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Member.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -304,6 +300,7 @@
     <Content Include="Content\newVersion\bootstrap-spinner.css" />
     <Content Include="Content\newVersion\bootstrap-tagsinput.css" />
     <Content Include="Content\newVersion\bootstrap.css" />
+    <Content Include="Content\newVersion\dataTables.bootstrap.css" />
     <Content Include="Content\newVersion\dropzone.css" />
     <Content Include="Content\newVersion\favicon.ico" />
     <Content Include="Content\newVersion\img\user-img-background.jpg" />
@@ -316,8 +313,6 @@
     <Content Include="Content\newVersion\style.css" />
     <Content Include="Content\newVersion\sweetalert.css" />
     <Content Include="Content\newVersion\waves.css" />
-    <Content Include="Content\select2\select2.min.css" />
-    <Content Include="Content\select2\select2.min.js" />
     <Content Include="Content\Tree.css" />
     <Content Include="Content\vendors\bootstrap-daterangepicker\daterangepicker.css" />
     <Content Include="Content\vendors\bootstrap-daterangepicker\daterangepicker.js" />
@@ -444,10 +439,6 @@
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
-    <Content Include="Content\bootstrap-datepicker3.css.map" />
-    <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
-    <Content Include="Content\bootstrap-datepicker.css.map" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -455,6 +446,10 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Content\bootstrap-datepicker3.css.map" />
+    <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
+    <Content Include="Content\bootstrap-datepicker.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -559,11 +554,17 @@
     <Content Include="Scripts\newVersion\bootstrap-notify.js" />
     <Content Include="Scripts\newVersion\bootstrap-select.js" />
     <Content Include="Scripts\newVersion\bootstrap.js" />
+    <Content Include="Scripts\newVersion\buttons.flash.min.js" />
+    <Content Include="Scripts\newVersion\buttons.html5.min.js" />
+    <Content Include="Scripts\newVersion\buttons.print.min.js" />
     <Content Include="Scripts\newVersion\Chart.bundle.js" />
+    <Content Include="Scripts\newVersion\dataTables.bootstrap.js" />
+    <Content Include="Scripts\newVersion\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\newVersion\demo.js" />
     <Content Include="Scripts\newVersion\dialogs.js" />
     <Content Include="Scripts\newVersion\index.js" />
     <Content Include="Scripts\newVersion\jquery.countTo.js" />
+    <Content Include="Scripts\newVersion\jquery.dataTables.js" />
     <Content Include="Scripts\newVersion\jquery.flot.categories.js" />
     <Content Include="Scripts\newVersion\jquery.flot.js" />
     <Content Include="Scripts\newVersion\jquery.flot.pie.js" />
@@ -573,10 +574,14 @@
     <Content Include="Scripts\newVersion\jquery.nestable.js" />
     <Content Include="Scripts\newVersion\jquery.slimscroll.js" />
     <Content Include="Scripts\newVersion\jquery.sparkline.js" />
+    <Content Include="Scripts\newVersion\jszip.min.js" />
     <Content Include="Scripts\newVersion\mindmup-editabletable.js" />
     <Content Include="Scripts\newVersion\morris.js" />
+    <Content Include="Scripts\newVersion\pdfmake.min.js" />
     <Content Include="Scripts\newVersion\raphael.min.js" />
     <Content Include="Scripts\newVersion\sweetalert.min.js" />
+    <Content Include="Scripts\newVersion\vfs_fonts.js" />
+    <Content Include="Scripts\newVersion\waitMe.js" />
     <Content Include="Scripts\newVersion\waves.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -639,8 +644,10 @@
     <Content Include="Views\Attendance\ManageFaculty.cshtml" />
     <Content Include="Views\Group\CreateGroup1.cshtml" />
     <Content Include="Views\Group\MyGroup1.cshtml" />
-    <Content Include="Views\Group\AddGroupOwner.cshtml" />
-    <Content Include="Views\Attendance\MajorList.cshtml" />
+    <Content Include="Views\Attendance\Index1.cshtml" />
+    <Content Include="Views\Attendance\EditClass1.cshtml" />
+    <Content Include="Views\Attendance\CreateClass1.cshtml" />
+    <Content Include="Views\Attendance\DetailClass1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
