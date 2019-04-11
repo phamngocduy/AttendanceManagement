@@ -6,15 +6,14 @@
 
 <link href="~/Content/newVersion/dataTables.bootstrap.css" rel="stylesheet" />
 
+
+
 <div class="container-fluid">
-    <div class="block-header">
-        <h2>ATTENDANCE</h2>
-    </div>
     <!-- Basic Example -->
     <div class="row clearfix">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="card">
-                <div class="header bg-red">
+                <div class="header bg-red tablinks" onclick="opentab(event,'Dashboard')">
                     <h2>
                         DASHBOARD
                     </h2>
@@ -23,7 +22,7 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="card">
-                <div class="header bg-cyan">
+                <div class="header bg-cyan tablinks" onclick="opentab(event,'Students')">
                     <h2>
                         STUDENTS
                     </h2>
@@ -32,7 +31,7 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="card">
-                <div class="header bg-green">
+                <div class="header bg-green tablinks" onclick="opentab(event,'Session')">
                     <h2>
                         SESSION
                     </h2>
@@ -41,7 +40,7 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="card">
-                <div class="header bg-amber">
+                <div class="header bg-amber tablinks" onclick="opentab(event,'Attendance')">
                     <h2>
                         ATTENDANCE
                     </h2>
@@ -51,7 +50,67 @@
 
     </div>
 
-    <div class="row clearfix">
+    <div class="row clearfix tabcontent" id="Dashboard">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        CHECK ATTENDANCE
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="javascript:void(0);">Action</a></li>
+                                <li><a href="javascript:void(0);">Another action</a></li>
+                                <li><a href="javascript:void(0);">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="example">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Day of birth</th>
+                                    <th>25/3</th>
+                                    <th>26/3</th>
+                                    <th>27/3</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Nguyễn Tấn Ninh</td>
+                                    <td>02-01-1997</td>
+                                    <td><input type="checkbox" /></td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Nguyễn Tấn Ninh</td>
+                                    <td>02-01-1997</td>
+                                    <td></td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+
+                                </tr>
+                     
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row clearfix tabcontent" id="Students">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header">
@@ -438,6 +497,58 @@
         </div>
     </div>
 
+
+    <!-- Vertical Layout -->
+    <div class="row clearfix tabcontent" id="Session">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        CREATE SESSION
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="javascript:void(0);">Action</a></li>
+                                <li><a href="javascript:void(0);">Another action</a></li>
+                                <li><a href="javascript:void(0);">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <form>
+                        <label for="total-week">Total Week</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="total_week" class="form-control">
+                            </div>
+                        </div>
+                        <label for="start_day">Start Day</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="date" id="start_day" class="form-control date">
+                            </div>
+                        </div>
+                        <label for="time">Time</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="time" id="time" class="form-control">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="js-sweetalert">
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect" data-type="success">SUBMIT</button>
+                            <button type="reset" class="btn btn-danger m-t-15 waves-effect" onclick="window.location.href='/attendance/index1'">BACK TO LIST</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts{
@@ -450,4 +561,26 @@
     <script src="~/Scripts/newVersion/vfs_fonts.js"></script>
     <script src="~/Scripts/newVersion/buttons.html5.min.js"></script>
     <script src="~/Scripts/newVersion/buttons.print.min.js"></script>
+    <script src="~/Scripts/newVersion/jquery-datatable.js"></script>
+
+
+
+    <script>
+        function opentab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+
+    
+
 }
