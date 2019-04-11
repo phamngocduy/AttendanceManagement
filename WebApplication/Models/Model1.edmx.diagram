@@ -4,30 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3f727215a5ca4185b076c383c83050ae" Name="Diagram1">
-        <EntityTypeShape EntityType="cap21t4Model.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetRole" Width="1.5" PointX="3.375" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUserClaim" Width="1.5" PointX="5" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUserLogin" Width="1.5" PointX="2.25" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUser" Width="1.5" PointX="1.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Attendance" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Class" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.ClassMember" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+      <Diagram DiagramId="51a984d0e91a4ef48c53abfd47217ace" Name="Diagram1">
+        <EntityTypeShape EntityType="cap21t4Model.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetRole" Width="1.5" PointX="1.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetUserClaim" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetUserLogin" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetUser" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Attendance" Width="1.5" PointX="14.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Class" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Course" Width="1.5" PointX="10.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Faculty" Width="1.5" PointX="5.75" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.Group" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Member" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Session" Width="1.5" PointX="6" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.sysdiagram" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.User" Width="1.5" PointX="2.875" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Major" Width="1.5" PointX="8" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Member" Width="1.5" PointX="12.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.Session" Width="1.5" PointX="12.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.sysdiagram" Width="1.5" PointX="9.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.User" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
         <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_User_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_Attendance_Member" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_Attendance_Session" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_Group_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="cap21t4Model.FK_Course_Major" ManuallyRouted="false" />
+        <AssociationConnector Association="cap21t4Model.FK_Session_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="cap21t4Model.FK_Major_Faculty" ManuallyRouted="false" />
+        <AssociationConnector Association="cap21t4Model.FK_Group_Group2" ManuallyRouted="false" />
+        <AssociationConnector Association="cap21t4Model.FK_Group_Group3" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="cap21t4Model.CourseMember" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.GroupMember" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.GroupOwner" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="cap21t4Model.Faculty" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

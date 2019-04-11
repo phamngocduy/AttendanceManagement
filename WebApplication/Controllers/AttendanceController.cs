@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using WebApplication.Models;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace WebApplication.Controllers
 {
@@ -18,10 +19,10 @@ namespace WebApplication.Controllers
 			return View(classlist);
 		}
 
-        public ActionResult Index1()
-        {
-            return View();
-        }
+		public ActionResult Index1()
+		{
+			return View();
+		}
 
 		public ActionResult CreateClassView()
 		{
@@ -84,47 +85,70 @@ namespace WebApplication.Controllers
 			return View();
 		}
 
-        public ActionResult CreateFaculty()
-        {
-            return View();
-        }
+		public ActionResult CreateFaculty()
+		{
+			return View();
+		}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateFaculty([Bind(Include = "Id,FacultyName,Description")] Faculty faculty)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Faculties.Add(faculty);
-                db.SaveChanges();
-                return RedirectToAction("ManageFaculty");
-            }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult CreateFaculty([Bind(Include = "Id,FacultyName,Description")] Faculty faculty)
+		{
+			if (ModelState.IsValid)
+			{
+				db.Faculties.Add(faculty);
+				db.SaveChanges();
+				return RedirectToAction("ManageFaculty");
+			}
 
-            return View(faculty);
-        }
+			return View(faculty);
+		}
 
-        public ActionResult ManageFaculty()
-        {
-            return View();
-        }
+		public ActionResult ManageFaculty()
+		{
+			return View();
+		}
 
-        public ActionResult DetailFaculty()
-        {
-            return View();
-        }
+		public ActionResult DetailFaculty()
+		{
+			return View();
+		}
 
-        public ActionResult EditClass1()
-        {
-            return View();
-        }
+		public ActionResult EditClass1()
+		{
+			return View();
+		}
 
-        public ActionResult CreateClass1()
-        {
-            return View();
-        }
-        public ActionResult DetailClass1()
-        {
-            return View();
-        }
-    }
+		public ActionResult CreateClass1()
+		{
+			return View();
+		}
+		public ActionResult DetailClass1()
+		{
+			return View();
+		}
+		public ActionResult MajorList()
+		{
+			SynMajor();
+			var major = db.Majors.ToList();
+			return View(major);
+		}
+		public void SynMajor()
+		{
+			APIController api = new APIController();
+			string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getMajors");
+			List<MajorsModel> major = JsonConvert.DeserializeObject<List<MajorsModel>>(data);
+			foreach (var item in major)
+			{
+				if (db.Majors.FirstOrDefault(x => x.Code == item.code) == null)
+				{
+					Major newMajor = new Major();
+					newMajor.Code = item.code;
+					newMajor.Name = item.name;
+					db.Majors.Add(newMajor);
+					db.SaveChanges();
+				}
+			}
+		}
+	}
 }
