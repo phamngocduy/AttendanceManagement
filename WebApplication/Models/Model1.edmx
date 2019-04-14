@@ -97,6 +97,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
           <Property Name="CourseName" Type="nvarchar" MaxLength="200" />
           <Property Name="Type" Type="nchar" MaxLength="10" />
           <Property Name="Major" Type="varchar" MaxLength="10" />
@@ -626,6 +627,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CourseName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Major" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -1041,6 +1043,7 @@
             <EntityTypeMapping TypeName="cap21t4Model.Course">
               <MappingFragment StoreEntitySet="Course">
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="CourseName" ColumnName="CourseName" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Major" ColumnName="Major" />

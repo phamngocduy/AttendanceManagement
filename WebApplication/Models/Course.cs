@@ -22,6 +22,7 @@ namespace WebApplication.Models
         }
     
         public int ID { get; set; }
+        public string Code { get; set; }
         public string CourseName { get; set; }
         public string Type { get; set; }
         public string Major { get; set; }

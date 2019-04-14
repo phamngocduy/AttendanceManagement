@@ -15,8 +15,10 @@ namespace WebApplication.Controllers
 		// GET: Attendance
 		public ActionResult Index()
 		{
-			var classlist = db.Classes.ToList();
-			return View(classlist);
+		
+			var courselist = db.Courses.ToList();
+			return View(courselist);
+
 		}
 
 		public ActionResult Index1()
@@ -72,6 +74,8 @@ namespace WebApplication.Controllers
 		}
 		public ActionResult manageClass()
 		{
+			var user = db.Users.ToList();
+			ViewData["students"] = user;
 			return View();
 		}
 		public ActionResult ManageStudent()
@@ -149,6 +153,46 @@ namespace WebApplication.Controllers
 					db.SaveChanges();
 				}
 			}
+		}
+		public ActionResult CourseList()
+		{
+			//APIController api = new APIController();
+			//string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getCourses");
+			//CourseModel course = JsonConvert.DeserializeObject<CourseModel>(data);
+			SynCourse();
+			var course = db.Courses.ToList();
+			return View(course);
+		}
+
+		public void SynCourse()
+		{
+			APIController api = new APIController();
+			string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getCourses");
+			CourseModel course = JsonConvert.DeserializeObject<CourseModel>(data);
+			foreach (var item in course.Courses)
+			{
+				if (db.Courses.FirstOrDefault(x => x.Code == item.Code) == null)
+				{
+					Course newCourse = new Course();
+					newCourse.Code = item.Code;
+					newCourse.CourseName = item.Name;
+					newCourse.Type = item.Type;
+					newCourse.Major = item.Major;
+					newCourse.Lecturer = item.Lecturer;
+					newCourse.Students = item.Students;
+					newCourse.DayOfWeek = item.DayOfWeek;
+					newCourse.TimeSpan = item.TimeSpan;
+					newCourse.Periods = item.Periods;
+					newCourse.Room = item.Room;
+					db.Courses.Add(newCourse);
+					db.SaveChanges();
+				}
+			}
+
+		}
+		public ActionResult AddStudent()
+		{
+			return View();
 		}
 	}
 }
