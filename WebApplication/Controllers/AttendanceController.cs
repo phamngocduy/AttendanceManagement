@@ -12,11 +12,13 @@ namespace WebApplication.Controllers
 	public class AttendanceController : Controller
 	{
 		AttendanceEntities db = new AttendanceEntities();
+		cap21t4Entities groupdb = new cap21t4Entities();
 		// GET: Attendance
 		public ActionResult Index()
 		{
 		
 			var courselist = db.Courses.ToList();
+	
 			return View(courselist);
 
 		}
@@ -72,10 +74,12 @@ namespace WebApplication.Controllers
 		//	return RedirectToAction("Index");
 
 		//}
-		public ActionResult manageClass()
+		public ActionResult manageClass(string id)
 		{
-			var user = db.CourseMembers.ToList();
-			ViewData["students"] = user;
+			Session["CourseID"] = id;
+			int courseID = int.Parse(id);
+			var student = db.CourseMembers.Where(x => x.CourseID == courseID).ToList();
+			ViewData["students"] = student;
 			return View();
 		}
 		public ActionResult ManageStudent()
@@ -161,18 +165,51 @@ namespace WebApplication.Controllers
 			var course = db.Courses.ToList();
 			return View(course);
 		}
-		public ActionResult AddStudent()
+		//public ActionResult AddStudent()
+		//{
+		//	ViewBag.Group = new SelectList(groupdb.Groups.Where(x => x.GroupParent != null).ToList(), "ID", "GroupName");
+		//	return View();
+		//}
+		public ActionResult AddStudent(string groupID)
 		{
-			return View();
+			ViewBag.Group = new SelectList(groupdb.Groups.Where(x => x.GroupParent != null).ToList(), "ID", "GroupName");
+			if (groupID != null)
+			{
+				int gID = int.Parse(groupID);
+				var user = groupdb.Groups.FirstOrDefault(x => x.ID == gID).Users.ToList();
+				return View(user);
+			}
+			else
+				return View();
+		}
+		[HttpPost]
+		public ActionResult AddStudent(List<string> studentlist)
+		{
+			foreach(var item in studentlist)
+			{
+				int id = int.Parse(item);
+				var user = groupdb.Users.FirstOrDefault(x => x.ID == id);
+				CourseMember newMember = new CourseMember();
+				newMember.CourseID = int.Parse(Session["CourseID"].ToString());
+				newMember.StudentID = user.StID;
+				newMember.Name = user.FullName;
+				newMember.Email = user.Email;
+				newMember.DoB = user.DoB;
+				newMember.Avatar = user.AvatarBase64;
+				db.CourseMembers.Add(newMember);
+			
+			}
+			db.SaveChanges();
+			return RedirectToAction("manageClass", new { id = Session["CourseID"] });
 		}
 		public ActionResult SynCourse()
 		{
 			APIController api = new APIController();
-			string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getCourses");
+			string data = api.ReadData("https://sodaubai.vanlanguni.edu.vn/API/getCourses");
 			CourseModel course = JsonConvert.DeserializeObject<CourseModel>(data);
 			foreach (var item in course.Courses)
 			{
-				var SynCourse = db.Courses.FirstOrDefault(x => x.Code == item.Code && x.Type1 == item.Type1 && x.Type2 == item.Type2);
+				var SynCourse = db.Courses.FirstOrDefault(x => x.Code == item.Code && x.Type1 == item.Type1 && x.Type2 == item.Type2 && x.Semester==course.Semester);
 				if (SynCourse == null)
 				{
 					Course newCourse = new Course();
@@ -210,6 +247,40 @@ namespace WebApplication.Controllers
 			}
 			db.SaveChanges();
 			return RedirectToAction("Index");
+		}
+
+		public ActionResult FacultyIndex()
+		{
+			var faculty = db.Faculties.ToList();
+			List<FacultyViewModel> listfaculty = new List<FacultyViewModel>();
+			foreach(var item in faculty)
+			{
+				FacultyViewModel facultyView = new FacultyViewModel();
+				facultyView.ID = item.ID;
+				facultyView.Name = item.Name;
+				facultyView.Description = item.Description;
+				facultyView.GroupLink = groupdb.Groups.FirstOrDefault(x => x.ID == item.GroupID).GroupName;
+				facultyView.Majors = item.Majors;
+				listfaculty.Add(facultyView);
+			}
+			return View(listfaculty);
+		}
+		[HttpGet]
+		public ActionResult CreateFaculty1()
+		{
+			ViewBag.GroupMap = groupdb.Groups.Where(x=>x.GroupParent!=null).ToList();
+			return View();
+		}
+		[HttpPost]
+		public ActionResult CreateFaculty1(Faculty faculty)
+		{
+			Faculty newfaculty = new Faculty();
+			newfaculty.Name = faculty.Name;
+			newfaculty.Description = faculty.Description;
+			newfaculty.GroupID = faculty.GroupID;
+			db.Faculties.Add(newfaculty);
+			db.SaveChanges();
+			return RedirectToAction("FacultyIndex");
 		}
 	}
 }

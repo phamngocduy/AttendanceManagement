@@ -1,0 +1,75 @@
+﻿@model WebApplication.Models.Faculty
+
+@{
+	/**/
+
+	ViewBag.Title = "CreateFaculty1";
+	Layout = null;
+	var GroupMapModel = ViewBag.GroupMap as List<WebApplication.Models.Group>;
+}
+<script src="~/Content/select2/select2.min.js"></script>
+<link href="~/Content/select2/select2.min.css" rel="stylesheet" />
+
+
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<br />
+				<form class="form-horizontal form-label-left" method="post" action="~/Attendance/CreateFaculty1">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Faculty Name</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							<input type="text"name="Name" class="form-control">
+						</div>
+					</div>
+					<br />
+				
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">
+							Faculty Description
+						</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							<textarea class="form-control"  name="Description" rows="3"></textarea>
+						</div>
+					</div>
+					<br />
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">GroupID</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							<select class="select2_multiple form-control" name="GroupID">
+								@foreach(var item in GroupMapModel)
+								{
+								<option value="@item.ID">@item.GroupName</option>
+								}
+								
+								
+							</select>
+						</div>
+					</div>
+		
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+							<button type="button" class="btn btn-primary">Cancel</button>
+							<button type="reset" class="btn btn-primary">Reset</button>
+							<button type="submit" class="btn btn-success">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+	$(document).ready(function () {
+		$(".select2_multiple").select2({ width: '100%' });
+	});
+</script>

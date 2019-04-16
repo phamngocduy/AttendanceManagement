@@ -1,4 +1,9 @@
-﻿<!doctype html>
+﻿@model IEnumerable<WebApplication.Models.User>
+
+@{
+	Layout = null;
+}
+<!doctype html>
 <html class="no-js" lang="en">
 
 <head>
@@ -43,30 +48,54 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="sparkline10-list">
 							<div class="sparkline10-hd">
-								<div class="main-sparkline10-hd">
-									<h1>Dual List box</h1>
+								<div class="row">
+									<div class="main-sparkline10-hd">
+										<h1>Add Student</h1>
+									</div>
 								</div>
+								<div class="row">
+
+									<div>
+										@*@using (Html.BeginForm("ChoseGroup", "Attendance", FormMethod.Post))
+										{ }*@
+
+											<div class="row">
+												<div class="col" style="margin:0 auto;text-align:center">
+													@Html.DropDownList("groupID", (SelectList)ViewBag.Group, "Please select group", new { @class = "form-control" })
+													<input type="submit" value="Chose" class="btn btn-default" onclick="Chose()" />
+												</div>
+											</div>
+									
+										<div class="row">
+
+										</div>
+
+									</div>
+								</div>
+
 							</div>
 							<div class="sparkline10-graph">
 								<div class="basic-login-form-ad">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<div class="dual-list-box-inner">
-												<form id="form" action="#" class="wizard-big">
-													<select class="form-control dual_select" multiple>
-														<option value="United States">United States</option>
-														<option value="United Kingdom">United Kingdom</option>
-														<option value="Australia">Australia</option>
-														<option selected value="Austria">Austria</option>
-														<option selected value="Bahamas">Bahamas</option>
-														<option value="Barbados">Barbados</option>
-														<option value="Belgium">Belgium</option>
-														<option value="Bermuda">Bermuda</option>
-														<option value="Brazil">Brazil</option>
-														<option value="Bulgaria">Bulgaria</option>
-														<option value="Cameroon">Cameroon</option>
-														<option value="Canada">Canada</option>
-													</select>
+												<form id="form" action="~/Attendance/AddStudent" method="post" class="wizard-big">
+													<div class="row">
+														<select class="form-control dual_select" multiple name="studentlist">
+															@if (Model != null)
+															{
+																foreach (var item in Model)
+																{
+																	<option value="@item.ID">@item.FullName</option>
+																}
+															}
+														</select>
+													</div>
+												
+													<div class="row">
+														<button type="button" class="btn btn-sm btn-primary ui-wizard-content" onclick="Clean"> Clean</button>
+														<input type="submit" class="btn btn-sm btn-primary ui-wizard-content" value="Create" />
+													</div>
 												</form>
 											</div>
 										</div>
@@ -117,7 +146,7 @@
 		============================================ -->
 	<script src="~/Content/kiaalap/js/metisMenu.min.js"></script>
 	<script src="~/Content/kiaalap/js/metisMenu-active.js"></script>
-	
+
 
 	<!-- duallistbox JS
 		============================================ -->
@@ -136,3 +165,15 @@
 </body>
 
 </html>
+
+<script>
+	function Chose() {
+		var groupID = $('#groupID').val();
+		var url = "/Attendance/AddStudent?groupID=" + groupID;
+		$("#ModalAddStudent").load(url, function () {
+			$('.modal-backdrop').remove();
+			$("#myAddStudent").modal("show");
+		})
+	}
+</script>
+
