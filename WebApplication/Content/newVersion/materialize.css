@@ -127,9 +127,9 @@
   border-color: #BDBDBD;
 }
 
-/* Checkboxes
+/* type="checkbox1"es
    ========================================================================== */
-/* CUSTOM CSS CHECKBOXES */
+/* CUSTOM CSS type="checkbox1"ES */
 form p {
   margin-bottom: 10px;
   text-align: left;
@@ -139,19 +139,19 @@ form p:last-child {
   margin-bottom: 0;
 }
 
-/* Remove default checkbox */
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
+/* Remove default type="checkbox1" */
+[type="type="checkbox1""]:not(:checked),
+[type="type="checkbox1""]:checked {
   position: absolute;
   left: -9999px;
   opacity: 0;
 }
 
-[type="checkbox"] {
-  /* checkbox aspect */
+[type="type="checkbox1""] {
+  /* type="checkbox1" aspect */
 }
 
-[type="checkbox"] + label {
+[type="type="checkbox1""] + label {
   position: relative;
   padding-left: 35px;
   cursor: pointer;
@@ -169,8 +169,8 @@ form p:last-child {
   /* IE10+ */
 }
 
-[type="checkbox"] + label:before,
-[type="checkbox"]:not(.filled-in) + label:after {
+[type="type="checkbox1""] + label:before,
+[type="type="checkbox1""]:not(.filled-in) + label:after {
   content: '';
   position: absolute;
   top: 0;
@@ -184,18 +184,18 @@ form p:last-child {
   transition: .2s;
 }
 
-[type="checkbox"]:not(.filled-in) + label:after {
+[type="type="checkbox1""]:not(.filled-in) + label:after {
   border: 0;
   -webkit-transform: scale(0);
           transform: scale(0);
 }
 
-[type="checkbox"]:not(:checked):disabled + label:before {
+[type="type="checkbox1""]:not(:checked):disabled + label:before {
   border: none;
   background-color: rgba(0, 0, 0, 0.26);
 }
 
-[type="checkbox"].tabbed:focus + label:after {
+[type="type="checkbox1""].tabbed:focus + label:after {
   -webkit-transform: scale(1);
           transform: scale(1);
   border: 0;
@@ -204,7 +204,7 @@ form p:last-child {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-[type="checkbox"]:checked + label:before {
+[type="type="checkbox1""]:checked + label:before {
   top: -4px;
   left: -5px;
   width: 12px;
@@ -221,13 +221,13 @@ form p:last-child {
           transform-origin: 100% 100%;
 }
 
-[type="checkbox"]:checked:disabled + label:before {
+[type="type="checkbox1""]:checked:disabled + label:before {
   border-right: 2px solid rgba(0, 0, 0, 0.26);
   border-bottom: 2px solid rgba(0, 0, 0, 0.26);
 }
 
-/* Indeterminate checkbox */
-[type="checkbox"]:indeterminate + label:before {
+/* Indeterminate type="checkbox1" */
+[type="type="checkbox1""]:indeterminate + label:before {
   top: -11px;
   left: -12px;
   width: 10px;
@@ -244,17 +244,17 @@ form p:last-child {
           transform-origin: 100% 100%;
 }
 
-[type="checkbox"]:indeterminate:disabled + label:before {
+[type="type="checkbox1""]:indeterminate:disabled + label:before {
   border-right: 2px solid rgba(0, 0, 0, 0.26);
   background-color: transparent;
 }
 
-[type="checkbox"].filled-in + label:after {
+[type="type="checkbox1""].filled-in + label:after {
   border-radius: 2px;
 }
 
-[type="checkbox"].filled-in + label:before,
-[type="checkbox"].filled-in + label:after {
+[type="type="checkbox1""].filled-in + label:before,
+[type="type="checkbox1""].filled-in + label:after {
   content: '';
   left: 0;
   position: absolute;
@@ -263,7 +263,7 @@ form p:last-child {
   z-index: 1;
 }
 
-[type="checkbox"].filled-in:not(:checked) + label:before {
+[type="type="checkbox1""].filled-in:not(:checked) + label:before {
   width: 0;
   height: 0;
   border: 3px solid transparent;
@@ -275,7 +275,7 @@ form p:last-child {
   transform-origin: 100% 100%;
 }
 
-[type="checkbox"].filled-in:not(:checked) + label:after {
+[type="type="checkbox1""].filled-in:not(:checked) + label:after {
   height: 20px;
   width: 20px;
   background-color: transparent;
@@ -284,7 +284,7 @@ form p:last-child {
   z-index: 0;
 }
 
-[type="checkbox"].filled-in:checked + label:before {
+[type="type="checkbox1""].filled-in:checked + label:before {
   top: 0;
   left: 1px;
   width: 8px;
@@ -299,7 +299,7 @@ form p:last-child {
   transform-origin: 100% 100%;
 }
 
-[type="checkbox"].filled-in:checked + label:after {
+[type="type="checkbox1""].filled-in:checked + label:after {
   top: 0;
   width: 20px;
   height: 20px;
@@ -308,33 +308,33 @@ form p:last-child {
   z-index: 0;
 }
 
-[type="checkbox"].filled-in.tabbed:focus + label:after {
+[type="type="checkbox1""].filled-in.tabbed:focus + label:after {
   border-radius: 2px;
   border-color: #5a5a5a;
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-[type="checkbox"].filled-in.tabbed:checked:focus + label:after {
+[type="type="checkbox1""].filled-in.tabbed:checked:focus + label:after {
   border-radius: 2px;
   background-color: #26a69a;
   border-color: #26a69a;
 }
 
-[type="checkbox"].filled-in:disabled:not(:checked) + label:before {
+[type="type="checkbox1""].filled-in:disabled:not(:checked) + label:before {
   background-color: transparent;
   border: 2px solid transparent;
 }
 
-[type="checkbox"].filled-in:disabled:not(:checked) + label:after {
+[type="type="checkbox1""].filled-in:disabled:not(:checked) + label:after {
   border-color: transparent;
   background-color: #BDBDBD;
 }
 
-[type="checkbox"].filled-in:disabled:checked + label:before {
+[type="type="checkbox1""].filled-in:disabled:checked + label:before {
   background-color: transparent;
 }
 
-[type="checkbox"].filled-in:disabled:checked + label:after {
+[type="type="checkbox1""].filled-in:disabled:checked + label:after {
   background-color: #BDBDBD;
   border-color: #BDBDBD;
 }
@@ -353,17 +353,17 @@ form p:last-child {
   cursor: pointer;
 }
 
-.switch label input[type=checkbox] {
+.switch label input[type=type="checkbox1"] {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.switch label input[type=checkbox]:checked + .lever {
+.switch label input[type=type="checkbox1"]:checked + .lever {
   background-color: #84c7c1;
 }
 
-.switch label input[type=checkbox]:checked + .lever:after {
+.switch label input[type=type="checkbox1"]:checked + .lever:after {
   background-color: #26a69a;
   left: 24px;
 }
@@ -396,21 +396,21 @@ form p:last-child {
   transition: left 0.3s ease, background .3s ease, box-shadow 0.1s ease;
 }
 
-input[type=checkbox]:checked:not(:disabled) ~ .lever:active::after,
-input[type=checkbox]:checked:not(:disabled).tabbed:focus ~ .lever::after {
+input[type=type="checkbox1"]:checked:not(:disabled) ~ .lever:active::after,
+input[type=type="checkbox1"]:checked:not(:disabled).tabbed:focus ~ .lever::after {
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4), 0 0 0 15px rgba(38, 166, 154, 0.1);
 }
 
-input[type=checkbox]:not(:disabled) ~ .lever:active:after,
-input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
+input[type=type="checkbox1"]:not(:disabled) ~ .lever:active:after,
+input[type=type="checkbox1"]:not(:disabled).tabbed:focus ~ .lever::after {
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4), 0 0 0 15px rgba(0, 0, 0, 0.08);
 }
 
-.switch input[type=checkbox][disabled] + .lever {
+.switch input[type=type="checkbox1"][disabled] + .lever {
   cursor: default;
 }
 
-.switch label input[type=checkbox][disabled] + .lever:after,
-.switch label input[type=checkbox][disabled]:checked + .lever:after {
+.switch label input[type=type="checkbox1"][disabled] + .lever:after,
+.switch label input[type=type="checkbox1"][disabled]:checked + .lever:after {
   background-color: #BDBDBD;
 }
