@@ -1,0 +1,30 @@
+﻿@model IEnumerable<WebApplication.Models.Group>
+
+@{
+	Layout = null;
+}
+
+<script src="~/Content/select2/select2.min.js"></script>
+<link href="~/Content/select2/select2.min.css" rel="stylesheet" />
+<div>
+	<form id="myForm" method="post" action="~/Group/AddGroupManager">
+
+		<div class="row">
+			<select class="js-example-basic-single" name="groupID">
+				@foreach (var item in Model)
+				{
+					<option value="@item.ID">@item.GroupName</option>
+				}
+			</select>
+		</div>
+		<div class="row">
+			<button type="button" class="btn btn-sm btn-primary ui-wizard-content" onclick="Clean"> Clean</button>
+			<input type="submit" class="btn btn-sm btn-primary ui-wizard-content" value="Create" />
+		</div>
+	</form>
+</div>
+<script>
+	$(document).ready(function () {
+		$(".js-example-basic-single").select2();
+	});
+</script>

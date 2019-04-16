@@ -12,16 +12,16 @@ namespace WebApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Member
+    public partial class CourseMember
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Member()
+        public CourseMember()
         {
             this.Attendances = new HashSet<Attendance>();
-            this.Courses = new HashSet<Course>();
         }
     
         public int ID { get; set; }
+        public Nullable<int> CourseID { get; set; }
         public string StudentID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -30,7 +30,6 @@ namespace WebApplication.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance> Attendances { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Course> Courses { get; set; }
+        public virtual Course Course { get; set; }
     }
 }

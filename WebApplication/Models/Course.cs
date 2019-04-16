@@ -17,15 +17,16 @@ namespace WebApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Course()
         {
+            this.CourseMembers = new HashSet<CourseMember>();
             this.Sessions = new HashSet<Session>();
-            this.Members = new HashSet<Member>();
         }
     
         public int ID { get; set; }
         public string Code { get; set; }
         public string CourseName { get; set; }
-        public string Type { get; set; }
-        public string Major { get; set; }
+        public string Type1 { get; set; }
+        public string Type2 { get; set; }
+        public Nullable<int> Major { get; set; }
         public string Lecturer { get; set; }
         public Nullable<int> Credit { get; set; }
         public Nullable<int> Students { get; set; }
@@ -34,11 +35,12 @@ namespace WebApplication.Models
         public Nullable<int> Periods { get; set; }
         public string Room { get; set; }
         public string Note { get; set; }
+        public Nullable<int> Semester { get; set; }
     
         public virtual Major Major1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Session> Sessions { get; set; }
+        public virtual ICollection<CourseMember> CourseMembers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Member> Members { get; set; }
+        public virtual ICollection<Session> Sessions { get; set; }
     }
 }

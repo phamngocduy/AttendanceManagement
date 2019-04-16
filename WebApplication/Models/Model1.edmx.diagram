@@ -4,34 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c62e94c490eb47ce8605e5c428f5bd79" Name="Diagram1">
-        <EntityTypeShape EntityType="cap21t4Model.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetRole" Width="1.5" PointX="1.5" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUserClaim" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUserLogin" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUser" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Attendance" Width="1.5" PointX="14.75" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Class" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Course" Width="1.5" PointX="10.25" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Faculty" Width="1.5" PointX="5.75" PointY="3" IsExpanded="true" />
+      <Diagram DiagramId="90d5a09071ff4acea3a31fb72d6140ff" Name="Diagram1">
+        <EntityTypeShape EntityType="cap21t4Model.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetRole" Width="1.5" PointX="1.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetUserClaim" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetUserLogin" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetUser" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.Group" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Major" Width="1.5" PointX="8" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Member" Width="1.5" PointX="12.5" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Session" Width="1.5" PointX="12.5" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.sysdiagram" Width="1.5" PointX="9.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.User" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.sysdiagram" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.User" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_User_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_Attendance_Member" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_Attendance_Session" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_Course_Major" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_Session_Course" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_Major_Faculty" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_Group_Group2" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_Group_Group3" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.CourseMember" ManuallyRouted="false" />
+        <AssociationConnector Association="cap21t4Model.GroupManager" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.GroupMember" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.GroupOwner" ManuallyRouted="false" />
       </Diagram>

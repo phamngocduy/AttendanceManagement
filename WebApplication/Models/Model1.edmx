@@ -66,66 +66,6 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
-        <EntityType Name="Attendance">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MemberID" Type="int" />
-          <Property Name="SessionID" Type="int" />
-          <Property Name="Status" Type="bit" />
-          <Property Name="Note" Type="nvarchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="Class">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClassName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="StartDate" Type="date" />
-          <Property Name="EndDate" Type="date" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="500" />
-          <Property Name="CreatedDate" Type="date" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="500" />
-          <Property Name="ModifiedDate" Type="date" />
-          <Property Name="DeletedBy" Type="nvarchar" MaxLength="500" />
-          <Property Name="DeletedDate" Type="date" />
-        </EntityType>
-        <EntityType Name="Course">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Code" Type="varchar" MaxLength="10" />
-          <Property Name="CourseName" Type="nvarchar" MaxLength="200" />
-          <Property Name="Type" Type="nchar" MaxLength="10" />
-          <Property Name="Major" Type="varchar" MaxLength="10" />
-          <Property Name="Lecturer" Type="varchar" MaxLength="10" />
-          <Property Name="Credit" Type="int" />
-          <Property Name="Students" Type="int" />
-          <Property Name="DayOfWeek" Type="varchar" MaxLength="20" />
-          <Property Name="TimeSpan" Type="time" Precision="7" />
-          <Property Name="Periods" Type="int" />
-          <Property Name="Room" Type="varchar" MaxLength="10" />
-          <Property Name="Note" Type="nvarchar" MaxLength="200" />
-        </EntityType>
-        <EntityType Name="CourseMember">
-          <Key>
-            <PropertyRef Name="CourseID" />
-            <PropertyRef Name="MemberID" />
-          </Key>
-          <Property Name="CourseID" Type="int" Nullable="false" />
-          <Property Name="MemberID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Faculty">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
-        </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="ID" />
@@ -134,7 +74,6 @@
           <Property Name="GroupName" Type="nvarchar" MaxLength="100" />
           <Property Name="GroupDescription" Type="nvarchar" MaxLength="500" />
           <Property Name="GroupType" Type="bit" />
-          <Property Name="GroupManager" Type="int" />
           <Property Name="GroupParent" Type="int" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="date" />
@@ -142,6 +81,14 @@
           <Property Name="ModifiedDate" Type="date" />
           <Property Name="DeletedBy" Type="nvarchar" MaxLength="500" />
           <Property Name="DeletedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="GroupManager">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="GroupManagerID" />
+          </Key>
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="GroupManagerID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="GroupMember">
           <Key>
@@ -158,34 +105,6 @@
           </Key>
           <Property Name="GroupID" Type="int" Nullable="false" />
           <Property Name="MemberID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Major">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
-          <Property Name="FacultyID" Type="int" />
-        </EntityType>
-        <EntityType Name="Member">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentID" Type="nvarchar" MaxLength="50" />
-          <Property Name="Name" Type="nvarchar" MaxLength="200" />
-          <Property Name="Email" Type="nvarchar" MaxLength="200" />
-          <Property Name="DoB" Type="date" />
-          <Property Name="Avatar" Type="nvarchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="Session">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CourseID" Type="int" />
-          <Property Name="Date" Type="datetime" />
-          <Property Name="Note" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -212,66 +131,6 @@
           <Property Name="AvatarBase64" Type="varchar(max)" />
           <Property Name="Note" Type="nvarchar" MaxLength="500" />
         </EntityType>
-        <Association Name="FK_Attendance_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Attendance">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Attendance_Session">
-          <End Role="Session" Type="Self.Session" Multiplicity="0..1" />
-          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Session">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Attendance">
-              <PropertyRef Name="SessionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClassMember_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="1" />
-          <End Role="CourseMember" Type="Self.CourseMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CourseMember">
-              <PropertyRef Name="CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClassMember_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="CourseMember" Type="Self.CourseMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CourseMember">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Course_Major">
-          <End Role="Major" Type="Self.Major" Multiplicity="0..1" />
-          <End Role="Course" Type="Self.Course" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Major">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Course">
-              <PropertyRef Name="Major" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -340,15 +199,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Group_Group3">
-          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
-          <End Role="Group1" Type="Self.Group" Multiplicity="*" />
+        <Association Name="FK_GroupManager_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="GroupManager" Type="Self.GroupManager" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Group1">
-              <PropertyRef Name="GroupManager" />
+            <Dependent Role="GroupManager">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupManager_Group1">
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="GroupManager" Type="Self.GroupManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupManager">
+              <PropertyRef Name="GroupManagerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -400,30 +271,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Major_Faculty">
-          <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
-          <End Role="Major" Type="Self.Major" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Faculty">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Major">
-              <PropertyRef Name="FacultyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Session_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
-          <End Role="Session" Type="Self.Session" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Session">
-              <PropertyRef Name="CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_User_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -443,39 +290,12 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CourseMember" EntityType="Self.CourseMember" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupManager" EntityType="Self.GroupManager" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupMember" EntityType="Self.GroupMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupOwner" EntityType="Self.GroupOwner" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Major" EntityType="Self.Major" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Attendance_Member" Association="Self.FK_Attendance_Member">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="Attendance" EntitySet="Attendance" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Attendance_Session" Association="Self.FK_Attendance_Session">
-            <End Role="Session" EntitySet="Session" />
-            <End Role="Attendance" EntitySet="Attendance" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClassMember_Course" Association="Self.FK_ClassMember_Course">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="CourseMember" EntitySet="CourseMember" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClassMember_Member" Association="Self.FK_ClassMember_Member">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="CourseMember" EntitySet="CourseMember" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Course_Major" Association="Self.FK_Course_Major">
-            <End Role="Major" EntitySet="Major" />
-            <End Role="Course" EntitySet="Course" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -496,9 +316,13 @@
             <End Role="Group" EntitySet="Group" />
             <End Role="Group1" EntitySet="Group" />
           </AssociationSet>
-          <AssociationSet Name="FK_Group_Group3" Association="Self.FK_Group_Group3">
+          <AssociationSet Name="FK_GroupManager_Group" Association="Self.FK_GroupManager_Group">
             <End Role="Group" EntitySet="Group" />
-            <End Role="Group1" EntitySet="Group" />
+            <End Role="GroupManager" EntitySet="GroupManager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupManager_Group1" Association="Self.FK_GroupManager_Group1">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="GroupManager" EntitySet="GroupManager" />
           </AssociationSet>
           <AssociationSet Name="FK_GroupMember_Group" Association="Self.FK_GroupMember_Group">
             <End Role="Group" EntitySet="Group" />
@@ -515,14 +339,6 @@
           <AssociationSet Name="FK_GroupOwner_User" Association="Self.FK_GroupOwner_User">
             <End Role="User" EntitySet="User" />
             <End Role="GroupOwner" EntitySet="GroupOwner" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Major_Faculty" Association="Self.FK_Major_Faculty">
-            <End Role="Faculty" EntitySet="Faculty" />
-            <End Role="Major" EntitySet="Major" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Session_Course" Association="Self.FK_Session_Course">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="Session" EntitySet="Session" />
           </AssociationSet>
           <AssociationSet Name="FK_User_AspNetUsers" Association="Self.FK_User_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -594,64 +410,6 @@
           <NavigationProperty Name="Users" Relationship="Self.FK_User_AspNetUsers" FromRole="AspNetUsers" ToRole="User" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
-        <EntityType Name="Attendance">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberID" Type="Int32" />
-          <Property Name="SessionID" Type="Int32" />
-          <Property Name="Status" Type="Boolean" />
-          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Member" Relationship="Self.FK_Attendance_Member" FromRole="Attendance" ToRole="Member" />
-          <NavigationProperty Name="Session" Relationship="Self.FK_Attendance_Session" FromRole="Attendance" ToRole="Session" />
-        </EntityType>
-        <EntityType Name="Class">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClassName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Precision="0" />
-          <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="0" />
-          <Property Name="DeletedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="Course">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="CourseName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Major" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Lecturer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Credit" Type="Int32" />
-          <Property Name="Students" Type="Int32" />
-          <Property Name="DayOfWeek" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="TimeSpan" Type="Time" Precision="7" />
-          <Property Name="Periods" Type="Int32" />
-          <Property Name="Room" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Major1" Relationship="Self.FK_Course_Major" FromRole="Course" ToRole="Major" />
-          <NavigationProperty Name="Sessions" Relationship="Self.FK_Session_Course" FromRole="Course" ToRole="Session" />
-          <NavigationProperty Name="Members" Relationship="Self.CourseMember" FromRole="Course" ToRole="Member" />
-        </EntityType>
-        <EntityType Name="Faculty">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Majors" Relationship="Self.FK_Major_Faculty" FromRole="Faculty" ToRole="Major" />
-        </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="ID" />
@@ -660,7 +418,6 @@
           <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="GroupDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="GroupType" Type="Boolean" />
-          <Property Name="GroupManager" Type="Int32" />
           <Property Name="GroupParent" Type="Int32" />
           <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
@@ -670,44 +427,10 @@
           <Property Name="DeletedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Group1" Relationship="Self.FK_Group_Group2" FromRole="Group" ToRole="Group1" />
           <NavigationProperty Name="Group2" Relationship="Self.FK_Group_Group2" FromRole="Group1" ToRole="Group" />
-          <NavigationProperty Name="Group11" Relationship="Self.FK_Group_Group3" FromRole="Group" ToRole="Group1" />
-          <NavigationProperty Name="Group3" Relationship="Self.FK_Group_Group3" FromRole="Group1" ToRole="Group" />
+          <NavigationProperty Name="Group11" Relationship="Self.GroupManager" FromRole="Group" ToRole="Group1" />
+          <NavigationProperty Name="Groups" Relationship="Self.GroupManager" FromRole="Group1" ToRole="Group" />
           <NavigationProperty Name="Users" Relationship="Self.GroupMember" FromRole="Group" ToRole="User" />
           <NavigationProperty Name="Users1" Relationship="Self.GroupOwner" FromRole="Group" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Major">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="FacultyID" Type="Int32" />
-          <NavigationProperty Name="Courses" Relationship="Self.FK_Course_Major" FromRole="Major" ToRole="Course" />
-          <NavigationProperty Name="Faculty" Relationship="Self.FK_Major_Faculty" FromRole="Major" ToRole="Faculty" />
-        </EntityType>
-        <EntityType Name="Member">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DoB" Type="DateTime" Precision="0" />
-          <Property Name="Avatar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Member" FromRole="Member" ToRole="Attendance" />
-          <NavigationProperty Name="Courses" Relationship="Self.CourseMember" FromRole="Member" ToRole="Course" />
-        </EntityType>
-        <EntityType Name="Session">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CourseID" Type="Int32" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="Note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Session" FromRole="Session" ToRole="Attendance" />
-          <NavigationProperty Name="Course" Relationship="Self.FK_Session_Course" FromRole="Session" ToRole="Course" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -777,66 +500,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Attendance_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Attendance">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Attendance_Session">
-          <End Role="Session" Type="Self.Session" Multiplicity="0..1" />
-          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Session">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Attendance">
-              <PropertyRef Name="SessionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Course_Major">
-          <End Role="Major" Type="Self.Major" Multiplicity="0..1" />
-          <End Role="Course" Type="Self.Course" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Major">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Course">
-              <PropertyRef Name="Major" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Session_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
-          <End Role="Session" Type="Self.Session" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Session">
-              <PropertyRef Name="CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Major_Faculty">
-          <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
-          <End Role="Major" Type="Self.Major" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Faculty">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Major">
-              <PropertyRef Name="FacultyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Group_Group2">
           <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
           <End Role="Group1" Type="Self.Group" Multiplicity="*" />
@@ -849,25 +512,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Group_Group3">
-          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
-          <End Role="Group1" Type="Self.Group" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Group">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Group1">
-              <PropertyRef Name="GroupManager" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <Association Name="CourseMember">
-          <End Role="Course" Type="Self.Course" Multiplicity="*" />
-          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+        <Association Name="GroupManager">
+          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <End Role="Group1" Type="Self.Group" Multiplicity="*" />
         </Association>
         <Association Name="GroupMember">
           <End Role="Group" Type="Self.Group" Multiplicity="*" />
@@ -883,14 +534,7 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="Attendances" EntityType="Self.Attendance" />
-          <EntitySet Name="Classes" EntityType="Self.Class" />
-          <EntitySet Name="Courses" EntityType="Self.Course" />
-          <EntitySet Name="Faculties" EntityType="Self.Faculty" />
           <EntitySet Name="Groups" EntityType="Self.Group" />
-          <EntitySet Name="Majors" EntityType="Self.Major" />
-          <EntitySet Name="Members" EntityType="Self.Member" />
-          <EntitySet Name="Sessions" EntityType="Self.Session" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -905,31 +549,7 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_Attendance_Member" Association="Self.FK_Attendance_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="Attendance" EntitySet="Attendances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Attendance_Session" Association="Self.FK_Attendance_Session">
-            <End Role="Session" EntitySet="Sessions" />
-            <End Role="Attendance" EntitySet="Attendances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Course_Major" Association="Self.FK_Course_Major">
-            <End Role="Major" EntitySet="Majors" />
-            <End Role="Course" EntitySet="Courses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Session_Course" Association="Self.FK_Session_Course">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="Session" EntitySet="Sessions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Major_Faculty" Association="Self.FK_Major_Faculty">
-            <End Role="Faculty" EntitySet="Faculties" />
-            <End Role="Major" EntitySet="Majors" />
-          </AssociationSet>
           <AssociationSet Name="FK_Group_Group2" Association="Self.FK_Group_Group2">
-            <End Role="Group" EntitySet="Groups" />
-            <End Role="Group1" EntitySet="Groups" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Group_Group3" Association="Self.FK_Group_Group3">
             <End Role="Group" EntitySet="Groups" />
             <End Role="Group1" EntitySet="Groups" />
           </AssociationSet>
@@ -937,9 +557,9 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="CourseMember" Association="Self.CourseMember">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="Member" EntitySet="Members" />
+          <AssociationSet Name="GroupManager" Association="Self.GroupManager">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="Group1" EntitySet="Groups" />
           </AssociationSet>
           <AssociationSet Name="GroupMember" Association="Self.GroupMember">
             <End Role="Group" EntitySet="Groups" />
@@ -1011,62 +631,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Attendances">
-            <EntityTypeMapping TypeName="cap21t4Model.Attendance">
-              <MappingFragment StoreEntitySet="Attendance">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
-                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Classes">
-            <EntityTypeMapping TypeName="cap21t4Model.Class">
-              <MappingFragment StoreEntitySet="Class">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Courses">
-            <EntityTypeMapping TypeName="cap21t4Model.Course">
-              <MappingFragment StoreEntitySet="Course">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Major" ColumnName="Major" />
-                <ScalarProperty Name="Lecturer" ColumnName="Lecturer" />
-                <ScalarProperty Name="Credit" ColumnName="Credit" />
-                <ScalarProperty Name="Students" ColumnName="Students" />
-                <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
-                <ScalarProperty Name="TimeSpan" ColumnName="TimeSpan" />
-                <ScalarProperty Name="Periods" ColumnName="Periods" />
-                <ScalarProperty Name="Room" ColumnName="Room" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Faculties">
-            <EntityTypeMapping TypeName="cap21t4Model.Faculty">
-              <MappingFragment StoreEntitySet="Faculty">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Groups">
             <EntityTypeMapping TypeName="cap21t4Model.Group">
               <MappingFragment StoreEntitySet="Group">
@@ -1074,7 +638,6 @@
                 <ScalarProperty Name="GroupName" ColumnName="GroupName" />
                 <ScalarProperty Name="GroupDescription" ColumnName="GroupDescription" />
                 <ScalarProperty Name="GroupType" ColumnName="GroupType" />
-                <ScalarProperty Name="GroupManager" ColumnName="GroupManager" />
                 <ScalarProperty Name="GroupParent" ColumnName="GroupParent" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -1082,37 +645,6 @@
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Majors">
-            <EntityTypeMapping TypeName="cap21t4Model.Major">
-              <MappingFragment StoreEntitySet="Major">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="FacultyID" ColumnName="FacultyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Members">
-            <EntityTypeMapping TypeName="cap21t4Model.Member">
-              <MappingFragment StoreEntitySet="Member">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DoB" ColumnName="DoB" />
-                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sessions">
-            <EntityTypeMapping TypeName="cap21t4Model.Session">
-              <MappingFragment StoreEntitySet="Session">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1151,12 +683,12 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="CourseMember" TypeName="cap21t4Model.CourseMember" StoreEntitySet="CourseMember">
-            <EndProperty Name="Course">
-              <ScalarProperty Name="ID" ColumnName="CourseID" />
+          <AssociationSetMapping Name="GroupManager" TypeName="cap21t4Model.GroupManager" StoreEntitySet="GroupManager">
+            <EndProperty Name="Group">
+              <ScalarProperty Name="ID" ColumnName="GroupID" />
             </EndProperty>
-            <EndProperty Name="Member">
-              <ScalarProperty Name="ID" ColumnName="MemberID" />
+            <EndProperty Name="Group1">
+              <ScalarProperty Name="ID" ColumnName="GroupManagerID" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="GroupMember" TypeName="cap21t4Model.GroupMember" StoreEntitySet="GroupMember">

@@ -18,8 +18,7 @@
         <h3>Welcome to SIMS,<strong> Ninh</strong>!</h3>
     </div>
     <div class="col-md-8 col-xs-6 add-class">
-        <i type="button" class="fa fa-plus" onclick="Create()"></i>
-
+			<i type="button" class="glyphicon glyphicon-refresh" onclick="window.location='/Attendance/SynCourse'">	</i>
     </div>
 </div>
 <div class="attendance-content">
@@ -34,26 +33,26 @@
         </form>
     </div>
     <hr />
-    <div class="row" id="myList">
-        @if (Model != null)
-        {
-            foreach (var item in Model)
-            {
-                <div class="col-sm-4 col-md-3 col-xs-6">
-                    <div class="thumbnail">
-						<div class="caption">
-							<h3><strong><a href="~/Attendance/manageClass/@item.ID">@item.CourseName</a></strong></h3>
-							<p>Lecturer: @item.Lecturer</p>
-							<p>Time:  @item.DayOfWeek @item.TimeSpan</p>
-							<p>Room:  @item.Room</p>
-							@*<i type="button" class="btn btn-primary" onclick="Edit(@item.ID)">Edit Class</i>*@
-						</div>
-                    </div>
-                </div>
-            }
-        }
+	<div class="row" id="myList">
+		@if (Model != null)
+		{
+			foreach (var item in Model)
+			{
+		<div class="col-sm-6 col-md-3">
+			<div class="thumbnail">
+				<div class="caption">
+					<h3><strong><a href="~/Attendance/manageClass/@item.ID">@item.CourseName</a></strong></h3>
+					<p>Lecturer: @item.Lecturer</p>
+					<p>Time:  @item.DayOfWeek @item.TimeSpan</p>
+					<p>Room:  @item.Room</p>
+					@*<i type="button" class="btn btn-primary" onclick="Edit(@item.ID)">Edit Class</i>*@
+				</div>
+			</div>
+		</div>
+			}
+		}
 
-    </div>
+	</div>
 
 </div>
 <div class="text-center">

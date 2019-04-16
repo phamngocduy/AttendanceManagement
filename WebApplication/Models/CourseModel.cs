@@ -7,7 +7,7 @@ namespace WebApplication.Models
 {
 	public class CourseModel
 	{
-		public string Semester { get; set; }
+		public int Semester { get; set; }
 		public List<CourseData> Courses { get; set; }
 		
 	}

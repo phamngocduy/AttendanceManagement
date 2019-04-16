@@ -11,7 +11,7 @@ namespace WebApplication.Controllers
 	[Authorize]
 	public class AttendanceController : Controller
 	{
-		cap21t4Entities db = new cap21t4Entities();
+		AttendanceEntities db = new AttendanceEntities();
 		// GET: Attendance
 		public ActionResult Index()
 		{
@@ -26,61 +26,61 @@ namespace WebApplication.Controllers
 			return View();
 		}
 
-		public ActionResult CreateClassView()
-		{
-			return PartialView("CreateClassView");
-		}
+		//public ActionResult CreateClassView()
+		//{
+		//	return PartialView("CreateClassView");
+		//}
 
-		[HttpPost]
-		public ActionResult CreateClass(Class Class)
-		{
-			if (ModelState.IsValid)
-			{
-				Class nClass = new Class();
-				nClass.ClassName = Class.ClassName;
-				nClass.StartDate = Class.StartDate;
-				nClass.CreatedDate = DateTime.Now.Date;
-				nClass.CreatedBy = User.Identity.Name;
-				db.Classes.Add(nClass);
-				db.SaveChanges();
-				return RedirectToAction("manageClass");
-			}
-			return RedirectToAction("Index");
+		//[HttpPost]
+		//public ActionResult CreateClass(Class Class)
+		//{
+		//	if (ModelState.IsValid)
+		//	{
+		//		Class nClass = new Class();
+		//		nClass.ClassName = Class.ClassName;
+		//		nClass.StartDate = Class.StartDate;
+		//		nClass.CreatedDate = DateTime.Now.Date;
+		//		nClass.CreatedBy = User.Identity.Name;
+		//		db.Classes.Add(nClass);
+		//		db.SaveChanges();
+		//		return RedirectToAction("manageClass");
+		//	}
+		//	return RedirectToAction("Index");
 
-		}
+		//}
 
-		public ActionResult Edit(string id)
-		{
-			var ClassID = int.Parse(id);
-			var editClass = db.Classes.FirstOrDefault(x => x.ID == ClassID);
-			return PartialView("EditClassView", editClass);
-		}
+		//public ActionResult Edit(string id)
+		//{
+		//	var ClassID = int.Parse(id);
+		//	var editClass = db.Classes.FirstOrDefault(x => x.ID == ClassID);
+		//	return PartialView("EditClassView", editClass);
+		//}
 
-		[HttpPost]
-		public ActionResult Edit(Class editClass)
-		{
-			var eClass = db.Classes.FirstOrDefault(x => x.ID == editClass.ID);
+		//[HttpPost]
+		//public ActionResult Edit(Class editClass)
+		//{
+		//	var eClass = db.Classes.FirstOrDefault(x => x.ID == editClass.ID);
 
-			if (ModelState.IsValid)
-			{
-				eClass.StartDate = editClass.StartDate;
-				eClass.Description = editClass.Description;
-				eClass.ModifiedBy = User.Identity.Name;
-				eClass.ModifiedDate = DateTime.Now.Date;
-				db.SaveChanges();
-			}
-			return RedirectToAction("Index");
+		//	if (ModelState.IsValid)
+		//	{
+		//		eClass.StartDate = editClass.StartDate;
+		//		eClass.Description = editClass.Description;
+		//		eClass.ModifiedBy = User.Identity.Name;
+		//		eClass.ModifiedDate = DateTime.Now.Date;
+		//		db.SaveChanges();
+		//	}
+		//	return RedirectToAction("Index");
 
-		}
+		//}
 		public ActionResult manageClass()
 		{
-			var user = db.Users.ToList();
+			var user = db.CourseMembers.ToList();
 			ViewData["students"] = user;
 			return View();
 		}
 		public ActionResult ManageStudent()
 		{
-			var user = db.Users.ToList();
+			var user = db.CourseMembers.ToList();
 			ViewBag.User = user;
 			return View();
 		}
@@ -132,8 +132,7 @@ namespace WebApplication.Controllers
 			return View();
 		}
 		public ActionResult MajorList()
-		{
-			SynMajor();
+		{ 
 			var major = db.Majors.ToList();
 			return View(major);
 		}
@@ -159,40 +158,58 @@ namespace WebApplication.Controllers
 			//APIController api = new APIController();
 			//string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getCourses");
 			//CourseModel course = JsonConvert.DeserializeObject<CourseModel>(data);
-			SynCourse();
 			var course = db.Courses.ToList();
 			return View(course);
 		}
-
-		public void SynCourse()
+		public ActionResult AddStudent()
+		{
+			return View();
+		}
+		public ActionResult SynCourse()
 		{
 			APIController api = new APIController();
 			string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getCourses");
 			CourseModel course = JsonConvert.DeserializeObject<CourseModel>(data);
 			foreach (var item in course.Courses)
 			{
-				if (db.Courses.FirstOrDefault(x => x.Code == item.Code) == null)
+				var SynCourse = db.Courses.FirstOrDefault(x => x.Code == item.Code && x.Type1 == item.Type1 && x.Type2 == item.Type2);
+				if (SynCourse == null)
 				{
 					Course newCourse = new Course();
 					newCourse.Code = item.Code;
 					newCourse.CourseName = item.Name;
-					newCourse.Type = item.Type;
-					newCourse.Major = item.Major;
+					newCourse.Type1 = item.Type1;
+					newCourse.Type2 = item.Type2;
+					newCourse.Major = db.Majors.FirstOrDefault(x => x.Code == item.Major).ID;
+					newCourse.Credit = item.Credit;
 					newCourse.Lecturer = item.Lecturer;
 					newCourse.Students = item.Students;
 					newCourse.DayOfWeek = item.DayOfWeek;
 					newCourse.TimeSpan = item.TimeSpan;
 					newCourse.Periods = item.Periods;
 					newCourse.Room = item.Room;
+					newCourse.Semester = course.Semester;
 					db.Courses.Add(newCourse);
-					db.SaveChanges();
+				}
+				else
+				{
+					SynCourse.Code = item.Code;
+					SynCourse.CourseName = item.Name;
+					SynCourse.Type1 = item.Type1;
+					SynCourse.Type2 = item.Type2;
+					SynCourse.Major = db.Majors.FirstOrDefault(x => x.Code == item.Major).ID;
+					SynCourse.Credit = item.Credit;
+					SynCourse.Lecturer = item.Lecturer;
+					SynCourse.Students = item.Students;
+					SynCourse.DayOfWeek = item.DayOfWeek;
+					SynCourse.TimeSpan = item.TimeSpan;
+					SynCourse.Periods = item.Periods;
+					SynCourse.Room = item.Room;
+					SynCourse.Semester = course.Semester;
 				}
 			}
-
-		}
-		public ActionResult AddStudent()
-		{
-			return View();
+			db.SaveChanges();
+			return RedirectToAction("Index");
 		}
 	}
 }

@@ -20,6 +20,7 @@ namespace WebApplication.Models
             this.Courses = new HashSet<Course>();
         }
     
+        public int ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public Nullable<int> FacultyID { get; set; }

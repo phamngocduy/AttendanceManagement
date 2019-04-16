@@ -112,6 +112,7 @@ namespace WebApplication.Controllers
 			var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
 			var memberlist = group.Users.ToList();
 			ViewBag.Owner = group.Users1.ToList();
+			ViewBag.GroupManager = group.Group11.ToList();
 			return View(memberlist);
 		}
 
@@ -401,6 +402,23 @@ namespace WebApplication.Controllers
 			group.Users1.Add(user);
 			db.SaveChanges();
 			return RedirectToAction("Detail", new { id = groupID });
+		}
+		[HttpGet]
+		public ActionResult AddGroupManager()
+		{
+			var group = db.Groups.Where(x => x.GroupParent != null);
+			return View(group);
+		}
+		[HttpPost]
+		public ActionResult AddGroupManager(string groupID)
+		{
+			int addgroupID = int.Parse(groupID);
+			var addGroup = db.Groups.FirstOrDefault(x => x.ID == addgroupID);
+			int editgroupID = int.Parse(Session["GroupID"].ToString());
+			var group = db.Groups.FirstOrDefault(x => x.ID == editgroupID);
+			group.Group11.Add(addGroup);
+			db.SaveChanges();
+			return RedirectToAction("Detail", new { id = editgroupID });
 		}
 	}
 }
