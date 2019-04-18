@@ -297,6 +297,17 @@ namespace WebApplication.Tests.Controllers
             await controller.InsertExcelData();
 
         }
+        [TestMethod]
+        public void TestAddGroupOwner()
+        {
+            var email = "duykhau1@vanlanguni.vn";
+            var groupID = 101;
+            var db = new cap21t4Entities();
+            GroupController controller2 = new GroupController();
+            var group = db.Groups.FirstOrDefault(y => y.ID == groupID);
+            var newOwner = group.Users1;
+            Assert.IsNotNull(newOwner);
+        }
     }
 }
 
