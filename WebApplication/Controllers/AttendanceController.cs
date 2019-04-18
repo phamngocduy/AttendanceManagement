@@ -16,9 +16,7 @@ namespace WebApplication.Controllers
 		// GET: Attendance
 		public ActionResult Index()
 		{
-		
 			var courselist = db.Courses.ToList();
-	
 			return View(courselist);
 
 		}

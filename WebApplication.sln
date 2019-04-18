@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManagement", "LoginMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManagementTest", "LoginManagementTest\LoginManagementTest.csproj", "{CF3B039D-16EA-4778-95F1-8EE602E9BC74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{D616CFD5-B4C4-488C-81A1-9FB0205C3413}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1.Tests", "WebApplication1.Tests\WebApplication1.Tests.csproj", "{3CF87ED4-7199-4172-BBF7-896FED2F952B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D616CFD5-B4C4-488C-81A1-9FB0205C3413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D616CFD5-B4C4-488C-81A1-9FB0205C3413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D616CFD5-B4C4-488C-81A1-9FB0205C3413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D616CFD5-B4C4-488C-81A1-9FB0205C3413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CF87ED4-7199-4172-BBF7-896FED2F952B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CF87ED4-7199-4172-BBF7-896FED2F952B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CF87ED4-7199-4172-BBF7-896FED2F952B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CF87ED4-7199-4172-BBF7-896FED2F952B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

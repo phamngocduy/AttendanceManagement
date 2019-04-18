@@ -92,8 +92,8 @@
 								<li>
 									<a><i class="fa fa-table"></i> Attendance <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="tables.html">Attendance with class</a></li>
-										<li><a href="tables_dynamic.html">Attendance with group</a></li>
+										<li><a href="~/Attendance/Index">My Class</a></li>
+
 									</ul>
 								</li>
 								<li>
@@ -110,12 +110,13 @@
 										<ul class="nav child_menu">
 											<li>@Html.ActionLink("Majors List", "MajorList", "Attendance")</li>
 											<li>@Html.ActionLink("Facultys List", "FacultyIndex", "Attendance")</li>
-											<li>@Html.ActionLink("Courses List", "UserRole", "Users")</li>
+											<li>@Html.ActionLink("Courses List", "CourseList", "Attendance")</li>
 											<li>@Html.ActionLink("All users", "Index", "Users")</li>
 											<li>@Html.ActionLink("Role Management", "UserRole", "Users")</li>
 										</ul>
 									</li>
 								}
+
 
 							</ul>
 						</div>

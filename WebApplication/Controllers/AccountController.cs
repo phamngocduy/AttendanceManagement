@@ -105,7 +105,10 @@ namespace WebApplication.Controllers
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
-
+		//public int FacultyID(string email)
+		//{
+		//	var groupID = db.Groups.
+		//}
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
