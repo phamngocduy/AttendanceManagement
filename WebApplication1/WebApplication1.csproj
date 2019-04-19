@@ -291,11 +291,6 @@
     <Content Include="Content\assets\plugins\bootstrap\js\popper.min.js" />
     <Content Include="Content\assets\plugins\c3-master\c3.min.css" />
     <Content Include="Content\assets\plugins\c3-master\c3.min.js" />
-    <Content Include="Content\assets\plugins\chartist-js\dist\chartist-init.css" />
-    <Content Include="Content\assets\plugins\chartist-js\dist\chartist.min.css" />
-    <Content Include="Content\assets\plugins\chartist-js\dist\chartist.min.js" />
-    <Content Include="Content\assets\plugins\chartist-plugin-tooltip-master\dist\chartist-plugin-tooltip.css" />
-    <Content Include="Content\assets\plugins\chartist-plugin-tooltip-master\dist\chartist-plugin-tooltip.min.js" />
     <Content Include="Content\assets\plugins\d3\d3.min.js" />
     <Content Include="Content\assets\plugins\jquery\jquery.min.js" />
     <Content Include="Content\assets\plugins\sparkline\jquery.sparkline.min.js" />

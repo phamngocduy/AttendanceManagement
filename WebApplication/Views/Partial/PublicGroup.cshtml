@@ -1,9 +1,16 @@
 ﻿@using WebApplication.Helpers
 @using WebApplication.Models
+
+@{
+	ViewBag.Title = "Index";
+	Layout = null;
+}
 @section head{
 	@Styles.Render("~/Content/Tree.css")
 }
-
+@section scripts{
+	@Scripts.Render("~/Scripts/tree.js")
+}
 @model List<Group>
 @for (var i = 0; i < Model.Count; i++)
 {
@@ -21,7 +28,7 @@
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
 						</div>
-						<a class="a-with-children" href="#@ahref" data-toggle="collapse">
+						<a class="a-with-children" href="#@ahref" data-toggle="collapse" aria-expanded="false">
 							@Html.CheckBox(@Model[i].GroupName, false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
 							<label for=@Model[i].ID>
 								@Html.DisplayFor(list => list[i].GroupName)
@@ -58,7 +65,6 @@
 		}
 		else
 		{
-
 			if (Model[i].Group1.Count > 0)
 			{
 				var ahref = "hide" + @Model[i].ID;
@@ -72,7 +78,7 @@
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
 						</div>
-						<a class="a-with-children" href="#@ahref" data-toggle="collapse">
+						<a class="a-with-children" href="#@ahref" data-toggle="collapse" aria-expanded="false">
 							@Html.CheckBox(@Model[i].GroupName, false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
 							<label for=@Model[i].ID>
 								@Html.DisplayFor(list => list[i].GroupName)
@@ -111,7 +117,4 @@
 			}
 		}
 	}
-}
-@section scripts{
-	@Scripts.Render("~/Scripts/tree.js")
 }
