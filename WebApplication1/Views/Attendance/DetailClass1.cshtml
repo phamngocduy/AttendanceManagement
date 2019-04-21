@@ -50,6 +50,8 @@
 
     </div>
 
+
+    <!--Dashboard-->
     <div class="row clearfix tabcontent" id="Dashboard">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -91,8 +93,21 @@
                                     <td>T150730</td>
                                     <td>Nguyễn Văn A</td>
                                     <td>02-01-1997</td>
-                                    <td align="center"><input type="checkbox" /></td>
-                                    <td contenteditable="true"></td>
+                                    <td align="center"><input type="checkbox" id="myCheck1" onclick="myFunction()" /></td>
+                                    <td>
+
+                                        <div class="dropdown" id="text1" style="display:none">
+                                            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                1
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a tabindex="-1" href="#">1</a></li>
+                                                <li><a tabindex="-1" href="#">2</a></li>
+                                                <li><a tabindex="-1" href="#">3</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td contenteditable="true"></td>
 
                                 </tr>
@@ -101,8 +116,21 @@
                                     <td>T150730</td>
                                     <td>Nguyễn Văn B</td>
                                     <td>02-01-1997</td>
-                                    <td align="center"><input type="checkbox" /></td>
-                                    <td contenteditable="true"></td>
+                                    <td align="center"><input type="checkbox" id="myCheck2" onclick="myFunction()" /></td>
+                                    <td>
+
+                                        <div class="dropdown" id="text2" style="display:none">
+                                            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                1
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a tabindex="-1" href="#">1</a></li>
+                                                <li><a tabindex="-1" href="#">2</a></li>
+                                                <li><a tabindex="-1" href="#">3</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td contenteditable="true"></td>
 
 
@@ -112,8 +140,21 @@
                                     <td>T150730</td>
                                     <td>Nguyễn Văn A</td>
                                     <td>02-01-1997</td>
-                                    <td align="center"><input type="checkbox" /></td>
-                                    <td contenteditable="true"></td>
+                                    <td align="center"><input type="checkbox" id="myCheck3" onclick="myFunction()" /></td>
+                                    <td>
+
+                                        <div class="dropdown" id="text3" style="display:none">
+                                            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                1
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a tabindex="-1" href="#">1</a></li>
+                                                <li><a tabindex="-1" href="#">2</a></li>
+                                                <li><a tabindex="-1" href="#">3</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td contenteditable="true"></td>
 
 
@@ -123,8 +164,21 @@
                                     <td>T150730</td>
                                     <td>Nguyễn Văn B</td>
                                     <td>02-01-1997</td>
-                                    <td align="center"><input type="checkbox" /></td>
-                                    <td contenteditable="true"></td>
+                                    <td align="center"><input type="checkbox" id="myCheck4" onclick="myFunction()" /></td>
+                                    <td>
+
+                                        <div class="dropdown" id="text4" style="display:none">
+                                            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                1
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a tabindex="-1" href="#">1</a></li>
+                                                <li><a tabindex="-1" href="#">2</a></li>
+                                                <li><a tabindex="-1" href="#">3</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td contenteditable="true"></td>
 
 
@@ -139,6 +193,8 @@
         </div>
     </div>
 
+
+    <!--Students-->
     <div class="row clearfix tabcontent" id="Students">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -578,6 +634,164 @@
             </div>
         </div>
     </div>
+
+    <!--Attendance-->
+    <div class="row clearfix tabcontent" id="Attendance">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        STUDENTS
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="javascript:void(0);">Action</a></li>
+                                <li><a href="javascript:void(0);">Another action</a></li>
+                                <li><a href="javascript:void(0);">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Name</th>
+                                    <th>MSSV</th>
+                                    <th>25/2</th>
+                                    <th>27/2</th>
+                                    <th>29/2</th>
+                                    <th>2/3</th>
+                                    <th>5/3</th>
+                                    <th>7/3</th>
+                                    <th>9/3</th>
+                                    <th>11/3</th>
+                                    <th>13/3</th>
+                                    <th>15/3</th>
+                                    <th>17/3</th>
+                                    <th>19/3</th>
+                                    <th>21/3</th>
+                                    <th>Total absent</th>
+                                    <th>Total attend</th>
+                                    <th>Total point</th>
+                                    <th>Note</th>
+
+
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>1</th>
+                                    <th>Nguyễn Văn A</th>
+                                    <th>T150730</th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" unchecked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th align="center">2</th>
+                                    <th align="center">11</th>
+                                    <th align="center">7</th>
+                                    <th></th>
+
+
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr>
+                                    <th>2</th>
+                                    <th>Nguyễn Văn B</th>
+                                    <th>T150731</th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" unchecked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" unchecked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th align="center">3</th>
+                                    <th align="center">10</th>
+                                    <th align="center">10</th>
+                                    <th></th>
+
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+                                    <th>Nguyễn Văn C</th>
+                                    <th>T150732</th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" unchecked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" unchecked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" unchecked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th align="center">2</th>
+                                    <th align="center">11</th>
+                                    <th align="center">-2</th>
+                                    <th></th>
+
+
+                                </tr>
+                                <tr>
+                                    <th>4</th>
+                                    <th>Nguyễn Văn D</th>
+                                    <th>T150734</th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" unchecked disabled /></th>
+                                    <th><input type="checkbox" unchecked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th><input type="checkbox" checked disabled /></th>
+                                    <th align="center">1</th>
+                                    <th align="center">12</th>
+                                    <th align="center">6</th>
+                                    <th></th>
+
+                                </tr>
+                               
+                               
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts{
@@ -608,8 +822,60 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+        function myFunction() {
+            // Get the checkbox
+            var checkBox = document.getElementById("myCheck1");
+            // Get the output text
+            var text = document.getElementById("text1");
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true) {
+                text.style.display = "block";
+            } else {
+                text.style.display = "none";
+            }
+            var checkBox = document.getElementById("myCheck2");
+            // Get the output text
+            var text = document.getElementById("text2");
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true) {
+                text.style.display = "block";
+            } else {
+                text.style.display = "none";
+            }
+            var checkBox = document.getElementById("myCheck3");
+            // Get the output text
+            var text = document.getElementById("text3");
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true) {
+                text.style.display = "block";
+            } else {
+                text.style.display = "none";
+            }
+            var checkBox = document.getElementById("myCheck4");
+            // Get the output text
+            var text = document.getElementById("text4");
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true) {
+                text.style.display = "block";
+            } else {
+                text.style.display = "none";
+            }
+        }
+
+        $(function () {
+
+            $(".dropdown-menu li a").click(function () {
+                $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+                $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+            });
+
+        });
     </script>
 
-    
+
 
 }

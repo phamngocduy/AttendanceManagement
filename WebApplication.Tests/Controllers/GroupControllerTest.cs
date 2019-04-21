@@ -308,6 +308,32 @@ namespace WebApplication.Tests.Controllers
             var newOwner = group.Users1;
             Assert.IsNotNull(newOwner);
         }
+
+        [TestMethod]
+        public void TestAddGroupSuccessfully()
+        {
+
+            //Arange
+            var controller = new GroupController();
+            var user = new Group();
+            var db = new cap21t4Entities();
+            var group = new Group()
+            {
+                ID = 9999,
+                GroupName = "Cap team 4",
+                GroupType = false,
+                GroupDescription = "test",
+                GroupParent = 76,
+                CreatedDate = DateTime.Now
+
+            };
+
+            db.Groups.Add(group);
+            Assert.IsNotNull(group);
+
+        }
+
+
     }
 }
 
