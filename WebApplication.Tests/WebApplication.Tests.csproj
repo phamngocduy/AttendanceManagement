@@ -122,9 +122,9 @@
     <None Include="Word.docx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebApplication\WebApplication.csproj">
+    <ProjectReference Include="..\GroupManagement\GroupManagement.csproj">
       <Project>{07253FA2-38B3-4CC7-9588-5BF3B6CB599E}</Project>
-      <Name>WebApplication</Name>
+      <Name>GroupManagement</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

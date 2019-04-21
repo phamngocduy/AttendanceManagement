@@ -1,0 +1,70 @@
+﻿@using WebApplication.Models
+@model WebApplication.Models.Group
+
+@{
+	ViewBag.Title = "Create Group";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+	var parentID = (int)ViewBag.ParentID;
+	var parentName = (string)ViewBag.ParentName;
+	var grouptype = (bool)ViewBag.GroupType;
+}
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card card-outline-danger">
+			<div class="card-header">
+				<h4 class="m-b-0 text-white">@WebApplication.Resources.Resource.Group</h4>
+			</div>
+			<div class="card-body">
+				<form action="~/Group/CreateGroup" method="post">
+					<div class="form-body">
+						<h3 class="card-title">Create new group</h3>
+						<hr>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Group Name</label>
+								<input type="text" name="GroupName" class="form-control">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Group Description</label>
+								<input type="text" name="GroupDescription" class="form-control">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Group Type</label>
+								<select class="form-control" name="GroupType" disabled>
+									@if (grouptype == true)
+									{
+										<option  value="@grouptype">Public Group</option>
+									}
+									else
+									{
+										<option  value="@grouptype">Private Group</option>
+									}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Group parent</label>
+								<select class="form-control" name="GroupParent" disabled>
+									<option  value="@parentID">@parentName</option>
+								</select>
+							</div>
+						</div>
+						@Html.HiddenFor(m => m.GroupParent, new { Value = parentID })
+						@Html.HiddenFor(m => m.GroupType, new { Value = grouptype })
+						<div class="form-actions">
+							<button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Create</button>
+							@Html.ActionLink("Canel", "Index", null, new { @class = "btn btn-inverse" })
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

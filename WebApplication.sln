@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{07253FA2-38B3-4CC7-9588-5BF3B6CB599E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupManagement", "GroupManagement\GroupManagement.csproj", "{07253FA2-38B3-4CC7-9588-5BF3B6CB599E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication.Tests", "WebApplication.Tests\WebApplication.Tests.csproj", "{D0C187E6-C985-4F13-9818-04F9B571CD11}"
 EndProject
