@@ -1,0 +1,77 @@
+﻿@model WebApplication.Models.Class
+
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+
+<div>
+	<form id="myForm" method="post" action="~/Attendance/CreateClass">
+		<div class="row">
+			<div class="col-md-4">
+				<p class="clearfix">
+					<i class="fa fa-book fa-2x text-primary pull-left"></i> Class name
+				</p>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="ClassName" class="form-control ui-wizard-content" placeholder="Your class">
+			</div>
+		</div>
+		<hr />
+		<!--Calendar-->
+		<div class="row">
+			<div class="col-md-4">
+				<p class="clearfix">
+					<i class=" fa fa-calendar fa-2x text-primary pull-left"></i> Start date
+				</p>
+			</div>
+			<div class="col-md-6">
+				<div class="input-group date" data-date-format="dd.mm.yyyy">
+					<input type="text" name="StartDate" class="form-control" placeholder="dd.mm.yyyy">
+					<div class="input-group-addon">
+						<span class="glyphicon glyphicon-th"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<hr />
+		<!--Description-->
+		<div class="row">
+			<div class="col-md-4">
+				<p class="clearfix">
+					<i class=" fa fa-pencil-square-o fa-2x text-primary pull-left"></i> Description
+				</p>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<textarea class="form-control" rows="3" name="Description" placeholder="Description...."></textarea>
+				</div>
+			</div>
+		</div>
+
+
+		<hr />
+		<!--Submit-->
+		<div>
+			<p class="clearfix">
+				<i class="fa fa-check fa-3x text-primary pull-left"></i>
+				"Click Submit to create your <strong>class</strong><br />
+				Then you'll be ready to immediately take attendance!<br />
+				Or continue managing your <strong>class</strong>
+			</p>
+		</div>
+		<div class="row">
+			<div class="col-md-7 col-md-offset-5">
+				<button type="button" class="btn btn-sm btn-primary ui-wizard-content" onclick="Clean"> Clean</button>
+
+				<input type="submit" class="btn btn-sm btn-primary ui-wizard-content" value="Create" />
+			</div>
+		</div>
+	</form>
+</div>
+<!--datepicker-->
+<script>
+	$('.input-group.date').datepicker({
+		format: "dd/mm/yyyy",
+		autoclose: true
+	});
+</script>

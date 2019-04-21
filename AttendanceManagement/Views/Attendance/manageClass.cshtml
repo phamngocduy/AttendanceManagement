@@ -1,0 +1,175 @@
+﻿@model WebApplication.Models.CourseMember
+@{
+	ViewBag.Title = "manageClass";
+	Layout = "~/Views/Shared/_LayoutTable.cshtml";
+}
+<link href="~/Content/Attendance.css" rel="stylesheet" />
+<link href="~/Scripts/wizard/Wizard.css" rel="stylesheet" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+	#but {
+		float: left;
+		margin-left: 10%;
+		height: 40px;
+		font-size: 25px;
+	}
+
+	#a {
+		height: 80px;
+		border-radius: 10px;
+	}
+
+	#span {
+		color: white;
+	}
+
+	#li {
+		width: 300px;
+		height: 100px;
+	}
+
+	#a {
+		border: 1px solid none;
+		font-size: 30px;
+		color: white;
+		height: 90%;
+	}
+
+	#lab {
+		font-size: 20px;
+	}
+
+	#label {
+		font-size: 20px;
+	}
+
+	#Name {
+		width: 60%;
+		height: 25px;
+	}
+
+	.avatar {
+		vertical-align: middle;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+	}
+
+	.col-6 {
+		width: 100%;
+	}
+
+	#session {
+		width: 140px;
+		background-color: darksalmon;
+		height: 60px;
+		font-size: 25px;
+		border-radius: 10px;
+	}
+</style>
+<div class="fixed-header row">
+	<div class="col-md-4 col-xs-6 header-left">
+		<h3><strong>Capston Team 04</strong></h3>
+	</div>
+</div>
+<div class="row">
+
+	<div class="container">
+		<div class="col-lg-12" style="margin-top:20px">
+			<ul class="nav nav-tabs">
+				<li class="active" id="li"><a data-toggle="tab" href="#home" id="a" style="background-color:tomato"><span id="theme" class="themed" style="background-color:#e74c3c !important;"> <i class="fa fa-book"></i></span><div>Dashboard</div></a></li>
+				<li id="li"><a data-toggle="tab" href="#menu1" id="a" style="background-color:darkolivegreen"><span id="theme" class="themed" style="background-color:#27ae60 !important"> <i class="fa fa-user"></i></span>Students</a></li>
+				<li id="li"><a data-toggle="tab" href="#menu2" id="a" style="background-color:#8d52ab"><span id="theme" class="themed" style="background-color:#af64aa !important"> <i class="fa fa-check-square-o"></i></span>Session</a></li>
+				<li id="li"><a data-toggle="tab" href="#menu3" id="a" style="background-color:chocolate"><span id="theme" class="themed" style="background-color:#e67e22 !important;"> <i class="fa fa-pencil-square-o"></i></span>Attendance</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<div id="menu1" class="tab-pane fade in active">
+					@{ Html.RenderPartial("~/Views/Attendance/StudentList.cshtml", ViewData["students"]); }
+				</div>
+				<div id="home" class="tab-pane fade">
+					<div class="fixed-header row" style="background-color:white">
+						<div class="col-md-4 col-xs-6 header-left">
+							<h3><strong style="color:black">My Students</strong></h3>
+						</div>
+					</div>
+				</div>
+				<div id="menu2" class="tab-pane fade">
+					<div class="fixed-header row" style="background-color:white">
+						<div class="col-md-4 col-xs-6 header-left">
+							<h3><strong style="color:black">My Session</strong></h3>
+						</div>
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title" style="color:black;font-size:30px"><strong>My Session</strong></h4>
+							</div>
+
+							<div class="modal-body">
+								<!--total week-->
+								<div class="row">
+									<div class="col-md-4">
+										<p class="clearfix" id="lab">
+											<i class="fa fa-calendar fa-2x text-primary pull-left" id="icon"></i> total week
+										</p>
+									</div>
+									<div class="col-md-6">
+										<input type="text" class="form-control ui-wizard-content" placeholder="total week...">
+									</div>
+								</div>
+
+								<hr />
+								<!--choose session for a week-->
+								<div class="row">
+									<div class="col-md-4">
+										<p class="clearfix" id="lab">
+											<i class=" fa fa-calendar-check-o fa-2x text-primary pull-left" id="icon"></i> choose session for a week
+										</p>
+									</div>
+									<div class="col-md-6">
+										<div class="weekdays-selector">
+											<input type="checkbox" id="weekday-mon" class="weekday" />
+											<label for="weekday-mon">t2</label>
+											<input type="checkbox" id="weekday-tue" class="weekday" />
+											<label for="weekday-tue">t3</label>
+											<input type="checkbox" id="weekday-wed" class="weekday" />
+											<label for="weekday-wed">t4</label>
+											<input type="checkbox" id="weekday-thu" class="weekday" />
+											<label for="weekday-thu">t5</label>
+											<input type="checkbox" id="weekday-fri" class="weekday" />
+											<label for="weekday-fri">t6</label>
+											<input type="checkbox" id="weekday-sat" class="weekday" />
+											<label for="weekday-sat">t7</label>
+											<input style="margin-left:20px; border-radius:10px; width:300px; border-color:aqua" type="date" class="weekday" />
+										</div>
+									</div>
+								</div>
+								<hr />
+								<!--submit-->
+
+								<div class="row">
+									<div class="col-md-7 col-md-offset-5">
+										<button id="session" type="button" class="btn btn-sm btn-primary ui-wizard-content"> Clean</button>
+										<button id="session" type="button" class="btn btn-sm btn-primary ui-wizard-content"> Submit</button>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div id="menu3" class="tab-pane fade">
+					<div class="fixed-header row" style="background-color:white">
+						<div class="col-md-4 col-xs-6 header-left">
+							<h3><strong style="color:black">Attendance</strong></h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--dialog manage session-->

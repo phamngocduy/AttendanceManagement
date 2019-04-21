@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupManagement", "GroupManagement\GroupManagement.csproj", "{07253FA2-38B3-4CC7-9588-5BF3B6CB599E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication.Tests", "WebApplication.Tests\WebApplication.Tests.csproj", "{D0C187E6-C985-4F13-9818-04F9B571CD11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupManagement.Tests", "GroupManagement.Tests\GroupManagement.Tests.csproj", "{D0C187E6-C985-4F13-9818-04F9B571CD11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Owin.Security.VanLang", "Microsoft.Owin.Security.VanLang\Microsoft.Owin.Security.VanLang.csproj", "{5CACFEDD-6577-4E5F-A047-0E320A17A353}"
 EndProject
@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManagement", "LoginMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManagementTest", "LoginManagementTest\LoginManagementTest.csproj", "{CF3B039D-16EA-4778-95F1-8EE602E9BC74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{D616CFD5-B4C4-488C-81A1-9FB0205C3413}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttendanceManagement", "AttendanceManagement\AttendanceManagement.csproj", "{C85F3758-6A04-4348-BD19-5D6B90B62356}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1.Tests", "WebApplication1.Tests\WebApplication1.Tests.csproj", "{3CF87ED4-7199-4172-BBF7-896FED2F952B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttendanceManagement.Tests", "AttendanceManagement.Tests\AttendanceManagement.Tests.csproj", "{7FDE85CD-D9E8-4A24-AC33-291A1263FE44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +43,14 @@ Global
 		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF3B039D-16EA-4778-95F1-8EE602E9BC74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D616CFD5-B4C4-488C-81A1-9FB0205C3413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D616CFD5-B4C4-488C-81A1-9FB0205C3413}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D616CFD5-B4C4-488C-81A1-9FB0205C3413}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D616CFD5-B4C4-488C-81A1-9FB0205C3413}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CF87ED4-7199-4172-BBF7-896FED2F952B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CF87ED4-7199-4172-BBF7-896FED2F952B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CF87ED4-7199-4172-BBF7-896FED2F952B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CF87ED4-7199-4172-BBF7-896FED2F952B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C85F3758-6A04-4348-BD19-5D6B90B62356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C85F3758-6A04-4348-BD19-5D6B90B62356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C85F3758-6A04-4348-BD19-5D6B90B62356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C85F3758-6A04-4348-BD19-5D6B90B62356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FDE85CD-D9E8-4A24-AC33-291A1263FE44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FDE85CD-D9E8-4A24-AC33-291A1263FE44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FDE85CD-D9E8-4A24-AC33-291A1263FE44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FDE85CD-D9E8-4A24-AC33-291A1263FE44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
