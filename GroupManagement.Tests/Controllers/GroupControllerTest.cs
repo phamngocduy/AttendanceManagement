@@ -300,15 +300,27 @@ namespace WebApplication.Tests.Controllers
         [TestMethod]
         public void TestAddGroupOwner()
         {
-            var email = "duykhau1@vanlanguni.vn";
-            var groupID = 101;
+            var GroupID = 1;
+            TestControllerBuilder builder = new TestControllerBuilder();
+            GroupController controller = new GroupController();
+            builder.InitializeController(controller);
+            var controllerContext = new Mock<ControllerContext>();
+            var session = new Mock<HttpSessionStateBase>();
+            var mockHttpContext = new Mock<HttpContextBase>();
+            //get session        
+            mockHttpContext.Setup(ctx => ctx.Session).Returns(session.Object);
+            controllerContext.Setup(ctx => ctx.HttpContext).Returns(mockHttpContext.Object);
+            controllerContext.Setup(p => p.HttpContext.Session["GroupID"]).Returns(GroupID);
+            controller.ControllerContext = controllerContext.Object;
+            var group = new Group();
             var db = new cap21t4Entities();
-            GroupController controller2 = new GroupController();
-            var group = db.Groups.FirstOrDefault(y => y.ID == groupID);
-            var newOwner = group.Users1;
-            Assert.IsNotNull(newOwner);
-        }
+            using (var scope = new TransactionScope())
+            {
+                var result1 = controller.AddGroupOwner(db.Groups.First().ID.ToString("1")) as RedirectResult;
+                Assert.IsNull(result1);
+            }
 
+        }
         [TestMethod]
         public void TestAddGroupSuccessfully()
         {

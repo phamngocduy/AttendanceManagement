@@ -57,7 +57,7 @@ namespace WebApplication.Controllers
                 TempData["SuccessMessage"] = "Created a new group successfully!";
                 return RedirectToAction("Index");
             }
-            TempData["ErrorMessage"] = "Group name or Group description cannot be empty!";
+            TempData["ErrorMessage"] = "Group name cannot be empty!";
             return RedirectToAction("Create");
 
         }
@@ -376,7 +376,7 @@ namespace WebApplication.Controllers
                 TempData["SuccessMessage"] = "Edited a group successfully!";
                 return RedirectToAction("Index");
             }
-            TempData["ErrorMessage"] = "Group name or Group description cannot be empty!";
+            TempData["ErrorMessage"] = "Group name cannot be empty!";
             return RedirectToAction("Edit");
         }
 
