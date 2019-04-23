@@ -67,7 +67,7 @@ app.service("Excelservice", function ($http) {
     this.InsertToDB = function () {
         var request = $http({
             method: "get",
-            url: '/Group/InsertExcelData',
+			url: '/Group/InsertExcelData',
             data: {},
             datatype: 'json'
         });

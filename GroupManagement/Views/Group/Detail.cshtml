@@ -53,14 +53,14 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<h4><strong>Group Owner:</strong></h4>
-					<ul>
-						@foreach (var item in OwnerModel)
-						{
-							<li>
-								@item.FullName
-							</li>
-						}
-					</ul>
+				<ul>
+					@foreach (var item in OwnerModel)
+					{
+						<li>
+							@item.FullName
+						</li>
+					}
+				</ul>
 			</div>
 			<div class="col-lg-6">
 				<h4><strong>Group Manager:</strong></h4>
@@ -115,6 +115,48 @@
 		</div>
 	</div>
 </div>
+<script src="~/Content/assets/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#example23').DataTable({
+			paging: false,
+			dom: 'Bfrtip',
+			buttons: [
+				'copy', 'excel', 'pdf', 'print'
+			]
+		});
+		var table = $('#example23').DataTable();
+		table.button().add(0, {
+			action: function (e, dt, button, config) {
+				var url = "/GroupManagement/Group/AddGroupManager";
+				$("#ModalAddManager").load(url, function () {
+					$("#myAddManager").modal("show");
+				})
+			},
+			text: 'add group'
+		});
+		table.button().add(0, {
+			action: function (e, dt, button, config) {
+				var url = "/GroupManagement/Group/AddGroupOwner";
+				$("#ModalAddOwner").load(url, function () {
+					$("#myAddOwner").modal("show");
+				})
+			},
+			text: 'add owner'
+		});
+		table.button().add(0, {
+			action: function (e, dt, button, config) {
+				window.location = '/GroupManagement/Group/Import/@Session["GroupID"]';
+			},
+			text: 'import'
+		}); table.button().add(0, {
+			action: function (e, dt, button, config) {
+				window.location = '/GroupManagement/Group';
+			},
+			text: 'back'
+		});
+	})
+</script>
 
 
 

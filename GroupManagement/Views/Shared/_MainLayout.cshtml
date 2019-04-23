@@ -135,7 +135,7 @@
 									<ul class="dropdown-user">
 										<li>
 											<div class="dw-user-box">
-												<div class="u-img"><img src="~/Content/assets/images/1.jpg" alt="user"></div>
+												<div class="u-img"><img src="~/Content/assets/1.jpg" alt="user"></div>
 												<div class="u-text">
 													<h4>@User.Identity.GetUserName()</h4>
 													<a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
@@ -175,8 +175,9 @@
 			<!-- Sidebar scroll-->
 			<div class="scroll-sidebar">
 				<!-- User profile -->
-				<div class="user-profile" style="background: url(/Content/assets/user-info.jpg) no-repeat;">
+				<div class="user-profile" style="background: url(../GroupManagement/Content/assets/user-info.jpg) no-repeat;">
 					<!-- User profile image -->
+			
 					<div class="profile-img"> <img src="~/Content/assets/profile.png" alt="user" /> </div>
 					<!-- User profile text-->
 					<div class="profile-text">
@@ -380,46 +381,7 @@
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
 	<!-- end - This is for export functionality only -->
-	<script>
-		$('#example23').DataTable({
-			paging: false,
-			dom: 'Bfrtip',
-			buttons: [
-				'copy', 'excel', 'pdf', 'print'
-			]
-		});
-		var table = $('#example23').DataTable();
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				var url = "/Group/AddGroupManager";
-				$("#ModalAddManager").load(url, function () {
-					$("#myAddManager").modal("show");
-				})
-			},
-			text: 'add group'
-		});
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				var url = "/Group/AddGroupOwner";
-				$("#ModalAddOwner").load(url, function () {
-					$("#myAddOwner").modal("show");
-				})
-			},
-			text: 'add owner'
-		});
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				window.location='/Group/Import/@Session["GroupID"]';
-			},
-			text: 'import'
-		}); table.button().add(0, {
-			action: function (e, dt, button, config) {
-				window.location = '/Group';
-			},
-			text: 'back'
-		});
-	</script>
-
+	
 	@RenderSection("head", required: false)
 	@RenderSection("scripts", required: false)
 
