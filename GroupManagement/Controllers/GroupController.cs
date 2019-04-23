@@ -16,19 +16,18 @@ using System.Globalization;
 
 namespace WebApplication.Controllers
 {
+	[Authorize]
     public class GroupController : Controller
     {
         cap21t4Entities db = new cap21t4Entities();
         // GET: Group
         public ActionResult Index()
         {
-            List<Group> tempList;
-            tempList = db.Groups.ToList();
-            var grouplist = tempList.Where(g => g.GroupParent == null).ToList();
+			List<Group> tempList = db.Groups.ToList();
+			var grouplist = tempList.Where(g => g.GroupParent == null).ToList();
             return View(grouplist);
         }
-        [Authorize]
-        [HttpGet]
+         [HttpGet]
         public ActionResult Create()
         {
             List<Group> ParentList = db.Groups.OrderByDescending(x => x.ID).ToList();
@@ -55,8 +54,10 @@ namespace WebApplication.Controllers
 
 				db.SaveChanges();
                 TempData["SuccessMessage"] = "Created a new group successfully!";
-                return RedirectToAction("Index");
-            }
+				string nGroupID = db.Groups.OrderByDescending(x => x.ID).First().ID.ToString();
+				Session["GroupID"] = nGroupID;
+				return RedirectToAction("Detail", new { id = nGroupID });
+			}
             TempData["ErrorMessage"] = "Group name cannot be empty!";
             return RedirectToAction("Create");
 
@@ -102,7 +103,9 @@ namespace WebApplication.Controllers
 				nGroup.Users1.Add(owner);
 
 				db.SaveChanges();
-				return RedirectToAction("Index");
+				string nGroupID = db.Groups.OrderByDescending(x => x.ID).First().ID.ToString();
+				Session["GroupID"] = nGroupID;
+				return RedirectToAction("Detail", new { id = nGroupID });
 			}
 			return View(group);
 		}
@@ -118,30 +121,15 @@ namespace WebApplication.Controllers
 			return View(memberlist);
 		}
 
-        public async System.Threading.Tasks.Task InsertUserAsync(string sEmail)
-        {
-            var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-
-            var user = new ApplicationUser { UserName = sEmail, Email = sEmail };
-            var result = await UserManager.CreateAsync(user);
-            if (result.Succeeded)
-            {
-                result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                //if (result.Succeeded)
-                //{
-                //	await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                //	return RedirectToLocal(returnUrl);
-                //}
-            }
-        }
+       
         public ActionResult Import(string id)
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult ReadExcel()
-        {
+		public ActionResult ReadExcel(HttpPostedFileBase fileupload)
+		{
             List<User> lstStudent = new List<User>();
             if (ModelState.IsValid)
             {
@@ -149,8 +137,8 @@ namespace WebApplication.Controllers
                 string filePath = string.Empty;
                 if (Request != null)
                 {
-                    HttpPostedFileBase file = Request.Files["file"];
-                    if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+					HttpPostedFileBase file = fileupload;
+					if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                     {
 
                         string fileName = file.FileName;
@@ -199,14 +187,13 @@ namespace WebApplication.Controllers
                         DataTable dt = result.Tables[0];
                         lstStudent = ConvertDataTable<User>(dt);
                         TempData["Excelstudent"] = lstStudent;
-                    }
+						TempData.Keep();
+					}
                 }
 
             }
-            // var files = Request.Files;
-
-            return new JsonResult { Data = lstStudent, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
+			return View("Import", new { id = Session["GroupID"] });
+		}
 
 		public async System.Threading.Tasks.Task<ActionResult> InsertExcelData()
 		{
@@ -224,7 +211,9 @@ namespace WebApplication.Controllers
 							var aspUser = db.AspNetUsers.FirstOrDefault(x => x.Email == s.Email);
 							if (aspUser == null)
 							{
-								await InsertUserAsync(s.Email);
+								var newuser = new ApplicationUser { UserName = s.Email, Email = s.Email };
+								var result = await UserManager.CreateAsync(newuser);
+								aspUser = db.AspNetUsers.FirstOrDefault(x => x.Email == s.Email);
 							}
 							var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
 							var user = db.Users.FirstOrDefault(x => x.StID == s.StID);
@@ -252,14 +241,15 @@ namespace WebApplication.Controllers
 						db.SaveChanges();
 
 					}
-					//return RedirectToAction("Detail", new { id = groupID });
+				
 				}
 			}
 			catch (Exception ex)
 			{
 				ex.ToString();
 			}
-			return new JsonResult { Data = length, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+			TempData.Remove("Excelstudent");
+			return RedirectToAction("Detail", new { id = Session["GroupID"] });
 		}
 		//Users : Sinh vien
 		//User1 : groupowner
@@ -304,31 +294,7 @@ namespace WebApplication.Controllers
             }
             return data;
         }
-        private static T GetItem<T>(DataRow dr)
-        {
-            Type temp = typeof(T);
-            T obj = Activator.CreateInstance<T>();
-
-
-            foreach (DataColumn column in dr.Table.Columns)
-            {
-
-                foreach (PropertyInfo pro in temp.GetProperties())
-                {
-                    string s = dr[column.ColumnName].ToString();
-                    if (pro.Name == column.ColumnName && dr.Table.Rows != null)
-                    {
-
-                        pro.SetValue(obj, dr[column.ColumnName].ToString(), null);
-                    }
-
-                    else
-                        continue;
-                }
-            }
-            return obj;
-        }
-
+       
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -379,16 +345,7 @@ namespace WebApplication.Controllers
             TempData["ErrorMessage"] = "Group name cannot be empty!";
             return RedirectToAction("Edit");
         }
-
-        public ActionResult CreateGroup1()
-        {
-            return View();
-        }
-        public ActionResult MyGroup1()
-        {
-            return View();
-        }
-
+ 
 		[HttpGet]
 		public ActionResult AddGroupOwner()
 		{
