@@ -16,18 +16,18 @@ using System.Globalization;
 
 namespace WebApplication.Controllers
 {
-	[Authorize]
-	public class GroupController : Controller
+    public class GroupController : Controller
     {
         cap21t4Entities db = new cap21t4Entities();
         // GET: Group
         public ActionResult Index()
         {
-            List<Group> tempList = db.Groups.ToList();
+            List<Group> tempList;
+            tempList = db.Groups.ToList();
             var grouplist = tempList.Where(g => g.GroupParent == null).ToList();
             return View(grouplist);
         }
-      
+        [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
@@ -55,15 +55,13 @@ namespace WebApplication.Controllers
 
 				db.SaveChanges();
                 TempData["SuccessMessage"] = "Created a new group successfully!";
-
-				string nGroupID = db.Groups.OrderByDescending(x => x.ID).First().ID.ToString();
-				Session["GroupID"] = nGroupID;
-				return RedirectToAction("Detail", new { id = nGroupID });
-			}
-            TempData["ErrorMessage"] = "Group name or Group description cannot be empty!";
+                return RedirectToAction("Index");
+            }
+            TempData["ErrorMessage"] = "Group name cannot be empty!";
             return RedirectToAction("Create");
 
         }
+        [Authorize]
         // GET: Groups/Create
         [HttpGet]
         public ActionResult CreateGroup(string id)
@@ -104,9 +102,7 @@ namespace WebApplication.Controllers
 				nGroup.Users1.Add(owner);
 
 				db.SaveChanges();
-				string nGroupID = db.Groups.OrderByDescending(x => x.ID).First().ID.ToString();
-				Session["GroupID"] = nGroupID;
-				return RedirectToAction("Detail", new { id = nGroupID });
+				return RedirectToAction("Index");
 			}
 			return View(group);
 		}
@@ -122,23 +118,41 @@ namespace WebApplication.Controllers
 			return View(memberlist);
 		}
 
+        public async System.Threading.Tasks.Task InsertUserAsync(string sEmail)
+        {
+            var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+
+            var user = new ApplicationUser { UserName = sEmail, Email = sEmail };
+            var result = await UserManager.CreateAsync(user);
+            if (result.Succeeded)
+            {
+                result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                //if (result.Succeeded)
+                //{
+                //	await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                //	return RedirectToLocal(returnUrl);
+                //}
+            }
+        }
         public ActionResult Import(string id)
         {
-			return View();
+            return View();
         }
 
         [HttpPost]
-        public ActionResult ReadExcel(HttpPostedFileBase fileupload)
+        public ActionResult ReadExcel()
         {
             List<User> lstStudent = new List<User>();
             if (ModelState.IsValid)
             {
+
                 string filePath = string.Empty;
                 if (Request != null)
                 {
-					HttpPostedFileBase file = fileupload;
-					if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                    HttpPostedFileBase file = Request.Files["file"];
+                    if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                     {
+
                         string fileName = file.FileName;
                         string fileContentType = file.ContentType;
                         string path = Server.MapPath("~/Uploads/");
@@ -172,7 +186,10 @@ namespace WebApplication.Controllers
                                 UseHeaderRow = true
                             }
                         });
+                        //reader.IsFirstRowAsColumnNames = true;
+                        //DataSet result = reader.AsDataSet();
                         reader.Close();
+                        //delete the file from physical path after reading 
                         string filedetails = path + fileName;
                         FileInfo fileinfo = new FileInfo(filedetails);
                         if (fileinfo.Exists)
@@ -182,14 +199,15 @@ namespace WebApplication.Controllers
                         DataTable dt = result.Tables[0];
                         lstStudent = ConvertDataTable<User>(dt);
                         TempData["Excelstudent"] = lstStudent;
-						TempData.Keep();
                     }
                 }
-            }
 
-			return View("Import", new { id = Session["GroupID"]});
+            }
+            // var files = Request.Files;
+
+            return new JsonResult { Data = lstStudent, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-		
+
 		public async System.Threading.Tasks.Task<ActionResult> InsertExcelData()
 		{
 			int groupID = int.Parse(Session["GroupID"].ToString());
@@ -206,9 +224,7 @@ namespace WebApplication.Controllers
 							var aspUser = db.AspNetUsers.FirstOrDefault(x => x.Email == s.Email);
 							if (aspUser == null)
 							{
-								var newuser = new ApplicationUser { UserName = s.Email, Email = s.Email };
-								var result = await UserManager.CreateAsync(newuser);
-								aspUser = db.AspNetUsers.FirstOrDefault(x => x.Email == s.Email);
+								await InsertUserAsync(s.Email);
 							}
 							var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
 							var user = db.Users.FirstOrDefault(x => x.StID == s.StID);
@@ -234,15 +250,16 @@ namespace WebApplication.Controllers
 							}
 						}
 						db.SaveChanges();
+
 					}
+					//return RedirectToAction("Detail", new { id = groupID });
 				}
 			}
 			catch (Exception ex)
 			{
 				ex.ToString();
 			}
-			TempData.Remove("Excelstudent");
-			return RedirectToAction("Detail",new { id = Session["GroupID"] } );
+			return new JsonResult { Data = length, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 		}
 		//Users : Sinh vien
 		//User1 : groupowner
@@ -287,8 +304,38 @@ namespace WebApplication.Controllers
             }
             return data;
         }
- 
-     
+        private static T GetItem<T>(DataRow dr)
+        {
+            Type temp = typeof(T);
+            T obj = Activator.CreateInstance<T>();
+
+
+            foreach (DataColumn column in dr.Table.Columns)
+            {
+
+                foreach (PropertyInfo pro in temp.GetProperties())
+                {
+                    string s = dr[column.ColumnName].ToString();
+                    if (pro.Name == column.ColumnName && dr.Table.Rows != null)
+                    {
+
+                        pro.SetValue(obj, dr[column.ColumnName].ToString(), null);
+                    }
+
+                    else
+                        continue;
+                }
+            }
+            return obj;
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
         {
@@ -301,14 +348,7 @@ namespace WebApplication.Controllers
                 _userManager = value;
             }
         }
-		private IAuthenticationManager AuthenticationManager
-		{
-			get
-			{
-				return HttpContext.GetOwinContext().Authentication;
-			}
-		}
-		public ActionResult ImportStudent()
+        public ActionResult ImportStudent()
         {
             return View();
         }
@@ -336,8 +376,17 @@ namespace WebApplication.Controllers
                 TempData["SuccessMessage"] = "Edited a group successfully!";
                 return RedirectToAction("Index");
             }
-            TempData["ErrorMessage"] = "Group name or Group description cannot be empty!";
+            TempData["ErrorMessage"] = "Group name cannot be empty!";
             return RedirectToAction("Edit");
+        }
+
+        public ActionResult CreateGroup1()
+        {
+            return View();
+        }
+        public ActionResult MyGroup1()
+        {
+            return View();
         }
 
 		[HttpGet]

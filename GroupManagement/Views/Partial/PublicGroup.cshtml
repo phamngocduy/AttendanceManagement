@@ -25,8 +25,8 @@
 					<div class="parent">
 						<div class="pull-right child">
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
+							@*@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
+							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })*@
 						</div>
 						<a class="a-with-children" href="#@ahref" data-toggle="collapse" aria-expanded="false">
 							@Html.CheckBox(@Model[i].GroupName, false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
@@ -50,8 +50,8 @@
 					<div class="parent">
 						<div class="pull-right child">
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
+							@*@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
+							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })*@
 						</div>
 						<a href="#">
 							@Html.CheckBox(@Model[i].GroupName ?? "1", false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
@@ -74,9 +74,9 @@
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil '></span>", "Edit", "Edit", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-success btn-lg" })
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-trash'></span>", "Delete", "Delete", "Activities", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-warning btn-lg" })
+							@*@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-trash'></span>", "Delete", "Delete", "Activities", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-warning btn-lg" })
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
+							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })*@
 						</div>
 						<a class="a-with-children" href="#@ahref" data-toggle="collapse" aria-expanded="false">
 							@Html.CheckBox(@Model[i].GroupName, false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
@@ -102,9 +102,9 @@
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil '></span>", "Edit", "Edit", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-success btn-lg" })
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-trash'></span>", "Delete", "Delete", "Activities", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-warning btn-lg" })
+							@*@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-trash'></span>", "Delete", "Delete", "Activities", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-warning btn-lg" })
 							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
+							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })*@
 						</div>
 						<a href="#">
 							@Html.CheckBox(@Model[i].GroupName ?? "1", false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })

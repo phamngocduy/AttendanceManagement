@@ -262,6 +262,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\animate.css" />
+    <Content Include="Content\assets\bootstrap.css" />
+    <Content Include="Content\assets\bootstrap.js" />
+    <Content Include="Content\assets\bootstrap.min.css" />
+    <Content Include="Content\assets\c3.min.css" />
+    <Content Include="Content\assets\c3.min.js" />
     <Content Include="Content\assets\css\animate.css" />
     <Content Include="Content\assets\css\colors\blue-dark.css" />
     <Content Include="Content\assets\css\colors\blue.css" />
@@ -277,6 +283,10 @@
     <Content Include="Content\assets\css\colors\red.css" />
     <Content Include="Content\assets\css\spinners.css" />
     <Content Include="Content\assets\css\style.css" />
+    <Content Include="Content\assets\custom.min.js" />
+    <Content Include="Content\assets\d3.min.js" />
+    <Content Include="Content\assets\flag-icon.min.css" />
+    <Content Include="Content\assets\font-awesome.min.css" />
     <Content Include="Content\assets\images\background\user-info.jpg" />
     <Content Include="Content\assets\images\big\img1.jpg" />
     <Content Include="Content\assets\images\big\img2.jpg" />
@@ -294,11 +304,18 @@
     <Content Include="Content\assets\images\users\7.jpg" />
     <Content Include="Content\assets\images\users\8.jpg" />
     <Content Include="Content\assets\images\users\profile.png" />
+    <Content Include="Content\assets\jquery.dataTables.min.js" />
+    <Content Include="Content\assets\jquery.min.js" />
+    <Content Include="Content\assets\jquery.slimscroll.js" />
+    <Content Include="Content\assets\jquery.sparkline.min.js" />
+    <Content Include="Content\assets\jQuery.style.switcher.js" />
     <Content Include="Content\assets\js\custom.min.js" />
     <Content Include="Content\assets\js\dashboard1.js" />
     <Content Include="Content\assets\js\jquery.slimscroll.js" />
     <Content Include="Content\assets\js\sidebarmenu.js" />
     <Content Include="Content\assets\js\waves.js" />
+    <Content Include="Content\assets\linea.css" />
+    <Content Include="Content\assets\materialdesignicons.min.css" />
     <Content Include="Content\assets\plugins\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\assets\plugins\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\assets\plugins\bootstrap\js\popper.min.js" />
@@ -309,6 +326,8 @@
     <Content Include="Content\assets\plugins\sparkline\jquery.sparkline.min.js" />
     <Content Include="Content\assets\plugins\sticky-kit-master\dist\sticky-kit.min.js" />
     <Content Include="Content\assets\plugins\styleswitcher\jQuery.style.switcher.js" />
+    <Content Include="Content\assets\popper.min.js" />
+    <Content Include="Content\assets\red.css" />
     <Content Include="Content\assets\scss\icons\flag-icon-css\flag-icon.min.css" />
     <Content Include="Content\assets\scss\icons\flag-icon-css\flags\ad.svg" />
     <Content Include="Content\assets\scss\icons\flag-icon-css\flags\ae.svg" />
@@ -601,6 +620,14 @@
     <Content Include="Content\assets\scss\icons\weather-icons\less\css\variables-night.css" />
     <Content Include="Content\assets\scss\icons\weather-icons\less\css\variables-time.css" />
     <Content Include="Content\assets\scss\icons\weather-icons\less\css\variables-wind-names.css" />
+    <Content Include="Content\assets\sidebarmenu.js" />
+    <Content Include="Content\assets\simple-line-icons.css" />
+    <Content Include="Content\assets\spinners.css" />
+    <Content Include="Content\assets\sticky-kit.min.js" />
+    <Content Include="Content\assets\style.css" />
+    <Content Include="Content\assets\themify-icons.css" />
+    <Content Include="Content\assets\waves.js" />
+    <Content Include="Content\assets\weather-icons.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -900,6 +927,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_MainLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
