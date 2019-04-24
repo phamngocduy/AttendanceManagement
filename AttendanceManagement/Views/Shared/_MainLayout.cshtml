@@ -1,11 +1,11 @@
 ﻿
 @using Microsoft.AspNet.Identity
-@*@{
+@{
 	/**/
 
 	String icontroler = Html.Controller();
 	String iaction = Html.Action();
-}*@
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,7 +88,7 @@
 						<!-- ============================================================== -->
 						<!-- Language -->
 						<!-- ============================================================== -->
-						@*<li class="nav-item dropdown">
+						<li class="nav-item dropdown">
 							@if (CultureInfo.CurrentCulture.Name == "vi")
 							{
 
@@ -96,11 +96,11 @@
 								<div class="dropdown-menu dropdown-menu-right scale-up">
 									<a class="dropdown-item" href="~/vi/@icontroler/@iaction">
 										<i class="flag-icon flag-icon-vn">
-										</i> @WebApplication.Resources.Resource.Viet
+										</i> @AttendanceManagement.Resources.Resource.Viet
 									</a>
 									<a class="dropdown-item" <a href="~/en/@icontroler/@iaction">
 										<i class="flag-icon flag-icon-gb">
-										</i> @WebApplication.Resources.Resource.English
+										</i> @AttendanceManagement.Resources.Resource.English
 									</a>
 								</div>
 							}
@@ -110,17 +110,17 @@
 								<div class="dropdown-menu dropdown-menu-right scale-up">
 									<a class="dropdown-item" href="~/vi/@icontroler/@iaction">
 										<i class="flag-icon flag-icon-vn">
-										</i> @WebApplication.Resources.Resource.Viet
+										</i> @AttendanceManagement.Resources.Resource.Viet
 									</a>
 									<a class="dropdown-item" <a href="~/en/@icontroler/@iaction">
 										<i class="flag-icon flag-icon-gb">
-										</i> @WebApplication.Resources.Resource.English
+										</i> @AttendanceManagement.Resources.Resource.English
 									</a>
 
 								</div>
 
 							}
-						</li>*@
+						</li>
 						<!-- ============================================================== -->
 						<!-- Profile -->
 						<!-- ============================================================== -->
@@ -135,7 +135,7 @@
 									<ul class="dropdown-user">
 										<li>
 											<div class="dw-user-box">
-												<div class="u-img"><img src="~/Content/assets/images/1.jpg" alt="user"></div>
+												<div class="u-img"><img src="~/Content/assets/1.jpg" alt="user"></div>
 												<div class="u-text">
 													<h4>@User.Identity.GetUserName()</h4>
 													<a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
@@ -153,9 +153,9 @@
 							}
 							else
 							{
-								@*<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="@Url.Action("Login", "Account")">
-									@WebApplication.Resources.Resource.Login
-								</a>*@
+								<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="@Url.Action("Login", "Account")">
+									@AttendanceManagement.Resources.Resource.Login
+								</a>
 
 							}
 
@@ -177,6 +177,7 @@
 				<!-- User profile -->
 				<div class="user-profile" style="background: url(/Content/assets/user-info.jpg) no-repeat;">
 					<!-- User profile image -->
+
 					<div class="profile-img"> <img src="~/Content/assets/profile.png" alt="user" /> </div>
 					<!-- User profile text-->
 					<div class="profile-text">
@@ -192,17 +193,15 @@
 				<!-- Sidebar navigation-->
 				<nav class="sidebar-nav">
 					<ul id="sidebarnav">
-						@*<li>
-							<a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu"> @WebApplication.Resources.Resource.Home</span></a>
-							<ul aria-expanded="false" class="collapse">
-								
-							</ul>
-						</li>*@
 						<li>
-							@*<a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">@WebApplication.Resources.Resource.Group</span></a>*@
+							<a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu"> @AttendanceManagement.Resources.Resource.Home</span></a>
+							<ul aria-expanded="false" class="collapse"></ul>
+						</li>
+						<li>
+							<a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">@AttendanceManagement.Resources.Resource.Group</span></a>
 							<ul aria-expanded="false" class="collapse">
-								@*<li>@Html.ActionLink(WebApplication.Resources.Resource.Creategroup, "Create", "Group")</li>
-								<li>@Html.ActionLink(WebApplication.Resources.Resource.Mygroup, "Index", "Group")</li>*@
+								<li>@Html.ActionLink(AttendanceManagement.Resources.Resource.Creategroup, "Create", "Group")</li>
+								<li>@Html.ActionLink(AttendanceManagement.Resources.Resource.Mygroup, "Index", "Group")</li>
 							</ul>
 						</li>
 						@if (User.IsInRole("Admin"))
@@ -246,7 +245,6 @@
 				<!-- ============================================================== -->
 				<!-- Bread crumb and right sidebar toggle -->
 				<!-- ============================================================== -->
-				
 				<!-- ============================================================== -->
 				<!-- End Bread crumb and right sidebar toggle -->
 				<!-- ============================================================== -->
@@ -380,45 +378,6 @@
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
 	<!-- end - This is for export functionality only -->
-	<script>
-		$('#example23').DataTable({
-			paging: false,
-			dom: 'Bfrtip',
-			buttons: [
-				'copy', 'excel', 'pdf', 'print'
-			]
-		});
-		var table = $('#example23').DataTable();
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				var url = "/Group/AddGroupManager";
-				$("#ModalAddManager").load(url, function () {
-					$("#myAddManager").modal("show");
-				})
-			},
-			text: 'add group'
-		});
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				var url = "/Group/AddGroupOwner";
-				$("#ModalAddOwner").load(url, function () {
-					$("#myAddOwner").modal("show");
-				})
-			},
-			text: 'add owner'
-		});
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				window.location='/Group/Import/@Session["GroupID"]';
-			},
-			text: 'import'
-		}); table.button().add(0, {
-			action: function (e, dt, button, config) {
-				window.location = '/Group';
-			},
-			text: 'back'
-		});
-	</script>
 
 	@RenderSection("head", required: false)
 	@RenderSection("scripts", required: false)

@@ -124,75 +124,82 @@ namespace WebApplication.Controllers
        
         public ActionResult Import(string id)
         {
-            return View();
-        }
+			TempData.Keep();
+			return View();
+		}
 
         [HttpPost]
-		public ActionResult ReadExcel(HttpPostedFileBase fileupload)
+		public ActionResult ReadExcel()
 		{
             List<User> lstStudent = new List<User>();
             if (ModelState.IsValid)
             {
+				try
+				{
+					string filePath = string.Empty;
+					if (Request != null)
+					{
+						HttpPostedFileBase file = Request.Files["fileupload"];
+						if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+						{
 
-                string filePath = string.Empty;
-                if (Request != null)
-                {
-					HttpPostedFileBase file = fileupload;
-					if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
-                    {
+							string fileName = file.FileName;
+							string fileContentType = file.ContentType;
+							string path = Server.MapPath("~/Uploads/");
+							if (!Directory.Exists(path))
+							{
+								Directory.CreateDirectory(path);
+							}
+							filePath = path + Path.GetFileName(file.FileName);
+							string extension = Path.GetExtension(file.FileName);
+							file.SaveAs(filePath);
+							Stream stream = file.InputStream;
+							// We return the interface, so that
+							IExcelDataReader reader = null;
+							if (file.FileName.EndsWith(".xls"))
+							{
+								reader = ExcelReaderFactory.CreateBinaryReader(stream);
+							}
+							else if (file.FileName.EndsWith(".xlsx"))
+							{
+								reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+							}
+							else
+							{
+								ModelState.AddModelError("File", "This file format is not supported");
+								return RedirectToAction("Index");
+							}
+							var result = reader.AsDataSet(new ExcelDataSetConfiguration()
+							{
+								ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+								{
+									UseHeaderRow = true
+								}
+							});
+							//reader.IsFirstRowAsColumnNames = true;
+							//DataSet result = reader.AsDataSet();
+							reader.Close();
+							//delete the file from physical path after reading 
+							string filedetails = path + fileName;
+							FileInfo fileinfo = new FileInfo(filedetails);
+							if (fileinfo.Exists)
+							{
+								fileinfo.Delete();
+							}
+							DataTable dt = result.Tables[0];
+							lstStudent = ConvertDataTable<User>(dt);
+							TempData["Excelstudent"] = lstStudent;
 
-                        string fileName = file.FileName;
-                        string fileContentType = file.ContentType;
-                        string path = Server.MapPath("~/Uploads/");
-                        if (!Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
-                        }
-                        filePath = path + Path.GetFileName(file.FileName);
-                        string extension = Path.GetExtension(file.FileName);
-                        file.SaveAs(filePath);
-                        Stream stream = file.InputStream;
-                        // We return the interface, so that
-                        IExcelDataReader reader = null;
-                        if (file.FileName.EndsWith(".xls"))
-                        {
-                            reader = ExcelReaderFactory.CreateBinaryReader(stream);
-                        }
-                        else if (file.FileName.EndsWith(".xlsx"))
-                        {
-                            reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("File", "This file format is not supported");
-                            return RedirectToAction("Index");
-                        }
-                        var result = reader.AsDataSet(new ExcelDataSetConfiguration()
-                        {
-                            ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
-                            {
-                                UseHeaderRow = true
-                            }
-                        });
-                        //reader.IsFirstRowAsColumnNames = true;
-                        //DataSet result = reader.AsDataSet();
-                        reader.Close();
-                        //delete the file from physical path after reading 
-                        string filedetails = path + fileName;
-                        FileInfo fileinfo = new FileInfo(filedetails);
-                        if (fileinfo.Exists)
-                        {
-                            fileinfo.Delete();
-                        }
-                        DataTable dt = result.Tables[0];
-                        lstStudent = ConvertDataTable<User>(dt);
-                        TempData["Excelstudent"] = lstStudent;
-						TempData.Keep();
+						}
 					}
-                }
+				}
+				catch (Exception ex)
+				{
+					return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+				}
 
             }
-			return View("Import", new { id = Session["GroupID"] });
+			return RedirectToAction("Import");
 		}
 
 		public async System.Threading.Tasks.Task<ActionResult> InsertExcelData()
