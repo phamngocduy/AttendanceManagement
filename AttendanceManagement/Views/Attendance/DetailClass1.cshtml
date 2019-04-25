@@ -916,6 +916,22 @@
 
         });
     </script>
+    <!--move lines-->
+    <script>
+        $('table').on('change', '[type=checkbox]', function () {
+            var $this = $(this);
+            var row = $this.closest('tr');
+            if ($this.prop('checked')) { // move to top
+                row.insertAfter(row.parent().find('tr:last-child'))
+
+            }
+            else { // move to bottom
+
+                row.insertBefore(row.parent().find('tr:first-child'))
+
+            }
+        });
+    </script>
 
 
 
