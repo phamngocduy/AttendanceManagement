@@ -141,6 +141,9 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="MyCourse" xml:space="preserve">
+    <value>My Course</value>
+  </data>
   <data name="Mygroup" xml:space="preserve">
     <value>My Groups</value>
   </data>

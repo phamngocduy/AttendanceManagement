@@ -133,6 +133,15 @@ namespace AttendanceManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lớp.
+        /// </summary>
+        public static string MyCourse {
+            get {
+                return ResourceManager.GetString("MyCourse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nhóm của tôi.
         /// </summary>
         public static string Mygroup {

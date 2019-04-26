@@ -141,6 +141,9 @@
   <data name="Login" xml:space="preserve">
     <value>Đăng Nhập</value>
   </data>
+  <data name="MyCourse" xml:space="preserve">
+    <value>Lớp</value>
+  </data>
   <data name="Mygroup" xml:space="preserve">
     <value>Nhóm của tôi</value>
   </data>
