@@ -32,11 +32,22 @@ namespace WebApplication.Controllers
 		{
 			try
 			{
-				var grouplist = db.Groups.ToList();
-
+				var grouplist = db.Groups.Where(x => x.GroupParent != null && x.GroupParent != 1).ToList();
+				List<GroupModel> list = new List<GroupModel>();
+				foreach(var item in grouplist)
+				{
+					GroupModel gr = new GroupModel
+					{
+						ID = item.ID,
+						GroupName = item.GroupName
+					};
+					list.Add(gr);
+				}
 				var response = new HttpResponseMessage(HttpStatusCode.OK);
-				response.Content = new StringContent(JsonConvert.SerializeObject(grouplist));
+				response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.Unicode);
 				response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+				response.Content.Headers.ContentType.CharSet = Encoding.Unicode.HeaderName;
+
 				return response;
 			}
 			catch
@@ -66,8 +77,9 @@ namespace WebApplication.Controllers
 					list.Add(us);
 				}
 				var response = new HttpResponseMessage(HttpStatusCode.OK);
-				response.Content = new StringContent(JsonConvert.SerializeObject(list));
+				response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.Unicode);
 				response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+				response.Content.Headers.ContentType.CharSet = Encoding.Unicode.HeaderName;
 				return response;
 			}
 			catch
@@ -75,11 +87,11 @@ namespace WebApplication.Controllers
 				return new HttpResponseMessage(HttpStatusCode.BadRequest);
 			}
 		}
-		public HttpResponseMessage getUserInfo(string email)
+		public HttpResponseMessage getUserInfo(string searchString)
 		{
 			try
 			{
-				var user = db.Users.FirstOrDefault(x => x.Email == email);
+				var user = db.Users.FirstOrDefault(x => x.Email == searchString || x.StID == searchString);
 				List<UserProfile> list = new List<UserProfile>();
 				UserProfile us = new UserProfile
 				{
@@ -93,8 +105,9 @@ namespace WebApplication.Controllers
 				};
 				list.Add(us);
 				var response = new HttpResponseMessage(HttpStatusCode.OK);
-				response.Content = new StringContent(JsonConvert.SerializeObject(list));
+				response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.Unicode);
 				response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+				response.Content.Headers.ContentType.CharSet = Encoding.Unicode.HeaderName;
 				return response;
 			}
 			catch
@@ -103,6 +116,7 @@ namespace WebApplication.Controllers
 			}
 		}
 
+		
 		[HttpGet]
 		public HttpResponseMessage getUserImage(String searchString)
 		{

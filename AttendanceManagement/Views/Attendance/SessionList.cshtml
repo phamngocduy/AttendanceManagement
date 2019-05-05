@@ -1,0 +1,152 @@
+﻿@model IEnumerable<AttendanceManagement.Models.Session>
+@{
+	int i = 1;
+}
+<link href="~/Content/assets/bootstrap-material-datetimepicker.css" rel="stylesheet">
+<!-- Page plugins css -->
+<link href="~/Content/assets/jquery-clockpicker.min.css" rel="stylesheet">
+<!-- Date picker plugins css -->
+<link href="~/Content/assets/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<!-- Daterange picker plugins css -->
+<link href="~/Content/assets/bootstrap-timepicker.min.css" rel="stylesheet">
+<link href="~/Content/assets/daterangepicker.css" rel="stylesheet">
+
+
+
+
+<div class="card">
+	<div class="card-body bg-success">
+		<h4 class="text-white card-title">Session Management</h4>
+
+	</div>
+	<div class="card-body">
+		<div class="message-box contact-box">
+			<h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-info waves-effect waves-dark" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button></h2>
+			<div class="message-widget contact-widget">
+				<div class="card-body collapse show">
+					<div class="table-responsive">
+						<table class="table product-overview">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Date</th>
+									<th>Present</th>
+									<th>Status</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>Buổi @(i++)</td>
+										<td>
+											@item.Date.Value.ToShortDateString()
+										</td>
+										<td>20</td>
+										<td>
+											<div class="col-lg-10 col-md-4">
+												
+												<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="location.href = '@Url.Action("CheckAttendance", "Attendance",new { id=item.ID })';">Check Attendance</button>
+											</div>
+										</td>
+										<td><a href="javascript:void(0)" class="text-inverse p-r-10" data-toggle="tooltip" title="" data-original-title="Edit"><i class="ti-marker-alt"></i></a> <a href="javascript:void(0)" class="text-inverse" title="" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash"></i></a></td>
+									</tr>
+								}
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- .modal for add task -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Create Session</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+			</div>
+			<div class="modal-body">
+				<form action="~/Session/Create" method="post">
+					<label for="total-week">Total Week</label>
+					<div class="form-group">
+						<div class="form-line">
+							<input type="text" name="TotalWeek" class="form-control" onkeypress="return allowOnlyNumber(event);">
+						</div>
+					</div>
+					<label for="start_day">Start Day</label>
+					<div class="input-group">
+						<input type="text" class="form-control" id="datepicker-autoclose" name="StartDate" placeholder="dd/mm/yyyy">
+						<span class="input-group-addon"><i class="icon-calender"></i></span>
+					</div>
+					<label for="time">Time</label>
+					<div class="input-group clockpicker " data-placement="bottom" data-align="top" data-autoclose="true">
+						<input type="text" class="form-control" name="Time" placeholder="hh:mm"> <span class="input-group-addon"> <span class="fa fa-clock-o"></span> </span>
+					</div>
+					<br>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-success">Submit</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<script src="~/Content/assets/jquery.min.js"></script>
+
+<script src="~/Content/assets/moment.js"></script>
+<script src="~/Content/assets/bootstrap-material-datetimepicker.js"></script>
+<!-- Clock Plugin JavaScript -->
+<script src="~/Content/assets/jquery-clockpicker.min.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="~/Content/assets/bootstrap-datepicker.min.js"></script>
+<!-- Date range Plugin JavaScript -->
+<script src="~/Content/assets/bootstrap-timepicker.min.js"></script>
+<script src="~/Content/assets/daterangepicker.js"></script>
+<script type="text/javascript">
+	$('#single-input').clockpicker({
+		placement: 'bottom',
+		align: 'left',
+		autoclose: true,
+		'default': 'now'
+	});
+	$('.clockpicker').clockpicker({
+		donetext: 'Done',
+	}).find('input').change(function () {
+		console.log(this.value);
+	});
+	$('#check-minutes').click(function (e) {
+		// Have to stop propagation here
+		e.stopPropagation();
+		input.clockpicker('show').clockpicker('toggleView', 'minutes');
+	});
+	if (/mobile/i.test(navigator.userAgent)) {
+		$('input').prop('readOnly', true);
+	}
+	// Date Picker
+	jQuery('#datepicker-autoclose').datepicker({
+		format: 'dd/mm/yyyy',
+		autoclose: true,
+		todayHighlight: true
+	});
+
+</script>
+<script>
+	function allowOnlyNumber(evt) {
+		var charCode = (evt.which) ? evt.which : event.keyCode
+		if (charCode > 31 && (charCode < 48 || charCode > 57))
+			return false;
+		return true;
+	}
+</script>

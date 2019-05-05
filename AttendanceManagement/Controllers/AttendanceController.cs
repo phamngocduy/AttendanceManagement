@@ -5,12 +5,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AttendanceManagement.Models;
+using System.Text;
+using System.Transactions;
 
 namespace AttendanceManagement.Controllers
 {
-    public class AttendanceController : Controller
-    {
+	public class AttendanceController : Controller
+	{
 		AttendanceEntities db = new AttendanceEntities();
+		APIController api = new APIController();
 
 		// GET: Attendance
 		public ActionResult Index()
@@ -73,10 +76,7 @@ namespace AttendanceManagement.Controllers
 		//}
 		public ActionResult manageClass(string id)
 		{
-			Session["CourseID"] = id;
-			int courseID = int.Parse(id);
-			var student = db.CourseMembers.Where(x => x.CourseID == courseID).ToList();
-			ViewData["students"] = student;
+
 			return View();
 		}
 		public ActionResult ManageStudent()
@@ -128,8 +128,56 @@ namespace AttendanceManagement.Controllers
 		{
 			return View();
 		}
-		public ActionResult DetailClass1()
+		public ActionResult DetailClass1(string id)
 		{
+			Session["CourseID"] = id;
+			int courseID = int.Parse(id);
+			ViewBag.tab = "tab1";
+			if (Session["tabactive"] != null)
+			{
+				ViewBag.tab = Session["tabactive"].ToString();
+				Session.Remove("tabactive");
+			}
+			if (Session["SessionID"] != null)
+			{
+				int sessionid = int.Parse(Session["SessionID"].ToString());
+				DateTime? date = db.Sessions.FirstOrDefault(x => x.ID == sessionid).Date;
+				ViewBag.date = date.Value.ToShortDateString();
+			}
+			var session = db.Sessions.Where(x => x.CourseID == courseID).OrderBy(x => x.Date).ToList();
+			ViewData["session"] = session;
+			var student = db.CourseMembers.Where(x => x.CourseID == courseID).ToList();
+			ViewData["students"] = student;
+			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
+			foreach (var iten in student)
+			{
+				DasboardAttendanceView attendanceview = new DasboardAttendanceView();
+				attendanceview.memberID = iten.ID;
+				attendanceview.studentID = iten.StudentID;
+				attendanceview.studentName = iten.Name;
+				List<DetailAttendance> listAttendance = new List<DetailAttendance>();
+				foreach (var item in session)
+				{
+					DetailAttendance detail = new DetailAttendance();
+					detail.Date = (DateTime) item.Date;
+					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
+					if (attendance == null)
+					{
+						detail.Status = "N/A";
+						detail.Note = "";
+					}
+					else
+					{
+						detail.Status = attendance.Status;
+						detail.Note = attendance.Note;
+					}
+					attendanceview.Attendance.Add(detail);
+					listAttendance.Add(detail);
+				}
+				list.Add(attendanceview);
+			}
+
+			ViewData["attendance"] = list;
 			return View();
 		}
 		public ActionResult MajorList()
@@ -162,43 +210,46 @@ namespace AttendanceManagement.Controllers
 			var course = db.Courses.ToList();
 			return View(course);
 		}
-		//public ActionResult AddStudent()
-		//{
-		//	ViewBag.Group = new SelectList(groupdb.Groups.Where(x => x.GroupParent != null).ToList(), "ID", "GroupName");
-		//	return View();
-		//}
-		public ActionResult AddStudent(string groupID)
+		public ActionResult AddStudent(string groupname)
 		{
-			//ViewBag.Group = new SelectList(groupdb.Groups.Where(x => x.GroupParent != null).ToList(), "ID", "GroupName");
-			if (groupID != null)
+			string groupdata = api.ReadData("http://localhost:54325/api/getAllGroups");
+			List<GroupModel> group = JsonConvert.DeserializeObject<List<GroupModel>>(groupdata);
+			ViewBag.Group = group;
+			if (groupname != null)
 			{
-				int gID = int.Parse(groupID);
-				//var user = groupdb.Groups.FirstOrDefault(x => x.ID == gID).Users.ToList();
-				//return View(user);
-				return View();
+				string userdata = api.ReadData("http://localhost:54325/api/getMember?groupname=" + groupname);
+				List<UserModel> user = JsonConvert.DeserializeObject<List<UserModel>>(userdata);
+				return View(user);
 			}
-			else
-				return View();
+
+			return View();
+
 		}
 		[HttpPost]
 		public ActionResult AddStudent(List<string> studentlist)
 		{
 			foreach (var item in studentlist)
 			{
-				int id = int.Parse(item);
-				//var user = groupdb.Users.FirstOrDefault(x => x.ID == id);
-				//CourseMember newMember = new CourseMember();
-				//newMember.CourseID = int.Parse(Session["CourseID"].ToString());
-				//newMember.StudentID = user.StID;
-				//newMember.Name = user.FullName;
-				//newMember.Email = user.Email;
-				//newMember.DoB = user.DoB;
-				//newMember.Avatar = user.AvatarBase64;
-				//db.CourseMembers.Add(newMember);
-
+				string studentdata = api.ReadData("http://localhost:54325/api/getUserInfo?searchString=" + item);
+				List<UserModel> studentinfo = JsonConvert.DeserializeObject<List<UserModel>>(studentdata);
+				var student = studentinfo.First();
+				var StudentInCourse = db.CourseMembers.FirstOrDefault(x => x.StudentID == student.StID);
+				if (StudentInCourse == null)
+				{
+					CourseMember newMember = new CourseMember();
+					newMember.CourseID = int.Parse(Session["CourseID"].ToString());
+					newMember.StudentID = student.StID;
+					newMember.Name = student.FullName;
+					newMember.Email = student.Email;
+					newMember.DoB = student.DoB;
+					newMember.Avatar = student.Avatar;
+					db.CourseMembers.Add(newMember);
+				}
 			}
 			db.SaveChanges();
-			return RedirectToAction("manageClass", new { id = Session["CourseID"] });
+			Session["tabactive"] = "tab2";
+
+			return RedirectToAction("DetailClass1", "Attendance", new { id = Session["CourseID"] });
 		}
 		public ActionResult SynCourse()
 		{
@@ -266,7 +317,7 @@ namespace AttendanceManagement.Controllers
 		[HttpGet]
 		public ActionResult CreateFaculty1()
 		{
-		//	ViewBag.GroupMap = groupdb.Groups.Where(x => x.GroupParent != null).ToList();
+			//	ViewBag.GroupMap = groupdb.Groups.Where(x => x.GroupParent != null).ToList();
 			return View();
 		}
 		[HttpPost]
@@ -279,6 +330,37 @@ namespace AttendanceManagement.Controllers
 			db.Faculties.Add(newfaculty);
 			db.SaveChanges();
 			return RedirectToAction("FacultyIndex");
+		}
+		[HttpGet]
+		public ActionResult CheckAttendance(string id)
+		{
+			Session["SessionID"] = id;
+			Session["tabactive"] = "tab4";
+
+			return RedirectToAction("DetailClass1", "Attendance", new { id = Session["CourseID"] });
+		}
+
+		[HttpPost]
+		public JsonResult CheckAttendance(List<AttendanceModel> attendance)
+		{
+			using (var scope = new TransactionScope())
+			{
+				int sessionID = int.Parse(Session["SessionID"].ToString());
+				foreach (var item in attendance)
+				{
+					Attendance att = new Attendance();
+					att.MemberID = item.memberID;
+					att.SessionID = sessionID;
+					att.Status = item.status;
+					att.Note = item.note;
+					db.Attendances.Add(att);
+				}
+				db.SaveChanges();
+				scope.Complete();
+				Session["tabactive"] = "tab1";
+			}
+
+			return Json("true");
 		}
 	}
 }

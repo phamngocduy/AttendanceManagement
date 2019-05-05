@@ -2,6 +2,15 @@
 @{
 	ViewBag.Title = "DetailClass1";
 	Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+	string active = ViewBag.tab.ToString();
+	string date = "nulldate";
+	if (ViewBag.date != null)
+	{
+		date = ViewBag.date.ToString();
+	}
+
+
 }
 
 <div class="row page-titles">
@@ -43,7 +52,7 @@
 	<ul class="nav nav-tabs">
 		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12 active">
 			<div class="card" style="text-align:center;">
-				<a data-toggle="tab" href="#tab1" id="a" style="background-color:tomato">
+				<a data-toggle="tab" href="#tab1" id="a" style="background-color:#7460ee">
 					<h2 style="color:white">
 						<span>
 							<i class="fa fa-book"></i>
@@ -56,7 +65,7 @@
 		</li>
 		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="card" style="text-align:center">
-				<a data-toggle="tab" href="#tab2" id="a" style="background-color:darkolivegreen">
+				<a data-toggle="tab" href="#tab2" id="b" style="background-color:#fc4b6c">
 					<h2 style="color:white">
 						<span>
 							<i class="fa fa-user"></i>
@@ -68,7 +77,7 @@
 		</li>
 		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="card" style="text-align:center">
-				<a data-toggle="tab" href="#tab3" id="a" style="background-color:#8d52ab">
+				<a data-toggle="tab" href="#tab3" id="c" style="background-color:#26c6da">
 					<h2 style="color:white">
 						<span>
 							<i class="fa fa-check-square-o"></i>
@@ -80,7 +89,7 @@
 		</li>
 		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="card" style="text-align:center">
-				<a data-toggle="tab" href="#tab4" id="a" style="background-color:chocolate">
+				<a data-toggle="tab" href="#tab4" id="d" style="background-color:#ffb22b">
 					<h2 style="color:white">
 						<span>
 							<i class="fa fa-pencil-square-o"></i>
@@ -92,771 +101,36 @@
 		</li>
 	</ul>
 	<div class="tab-content">
-		<div id="tab1" class="tab-pane fade">
-			<div class="row clearfix tabcontent" id="Attendance">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div class="card">
-						<div class="header">
-							<h2>
-								TOTAL ATTENDANCE
-							</h2>
-							<ul class="header-dropdown m-r--5">
-								<li class="dropdown">
-									<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-										<i class="material-icons">more_vert</i>
-									</a>
-									<ul class="dropdown-menu pull-right">
-										<li><a href="javascript:void(0);">Action</a></li>
-										<li><a href="javascript:void(0);">Another action</a></li>
-										<li><a href="javascript:void(0);">Something else here</a></li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-						<div class="body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-									<thead>
-										<tr>
-											<th>MSSV</th>
-											<th>Name</th>
-											<th>Total attend</th>
-											<th>Total point</th>
-											<th>25/2</th>
-											<th>27/2</th>
-											<th>29/2</th>
-											<th>2/3</th>
-											<th>5/3</th>
-											<th>7/3</th>
-											<th>9/3</th>
-											<th>11/3</th>
-											<th>13/3</th>
-											<th>15/3</th>
-											<th>17/3</th>
-											<th>19/3</th>
-											<th>21/3</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>T150730</th>
-											<th>Nguyễn Văn A</th>
-											<th align="center">11/13</th>
-											<th align="center">7</th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="0"><input type="checkbox" unchecked disabled /></abbr></th>
-											<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="0"><input type="checkbox" unchecked disabled /></abbr></th>
-											<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-
-										</tr>
-									</tfoot>
-									<tbody>
-										<tr>
-											<th>T150731</th>
-
-											<th>Nguyễn Văn B</th>
-											<th align="center">10/13</th>
-											<th align="center">10</th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="0"><input type="checkbox" unchecked disabled /></abbr></th>
-											<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+2"><input type="checkbox" unchecked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="0"><input type="checkbox" unchecked disabled /></abbr></th>
-											<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-										</tr>
-										<tr>
-											<th>T150732</th>
-
-											<th>Nguyễn Văn C</th>
-											<th align="center">11/13</th>
-											<th align="center">-2</th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="0"><input type="checkbox" unchecked disabled /></abbr></th>
-											<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="0"><input type="checkbox" unchecked disabled /></abbr></th>
-											<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-										</tr>
-										<tr>
-											<th>T150734</th>
-
-											<th>Nguyễn Văn D</th>
-											<th align="center">12/13</th>
-											<th align="center">6</th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="0"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="0"><input type="checkbox" unchecked disabled /></abbr></th>
-											<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-											<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-										</tr>
-
-
-
-									</tbody>
-								</table>
+		<div id="tab1" class="tab-pane active ">
+			@{ Html.RenderPartial("~/Views/Attendance/AllAttendance.cshtml", ViewData["attendance"]); }
+		
+		</div>
+		<div id="tab2" class="tab-pane ">
+			@{ Html.RenderPartial("~/Views/Attendance/StudentList.cshtml", ViewData["students"]); }
+		</div>
+		<div id="tab3" class="tab-pane ">
+			@{ Html.RenderPartial("~/Views/Attendance/SessionList.cshtml", ViewData["session"]); }
+		</div>
+		<div id="tab4" class="tab-pane">
+			@if (ViewBag.date == null)
+			{
+				<div class="card">
+					<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
+					<div class="card-body">
+						<div class="row" style="text-align:center">
+							<div class="col">
+								<button class="btn btn-primary" onclick="choice()">Please choice session</button>
 							</div>
 						</div>
+
 					</div>
 				</div>
-			</div>
-		</div>
-		<div id="tab2" class="tab-pane active">
-			<div class="row clearfix tabcontent" id="Students">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div class="card">
-						<div class="header">
-							<h2>
-								STUDENTS
-							</h2>
-							<ul class="header-dropdown m-r--5">
-								<li class="dropdown">
-									<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-										<i class="material-icons">more_vert</i>
-									</a>
-									<ul class="dropdown-menu pull-right">
-										<li><a href="javascript:void(0);">Action</a></li>
-										<li><a href="javascript:void(0);">Another action</a></li>
-										<li><a href="javascript:void(0);">Something else here</a></li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-						<div class="body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-									<thead>
-										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-
-										</tr>
-									</tfoot>
-									<tbody>
-										<tr>
-											<td>Tiger Nixon</td>
-											<td>System Architect</td>
-											<td>Edinburgh</td>
-											<td>61</td>
-											<td>2011/04/25</td>
-
-										</tr>
-										<tr>
-											<td>Garrett Winters</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>63</td>
-											<td>2011/07/25</td>
-
-										</tr>
-										<tr>
-											<td>Ashton Cox</td>
-											<td>Junior Technical Author</td>
-											<td>San Francisco</td>
-											<td>66</td>
-											<td>2009/01/12</td>
-
-										</tr>
-										<tr>
-											<td>Cedric Kelly</td>
-											<td>Senior Javascript Developer</td>
-											<td>Edinburgh</td>
-											<td>22</td>
-											<td>2012/03/29</td>
-
-										</tr>
-										<tr>
-											<td>Airi Satou</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>33</td>
-											<td>2008/11/28</td>
-
-										</tr>
-										<tr>
-											<td>Brielle Williamson</td>
-											<td>Integration Specialist</td>
-											<td>New York</td>
-											<td>61</td>
-											<td>2012/12/02</td>
-										</tr>
-										<tr>
-											<td>Herrod Chandler</td>
-											<td>Sales Assistant</td>
-											<td>San Francisco</td>
-											<td>59</td>
-											<td>2012/08/06</td>
-										</tr>
-										<tr>
-											<td>Rhona Davidson</td>
-											<td>Integration Specialist</td>
-											<td>Tokyo</td>
-											<td>55</td>
-											<td>2010/10/14</td>
-										</tr>
-										<tr>
-											<td>Colleen Hurst</td>
-											<td>Javascript Developer</td>
-											<td>San Francisco</td>
-											<td>39</td>
-											<td>2009/09/15</td>
-										</tr>
-										<tr>
-											<td>Sonya Frost</td>
-											<td>Software Engineer</td>
-											<td>Edinburgh</td>
-											<td>23</td>
-											<td>2008/12/13</td>
-										</tr>
-										<tr>
-											<td>Jena Gaines</td>
-											<td>Office Manager</td>
-											<td>London</td>
-											<td>30</td>
-											<td>2008/12/19</td>
-										</tr>
-										<tr>
-											<td>Quinn Flynn</td>
-											<td>Support Lead</td>
-											<td>Edinburgh</td>
-											<td>22</td>
-											<td>2013/03/03</td>
-										</tr>
-										<tr>
-											<td>Charde Marshall</td>
-											<td>Regional Director</td>
-											<td>San Francisco</td>
-											<td>36</td>
-											<td>2008/10/16</td>
-										</tr>
-										<tr>
-											<td>Haley Kennedy</td>
-											<td>Senior Marketing Designer</td>
-											<td>London</td>
-											<td>43</td>
-											<td>2012/12/18</td>
-										</tr>
-										<tr>
-											<td>Tatyana Fitzpatrick</td>
-											<td>Regional Director</td>
-											<td>London</td>
-											<td>19</td>
-											<td>2010/03/17</td>
-										</tr>
-										<tr>
-											<td>Michael Silva</td>
-											<td>Marketing Designer</td>
-											<td>London</td>
-											<td>66</td>
-											<td>2012/11/27</td>
-										</tr>
-										<tr>
-											<td>Paul Byrd</td>
-											<td>Chief Financial Officer (CFO)</td>
-											<td>New York</td>
-											<td>64</td>
-											<td>2010/06/09</td>
-										</tr>
-										<tr>
-											<td>Gloria Little</td>
-											<td>Systems Administrator</td>
-											<td>New York</td>
-											<td>59</td>
-											<td>2009/04/10</td>
-										</tr>
-										<tr>
-											<td>Bradley Greer</td>
-											<td>Software Engineer</td>
-											<td>London</td>
-											<td>41</td>
-											<td>2012/10/13</td>
-										</tr>
-										<tr>
-											<td>Dai Rios</td>
-											<td>Personnel Lead</td>
-											<td>Edinburgh</td>
-											<td>35</td>
-											<td>2012/09/26</td>
-										</tr>
-										<tr>
-											<td>Jenette Caldwell</td>
-											<td>Development Lead</td>
-											<td>New York</td>
-											<td>30</td>
-											<td>2011/09/03</td>
-										</tr>
-										<tr>
-											<td>Yuri Berry</td>
-											<td>Chief Marketing Officer (CMO)</td>
-											<td>New York</td>
-											<td>40</td>
-											<td>2009/06/25</td>
-										</tr>
-										<tr>
-											<td>Caesar Vance</td>
-											<td>Pre-Sales Support</td>
-											<td>New York</td>
-											<td>21</td>
-											<td>2011/12/12</td>
-										</tr>
-										<tr>
-											<td>Doris Wilder</td>
-											<td>Sales Assistant</td>
-											<td>Sidney</td>
-											<td>23</td>
-											<td>2010/09/20</td>
-										</tr>
-										<tr>
-											<td>Angelica Ramos</td>
-											<td>Chief Executive Officer (CEO)</td>
-											<td>London</td>
-											<td>47</td>
-											<td>2009/10/09</td>
-										</tr>
-										<tr>
-											<td>Gavin Joyce</td>
-											<td>Developer</td>
-											<td>Edinburgh</td>
-											<td>42</td>
-											<td>2010/12/22</td>
-										</tr>
-										<tr>
-											<td>Jennifer Chang</td>
-											<td>Regional Director</td>
-											<td>Singapore</td>
-											<td>28</td>
-											<td>2010/11/14</td>
-										</tr>
-										<tr>
-											<td>Brenden Wagner</td>
-											<td>Software Engineer</td>
-											<td>San Francisco</td>
-											<td>28</td>
-											<td>2011/06/07</td>
-										</tr>
-										<tr>
-											<td>Fiona Green</td>
-											<td>Chief Operating Officer (COO)</td>
-											<td>San Francisco</td>
-											<td>48</td>
-											<td>2010/03/11</td>
-										</tr>
-										<tr>
-											<td>Shou Itou</td>
-											<td>Regional Marketing</td>
-											<td>Tokyo</td>
-											<td>20</td>
-											<td>2011/08/14</td>
-										</tr>
-										<tr>
-											<td>Michelle House</td>
-											<td>Integration Specialist</td>
-											<td>Sidney</td>
-											<td>37</td>
-											<td>2011/06/02</td>
-										</tr>
-										<tr>
-											<td>Suki Burks</td>
-											<td>Developer</td>
-											<td>London</td>
-											<td>53</td>
-											<td>2009/10/22</td>
-										</tr>
-										<tr>
-											<td>Prescott Bartlett</td>
-											<td>Technical Author</td>
-											<td>London</td>
-											<td>27</td>
-											<td>2011/05/07</td>
-										</tr>
-										<tr>
-											<td>Gavin Cortez</td>
-											<td>Team Leader</td>
-											<td>San Francisco</td>
-											<td>22</td>
-											<td>2008/10/26</td>
-										</tr>
-										<tr>
-											<td>Martena Mccray</td>
-											<td>Post-Sales support</td>
-											<td>Edinburgh</td>
-											<td>46</td>
-											<td>2011/03/09</td>
-										</tr>
-										<tr>
-											<td>Unity Butler</td>
-											<td>Marketing Designer</td>
-											<td>San Francisco</td>
-											<td>47</td>
-											<td>2009/12/09</td>
-										</tr>
-										<tr>
-											<td>Howard Hatfield</td>
-											<td>Office Manager</td>
-											<td>San Francisco</td>
-											<td>51</td>
-											<td>2008/12/16</td>
-										</tr>
-										<tr>
-											<td>Hope Fuentes</td>
-											<td>Secretary</td>
-											<td>San Francisco</td>
-											<td>41</td>
-											<td>2010/02/12</td>
-										</tr>
-										<tr>
-											<td>Vivian Harrell</td>
-											<td>Financial Controller</td>
-											<td>San Francisco</td>
-											<td>62</td>
-											<td>2009/02/14</td>
-										</tr>
-										<tr>
-											<td>Timothy Mooney</td>
-											<td>Office Manager</td>
-											<td>London</td>
-											<td>37</td>
-											<td>2008/12/11</td>
-										</tr>
-										<tr>
-											<td>Jackson Bradshaw</td>
-											<td>Director</td>
-											<td>New York</td>
-											<td>65</td>
-											<td>2008/09/26</td>
-										</tr>
-										<tr>
-											<td>Olivia Liang</td>
-											<td>Support Engineer</td>
-											<td>Singapore</td>
-											<td>64</td>
-											<td>2011/02/03</td>
-										</tr>
-										<tr>
-											<td>Bruno Nash</td>
-											<td>Software Engineer</td>
-											<td>London</td>
-											<td>38</td>
-											<td>2011/05/03</td>
-										</tr>
-										<tr>
-											<td>Sakura Yamamoto</td>
-											<td>Support Engineer</td>
-											<td>Tokyo</td>
-											<td>37</td>
-											<td>2009/08/19</td>
-										</tr>
-										<tr>
-											<td>Thor Walton</td>
-											<td>Developer</td>
-											<td>New York</td>
-											<td>61</td>
-											<td>2013/08/11</td>
-										</tr>
-										<tr>
-											<td>Finn Camacho</td>
-											<td>Support Engineer</td>
-											<td>San Francisco</td>
-											<td>47</td>
-											<td>2009/07/07</td>
-										</tr>
-										<tr>
-											<td>Serge Baldwin</td>
-											<td>Data Coordinator</td>
-											<td>Singapore</td>
-											<td>64</td>
-											<td>2012/04/09</td>
-										</tr>
-
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="tab3" class="tab-pane fade">
-			<div class="row clearfix tabcontent" id="Session">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div class="card">
-						<div class="header">
-							<h2>
-								CREATE SESSION
-							</h2>
-							<ul class="header-dropdown m-r--5">
-								<li class="dropdown">
-									<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-										<i class="material-icons">more_vert</i>
-									</a>
-									<ul class="dropdown-menu pull-right">
-										<li><a href="javascript:void(0);">Action</a></li>
-										<li><a href="javascript:void(0);">Another action</a></li>
-										<li><a href="javascript:void(0);">Something else here</a></li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-						<div class="body">
-							<form>
-								<label for="total-week">Total Week</label>
-								<div class="form-group">
-									<div class="form-line">
-										<input type="text" id="total_week" class="form-control">
-									</div>
-								</div>
-								<label for="start_day">Start Day</label>
-								<div class="form-group">
-									<div class="form-line">
-										<input type="date" id="start_day" class="form-control date">
-									</div>
-								</div>
-								<label for="time">Time</label>
-								<div class="form-group">
-									<div class="form-line">
-										<input type="time" id="time" class="form-control">
-									</div>
-								</div>
-								<br>
-								<div class="js-sweetalert">
-									<button type="submit" class="btn btn-primary m-t-15 waves-effect" data-type="success">SUBMIT</button>
-									<button type="reset" class="btn btn-danger m-t-15 waves-effect" onclick="window.location.href='/attendance/index1'">BACK TO LIST</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="tab4" class="tab-pane fade">
-			<div class="card card-outline-info">
-				<div class="card-header" style="color:black"><h3><strong> Check Attendance</strong></h3></div>
-				<div class="card-body">
-					<div class="row">
-						<h3 class="card-title">Course:</h3>
-					</div>
-					<div class="table-responsive m-t-40">
-						<table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th style="text-align:center">26/3</th>
-									<th>Point</th>
-									<th>Name</th>
-									<th>MSSV</th>
-									<th>Bỉthday</th>
-									<th>Note</th>
-
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td align="center">
-										<input type="checkbox" id="myCheck1" onclick="myFunction()" />
-									</td>
-									<td>
-										<div class="dropdown" id="text1" style="display:none">
-											<button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-												1
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width: 100px; height: 120px; overflow: auto">
-												<li><a tabindex="-1" href="#">-9</a></li>
-												<li><a tabindex="-1" href="#">-8</a></li>
-												<li><a tabindex="-1" href="#">-7</a></li>
-												<li><a tabindex="-1" href="#">-6</a></li>
-												<li><a tabindex="-1" href="#">-5</a></li>
-												<li><a tabindex="-1" href="#">-4</a></li>
-												<li><a tabindex="-1" href="#">-3</a></li>
-												<li><a tabindex="-1" href="#">-2</a></li>
-												<li><a tabindex="-1" href="#">-1</a></li>
-												<li><a tabindex="-1" href="#">0</a></li>
-												<li><a tabindex="-1" href="#">1</a></li>
-												<li><a tabindex="-1" href="#">2</a></li>
-												<li><a tabindex="-1" href="#">3</a></li>
-												<li><a tabindex="-1" href="#">4</a></li>
-												<li><a tabindex="-1" href="#">5</a></li>
-												<li><a tabindex="-1" href="#">6</a></li>
-												<li><a tabindex="-1" href="#">7</a></li>
-												<li><a tabindex="-1" href="#">8</a></li>
-												<li><a tabindex="-1" href="#">9</a></li>
-												<li><a tabindex="-1" href="#">10</a></li>
-											</ul>
-										</div>
-									</td>
-									<td>Nguyễn Văn A</td>
-									<td>T150730</td>
-									<td>02-01-1997</td>
-									<td contenteditable="true"></td>
-
-								</tr>
-								<tr>
-									<td align="center"><input type="checkbox" id="myCheck2" onclick="myFunction()" /></td>
-									<td>
-
-										<div class="dropdown" id="text2" style="display:none">
-											<button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-												1
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width: 100px; height: 120px; overflow: auto">
-												<li><a tabindex="-1" href="#">-9</a></li>
-												<li><a tabindex="-1" href="#">-8</a></li>
-												<li><a tabindex="-1" href="#">-7</a></li>
-												<li><a tabindex="-1" href="#">-6</a></li>
-												<li><a tabindex="-1" href="#">-5</a></li>
-												<li><a tabindex="-1" href="#">-4</a></li>
-												<li><a tabindex="-1" href="#">-3</a></li>
-												<li><a tabindex="-1" href="#">-2</a></li>
-												<li><a tabindex="-1" href="#">-1</a></li>
-												<li><a tabindex="-1" href="#">0</a></li>
-												<li><a tabindex="-1" href="#">1</a></li>
-												<li><a tabindex="-1" href="#">2</a></li>
-												<li><a tabindex="-1" href="#">3</a></li>
-												<li><a tabindex="-1" href="#">4</a></li>
-												<li><a tabindex="-1" href="#">5</a></li>
-												<li><a tabindex="-1" href="#">6</a></li>
-												<li><a tabindex="-1" href="#">7</a></li>
-												<li><a tabindex="-1" href="#">8</a></li>
-												<li><a tabindex="-1" href="#">9</a></li>
-												<li><a tabindex="-1" href="#">10</a></li>
-											</ul>
-										</div>
-									</td>
-									<td>Nguyễn Văn B</td>
-									<td>T150731</td>
-									<td>02-01-1997</td>
-									<td contenteditable="true"></td>
-
-								</tr>
-								<tr>
-									<td align="center"><input type="checkbox" id="myCheck3" onclick="myFunction()" /></td>
-									<td>
-
-										<div class="dropdown" id="text3" style="display:none">
-											<button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-												1
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width: 100px; height: 120px; overflow: auto">
-												<li><a tabindex="-1" href="#">-9</a></li>
-												<li><a tabindex="-1" href="#">-8</a></li>
-												<li><a tabindex="-1" href="#">-7</a></li>
-												<li><a tabindex="-1" href="#">-6</a></li>
-												<li><a tabindex="-1" href="#">-5</a></li>
-												<li><a tabindex="-1" href="#">-4</a></li>
-												<li><a tabindex="-1" href="#">-3</a></li>
-												<li><a tabindex="-1" href="#">-2</a></li>
-												<li><a tabindex="-1" href="#">-1</a></li>
-												<li><a tabindex="-1" href="#">0</a></li>
-												<li><a tabindex="-1" href="#">1</a></li>
-												<li><a tabindex="-1" href="#">2</a></li>
-												<li><a tabindex="-1" href="#">3</a></li>
-												<li><a tabindex="-1" href="#">4</a></li>
-												<li><a tabindex="-1" href="#">5</a></li>
-												<li><a tabindex="-1" href="#">6</a></li>
-												<li><a tabindex="-1" href="#">7</a></li>
-												<li><a tabindex="-1" href="#">8</a></li>
-												<li><a tabindex="-1" href="#">9</a></li>
-												<li><a tabindex="-1" href="#">10</a></li>
-											</ul>
-										</div>
-									</td>
-									<td>Nguyễn Văn A</td>
-									<td>T150730</td>
-									<td>02-01-1997</td>
-									<td contenteditable="true"></td>
-
-								</tr>
-								<tr>
-									<td align="center"><input type="checkbox" id="myCheck4" onclick="myFunction()" /></td>
-									<td>
-
-										<div class="dropdown" id="text4" style="display:none">
-											<button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-												1
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width: 100px; height: 120px; overflow: auto">
-												<li><a tabindex="-1" href="#">-9</a></li>
-												<li><a tabindex="-1" href="#">-8</a></li>
-												<li><a tabindex="-1" href="#">-7</a></li>
-												<li><a tabindex="-1" href="#">-6</a></li>
-												<li><a tabindex="-1" href="#">-5</a></li>
-												<li><a tabindex="-1" href="#">-4</a></li>
-												<li><a tabindex="-1" href="#">-3</a></li>
-												<li><a tabindex="-1" href="#">-2</a></li>
-												<li><a tabindex="-1" href="#">-1</a></li>
-												<li><a tabindex="-1" href="#">0</a></li>
-												<li><a tabindex="-1" href="#">1</a></li>
-												<li><a tabindex="-1" href="#">2</a></li>
-												<li><a tabindex="-1" href="#">3</a></li>
-												<li><a tabindex="-1" href="#">4</a></li>
-												<li><a tabindex="-1" href="#">5</a></li>
-												<li><a tabindex="-1" href="#">6</a></li>
-												<li><a tabindex="-1" href="#">7</a></li>
-												<li><a tabindex="-1" href="#">8</a></li>
-												<li><a tabindex="-1" href="#">9</a></li>
-												<li><a tabindex="-1" href="#">10</a></li>
-											</ul>
-										</div>
-									</td>
-									<td>Nguyễn Văn A</td>
-									<td>T150730</td>
-									<td>02-01-1997</td>
-									<td contenteditable="true"></td>
-
-								</tr>
-
-
-							</tbody>
-
-						</table>
-					</div>
-				</div>
-			</div>
+			}
+			else
+			{
+				Html.RenderPartial("~/Views/Attendance/AttendanceList.cshtml", ViewData["students"]);
+			}
+			
 		</div>
 
 
@@ -864,127 +138,21 @@
 </div>
 
 <script src="~/Content/assets/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function () {
-		$('#example23').DataTable({
-			paging: false,
-			dom: 'Bfrtip',
-			buttons: [
-				'copy', 'excel', 'pdf', 'print'
-			]
-		});
-		var table = $('#example23').DataTable();
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				var url = "/GroupManagement/Group/AddGroupManager";
-				$("#ModalAddManager").load(url, function () {
-					$("#myAddManager").modal("show");
-				})
-			},
-			text: 'add group'
-		});
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				var url = "/GroupManagement/Group/AddGroupOwner";
-				$("#ModalAddOwner").load(url, function () {
-					$("#myAddOwner").modal("show");
-				})
-			},
-			text: 'add owner'
-		});
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				window.location = '/GroupManagement/Group/Import/@Session["GroupID"]';
-			},
-			text: 'import'
-		}); table.button().add(0, {
-			action: function (e, dt, button, config) {
-				window.location = '/GroupManagement/Group';
-			},
-			text: 'back'
-		});
-	})
+
+<script>
+$(function () {
+	var selector = '@active';
+	$("#tab1").removeClass("active");
+	$("#tab2").removeClass("active");
+	$("#tab3").removeClass("active");
+	$("#tab4").removeClass("active");
+    $("#" + selector).addClass("active");
+});
 </script>
 <script>
-	function opentab(evt, tabName) {
-		var i, tabcontent, tablinks;
-		tabcontent = document.getElementsByClassName("tabcontent");
-		for (i = 0; i < tabcontent.length; i++) {
-			tabcontent[i].style.display = "none";
-		}
-		tablinks = document.getElementsByClassName("tablinks");
-		for (i = 0; i < tablinks.length; i++) {
-			tablinks[i].className = tablinks[i].className.replace(" active", "");
-		}
-		document.getElementById(tabName).style.display = "block";
-		evt.currentTarget.className += " active";
+	function choice() {
+		$('[href="#tab3"]').tab('show');
 	}
-	function myFunction() {
-		// Get the checkbox
-		var checkBox = document.getElementById("myCheck1");
-		// Get the output text
-		var text = document.getElementById("text1");
-
-		// If the checkbox is checked, display the output text
-		if (checkBox.checked == true) {
-			text.style.display = "block";
-		} else {
-			text.style.display = "none";
-		}
-		var checkBox = document.getElementById("myCheck2");
-		// Get the output text
-		var text = document.getElementById("text2");
-
-		// If the checkbox is checked, display the output text
-		if (checkBox.checked == true) {
-			text.style.display = "block";
-		} else {
-			text.style.display = "none";
-		}
-		var checkBox = document.getElementById("myCheck3");
-		// Get the output text
-		var text = document.getElementById("text3");
-
-		// If the checkbox is checked, display the output text
-		if (checkBox.checked == true) {
-			text.style.display = "block";
-		} else {
-			text.style.display = "none";
-		}
-		var checkBox = document.getElementById("myCheck4");
-		// Get the output text
-		var text = document.getElementById("text4");
-
-		// If the checkbox is checked, display the output text
-		if (checkBox.checked == true) {
-			text.style.display = "block";
-		} else {
-			text.style.display = "none";
-		}
-	}
-
-	$(function () {
-
-		$(".dropdown-menu li a").click(function () {
-			$(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
-			$(this).parents(".dropdown").find('.btn').val($(this).data('value'));
-		});
-
-	});
-</script>
-<!--move lines-->
-<script>
-	$('table').on('change', '[type=checkbox]', function () {
-		var $this = $(this);
-		var row = $this.closest('tr');
-		if ($this.prop('checked')) { // move to top
-			row.insertAfter(row.parent().find('tr:last-child'))
-		}
-		else { // move to bottom
-
-			row.insertBefore(row.parent().find('tr:first-child'))
-		}
-	});
 </script>
 
 

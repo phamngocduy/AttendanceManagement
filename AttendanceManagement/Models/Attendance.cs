@@ -17,7 +17,7 @@ namespace AttendanceManagement.Models
         public int ID { get; set; }
         public Nullable<int> MemberID { get; set; }
         public Nullable<int> SessionID { get; set; }
-        public Nullable<byte> Status { get; set; }
+        public string Status { get; set; }
         public string Note { get; set; }
     
         public virtual CourseMember CourseMember { get; set; }
