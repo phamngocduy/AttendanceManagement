@@ -1,177 +1,158 @@
-﻿@model IEnumerable<AttendanceManagement.Models.Course>
-@{
-	ViewBag.Title = "Index";
+﻿@{
+	ViewBag.Title = "DetailClass";
 	Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+	string active = ViewBag.tab.ToString();
+	string date = "nulldate";
+	if (ViewBag.date != null)
+	{
+		date = ViewBag.date.ToString();
+	}
+
+
 }
 
-
-
-<link href="~/Content/Attendance.css" rel="stylesheet" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
-<link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
-
-
-<div class="fixed-header row">
-	<div class="col-md-4 col-xs-6 header-left">
-		<h3>Welcome to SIMS,<strong> Ninh</strong>!</h3>
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">@AttendanceManagement.Resources.Resource.Mygroup</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">@AttendanceManagement.Resources.Resource.Group</a></li>
+			<li class="breadcrumb-item active">@AttendanceManagement.Resources.Resource.Mygroup</li>
+		</ol>
 	</div>
-	<div class="col-md-8 col-xs-6 add-class">
-		<i type="button" class="glyphicon glyphicon-refresh" onclick="window.location='/Attendance/SynCourse'">	</i>
+	<div class="col-md-7 col-4 align-self-center">
+		<div class="d-flex m-t-10 justify-content-end">
+			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
+				<div class="chart-text m-r-10">
+					<h6 class="m-b-0"><small>THIS MONTH</small></h6>
+					<h4 class="m-t-0 text-info">$58,356</h4>
+				</div>
+				<div class="spark-chart">
+					<div id="monthchart"></div>
+				</div>
+			</div>
+			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
+				<div class="chart-text m-r-10">
+					<h6 class="m-b-0"><small>LAST MONTH</small></h6>
+					<h4 class="m-t-0 text-primary">$48,356</h4>
+				</div>
+				<div class="spark-chart">
+					<div id="lastmonthchart"></div>
+				</div>
+			</div>
+			<div class="">
+				<button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+			</div>
+		</div>
 	</div>
 </div>
-<div class="attendance-content">
-	<div class="row">
-		<div class="col-md-6">
-			<h3>My Class</h3>
-		</div>
-		@*<div>
-			@using (Html.BeginForm("Chose", "Lecturer", FormMethod.Post))
-			{
-				<div class="row">
-					<div class="col-lg-3"  style="margin:0 auto;text-align:center">
-						@Html.DropDownList("SessionID", (SelectList)ViewBag.Lesson, "Please select session", new { @class = "form-control" })
-						<input type="submit" value="Chose" class="btn btn-default" />
-					</div>
-				</div>
-
-				<div class="row">
-
-				</div>
-					}
-				</div>*@
-		<form class="navbar-form navbar-left">
-			<div class="form-group ">
-				<input style="border-radius:5px" type="text" id="myInput" class="form-control" placeholder="Search ...">
+<div class="container-fluid">
+	<!-- Basic Example -->
+	<ul class="nav nav-tabs">
+		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12 active">
+			<div class="card" style="text-align:center;">
+				<a data-toggle="tab" href="#tab1" id="a" style="background-color:#7460ee">
+					<h2 style="color:white">
+						<span>
+							<i class="fa fa-book"></i>
+						</span>
+						DASHBOARD
+					</h2>
+				</a>
 			</div>
-		</form>
-	</div>
-	<hr />
-	<div class="row" id="myList">
-		@if (Model != null)
-		{
-			foreach (var item in Model)
+
+		</li>
+		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="card" style="text-align:center">
+				<a data-toggle="tab" href="#tab2" id="b" style="background-color:#fc4b6c">
+					<h2 style="color:white">
+						<span>
+							<i class="fa fa-user"></i>
+						</span>
+						STUDENTS
+					</h2>
+				</a>
+			</div>
+		</li>
+		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="card" style="text-align:center">
+				<a data-toggle="tab" href="#tab3" id="c" style="background-color:#26c6da">
+					<h2 style="color:white">
+						<span>
+							<i class="fa fa-check-square-o"></i>
+						</span>
+						SESSION
+					</h2>
+				</a>
+			</div>
+		</li>
+		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="card" style="text-align:center">
+				<a data-toggle="tab" href="#tab4" id="d" style="background-color:#ffb22b">
+					<h2 style="color:white">
+						<span>
+							<i class="fa fa-pencil-square-o"></i>
+						</span>
+						ATTENDANCE
+					</h2>
+				</a>
+			</div>
+		</li>
+	</ul>
+	<div class="tab-content">
+		<div id="tab1" class="tab-pane active ">
+			@{ Html.RenderPartial("~/Views/Attendance/AllAttendance.cshtml", ViewData["attendance"]); }
+
+		</div>
+		<div id="tab2" class="tab-pane ">
+			@{ Html.RenderPartial("~/Views/Attendance/StudentList.cshtml", ViewData["students"]); }
+		</div>
+		<div id="tab3" class="tab-pane ">
+			@{ Html.RenderPartial("~/Views/Attendance/SessionList.cshtml", ViewData["session"]); }
+		</div>
+		<div id="tab4" class="tab-pane">
+			@if (ViewBag.date == null)
 			{
-				<div class="col-sm-6 col-md-3">
-					<div class="thumbnail">
-						<div class="caption">
-							<h3><strong><a href="~/Attendance/manageClass/@item.ID">@item.CourseName</a></strong></h3>
-							<p>Lecturer: @item.Lecturer</p>
-							<p>Time:  @item.DayOfWeek @item.TimeSpan</p>
-							<p>Room:  @item.Room</p>
-							@*<i type="button" class="btn btn-primary" onclick="Edit(@item.ID)">Edit Class</i>*@
+				<div class="card">
+					<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
+					<div class="card-body">
+						<div class="row" style="text-align:center">
+							<div class="col">
+								<button class="btn btn-primary" onclick="choice()">Please choice session</button>
+							</div>
 						</div>
+
 					</div>
 				</div>
 			}
-		}
+			else
+			{
+				Html.RenderPartial("~/Views/Attendance/AttendanceList.cshtml", ViewData["students"]);
+			}
 
-	</div>
-
-</div>
-<div class="text-center">
-	<nav aria-label="Page navigation">
-		<ul class="pagination">
-			<li>
-				<a href="#" aria-label="Previous">
-					<span aria-hidden="true">&laquo;</span>
-				</a>
-			</li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li>
-				<a href="#" aria-label="Next">
-					<span aria-hidden="true">&raquo;</span>
-				</a>
-			</li>
-		</ul>
-	</nav>
-</div>
-
-<!--Dialog create new class-->
-<div class="modal fade" id="myCreateClass" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Create new <strong>Class</strong></h4>
-			</div>
-			<div class="modal-body" id="ModalCreateClass">
-
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
 		</div>
+
 
 	</div>
 </div>
 
-<!--Dialog edit class-->
-<div class="modal fade" id="myEditClass" role="dialog">
-	<div class="modal-dialog">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Edit <strong>Class</strong></h4>
-			</div>
-			<div class="modal-body" id="ModalEditClass">
+<script src="~/Content/assets/jquery.min.js"></script>
 
-			</div>
-		</div>
-		<div class="modal-footer">
-		</div>
-	</div>
-</div>
-
-<!--Create class-->
 <script>
-	function Create() {
-		var url = "/Attendance/CreateClassView";
-		$("#ModalCreateClass").load(url, function () {
-			$("#myCreateClass").modal("show");
-		})
+$(function () {
+	var selector = '@active';
+	$("#tab1").removeClass("active");
+	$("#tab2").removeClass("active");
+	$("#tab3").removeClass("active");
+	$("#tab4").removeClass("active");
+    $("#" + selector).addClass("active");
+});
+</script>
+<script>
+	function choice() {
+		$('[href="#tab3"]').tab('show');
 	}
 </script>
-<script>
-	function Edit(id) {
-		var url = "/Attendance/Edit?id=" + id;
-		$("#ModalEditClass").load(url, function () {
-			$("#myEditClass").modal("show");
-		})
-	}
-</script>
-<script>
-	function Clean() {
-
-	}
-</script>
-
-<script>
-	function Submit() {
-
-	}
-</script>
-
-
-<!--search class-->
-<script>
-	$(document).ready(function () {
-		$("#myInput").on("keyup", function () {
-			var value = $(this).val().toLowerCase();
-			$("#myList *").filter(function () {
-				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-			});
-		});
-	});
-</script>
-
-
 
 
 

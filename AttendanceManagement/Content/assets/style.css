@@ -722,7 +722,36 @@ Table Cell
   width: 100%;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar; }
+th.dt-center, td.dt-center {
+	text-align: center;
+}
 
+th, td {
+	white-space: nowrap;
+}
+
+div.dataTables_wrapper {
+	margin: 0 auto;
+}
+
+div.container {
+	width: 80%;
+}
+table.DTFC_Cloned thead, table.DTFC_Cloned tfoot {
+	background-color: white
+}
+
+div.DTFC_Blocker {
+	background-color: white
+}
+
+div.DTFC_LeftWrapper table.dataTable, div.DTFC_RightWrapper table.dataTable {
+		z-index: 99999
+}
+
+	div.DTFC_LeftWrapper table.dataTable.no-footer, div.DTFC_RightWrapper table.dataTable.no-footer {
+		border-bottom: none
+	}
 /*******************
 Wave Effects
 *******************/
@@ -2988,6 +3017,12 @@ Table-Layout
 
 .table-striped tbody tr:nth-of-type(odd) {
   background: #f2f4f8; }
+
+.table-striped tbody tr:nth-of-type(even) {
+	background: #ffffff;
+}
+
+
 
 .color-table.success-table thead th {
   background-color: #26c6da;

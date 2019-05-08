@@ -1,26 +1,35 @@
 ﻿@model List<AttendanceManagement.Models.DasboardAttendanceView>
-@if (Model.Count > 0) { 
+@{
+	int iSession = 1;
+}
+@if (Model.Count > 0)
+{
 	<div class="card card-outline-primary">
-		<div class="card-header"><h3 style="color:white"><strong> TOTAL ATTENDANCE</strong></h3></div>
+			<div class="card-header"><h3 style="color:white"><strong> TOTAL ATTENDANCE</strong></h3></div>
 		<div class="card-body">
+			<div class="row pull-right">
+				<div class="bt-switch">
+					<input type="checkbox" checked data-on-color="danger" data-off-color="success" data-on-text="Status" data-off-text="Point">
+				</div>
+			</div>
 			<div class="table-responsive m-t-40">
-				<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+				<table id="allAttendance" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
 					<thead>
 						<tr>
 							<th>MSSV</th>
 							<th>Name</th>
 							<th>Total attend</th>
 							<th>Total point</th>
-							@for (int i =0;i< 1 ;i++)
+							@for (int i = 0; i < 1; i++)
 							{
 								var model = Model[i];
 								foreach (var item in model.Attendance)
 								{
-									<th>@item.Date.ToShortDateString()</th>
+									<th data-toggle="tooltip" data-placement="top" title="@item.Date.ToShortDateString()">Sesion @(iSession++)</th>
 								}
 							}
 						</tr>
-						
+
 					</thead>
 					<tfoot>
 						<tr>
@@ -37,38 +46,78 @@
 								}
 							}
 						</tr>
-						</tfoot>
+					</tfoot>
 					<tbody>
 						@foreach (var item in Model)
 						{
-						<tr>
-							<th>@item.studentID</th>
-							<th>@item.studentName</th>
-							<th align="center">10/13</th>
-							<th align="center">10</th>
-							@foreach (var i in item.Attendance)
-							{
-								<th>@i.Status</th>
-							}
-							@*<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-							<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-							<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-							<th><abbr title="0"><input type="checkbox" unchecked disabled /></abbr></th>
-							<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-							<th><abbr title="+2"><input type="checkbox" unchecked disabled /></abbr></th>
-							<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-							<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>
-							<th><abbr title="0"><input type="checkbox" unchecked disabled /></abbr></th>
-							<th><abbr title="+6"><input type="checkbox" checked disabled /></abbr></th>
-							<th><abbr title="+2"><input type="checkbox" checked disabled /></abbr></th>
-							<th><abbr title="-3"><input type="checkbox" checked disabled /></abbr></th>
-							<th><abbr title="+1"><input type="checkbox" checked disabled /></abbr></th>*@
-						</tr>
+							<tr>
+								<th>@item.studentID</th>
+								<th style="text-align:left">@item.studentName</th>
+								<th>@item.TotalPresent/@item.TotalSession</th>
+								<th>@item.TotalPoint</th>
+								@foreach (var i in item.Attendance)
+								{
+								<th>
+									
+									<div class="Spoint" style="display:none">
+										@i.Status
+									</div>
+									<div class="status">
+										@if (i.Status == "0")
+										{
+											<img src="/Content/image/uncheck.png" style="width:20px;height:20px" />
+										}
+										else
+										{
+											<img src="/Content/image/check.png" style="width:20px;height:20px" />
+										}
+									</div>
+								</th>
+								}
+							</tr>
 						}
-				
+
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
+
+
+	<script src="~/Content/assets/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var table = $('#allAttendance').DataTable({
+				scrollY: "500px",
+				ordering: false,
+				scrollX: true,
+				scrollCollapse: true,
+				paging: false,
+				fixedColumns: {
+					leftColumns: 4
+				}
+				,
+				columnDefs: [
+					{ "className": "dt-center", "targets": "_all" }
+				]
+			});
+		});
+	</script>
+	<script src="~/Content/assets/bootstrap-switch.min.js"></script>
+	<script type="text/javascript">
+		$(".bt-switch input[type='checkbox']").bootstrapSwitch({
+			onSwitchChange: function (e, state) {
+				if (state == false) {
+					$('div.Spoint').show();
+					$('div.status').hide();
+				} else {
+					
+					$('div.Spoint').hide();
+					$('div.status').show();
+				}
+				
+			}});
+	
+	</script>
+
 }

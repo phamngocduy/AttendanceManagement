@@ -1,6 +1,5 @@
-﻿
-@{
-	ViewBag.Title = "DetailClass1";
+﻿@{
+	ViewBag.Title = "DetailClass";
 	Layout = "~/Views/Shared/_MainLayout.cshtml";
 
 	string active = ViewBag.tab.ToString();
@@ -101,7 +100,7 @@
 		</li>
 	</ul>
 	<div class="tab-content">
-		<div id="tab1" class="tab-pane active ">
+		<div id="tab1" class="tab-pane ">
 			@{ Html.RenderPartial("~/Views/Attendance/AllAttendance.cshtml", ViewData["attendance"]); }
 		
 		</div>
@@ -142,11 +141,7 @@
 <script>
 $(function () {
 	var selector = '@active';
-	$("#tab1").removeClass("active");
-	$("#tab2").removeClass("active");
-	$("#tab3").removeClass("active");
-	$("#tab4").removeClass("active");
-    $("#" + selector).addClass("active");
+	$('[href="#' + selector+'"]').tab('show');
 });
 </script>
 <script>
@@ -154,6 +149,7 @@ $(function () {
 		$('[href="#tab3"]').tab('show');
 	}
 </script>
+
 
 
 

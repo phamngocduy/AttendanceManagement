@@ -313,6 +313,8 @@
     <Content Include="Content\assets\bootstrap-datepicker.min.js" />
     <Content Include="Content\assets\bootstrap-material-datetimepicker.css" />
     <Content Include="Content\assets\bootstrap-material-datetimepicker.js" />
+    <Content Include="Content\assets\bootstrap-switch.min.css" />
+    <Content Include="Content\assets\bootstrap-switch.min.js" />
     <Content Include="Content\assets\bootstrap-timepicker.min.css" />
     <Content Include="Content\assets\bootstrap-timepicker.min.js" />
     <Content Include="Content\assets\bootstrap.css" />
@@ -377,8 +379,10 @@
     <Content Include="Content\fonts\educate-icon.svg" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\image\check.png" />
     <Content Include="Content\image\logo-vlu-2018-transparent.png" />
     <Content Include="Content\image\logovl.png" />
+    <Content Include="Content\image\uncheck.png" />
     <Content Include="Content\image\user.png" />
     <Content Include="Content\kiaalap\css\bootstrap-duallistbox.min.css" />
     <Content Include="Content\kiaalap\js\duallistbox.active.js" />
@@ -728,6 +732,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -762,21 +767,12 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Attendance\AddStudent.cshtml" />
     <Content Include="Views\Attendance\AttendanceExcel.cshtml" />
-    <Content Include="Views\Attendance\CourseList.cshtml" />
-    <Content Include="Views\Attendance\CreateClass1.cshtml" />
-    <Content Include="Views\Attendance\CreateClassView.cshtml" />
-    <Content Include="Views\Attendance\CreateFaculty.cshtml" />
     <Content Include="Views\Attendance\CreateFaculty1.cshtml" />
-    <Content Include="Views\Attendance\DetailClass1.cshtml" />
+    <Content Include="Views\Attendance\DetailClass.cshtml" />
     <Content Include="Views\Attendance\DetailFaculty.cshtml" />
-    <Content Include="Views\Attendance\EditClass1.cshtml" />
-    <Content Include="Views\Attendance\EditClassView.cshtml" />
     <Content Include="Views\Attendance\FacultyIndex.cshtml" />
     <Content Include="Views\Attendance\Index.cshtml" />
     <Content Include="Views\Attendance\MajorList.cshtml" />
-    <Content Include="Views\Attendance\manageClass.cshtml" />
-    <Content Include="Views\Attendance\ManageFaculty.cshtml" />
-    <Content Include="Views\Attendance\ManageStudent.cshtml" />
     <Content Include="Views\Attendance\StudentList.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -794,7 +790,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\Attendance\SessionList.cshtml" />
-    <Content Include="Views\Attendance\CreateSession.cshtml" />
     <Content Include="Views\Attendance\AttendanceList.cshtml" />
     <Content Include="Views\Attendance\AllAttendance.cshtml" />
   </ItemGroup>

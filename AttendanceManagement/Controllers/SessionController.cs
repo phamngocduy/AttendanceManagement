@@ -29,13 +29,13 @@ namespace AttendanceManagement.Controllers
 			db.SaveChanges();
 			Session["tabactive"] = "tab3";
 
-			return RedirectToAction("DetailClass1", "Attendance",new { id = Session["CourseID"] });
+			return RedirectToAction("DetailClass", "Attendance",new { id = Session["CourseID"] });
 		}
 		[HttpGet]
 		public ActionResult ChangeToSession()
 		{
 			Session["tabactive"] = "tab3";
-			return RedirectToAction("DetailClass1", "Attendance", new { id = Session["CourseID"] });
+			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
 		}
     }
 }

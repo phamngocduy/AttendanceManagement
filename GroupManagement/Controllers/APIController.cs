@@ -92,7 +92,7 @@ namespace WebApplication.Controllers
 			try
 			{
 				var user = db.Users.FirstOrDefault(x => x.Email == searchString || x.StID == searchString);
-				List<UserProfile> list = new List<UserProfile>();
+				//List<UserProfile> list = new List<UserProfile>();
 				UserProfile us = new UserProfile
 				{
 					StID = user.StID,
@@ -103,9 +103,9 @@ namespace WebApplication.Controllers
 					Avatar = user.AvatarBase64,
 					UserID = user.UserID
 				};
-				list.Add(us);
+				//list.Add(us);
 				var response = new HttpResponseMessage(HttpStatusCode.OK);
-				response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.Unicode);
+				response.Content = new StringContent(JsonConvert.SerializeObject(us), Encoding.Unicode);
 				response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 				response.Content.Headers.ContentType.CharSet = Encoding.Unicode.HeaderName;
 				return response;

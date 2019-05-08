@@ -22,76 +22,78 @@ else
 	<div class="card card-outline-warning">
 		<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
 		<div class="card-body">
-
-			<div class="row">
+			<div class="row pull-left">
 				<div class="col-lg-3">
 					<button type="button" id="btnCheckAttendance" class="btn waves-effect waves-light btn-block btn-info">Check Attendance</button>
 				</div>
 			</div>
-			<div class="table-responsive m-t-40">
-				<table id="tableattendance" name="atten" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-					<thead>
-						<tr>
-							<th style="display:none"></th>
-							<th style="text-align:center">@ViewBag.date</th>
-							<th>Point</th>
-							<th>Name</th>
-							<th>MSSV</th>
-							<th>Birthday</th>
-							<th>Note</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (var item in Model)
-						{
-							<tr>
-								<td style="display:none">
-									<input type="text" value="@item.ID" name="memberID" />
-								</td>
-								<td align="center">
-									<input type="checkbox" />
-								</td>
-								<td>
-									<select class="custom-select" style="display:none" name="status">
-										<option value="-9">-9</option>
-										<option value="-8">-8</option>
-										<option value="-7">-7</option>
-										<option value="-6">-6</option>
-										<option value="-5">-5</option>
-										<option value="-4">-4</option>
-										<option value="-3">-3</option>
-										<option value="-2">-2</option>
-										<option value="-1">-1</option>
-										<option value="0" selected>0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-									</select>
-								</td>
-								<td>@item.Name</td>
-								<td>@item.StudentID</td>
-								<td>@item.DoB.Value.ToShortDateString()</td>
-								<td>
-									<div class="text" contenteditable="true">
-										<input style="display:none" value="" class="textcontent" type="text" name="note" />
-									</div>
-								</td>
+			<div class="row pull-right">
 
-							</tr>
-						}
-					</tbody>
-				</table>
 			</div>
+				<div class="table-responsive m-t-40">
+					<table id="tableattendance" name="atten" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
+						<thead>
+							<tr>
+								<th style="display:none"></th>
+								<th style="text-align:center">@ViewBag.date</th>
+								<th>Point</th>
+								<th>Name</th>
+								<th>MSSV</th>
+								<th>Birthday</th>
+								<th>Note</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td style="display:none">
+										<input type="text" value="@item.ID" name="memberID" />
+									</td>
+									<td align="center">
+										<input type="checkbox" />
+									</td>
+									<td>
+										<select class="custom-select" style="display:none" name="status">
+											<option value="-9">-9</option>
+											<option value="-8">-8</option>
+											<option value="-7">-7</option>
+											<option value="-6">-6</option>
+											<option value="-5">-5</option>
+											<option value="-4">-4</option>
+											<option value="-3">-3</option>
+											<option value="-2">-2</option>
+											<option value="-1">-1</option>
+											<option value="0" selected>0</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+										</select>
+									</td>
+									<td>@item.Name</td>
+									<td>@item.StudentID</td>
+									<td>@item.DoB.Value.ToShortDateString()</td>
+									<td>
+										<div class="text" contenteditable="true">
+											<input style="display:none" value="" class="textcontent" type="text" name="note" />
+										</div>
+									</td>
 
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+
+			</div>
 		</div>
-	</div>
 
 }
 
@@ -180,7 +182,7 @@ else
 				success: function (response) {
 					var id = @Session["CourseID"];
 					alert(id);
-					var url = '@Url.Action("Detailclass1", "Attendance", new { id = "__id__" })';
+					var url = '@Url.Action("Detailclass", "Attendance", new { id = "__id__" })';
 					alert(url);
 					window.location.href = url.replace('__id__', id);
 				}
@@ -216,34 +218,3 @@ else
 </script>
 
 
-
-@*<script type="text/javascript">
-		$(document).ready(function () {
-			$('#tableattendance').DataTable({
-				paging: false,
-				dom: 'Bfrtip',
-				buttons: [
-					'copy', 'excel', 'pdf', 'print'
-				]
-			});
-			var table = $('#tableattendance').DataTable();
-			table.button().add(0, {
-				action: function (e, dt, button, config) {
-					var url = "/GroupManagement/Group/AddGroupManager";
-					$("#ModalAddManager").load(url, function () {
-						$("#myAddManager").modal("show");
-					})
-				},
-				text: 'Check Attendance'
-			});
-			table.button().add(0, {
-				action: function (e, dt, button, config) {
-					var url = "/GroupManagement/Group/AddGroupManager";
-					$("#ModalAddManager").load(url, function () {
-						$("#myAddManager").modal("show");
-					})
-				},
-				text: 'Back'
-			});
-		})
-	</script>*@

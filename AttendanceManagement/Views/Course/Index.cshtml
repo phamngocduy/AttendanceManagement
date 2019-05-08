@@ -48,23 +48,31 @@
 	</div>
 	<div class="card-body">
 		<div class="message-box contact-box">
-			<h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-success waves-effect waves-dark"><i class="mdi mdi-autorenew"></i></button></h2>
+			<h2 class="add-ct-btn">
+			<button type="button" class="btn btn-circle btn-lg btn-success waves-effect waves-dark" onclick="location.href = '@Url.Action("SynCourse", "Course")';"><i class="mdi mdi-autorenew"></i></button>
+			</h2>
 			<div class="row">
 				<div class="col-md-10">
-					@using (Html.BeginForm("Chose", "Lecturer", FormMethod.Post))
+					@using (Html.BeginForm("Index", "Course", FormMethod.Post))
 					{
-						<div class="col-lg-3">
+						<div class="col-lg-6">
 							<div class="row">
 								<div class="col-6">
 									<h2>Semester</h2>
 								</div>
 								<div class="col-6">
-									<select class="custom-select pull-left" name="GroupParent" onchange="this.form.submit()">
-										<option value="@ViewBag.Semester[0]" selected>	@ViewBag.Semester[0]</option>
-										@for (int i = 1; i < Enumerable.Count(ViewBag.Semester); i++)
+									<select class="custom-select pull-left" name="SemeterID" onchange="this.form.submit()">
+										@foreach (var item in ViewBag.Semester)
 										{
-											<option value="@ViewBag.Semester[i]">@ViewBag.Semester[i]</option>
+											if (item == ViewBag.SemesterSelected)
+											{
+												<option value="@item" selected>	@item</option>
+											}
+											else { 
+											<option value="@item">	@item</option>
+											}
 										}
+
 									</select>
 								</div>
 							</div>
@@ -96,7 +104,8 @@
 										<h5 class="card-title">Lecturer: @item.Lecturer</h5>
 										<p class="card-text">Time:  @item.DayOfWeek @item.TimeSpan</p>
 										<p class="card-text">Room:  @item.Room</p>
-										<a href="@Url.Action("Detailclass1","Attendance",new { id = item.ID })" class="btn btn-inverse">Detail </a>
+										<p class="card-text">Semester:  @item.Semester</p>
+										<a href="@Url.Action("Detailclass","Attendance",new { id = item.ID })" class="btn btn-inverse">Detail </a>
 									</div>
 								</div>
 							</div>

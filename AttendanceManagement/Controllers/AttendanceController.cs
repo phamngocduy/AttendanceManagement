@@ -22,74 +22,6 @@ namespace AttendanceManagement.Controllers
 			return View(courselist);
 
 		}
-
-		public ActionResult Index1()
-		{
-			return View();
-		}
-
-		//public ActionResult CreateClassView()
-		//{
-		//	return PartialView("CreateClassView");
-		//}
-
-		//[HttpPost]
-		//public ActionResult CreateClass(Class Class)
-		//{
-		//	if (ModelState.IsValid)
-		//	{
-		//		Class nClass = new Class();
-		//		nClass.ClassName = Class.ClassName;
-		//		nClass.StartDate = Class.StartDate;
-		//		nClass.CreatedDate = DateTime.Now.Date;
-		//		nClass.CreatedBy = User.Identity.Name;
-		//		db.Classes.Add(nClass);
-		//		db.SaveChanges();
-		//		return RedirectToAction("manageClass");
-		//	}
-		//	return RedirectToAction("Index");
-
-		//}
-
-		//public ActionResult Edit(string id)
-		//{
-		//	var ClassID = int.Parse(id);
-		//	var editClass = db.Classes.FirstOrDefault(x => x.ID == ClassID);
-		//	return PartialView("EditClassView", editClass);
-		//}
-
-		//[HttpPost]
-		//public ActionResult Edit(Class editClass)
-		//{
-		//	var eClass = db.Classes.FirstOrDefault(x => x.ID == editClass.ID);
-
-		//	if (ModelState.IsValid)
-		//	{
-		//		eClass.StartDate = editClass.StartDate;
-		//		eClass.Description = editClass.Description;
-		//		eClass.ModifiedBy = User.Identity.Name;
-		//		eClass.ModifiedDate = DateTime.Now.Date;
-		//		db.SaveChanges();
-		//	}
-		//	return RedirectToAction("Index");
-
-		//}
-		public ActionResult manageClass(string id)
-		{
-
-			return View();
-		}
-		public ActionResult ManageStudent()
-		{
-			var user = db.CourseMembers.ToList();
-			ViewBag.User = user;
-			return View();
-		}
-		public ActionResult manageSession()
-		{
-			return View();
-		}
-
 		public ActionResult CreateFaculty()
 		{
 			return View();
@@ -128,7 +60,7 @@ namespace AttendanceManagement.Controllers
 		{
 			return View();
 		}
-		public ActionResult DetailClass1(string id)
+		public ActionResult DetailClass(string id)
 		{
 			Session["CourseID"] = id;
 			int courseID = int.Parse(id);
@@ -155,9 +87,13 @@ namespace AttendanceManagement.Controllers
 				attendanceview.memberID = iten.ID;
 				attendanceview.studentID = iten.StudentID;
 				attendanceview.studentName = iten.Name;
+				attendanceview.TotalSession = session.Count();
+				int TotalPresent = 0;
+				int TotalPoint = 0;
 				List<DetailAttendance> listAttendance = new List<DetailAttendance>();
 				foreach (var item in session)
 				{
+
 					DetailAttendance detail = new DetailAttendance();
 					detail.Date = (DateTime) item.Date;
 					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
@@ -169,11 +105,19 @@ namespace AttendanceManagement.Controllers
 					else
 					{
 						detail.Status = attendance.Status;
+						
+						if (attendance.Status != "0")
+						{
+							TotalPresent++;
+						}
+						TotalPoint = TotalPoint + int.Parse(attendance.Status);
 						detail.Note = attendance.Note;
 					}
 					attendanceview.Attendance.Add(detail);
 					listAttendance.Add(detail);
 				}
+				attendanceview.TotalPoint = TotalPoint;
+				attendanceview.TotalPresent = TotalPresent;
 				list.Add(attendanceview);
 			}
 
@@ -202,14 +146,6 @@ namespace AttendanceManagement.Controllers
 				}
 			}
 		}
-		public ActionResult CourseList()
-		{
-			//APIController api = new APIController();
-			//string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getCourses");
-			//CourseModel course = JsonConvert.DeserializeObject<CourseModel>(data);
-			var course = db.Courses.ToList();
-			return View(course);
-		}
 		public ActionResult AddStudent(string groupname)
 		{
 			string groupdata = api.ReadData("http://localhost:54325/api/getAllGroups");
@@ -231,71 +167,26 @@ namespace AttendanceManagement.Controllers
 			foreach (var item in studentlist)
 			{
 				string studentdata = api.ReadData("http://localhost:54325/api/getUserInfo?searchString=" + item);
-				List<UserModel> studentinfo = JsonConvert.DeserializeObject<List<UserModel>>(studentdata);
-				var student = studentinfo.First();
-				var StudentInCourse = db.CourseMembers.FirstOrDefault(x => x.StudentID == student.StID);
+				UserModel student = JsonConvert.DeserializeObject<UserModel>(studentdata);
+				var courseID = int.Parse(Session["CourseID"].ToString());
+				var course = db.Courses.FirstOrDefault(x => x.ID == courseID);
+				var StudentInCourse = course.CourseMembers.FirstOrDefault(x => x.StudentID == student.StID);
 				if (StudentInCourse == null)
 				{
 					CourseMember newMember = new CourseMember();
-					newMember.CourseID = int.Parse(Session["CourseID"].ToString());
+					newMember.CourseID = courseID;
 					newMember.StudentID = student.StID;
 					newMember.Name = student.FullName;
 					newMember.Email = student.Email;
 					newMember.DoB = student.DoB;
 					newMember.Avatar = student.Avatar;
-					db.CourseMembers.Add(newMember);
+					course.CourseMembers.Add(newMember);
 				}
 			}
 			db.SaveChanges();
 			Session["tabactive"] = "tab2";
 
-			return RedirectToAction("DetailClass1", "Attendance", new { id = Session["CourseID"] });
-		}
-		public ActionResult SynCourse()
-		{
-			APIController api = new APIController();
-			string data = api.ReadData("https://sodaubai.vanlanguni.edu.vn/API/getCourses");
-			CourseModel course = JsonConvert.DeserializeObject<CourseModel>(data);
-			foreach (var item in course.Courses)
-			{
-				var SynCourse = db.Courses.FirstOrDefault(x => x.Code == item.Code && x.Type1 == item.Type1 && x.Type2 == item.Type2 && x.Semester == course.Semester);
-				if (SynCourse == null)
-				{
-					Course newCourse = new Course();
-					newCourse.Code = item.Code;
-					newCourse.CourseName = item.Name;
-					newCourse.Type1 = item.Type1;
-					newCourse.Type2 = item.Type2;
-					newCourse.Major = db.Majors.FirstOrDefault(x => x.Code == item.Major).ID;
-					newCourse.Credit = item.Credit;
-					newCourse.Lecturer = item.Lecturer;
-					newCourse.Students = item.Students;
-					newCourse.DayOfWeek = item.DayOfWeek;
-					newCourse.TimeSpan = item.TimeSpan;
-					newCourse.Periods = item.Periods;
-					newCourse.Room = item.Room;
-					newCourse.Semester = course.Semester;
-					db.Courses.Add(newCourse);
-				}
-				else
-				{
-					SynCourse.Code = item.Code;
-					SynCourse.CourseName = item.Name;
-					SynCourse.Type1 = item.Type1;
-					SynCourse.Type2 = item.Type2;
-					SynCourse.Major = db.Majors.FirstOrDefault(x => x.Code == item.Major).ID;
-					SynCourse.Credit = item.Credit;
-					SynCourse.Lecturer = item.Lecturer;
-					SynCourse.Students = item.Students;
-					SynCourse.DayOfWeek = item.DayOfWeek;
-					SynCourse.TimeSpan = item.TimeSpan;
-					SynCourse.Periods = item.Periods;
-					SynCourse.Room = item.Room;
-					SynCourse.Semester = course.Semester;
-				}
-			}
-			db.SaveChanges();
-			return RedirectToAction("Index");
+			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
 		}
 
 		public ActionResult FacultyIndex()
@@ -337,7 +228,7 @@ namespace AttendanceManagement.Controllers
 			Session["SessionID"] = id;
 			Session["tabactive"] = "tab4";
 
-			return RedirectToAction("DetailClass1", "Attendance", new { id = Session["CourseID"] });
+			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
 		}
 
 		[HttpPost]

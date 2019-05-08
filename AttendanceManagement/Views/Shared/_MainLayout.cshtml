@@ -20,6 +20,7 @@
 	<title>Student information management system - Văn Lang University </title>
 	<!-- Bootstrap Core CSS -->
 	<link href="~/Content/assets/bootstrap.css" rel="stylesheet" />
+	<link href="~/Content/assets/bootstrap-switch.min.css" rel="stylesheet">
 	<!--This page css - Morris CSS -->
 	<link href="~/Content/assets/c3.min.css" rel="stylesheet">
 	<!-- Custom CSS -->
@@ -27,6 +28,8 @@
 	<!-- You can change the theme colors from here -->
 	<link href="~/Content/assets/red.css" id="theme" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -359,7 +362,8 @@
 	<script src="~/Content/assets/custom.min.js"></script>
 
 	<!-- ============================================================== -->
-	<!-- This page plugins -->
+	<!-- This page plugins -->  <!-- bt-switch -->
+
 	<!-- ============================================================== -->
 	<!--c3 JavaScript -->
 	<script src="~/Content/assets/d3.min.js"></script>
@@ -369,6 +373,7 @@
 	<!-- ============================================================== -->
 	<script src="~/Content/assets/jQuery.style.switcher.js"></script>
 	<script src="~/Content/assets/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
 	<!-- start - This is for export functionality only -->
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
@@ -377,6 +382,9 @@
 	<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+
+
+
 	<!-- end - This is for export functionality only -->
 
 	@RenderSection("head", required: false)

@@ -69,12 +69,11 @@
 															{
 																foreach (var item in Model)
 																{
-																	<option value="@item.StID">@item.FullName</option>
+																	<option value="@item.StID">@item.StID      @item.FullName</option>
 																}
 															}
 														</select>
 													</div>
-
 													<div class="row" style="text-align:center">
 														<button type="reset" class="btn btn-sm btn-primary ui-wizard-content" > Clean</button>
 														<input type="submit" class="btn btn-sm btn-primary ui-wizard-content" value="Add" />
