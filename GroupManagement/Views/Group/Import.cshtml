@@ -53,11 +53,12 @@
 				<div class="form-control">
 					<input type="file" id="fileupload" name="fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="upload()" />
 				</div>
+			
 			</div>
 			<div class="col-md-6">
 				<div class="row">
 					<div class="col-md-3">
-						<input type="submit" value="Preview" id="PreviewDiv" class="btn btn-default btn-block" disabled/>
+						<input type="submit" value="Preview" id="PreviewDiv" class="btn btn-default btn-block" disabled />
 					</div>
 					<div class="col-md-3">
 						@if (ListStudent != null)
@@ -70,8 +71,13 @@
 						}
 					</div>
 					<div class="col-md-3">
+
+						<a href="~/Content/ImportExcelTemplate.xlsx" class="btn btn-warning" download="ImportExcelTemplate.xlsx">Template</a>
+					</div>
+					<div class="col-md-3">
 						<input type="button" value="Back" class="btn btn-default btn-block" onclick="window.location='/GroupManagement/Group/Detail/@Session["GroupID"]';" />
 					</div>
+
 				</div>
 			</div>
 		</form>
@@ -80,32 +86,51 @@
 	@if (ListStudent != null)
 	{
 		<div class="table-responsive m-t-40">
-			<table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+			<table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
 				<thead>
 					<tr>
-						<th>No.</th>
-						<th>StID</th>
-						<th>Full Name</th>
-						<th>Email</th>
-						<th>DoB</th>
+						<th style="text-align:center">No.</th>
+						<th style="text-align:center">StID</th>
+						<th colspan="2" style="text-align:center">Full Name</th>
+						<th style="text-align:center">Gender</th>
+						<th style="text-align:center">DoB</th>
+						<th style="text-align:center">PoB</th>
+						<th style="text-align:center">Email</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach (var item in ListStudent)
 					{
 						<tr>
-							<td>@(i++)</td>
+							<td style="text-align:center" >@(i++)</td>
 							<td>
 								@item.StID
 							</td>
-							<td>
-								@item.FullName
+							<td style="text-align:left"> 
+								@item.FirstName  
 							</td>
-							<td>
-								@item.Email
+							<td style="text-align:left">
+								@item.LastName
 							</td>
-							<td>
+							<td style="text-align:center">
+								@if (item.Gender == true)
+								{
+									<p>1</p>
+								}
+								else
+								{
+									<p>0</p>
+								}
+							</td>
+							<td style="text-align:center">
 								@item.DoB.Value.ToShortDateString()
+							</td>
+
+							<td style="text-align:left">
+								@item.PlaceofBirth
+							</td>
+							<td style="text-align:left">
+								@item.Email
 							</td>
 						</tr>
 					}
@@ -119,7 +144,7 @@
 
 
 <script src="~/Content/assets/jquery.min.js"></script>
-<script  type="text/javascript">
+<script type="text/javascript">
 	function upload() {
 		if (document.getElementById("fileupload").files.length > 0) {
 			document.getElementById("PreviewDiv").disabled = false;
@@ -131,11 +156,17 @@
 
 	$(document).ready(function () {
 		$('#example23').DataTable({
+			ordering: false,
 			paging: false,
 			dom: 'Bfrtip',
+			autoWidth: true,
 			buttons: [
 				'copy', 'excel', 'pdf', 'print'
-			]
+			],
+			columnDefs: [
+				{ "width": "20%", "targets": 0 }
+			],
+
 		});
 	})
 </script>

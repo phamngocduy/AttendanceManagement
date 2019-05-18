@@ -637,13 +637,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\scss\icons\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\scss\icons\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\scss\icons\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -660,6 +653,14 @@
     <Content Include="Content\scss\icons\themify-icons\fonts\themify.eot" />
     <Content Include="Content\scss\icons\themify-icons\fonts\themify.ttf" />
     <Content Include="Content\scss\icons\themify-icons\fonts\themify.woff" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="Content\ImportExcelTemplate.xlsx" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -850,6 +851,9 @@
     <Content Include="Views\Group\AddGroupManager.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Group\Delete.cshtml" />
+    <Content Include="Views\Partial\DeleteGroup.cshtml" />
+    <Content Include="Views\Partial\groupLink.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

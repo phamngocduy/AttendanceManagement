@@ -69,16 +69,18 @@ namespace AttendanceManagement.Controllers
 			{
 				ViewBag.tab = Session["tabactive"].ToString();
 				Session.Remove("tabactive");
+				
 			}
 			if (Session["SessionID"] != null)
 			{
 				int sessionid = int.Parse(Session["SessionID"].ToString());
 				DateTime? date = db.Sessions.FirstOrDefault(x => x.ID == sessionid).Date;
-				ViewBag.date = date.Value.ToShortDateString();
+				TempData["date"] = date.Value.ToShortDateString();
+				Session.Remove("SessionID");
 			}
 			var session = db.Sessions.Where(x => x.CourseID == courseID).OrderBy(x => x.Date).ToList();
 			ViewData["session"] = session;
-			var student = db.CourseMembers.Where(x => x.CourseID == courseID).ToList();
+			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x=>x.Name).ToList();
 			ViewData["students"] = student;
 			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
 			foreach (var iten in student)
@@ -229,7 +231,7 @@ namespace AttendanceManagement.Controllers
 			Session["tabactive"] = "tab4";
 
 			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
-		}
+		} 
 
 		[HttpPost]
 		public JsonResult CheckAttendance(List<AttendanceModel> attendance)
@@ -248,6 +250,8 @@ namespace AttendanceManagement.Controllers
 				}
 				db.SaveChanges();
 				scope.Complete();
+				TempData.Remove("date");
+				Session.Remove("SessionID");
 				Session["tabactive"] = "tab1";
 			}
 

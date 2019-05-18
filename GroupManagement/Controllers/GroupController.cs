@@ -17,77 +17,79 @@ using System.Globalization;
 namespace WebApplication.Controllers
 {
 	[Authorize]
-    public class GroupController : Controller
-    {
-        cap21t4Entities db = new cap21t4Entities();
-        // GET: Group
-        public ActionResult Index()
-        {
+	public class GroupController : Controller
+	{
+		cap21t4Entities db = new cap21t4Entities();
+		// GET: Group
+		public ActionResult Index()
+		{
+			TempData.Remove("Excelstudent");
 			List<Group> tempList = db.Groups.ToList();
 			var grouplist = tempList.Where(g => g.GroupParent == null).ToList();
-            return View(grouplist);
-        }
-         [HttpGet]
-        public ActionResult Create()
-        {
-            List<Group> ParentList = db.Groups.OrderByDescending(x => x.ID).ToList();
-            ParentList.RemoveRange(ParentList.Count - 2, 2);
-            ViewBag.Parent = ParentList;
-            return View(ViewBag.Parent);
-        }
-        [HttpPost]
-        public ActionResult Create(Group group)
-        {
-            if (ModelState.IsValid)
-            {
-                Group nGroup = new Group();
-                nGroup.GroupName = group.GroupName;
-                nGroup.GroupDescription = group.GroupDescription;
-                nGroup.GroupType = group.GroupType;
-                nGroup.GroupParent = group.GroupParent;
-                nGroup.CreatedDate = DateTime.Now.Date;
-                nGroup.CreatedBy = User.Identity.Name;
-                db.Groups.Add(nGroup);
+			ViewBag.User = db.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+			return View(grouplist);
+		}
+		[HttpGet]
+		public ActionResult Create()
+		{
+			List<Group> ParentList = db.Groups.OrderByDescending(x => x.ID).ToList();
+			ParentList.RemoveRange(ParentList.Count - 2, 2);
+			ViewBag.Parent = ParentList;
+			return View(ViewBag.Parent);
+		}
+		[HttpPost]
+		public ActionResult Create(Group group)
+		{
+			if (ModelState.IsValid)
+			{
+				Group nGroup = new Group();
+				nGroup.GroupName = group.GroupName;
+				nGroup.GroupDescription = group.GroupDescription;
+				nGroup.GroupType = group.GroupType;
+				nGroup.GroupParent = group.GroupParent;
+				nGroup.CreatedDate = DateTime.Now.Date;
+				nGroup.CreatedBy = User.Identity.Name;
+				db.Groups.Add(nGroup);
 				//add owner
 				var owner = db.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
 				nGroup.Users1.Add(owner);
 
 				db.SaveChanges();
-                TempData["SuccessMessage"] = "Created a new group successfully!";
+				TempData["SuccessMessage"] = "Created a new group successfully!";
 				string nGroupID = db.Groups.OrderByDescending(x => x.ID).First().ID.ToString();
 				Session["GroupID"] = nGroupID;
 				return RedirectToAction("Detail", new { id = nGroupID });
 			}
-            TempData["ErrorMessage"] = "Group name cannot be empty!";
-            return RedirectToAction("Create");
+			TempData["ErrorMessage"] = "Group name cannot be empty!";
+			return RedirectToAction("Create");
 
-        }
-        [Authorize]
-        // GET: Groups/Create
-        [HttpGet]
-        public ActionResult CreateGroup(string id)
-        {
-            Group model = new Group();
-            String parentgroupName;
-            var GroupParentID = int.Parse(id);
-            if (GroupParentID == 1 || GroupParentID == 2)
-            {
-                parentgroupName = "No Parent Group";
-            }
-            else
-            {
-                parentgroupName = db.Groups.First(x => x.ID == GroupParentID).GroupName;
-            }
-            ViewBag.ParentID = GroupParentID;
-            ViewBag.ParentName = parentgroupName;
-            ViewBag.GroupType = db.Groups.First(x => x.ID == GroupParentID).GroupType;
-            return View(model);
-        }
+		}
+		[Authorize]
+		// GET: Groups/Create
+		[HttpGet]
+		public ActionResult CreateGroup(string id)
+		{
+			Group model = new Group();
+			String parentgroupName;
+			var GroupParentID = int.Parse(id);
+			if (GroupParentID == 1 || GroupParentID == 2)
+			{
+				parentgroupName = "No Parent Group";
+			}
+			else
+			{
+				parentgroupName = db.Groups.First(x => x.ID == GroupParentID).GroupName;
+			}
+			ViewBag.ParentID = GroupParentID;
+			ViewBag.ParentName = parentgroupName;
+			ViewBag.GroupType = db.Groups.First(x => x.ID == GroupParentID).GroupType;
+			return View(model);
+		}
 
-        // POST: Groups/Create
-        [HttpPost]
-        public ActionResult CreateGroup(Group group)
-        {
+		// POST: Groups/Create
+		[HttpPost]
+		public ActionResult CreateGroup(Group group)
+		{
 			if (ModelState.IsValid)
 			{
 				Group nGroup = new Group();
@@ -109,31 +111,33 @@ namespace WebApplication.Controllers
 			}
 			return View(group);
 		}
-        public ActionResult Detail(string id)
-        {
+		public ActionResult Detail(string id)
+		{
+			TempData.Remove("Excelstudent");
 			int groupID = int.Parse(id);
 			Session["GroupID"] = id;
 			var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
-			var memberlist = group.Users.ToList();
-			ViewBag.GroupName = group.GroupName;
+			var memberlist = group.Users.ToList().OrderBy(x=>x.LastName);
+			List<Group> tempList = GroupParentwithGroup(group);
+			ViewBag.GroupParent = tempList;
 			ViewBag.Owner = group.Users1.ToList();
 			ViewBag.GroupManager = group.Group11.ToList();
 			return View(memberlist);
 		}
 
-       
-        public ActionResult Import(string id)
-        {
+
+		public ActionResult Import(string id)
+		{
 			TempData.Keep();
 			return View();
 		}
 
-        [HttpPost]
+		[HttpPost]
 		public ActionResult ReadExcel()
 		{
-            List<User> lstStudent = new List<User>();
-            if (ModelState.IsValid)
-            {
+			List<User> lstStudent = new List<User>();
+			if (ModelState.IsValid)
+			{
 				try
 				{
 					string filePath = string.Empty;
@@ -188,7 +192,7 @@ namespace WebApplication.Controllers
 							}
 							DataTable dt = result.Tables[0];
 							lstStudent = ConvertDataTable<User>(dt);
-							TempData["Excelstudent"] = lstStudent;
+							TempData["Excelstudent"] = lstStudent.OrderBy(x=>x.LastName).ToList();
 
 						}
 					}
@@ -198,7 +202,7 @@ namespace WebApplication.Controllers
 					return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 				}
 
-            }
+			}
 			return RedirectToAction("Import");
 		}
 
@@ -248,7 +252,7 @@ namespace WebApplication.Controllers
 						db.SaveChanges();
 
 					}
-				
+
 				}
 			}
 			catch (Exception ex)
@@ -262,97 +266,108 @@ namespace WebApplication.Controllers
 		//User1 : groupowner
 
 		public void AddParentGroup(Group g, User u)
-        {
-            if (g.Group2 != null && g.Group2.ID != 2)
-            {
-                g.Group2.Users.Add(u);
-                AddParentGroup(g.Group2, u);
-            }
-        }
+		{
+			if (g.Group2 != null && g.Group2.ID != 2)
+			{
+				if (g.Group2.Users.Contains(u) == false)
+				{
+					g.Group2.Users.Add(u);
+				}
+				AddParentGroup(g.Group2, u);
+			}
+		}
 
-        private static List<User> ConvertDataTable<T>(DataTable dt)
-        {
-            List<User> data = new List<User>();
-            dt.Rows.RemoveAt(0);
-            dt.Rows.RemoveAt(0);
-            dt.Rows.RemoveAt(0);
-            dt.Rows.RemoveAt(0);
-            dt.Rows.RemoveAt(0);
-            dt.Rows.RemoveAt(0);
+		private static List<User> ConvertDataTable<T>(DataTable dt)
+		{
+			List<User> data = new List<User>();
+			dt.Rows.RemoveAt(0);
+			dt.Rows.RemoveAt(0);
+			dt.Rows.RemoveAt(0);
+			dt.Rows.RemoveAt(0);
+			dt.Rows.RemoveAt(0);
+			dt.Rows.RemoveAt(0);
 
-            DataRowCollection list = dt.Rows;
-            foreach (DataRow row in list)
-            {
+			DataRowCollection list = dt.Rows;
+			foreach (DataRow row in list)
+			{
 
-                if (String.IsNullOrEmpty(row[0].ToString()))
-                {
-                    break;
-                }
-                User us = new User();
+				if (String.IsNullOrEmpty(row[0].ToString()))
+				{
+					break;
+				}
+				User us = new User();
 
-                us.StID = row[1].ToString();
-                us.FullName = row[2].ToString() + " " + row[3].ToString();
-                //us.PhoneNumber = row[3].ToString();
-                string s = row[4].ToString();
-                us.DoB = DateTime.ParseExact(row[4].ToString(), "dd/mm/yyyy", null);
-                us.Email = row[5].ToString();
-                us.Note = row[6].ToString();
-                data.Add(us);
-            }
-            return data;
-        }
-       
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-        private ApplicationUserManager _userManager;
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-        public ActionResult ImportStudent()
-        {
-            return View();
-        }
-        [HttpGet]
-        public ActionResult Edit(string id)
-        {
-            int groupID = int.Parse(id);
-            Group editGroup = db.Groups.FirstOrDefault(x => x.ID == groupID);
+				us.StID = row[1].ToString();
+				us.FirstName = row[2].ToString();
+				us.LastName=  row[3].ToString();
+				if (row[4].ToString() == "0")
+				{
+					us.Gender = false;
+				}
+				else
+				{
+					us.Gender = true;
+				}
+				us.DoB = DateTime.ParseExact(row[5].ToString(), "dd/mm/yyyy", null);
+				us.PlaceofBirth = row[6].ToString();
+				us.Email = row[7].ToString();
+				us.Note = row[8].ToString();
+				data.Add(us);
+			}
+			return data;
+		}
 
-            ViewBag.Parent = editGroup.Group1;
-            return View(editGroup);
-        }
-        [HttpPost]
-        public ActionResult Edit(Group editgroup)
-        {
+		private IAuthenticationManager AuthenticationManager
+		{
+			get
+			{
+				return HttpContext.GetOwinContext().Authentication;
+			}
+		}
+		private ApplicationUserManager _userManager;
+		public ApplicationUserManager UserManager
+		{
+			get
+			{
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set
+			{
+				_userManager = value;
+			}
+		}
+		public ActionResult ImportStudent()
+		{
+			return View();
+		}
+		[HttpGet]
+		public ActionResult Edit(string id)
+		{
+			int groupID = int.Parse(id);
+			Group editGroup = db.Groups.FirstOrDefault(x => x.ID == groupID);
 
-            Group group = db.Groups.FirstOrDefault(x => x.ID == editgroup.ID);
-            if (ModelState.IsValid)
-            {
-                group.GroupName = editgroup.GroupName;
-                group.GroupDescription = editgroup.GroupDescription;
-                group.ModifiedBy = User.Identity.Name;
-                group.ModifiedDate = DateTime.Now.Date;
-                db.SaveChanges();
-                TempData["SuccessMessage"] = "Edited a group successfully!";
-                return RedirectToAction("Index");
-            }
-            TempData["ErrorMessage"] = "Group name cannot be empty!";
-            return RedirectToAction("Edit");
-        }
- 
+			ViewBag.Parent = editGroup.Group1;
+			return View(editGroup);
+		}
+		[HttpPost]
+		public ActionResult Edit(Group editgroup)
+		{
+
+			Group group = db.Groups.FirstOrDefault(x => x.ID == editgroup.ID);
+			if (ModelState.IsValid)
+			{
+				group.GroupName = editgroup.GroupName;
+				group.GroupDescription = editgroup.GroupDescription;
+				group.ModifiedBy = User.Identity.Name;
+				group.ModifiedDate = DateTime.Now.Date;
+				db.SaveChanges();
+				TempData["SuccessMessage"] = "Edited a group successfully!";
+				return RedirectToAction("Index");
+			}
+			TempData["ErrorMessage"] = "Group name cannot be empty!";
+			return RedirectToAction("Edit");
+		}
+
 		[HttpGet]
 		public ActionResult AddGroupOwner()
 		{
@@ -362,7 +377,7 @@ namespace WebApplication.Controllers
 		[HttpPost]
 		public ActionResult AddGroupOwner(string email)
 		{
-			var user = db.Users.FirstOrDefault(x=>x.Email==email);
+			var user = db.Users.FirstOrDefault(x => x.Email == email);
 			int groupID = int.Parse(Session["GroupID"].ToString());
 			var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
 			group.Users1.Add(user);
@@ -385,6 +400,67 @@ namespace WebApplication.Controllers
 			group.Group11.Add(addGroup);
 			db.SaveChanges();
 			return RedirectToAction("Detail", new { id = editgroupID });
+		}
+
+		public ActionResult Delete(string id)
+		{
+			int groupID = int.Parse(id);
+			Session["DeleteGroupID"] = groupID;
+			var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
+			List<Group> tempList = GroupParent(group);
+			return View(tempList);
+
+		}
+		[HttpPost]
+		public ActionResult Delete(IEnumerable<int> ids)
+		{
+			int deletegroup = int.Parse(Session["DeleteGroupID"].ToString());
+			var group = db.Groups.FirstOrDefault(x => x.ID == deletegroup);
+			foreach (int item in ids)
+			{
+				var groupParent = db.Groups.FirstOrDefault(x => x.ID == item);
+				foreach (var member in group.Users)
+				{
+					groupParent.Users.Remove(member);
+				}
+			}
+			foreach (var gr in group.Group1)
+			{
+				db.Groups.Remove(gr);
+			}
+			group.Users.Clear();
+			group.Users1.Clear();
+			group.Group1.Clear();
+			group.Group11.Clear();
+			db.Groups.Remove(group);
+			db.SaveChanges();
+
+			return RedirectToAction("Index");
+
+		}
+		public List<Group> GroupParent(Group g)
+		{
+			List<Group> parentGroup = new List<Group>();
+			GetParentGroup(g, parentGroup);
+			return parentGroup;
+
+		}
+		public List<Group> GroupParentwithGroup(Group g)
+		{
+			List<Group> parentGroup = new List<Group>();
+			parentGroup.Add(g);
+			GetParentGroup(g, parentGroup);
+			return parentGroup;
+
+		}
+
+		public void GetParentGroup(Group g, List<Group> list)
+		{
+			if (g.Group2 != null && g.Group2.ID != 2)
+			{
+				list.Add(g.Group2);
+				GetParentGroup(g.Group2, list);
+			}
 		}
 	}
 }

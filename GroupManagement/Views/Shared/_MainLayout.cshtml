@@ -177,7 +177,7 @@
 				<!-- User profile -->
 				<div class="user-profile" style="background: url(/GroupManagement/Content/assets/user-info.jpg) no-repeat;">
 					<!-- User profile image -->
-			
+
 					<div class="profile-img"> <img src="~/Content/assets/profile.png" alt="user" /> </div>
 					<!-- User profile text-->
 					<div class="profile-text">
@@ -195,9 +195,7 @@
 					<ul id="sidebarnav">
 						<li>
 							<a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu"> @WebApplication.Resources.Resource.Home</span></a>
-							<ul aria-expanded="false" class="collapse">
-								
-							</ul>
+							<ul aria-expanded="false" class="collapse"></ul>
 						</li>
 						<li>
 							<a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">@WebApplication.Resources.Resource.Group</span></a>
@@ -247,7 +245,6 @@
 				<!-- ============================================================== -->
 				<!-- Bread crumb and right sidebar toggle -->
 				<!-- ============================================================== -->
-				
 				<!-- ============================================================== -->
 				<!-- End Bread crumb and right sidebar toggle -->
 				<!-- ============================================================== -->
@@ -372,6 +369,8 @@
 	<!-- ============================================================== -->
 	<script src="~/Content/assets/jQuery.style.switcher.js"></script>
 	<script src="~/Content/assets/jquery.dataTables.min.js"></script>
+
+
 	<!-- start - This is for export functionality only -->
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
@@ -381,7 +380,7 @@
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
 	<!-- end - This is for export functionality only -->
-	
+
 	@RenderSection("head", required: false)
 	@RenderSection("scripts", required: false)
 

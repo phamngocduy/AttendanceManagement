@@ -1,0 +1,81 @@
+﻿@model AttendanceManagement.Models.Session
+	@{
+		Layout = null;
+	}
+	<link href="~/Content/assets/bootstrap-material-datetimepicker.css" rel="stylesheet">
+	<!-- Page plugins css -->
+	<link href="~/Content/assets/jquery-clockpicker.min.css" rel="stylesheet">
+	<!-- Date picker plugins css -->
+	<link href="~/Content/assets/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+	<!-- Daterange picker plugins css -->
+	<link href="~/Content/assets/bootstrap-timepicker.min.css" rel="stylesheet">
+	<link href="~/Content/assets/daterangepicker.css" rel="stylesheet">
+
+
+	<form action="~/Session/Edit" method="post">
+		<div class="input-group">
+			<input type="text" class="form-control" name="ID" value="@Model.ID" style="display:none">
+		</div>
+		<label for="start_day">Date</label>
+		<div class="input-group">
+			<input type="text" class="form-control" id="datepicker-autoclose1" name="Date" value="@Model.Date.Value.ToShortDateString()">
+			<span class="input-group-addon"><i class="icon-calender"></i></span>
+		</div>
+		<label for="time">Time</label>
+		<div class="input-group clockpicker " data-placement="bottom" data-align="top" data-autoclose="true">
+			<input type="text" class="form-control" name="Time" value="@Model.Time"> <span class="input-group-addon"> <span class="fa fa-clock-o"></span> </span>
+		</div>
+		<div class="input-group">
+			<input type="text" class="form-control" name="Note" value="@Model.Note">
+		</div>
+		<br>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-success">Submit</button>
+		</div>
+	</form>
+
+	<script src="~/Content/assets/moment.js"></script>
+	<script src="~/Content/assets/bootstrap-material-datetimepicker.js"></script>
+	<!-- Clock Plugin JavaScript -->
+	<script src="~/Content/assets/jquery-clockpicker.min.js"></script>
+	<!-- Date Picker Plugin JavaScript -->
+	<script src="~/Content/assets/bootstrap-datepicker.min.js"></script>
+	<!-- Date range Plugin JavaScript -->
+	<script src="~/Content/assets/bootstrap-timepicker.min.js"></script>
+	<script src="~/Content/assets/daterangepicker.js"></script>
+	<script type="text/javascript">
+		$('#single-input').clockpicker({
+			placement: 'bottom',
+			align: 'left',
+			autoclose: true,
+			'default': 'now'
+		});
+		$('.clockpicker').clockpicker({
+			donetext: 'Done',
+		}).find('input').change(function () {
+			console.log(this.value);
+		});
+		$('#check-minutes').click(function (e) {
+			// Have to stop propagation here
+			e.stopPropagation();
+			input.clockpicker('show').clockpicker('toggleView', 'minutes');
+		});
+		if (/mobile/i.test(navigator.userAgent)) {
+			$('input').prop('readOnly', true);
+		}
+		// Date Picker
+		jQuery('#datepicker-autoclose1').datepicker({
+			format: 'dd/mm/yyyy',
+			autoclose: true,
+			todayHighlight: true
+		});
+	</script>
+	<script>
+		function allowOnlyNumber(evt) {
+			var charCode = (evt.which) ? evt.which : event.keyCode
+			if (charCode > 31 && (charCode < 48 || charCode > 57))
+				return false;
+			return true;
+		}
+	</script>

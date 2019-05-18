@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="44e3fc3d5b3345f08cff326f259bb3f9" Name="Diagram1">
+      <Diagram DiagramId="81ee863f0416491086b89c4366381077" Name="Diagram1">
         <EntityTypeShape EntityType="cap21t4Model.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.AspNetRole" Width="1.5" PointX="1.5" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUserClaim" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUserLogin" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetUserClaim" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.AspNetUserLogin" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.AspNetUser" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.Group" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="cap21t4Model.sysdiagram" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.User" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="cap21t4Model.User" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="cap21t4Model.FK_User_AspNetUsers" ManuallyRouted="false" />

@@ -41,13 +41,25 @@
 									<tr>
 										<td>Buổi @(i++)</td>
 										<td>
+											@item.Time
+											<br />
 											@item.Date.Value.ToShortDateString()
 										</td>
 										<td>20</td>
 										<td>
-												<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="location.href = '@Url.Action("CheckAttendance", "Attendance",new { id=item.ID })';">Check Attendance</button>
+											<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="location.href = '@Url.Action("CheckAttendance", "Attendance",new { id=item.ID })';">Check Attendance</button>
 										</td>
-										<td><a href="javascript:void(0)" class="text-inverse p-r-10" data-toggle="tooltip" title="" data-original-title="Edit"><i class="ti-marker-alt"></i></a> <a href="javascript:void(0)" class="text-inverse" title="" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash"></i></a></td>
+										<td>
+											<button type="button" onclick="Edit(@item.ID)">
+												<i class="ti-marker-alt"></i>
+											</button>
+											<form action="~/Session/Delete" method="post">
+												<input type="text" name="sessionID" value="@item.ID" style="display:none"/>
+												<button type="submit">
+													<i class="ti-trash"></i>
+												</button>
+											</form>
+										</td>
 									</tr>
 								}
 
@@ -77,7 +89,7 @@
 							<input type="text" name="TotalWeek" class="form-control" onkeypress="return allowOnlyNumber(event);">
 						</div>
 					</div>
-					<label for="start_day">Start Day</label>
+					<label for="start_day">Date</label>
 					<div class="input-group">
 						<input type="text" class="form-control" id="datepicker-autoclose" name="StartDate" placeholder="dd/mm/yyyy">
 						<span class="input-group-addon"><i class="icon-calender"></i></span>
@@ -93,15 +105,39 @@
 					</div>
 				</form>
 			</div>
-
 		</div>
 		<!-- /.modal-content -->
 	</div>
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-<script src="~/Content/assets/jquery.min.js"></script>
+<!-- /.modal -->
+<div class="modal fade" id="myEditSession" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Add <strong>Student</strong></h4>
+			</div>
+			<div class="modal-body" id="ModalEditSession">
 
+			</div>
+		</div>
+		<div class="modal-footer">
+		</div>
+	</div>
+</div>
+
+<script src="~/Content/assets/jquery.min.js"></script>
+<script>
+	function Edit(id) {
+		var url = "/Session/Edit?id=" + id;
+		$("#ModalEditSession").load(url, function () {
+			$("#myEditSession").modal("show");
+		})
+	}
+</script>
 <script src="~/Content/assets/moment.js"></script>
 <script src="~/Content/assets/bootstrap-material-datetimepicker.js"></script>
 <!-- Clock Plugin JavaScript -->
@@ -137,7 +173,6 @@
 		autoclose: true,
 		todayHighlight: true
 	});
-
 </script>
 <script>
 	function allowOnlyNumber(evt) {
@@ -146,4 +181,32 @@
 			return false;
 		return true;
 	}
+</script>
+<script>
+	$('table').on('click', '[type=submit]', function (e) {
+		e.preventDefault();
+		var form = $(this).parents('form');
+        swal({   
+            title: "Are you sure?",   
+            text: "You will not be able to recover this session",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Yes, delete it!",   
+            closeOnConfirm: false 
+		}, function (isConfirm) {   
+			if (isConfirm) {
+				swal({
+					title: "Deleted!",
+					text: "This session has been deleted.",
+					type: "success",
+					closeOnConfirm: false
+				}, function (isConfirm) {
+					if (isConfirm) {
+						form.submit();
+					}
+				});
+			} 
+        });
+    });
 </script>

@@ -4,7 +4,8 @@
 	ViewBag.Title = "Detail";
 	Layout = "~/Views/Shared/_MainLayout.cshtml";
 	int i = 1;
-
+	
+	var GroupParent = ViewBag.GroupParent as List<WebApplication.Models.Group>;
 	var OwnerModel = ViewBag.Owner as List<WebApplication.Models.User>;
 	var GroupManagerModel = ViewBag.GroupManager as List<WebApplication.Models.Group>;
 
@@ -48,8 +49,10 @@
 	<div class="card-header" style="color:black">Group Detail</div>
 	<div class="card-body">
 		<div class="row">
-			<h3 class="card-title">Group: <strong>@ViewBag.GroupName</strong></h3>
+			@{	Html.RenderPartial("~/Views/Partial/groupLink.cshtml", GroupParent); }
 		</div>
+		<br />
+
 		<div class="row">
 			<div class="col-lg-6">
 				<h4><strong>Group Owner:</strong></h4>
@@ -57,7 +60,7 @@
 					@foreach (var item in OwnerModel)
 					{
 						<li>
-							@item.FullName
+							@item.FirstName
 						</li>
 					}
 				</ul>
@@ -96,7 +99,7 @@
 								@item.StID
 							</td>
 							<td>
-								@item.FullName
+								@item.FirstName  @item.LastName
 							</td>
 							<td>
 								@item.Email
@@ -172,7 +175,6 @@
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 
@@ -192,9 +194,7 @@
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
-
 	</div>
 </div>

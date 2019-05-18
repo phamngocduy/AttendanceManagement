@@ -1,0 +1,41 @@
+﻿@using WebApplication.Helpers
+@using WebApplication.Models
+
+@{
+	ViewBag.Title = "Index";
+	Layout = null;
+}
+@section head{
+	@Styles.Render("~/Content/Tree.css")
+}
+@section scripts{
+	@Scripts.Render("~/Scripts/tree.js")
+}
+@model List<Group>
+
+@for (var i = Model.Count - 1; i < Model.Count; i++)
+{
+	if (i >= 0)
+	{
+		var ahref = "hide1" + @Model[i].ID;
+		<li>
+			<div class="parent">
+				<a class="a-with-children" href="#@ahref" data-toggle="collapse" aria-expanded="false">
+					@Html.CheckBox(@Model[i].GroupName, false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
+					<label for=@Model[i].ID>
+						@Html.DisplayFor(list => list[i].GroupName)
+					</label>
+				</a>
+			</div>
+			<ul>
+				<div id="@ahref" class="panel-collapse collapse in">
+					@{
+						Model.RemoveAt(Model.Count - 1);
+						List<Group> modelgroup = Model;
+						Html.RenderPartial("~/Views/Partial/DeleteGroup.cshtml", modelgroup);
+					}
+				</div>
+			</ul>
+		</li>
+	}
+}

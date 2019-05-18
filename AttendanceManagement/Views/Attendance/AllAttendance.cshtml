@@ -2,24 +2,48 @@
 @{
 	int iSession = 1;
 }
+
 @if (Model.Count > 0)
 {
 	<div class="card card-outline-primary">
-			<div class="card-header"><h3 style="color:white"><strong> TOTAL ATTENDANCE</strong></h3></div>
+		<div class="card-header"><h3 style="color:white"><strong> TOTAL ATTENDANCE</strong></h3></div>
 		<div class="card-body">
+			<div class="col-lg-12 col-xlg-12 col-md-7">
+				<div class="user-analytics chartist-chart" style="height: 250px;"></div>
+
+			</div>
+
+			<div class="col-lg-12 col-xlg-12 col-md-7">
+				<div>
+					<h3 class="card-title">Chart</h3>
+				</div>
+				<div class="ml-auto align-self-center">
+					<ul class="list-inline m-b-0">
+						<li>
+							<h6 class="text-muted text-success"><i class="fa fa-circle font-10 m-r-10 "></i>Student</h6>
+						</li>
+
+					</ul>
+				</div>
+
+			</div>
+
+			<div class="campaign ct-charts"></div>
+			<br />
+			<br />
 			<div class="row pull-right">
 				<div class="bt-switch">
 					<input type="checkbox" checked data-on-color="danger" data-off-color="success" data-on-text="Status" data-off-text="Point">
 				</div>
 			</div>
 			<div class="table-responsive m-t-40">
-				<table id="allAttendance" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
+				<table id="allAttendance" class="display nowrap table table-hover table-striped table-bordered" style="width:100%;margin:0px;">
 					<thead>
 						<tr>
 							<th>MSSV</th>
-							<th>Name</th>
-							<th>Total attend</th>
-							<th>Total point</th>
+							<th>Full Name</th>
+							<th>Attend</th>
+							<th>Point</th>
 							@for (int i = 0; i < 1; i++)
 							{
 								var model = Model[i];
@@ -34,9 +58,9 @@
 					<tfoot>
 						<tr>
 							<th>MSSV</th>
-							<th>Name</th>
-							<th>Total attend</th>
-							<th>Total point</th>
+							<th>Full Name</th>
+							<th>Attend</th>
+							<th>Point</th>
 							@for (int i = 0; i < 1; i++)
 							{
 								var model = Model[i];
@@ -51,28 +75,28 @@
 						@foreach (var item in Model)
 						{
 							<tr>
-								<th>@item.studentID</th>
-								<th style="text-align:left">@item.studentName</th>
-								<th>@item.TotalPresent/@item.TotalSession</th>
-								<th>@item.TotalPoint</th>
+								<td>@item.studentID</td>
+								<td style="text-align:left">@item.studentName</td>
+								<td style="width:50px">@item.TotalPresent/@item.TotalSession</td>
+								<td style="width:40px">@item.TotalPoint</td>
 								@foreach (var i in item.Attendance)
 								{
-								<th>
-									
-									<div class="Spoint" style="display:none">
-										@i.Status
-									</div>
-									<div class="status">
-										@if (i.Status == "0")
-										{
-											<img src="/Content/image/uncheck.png" style="width:20px;height:20px" />
-										}
-										else
-										{
-											<img src="/Content/image/check.png" style="width:20px;height:20px" />
-										}
-									</div>
-								</th>
+									<td>
+
+										<div class="Spoint" style="display:none">
+											@i.Status
+										</div>
+										<div class="status">
+											@if (i.Status == "0")
+											{
+												<img src="/Content/image/uncheck.png" style="width:20px;height:20px" />
+											}
+											else
+											{
+												<img src="/Content/image/check.png" style="width:20px;height:20px" />
+											}
+										</div>
+									</td>
 								}
 							</tr>
 						}
@@ -88,19 +112,28 @@
 	<script type="text/javascript">
 		$(document).ready(function () {
 			var table = $('#allAttendance').DataTable({
-				scrollY: "500px",
 				ordering: false,
-				scrollX: true,
+				scrollY: "500px",
+				scrollX: "100%",
 				scrollCollapse: true,
 				paging: false,
+				autoWidth: true,
+				fixedHeader: true,
 				fixedColumns: {
 					leftColumns: 4
 				}
 				,
 				columnDefs: [
 					{ "className": "dt-center", "targets": "_all" }
-				]
+				],
+
 			});
+			//update widths on thead
+			var widths = [61.6, 220.8, 46.4, 36.8];
+			$('.DTFC_LeftHeadWrapper thead th').each(
+				function (i, val) {
+					$(this).css('width', widths[i]);
+				});
 		});
 	</script>
 	<script src="~/Content/assets/bootstrap-switch.min.js"></script>
@@ -111,13 +144,139 @@
 					$('div.Spoint').show();
 					$('div.status').hide();
 				} else {
-					
+
 					$('div.Spoint').hide();
 					$('div.status').show();
 				}
-				
-			}});
-	
+			}
+		});
+
+	</script>
+
+	<script>
+		$(function () {
+			"use strict";
+			var chart = new Chartist.Line('.campaign', {
+				labels: ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8'],
+				series: [
+					[25, 25, 16, 18, 25, 19, 18, 24]
+				]
+			}, {
+					low: 0,
+					high: 28,
+					showArea: true,
+					fullWidth: true,
+					plugins: [
+						Chartist.plugins.tooltip()
+					],
+					axisY: {
+						onlyInteger: true
+						, scaleMinSpace: 40
+						, offset: 20
+						, labelInterpolationFnc: function (value) {
+							return (value / 1);
+						}
+					},
+				});
+
+			// Offset x1 a tiny amount so that the straight stroke gets a bounding box
+			// Straight lines don't get a bounding box
+			// Last remark on -> http://www.w3.org/TR/SVG11/coords.html#ObjectBoundingBox
+			chart.on('draw', function (ctx) {
+				if (ctx.type === 'area') {
+					ctx.element.attr({
+						x1: ctx.x1 + 0.001
+					});
+				}
+			});
+
+			// Create the gradient definition on created event (always after chart re-render)
+			chart.on('created', function (ctx) {
+				var defs = ctx.svg.elem('defs');
+				defs.elem('linearGradient', {
+					id: 'gradient',
+					x1: 0,
+					y1: 1,
+					x2: 0,
+					y2: 0
+				}).elem('stop', {
+					offset: 0,
+					'stop-color': 'rgba(255, 255, 255, 1)'
+				}).parent().elem('stop', {
+					offset: 1,
+					'stop-color': 'rgba(38, 198, 218, 1)'
+				});
+			});
+			// ==============================================================
+			// This is for the animation
+			// ==============================================================
+			chart.on('draw', function (data) {
+				if (data.type === 'line' || data.type === 'area') {
+					data.element.animate({
+						d: {
+							begin: 500 * data.index,
+							dur: 500,
+							from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+							to: data.path.clone().stringify(),
+							easing: Chartist.Svg.Easing.easeInOutElastic
+						}
+					});
+				}
+				if (data.type === 'bar') {
+					data.element.animate({
+						y2: {
+							dur: 500,
+							from: data.y1,
+							to: data.y2,
+							easing: Chartist.Svg.Easing.easeInOutElastic
+						},
+						opacity: {
+							dur: 500,
+							from: 0,
+							to: 1,
+							easing: Chartist.Svg.Easing.easeInOutElastic
+						}
+					});
+				}
+			});
+
+
+		});
+
+
+		$(function () {
+			"use strict";
+
+			// ============================================================== 
+			// User analytics
+			// ============================================================== 
+			new Chartist.Line('.user-analytics', {
+				labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'S15']
+				, series: [
+					[51, 25, 35, 70, 63, 1, 49]
+
+				]
+			}, {
+					high: 125
+					, low: 0
+					, showArea: true
+					, lineSmooth: Chartist.Interpolation.simple({
+						divisor: 10
+					})
+					, fullWidth: true
+					, plugins: [
+						Chartist.plugins.tooltip()
+					], // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
+					axisY: {
+						onlyInteger: true
+						, offset: 20
+						, labelInterpolationFnc: function (value) {
+							return value;
+						}
+					}
+				});
+		});
+
 	</script>
 
 }

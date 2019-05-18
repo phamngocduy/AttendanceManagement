@@ -322,11 +322,19 @@
     <Content Include="Content\assets\bootstrap.min.css" />
     <Content Include="Content\assets\c3.min.css" />
     <Content Include="Content\assets\c3.min.js" />
+    <Content Include="Content\assets\chartist-init.css" />
+    <Content Include="Content\assets\chartist-plugin-tooltip.css" />
+    <Content Include="Content\assets\chartist-plugin-tooltip.min.js" />
+    <Content Include="Content\assets\chartist.css" />
+    <Content Include="Content\assets\chartist.min.js" />
+    <Content Include="Content\assets\css-chart.css" />
     <Content Include="Content\assets\custom-select.png" />
     <Content Include="Content\assets\custom.min.js" />
     <Content Include="Content\assets\d3.min.js" />
+    <Content Include="Content\assets\dataTables.fixedColumns.js" />
     <Content Include="Content\assets\daterangepicker.css" />
     <Content Include="Content\assets\daterangepicker.js" />
+    <Content Include="Content\assets\echarts-all.js" />
     <Content Include="Content\assets\flag-icon.min.css" />
     <Content Include="Content\assets\font-awesome.min.css" />
     <Content Include="Content\assets\jquery-clockpicker.min.css" />
@@ -335,7 +343,9 @@
     <Content Include="Content\assets\jquery.min.js" />
     <Content Include="Content\assets\jquery.slimscroll.js" />
     <Content Include="Content\assets\jquery.sparkline.min.js" />
+    <Content Include="Content\assets\jquery.steps.min.js" />
     <Content Include="Content\assets\jQuery.style.switcher.js" />
+    <Content Include="Content\assets\jquery.sweet-alert.custom.js" />
     <Content Include="Content\assets\linea.css" />
     <Content Include="Content\assets\materialdesignicons.min.css" />
     <Content Include="Content\assets\moment.js" />
@@ -345,12 +355,17 @@
     <Content Include="Content\assets\sidebarmenu.js" />
     <Content Include="Content\assets\simple-line-icons.css" />
     <Content Include="Content\assets\spinners.css" />
+    <Content Include="Content\assets\steps.css" />
+    <Content Include="Content\assets\steps.js" />
     <Content Include="Content\assets\sticky-kit.min.js" />
     <Content Include="Content\assets\style.css" />
+    <Content Include="Content\assets\sweetalert.css" />
+    <Content Include="Content\assets\sweetalert.min.js" />
     <Content Include="Content\assets\themify-icons.css" />
     <Content Include="Content\assets\user-info.jpg" />
     <Content Include="Content\assets\waves.js" />
     <Content Include="Content\assets\weather-icons.min.css" />
+    <Content Include="Content\assets\widget-charts.js" />
     <Content Include="Content\Attendance.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
@@ -792,10 +807,10 @@
     <Content Include="Views\Attendance\SessionList.cshtml" />
     <Content Include="Views\Attendance\AttendanceList.cshtml" />
     <Content Include="Views\Attendance\AllAttendance.cshtml" />
+    <Content Include="Views\Session\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Session\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

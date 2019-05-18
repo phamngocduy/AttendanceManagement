@@ -1,0 +1,60 @@
+﻿@{
+	ViewBag.Title = "Index";
+	Layout = null;
+}
+
+@using System.Collections
+@using WebApplication.Models
+
+@section head{
+	@Styles.Render("~/Content/Tree.css")
+}
+@section scripts{
+	@Scripts.Render("~/Scripts/tree.js")
+}
+@model List<Group>
+<div class="card card-outline-danger">
+	<div class="card-header" style="color:black"></div>
+	<div class="card-body">
+		<div class="row">
+			<h4><strong>Delete all member in: </strong></h4>
+		</div>
+		<div>
+			<span class="label label-success" style="font-size: 20px">@TempData["SuccessMessage"]</span>
+		</div>
+		<div class="row">
+			<div class="tree">
+				@{ Html.RenderPartial("~/Views/Partial/DeleteGroup.cshtml", Model); }
+			</div>
+		</div>
+
+		<br />
+		<br />
+		<div class="row" style="text-align:center">
+			<div class="col-lg-6">
+				<button type="button" class="btn btn-rounded btn-block btn-outline-danger" data-dismiss="modal">Cancel</button>
+			</div>
+			<div class="col-lg-6">
+				<button type="button" onclick="Click()" class="btn btn-rounded btn-block btn-outline-success" >Delete</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function Click() {
+			var id = [];
+			$("#ModalDeleteGroup input:checked").each(function () {
+					id.push($(this).attr("value"));
+				});
+
+				$.ajax({
+					url: "/Group/Delete",
+					type: "POST",
+					data: { ids: id },
+					traditional: true,
+					success: function () {
+						window.location = "";
+					}
+				});
+		}
+	</script>

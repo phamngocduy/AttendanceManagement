@@ -1,0 +1,17 @@
+﻿@using WebApplication.Models
+@model List<Group>
+<ol class="breadcrumb" style="background-color:white">
+	<li class="breadcrumb-item"><a href="~/Group/">My Group</a></li>
+	@for (int i = Model.Count - 1; i >= 0; i--)
+	{
+		if (i > 0)
+		{
+			<li class="breadcrumb-item"><a href="~/Group/Detail/@Model[i].ID">@Model[i].GroupName</a></li>
+		}
+		else if (i == 0)
+		{
+			<li class="breadcrumb-item active">@Model[i].GroupName</li>
+		}
+
+	}
+</ol>

@@ -50,7 +50,7 @@ namespace WebApplication.Controllers
 					{
 						UsersRoleView u = new UsersRoleView();
 						u.Email = item.Email;
-						u.FullName = item.FullName;
+						u.FullName = item.FirstName;
 						u.Avatar = item.AvatarBase64;
 						u.Role = role.Name;
 						userRole.Add(u);
@@ -62,7 +62,7 @@ namespace WebApplication.Controllers
 				{
 					UsersRoleView u = new UsersRoleView();
 					u.Email = item.Email;
-					u.FullName = item.FullName;
+					u.FullName = item.FirstName;
 					u.Avatar = item.AvatarBase64;
 					u.Role = uRole.First().Name;
 					userRole.Add(u);

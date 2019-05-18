@@ -2,7 +2,7 @@
 
 @{
 	ViewBag.Title = "Index";
-	Layout = "~/Views/Shared/_LayoutTable.cshtml";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
 	int i = 1;
 }
 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -57,7 +57,7 @@
 							<img src="data:image/png;base64,@item.AvatarBase64" alt="Avatar" class="avatar" width="10%">
 						</td>
 						<td>@item.StID</td>
-						<td>@item.FullName</td>
+						<td>@item.FirstName</td>
 						<td>@(item.DoB.HasValue ? item.DoB.Value.ToShortDateString() : string.Empty)</td>
 						<td>@item.Email</td>
 						<td>@item.PhoneNumber</td>

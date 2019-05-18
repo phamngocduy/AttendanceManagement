@@ -67,7 +67,7 @@ namespace WebApplication.Controllers
 					UserProfile us = new UserProfile
 					{
 						StID = item.StID,
-						FullName = item.FullName,
+						FullName = item.FirstName,
 						PhoneNumber = item.PhoneNumber,
 						Email = item.Email,
 						DoB = item.DoB,
@@ -96,7 +96,7 @@ namespace WebApplication.Controllers
 				UserProfile us = new UserProfile
 				{
 					StID = user.StID,
-					FullName = user.FullName,
+					FullName = user.FirstName,
 					PhoneNumber = user.PhoneNumber,
 					Email = user.Email,
 					DoB = user.DoB,
@@ -122,7 +122,7 @@ namespace WebApplication.Controllers
 		{
 			try
 			{
-				var user = db.Users.FirstOrDefault(x => x.Email == searchString || x.FullName == searchString || x.StID == searchString);
+				var user = db.Users.FirstOrDefault(x => x.Email == searchString || x.FirstName == searchString || x.StID == searchString);
 
 				var response = new HttpResponseMessage(HttpStatusCode.OK);
 				response.Content = new StringContent(JsonConvert.SerializeObject(new { Avatar = user.AvatarBase64 }));

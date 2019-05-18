@@ -24,9 +24,12 @@ namespace WebApplication.Models
         public int ID { get; set; }
         public string UserID { get; set; }
         public string StID { get; set; }
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Nullable<bool> Gender { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+        public string PlaceofBirth { get; set; }
         public Nullable<System.DateTime> DoB { get; set; }
         public string AvatarLink { get; set; }
         public string AvatarBase64 { get; set; }
