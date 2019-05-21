@@ -7,6 +7,12 @@ using System.Web.Mvc;
 using AttendanceManagement.Models;
 using System.Text;
 using System.Transactions;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Drawing;
+using ZXing;
+using ZXing.QrCode;
+using System.Web.Services;
 
 namespace AttendanceManagement.Controllers
 {
@@ -64,12 +70,13 @@ namespace AttendanceManagement.Controllers
 		{
 			Session["CourseID"] = id;
 			int courseID = int.Parse(id);
+			ViewBag.Course = db.Courses.FirstOrDefault(x => x.ID == courseID).CourseName;
 			ViewBag.tab = "tab1";
 			if (Session["tabactive"] != null)
 			{
 				ViewBag.tab = Session["tabactive"].ToString();
 				Session.Remove("tabactive");
-				
+
 			}
 			if (Session["SessionID"] != null)
 			{
@@ -80,7 +87,7 @@ namespace AttendanceManagement.Controllers
 			}
 			var session = db.Sessions.Where(x => x.CourseID == courseID).OrderBy(x => x.Date).ToList();
 			ViewData["session"] = session;
-			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x=>x.Name).ToList();
+			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.Name).ToList();
 			ViewData["students"] = student;
 			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
 			foreach (var iten in student)
@@ -97,7 +104,7 @@ namespace AttendanceManagement.Controllers
 				{
 
 					DetailAttendance detail = new DetailAttendance();
-					detail.Date = (DateTime) item.Date;
+					detail.Date = (DateTime)item.Date;
 					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
 					if (attendance == null)
 					{
@@ -107,7 +114,7 @@ namespace AttendanceManagement.Controllers
 					else
 					{
 						detail.Status = attendance.Status;
-						
+
 						if (attendance.Status != "0")
 						{
 							TotalPresent++;
@@ -231,7 +238,7 @@ namespace AttendanceManagement.Controllers
 			Session["tabactive"] = "tab4";
 
 			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
-		} 
+		}
 
 		[HttpPost]
 		public JsonResult CheckAttendance(List<AttendanceModel> attendance)
@@ -257,5 +264,95 @@ namespace AttendanceManagement.Controllers
 
 			return Json("true");
 		}
+		public ActionResult TestQR()
+		{
+			return View();
+		}
+		[HttpPost]
+		public JsonResult ClearYourSessionValue()
+		{
+			// This will leave the key in the Session cache, but clear the value
+			Session["SessionQRID"] = null;
+
+			// This will remove both the key and value from the Session cache
+			Session.Remove("SessionQRID");
+
+			return Json("revove session");
+
+		}
+
+		[HttpPost]
+		public string CheckSessionQRCode()
+		{
+			if (Session["SessionQRID"] != null)
+			{
+				return "true";
+			}
+			else
+			{
+				return "false";
+			}
+
+			
+
+		}
+		public ActionResult Generate(string id)
+		{
+			Session["SessionQRID"] = id;
+			QRCodeModel qrcode = new QRCodeModel();
+			qrcode.QRCodeText = id;
+			try
+			{
+				qrcode.QRCodeImagePath = GenerateQRCode(id);
+				ViewBag.Message = "QR Code Generated successfully";
+			}
+			catch (Exception ex)
+			{
+				//catch exception if there is any
+			}
+			return View("QRCode", qrcode);
+		}
+
+		private string GenerateQRCode(string qrcodeText)
+		{
+			string folderPath = "~/Images/";
+			string imagePath = "~/Images/QrCode.jpg";
+			// create new Directory if not exist
+			if (!Directory.Exists(Server.MapPath(folderPath)))
+			{
+				Directory.CreateDirectory(Server.MapPath(folderPath));
+			}
+
+			var barcodeWriter = new BarcodeWriter() {
+				Format = BarcodeFormat.QR_CODE,
+				Options = new QrCodeEncodingOptions
+				{
+					Width = 400,
+					Height = 400
+				}
+			};
+		
+			var result = barcodeWriter.Write(qrcodeText);
+
+			string barcodePath = Server.MapPath(imagePath);
+			var barcodeBitmap = new Bitmap(result);
+			using (MemoryStream memory = new MemoryStream())
+			{
+				using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+				{
+					barcodeBitmap.Save(memory, ImageFormat.Png);
+					byte[] bytes = memory.ToArray();
+					fs.Write(bytes, 0, bytes.Length);
+				}
+			}
+			return imagePath;
+		}
+
+		//public ActionResult CheckAttendanceByCode()
+		//{
+
+		//}
+
+
 	}
 }

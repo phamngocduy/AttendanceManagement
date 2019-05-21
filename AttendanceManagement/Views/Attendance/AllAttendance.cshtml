@@ -10,25 +10,7 @@
 		<div class="card-body">
 			<div class="col-lg-12 col-xlg-12 col-md-7">
 				<div class="user-analytics chartist-chart" style="height: 250px;"></div>
-
 			</div>
-
-			<div class="col-lg-12 col-xlg-12 col-md-7">
-				<div>
-					<h3 class="card-title">Chart</h3>
-				</div>
-				<div class="ml-auto align-self-center">
-					<ul class="list-inline m-b-0">
-						<li>
-							<h6 class="text-muted text-success"><i class="fa fa-circle font-10 m-r-10 "></i>Student</h6>
-						</li>
-
-					</ul>
-				</div>
-
-			</div>
-
-			<div class="campaign ct-charts"></div>
 			<br />
 			<br />
 			<div class="row pull-right">
@@ -118,7 +100,6 @@
 				scrollCollapse: true,
 				paging: false,
 				autoWidth: true,
-				fixedHeader: true,
 				fixedColumns: {
 					leftColumns: 4
 				}
@@ -156,101 +137,7 @@
 	<script>
 		$(function () {
 			"use strict";
-			var chart = new Chartist.Line('.campaign', {
-				labels: ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8'],
-				series: [
-					[25, 25, 16, 18, 25, 19, 18, 24]
-				]
-			}, {
-					low: 0,
-					high: 28,
-					showArea: true,
-					fullWidth: true,
-					plugins: [
-						Chartist.plugins.tooltip()
-					],
-					axisY: {
-						onlyInteger: true
-						, scaleMinSpace: 40
-						, offset: 20
-						, labelInterpolationFnc: function (value) {
-							return (value / 1);
-						}
-					},
-				});
-
-			// Offset x1 a tiny amount so that the straight stroke gets a bounding box
-			// Straight lines don't get a bounding box
-			// Last remark on -> http://www.w3.org/TR/SVG11/coords.html#ObjectBoundingBox
-			chart.on('draw', function (ctx) {
-				if (ctx.type === 'area') {
-					ctx.element.attr({
-						x1: ctx.x1 + 0.001
-					});
-				}
-			});
-
-			// Create the gradient definition on created event (always after chart re-render)
-			chart.on('created', function (ctx) {
-				var defs = ctx.svg.elem('defs');
-				defs.elem('linearGradient', {
-					id: 'gradient',
-					x1: 0,
-					y1: 1,
-					x2: 0,
-					y2: 0
-				}).elem('stop', {
-					offset: 0,
-					'stop-color': 'rgba(255, 255, 255, 1)'
-				}).parent().elem('stop', {
-					offset: 1,
-					'stop-color': 'rgba(38, 198, 218, 1)'
-				});
-			});
-			// ==============================================================
-			// This is for the animation
-			// ==============================================================
-			chart.on('draw', function (data) {
-				if (data.type === 'line' || data.type === 'area') {
-					data.element.animate({
-						d: {
-							begin: 500 * data.index,
-							dur: 500,
-							from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-							to: data.path.clone().stringify(),
-							easing: Chartist.Svg.Easing.easeInOutElastic
-						}
-					});
-				}
-				if (data.type === 'bar') {
-					data.element.animate({
-						y2: {
-							dur: 500,
-							from: data.y1,
-							to: data.y2,
-							easing: Chartist.Svg.Easing.easeInOutElastic
-						},
-						opacity: {
-							dur: 500,
-							from: 0,
-							to: 1,
-							easing: Chartist.Svg.Easing.easeInOutElastic
-						}
-					});
-				}
-			});
-
-
-		});
-
-
-		$(function () {
-			"use strict";
-
-			// ============================================================== 
-			// User analytics
-			// ============================================================== 
-			new Chartist.Line('.user-analytics', {
+			var chart = new Chartist.Line('.user-analytics', {
 				labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'S15']
 				, series: [
 					[51, 25, 35, 70, 63, 1, 49]
@@ -275,6 +162,64 @@
 						}
 					}
 				});
+
+			//chart.on('draw', function (ctx) {
+			//	if (ctx.type === 'area') {
+			//		ctx.element.attr({
+			//			x1: ctx.x1 + 0.001
+			//		});
+			//	}
+			//});
+
+			//// Create the gradient definition on created event (always after chart re-render)
+			//chart.on('created', function (ctx) {
+			//	var defs = ctx.svg.elem('defs');
+			//	defs.elem('linearGradient', {
+			//		id: 'gradient',
+			//		x1: 0,
+			//		y1: 1,
+			//		x2: 0,
+			//		y2: 0
+			//	}).elem('stop', {
+			//		offset: 0,
+			//		'stop-color': 'rgba(255, 255, 255, 1)'
+			//	}).parent().elem('stop', {
+			//		offset: 1,
+			//		'stop-color': 'rgba(38, 198, 218, 1)'
+			//	});
+			//});
+			//// ==============================================================
+			//// This is for the animation
+			//// ==============================================================
+			//chart.on('draw', function (data) {
+			//	if (data.type === 'line' || data.type === 'area') {
+			//		data.element.animate({
+			//			d: {
+			//				begin: 500 * data.index,
+			//				dur: 500,
+			//				from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+			//				to: data.path.clone().stringify(),
+			//				easing: Chartist.Svg.Easing.easeInOutElastic
+			//			}
+			//		});
+			//	}
+			//	if (data.type === 'bar') {
+			//		data.element.animate({
+			//			y2: {
+			//				dur: 500,
+			//				from: data.y1,
+			//				to: data.y2,
+			//				easing: Chartist.Svg.Easing.easeInOutElastic
+			//			},
+			//			opacity: {
+			//				dur: 500,
+			//				from: 0,
+			//				to: 1,
+			//				easing: Chartist.Svg.Easing.easeInOutElastic
+			//			}
+			//		});
+			//	}
+			//});
 		});
 
 	</script>

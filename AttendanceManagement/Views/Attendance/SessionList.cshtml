@@ -48,13 +48,15 @@
 										<td>20</td>
 										<td>
 											<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="location.href = '@Url.Action("CheckAttendance", "Attendance",new { id=item.ID })';">Check Attendance</button>
+											<button type="button" class="btn waves-effect waves-light btn-block btn-danger" onclick="GenCode(@item.ID)">QR Attendance</button>
+											<button type="button" class="btn waves-effect waves-light btn-block btn-danger"  onclick="testSession()">Check Session</button>
 										</td>
 										<td>
 											<button type="button" onclick="Edit(@item.ID)">
 												<i class="ti-marker-alt"></i>
 											</button>
 											<form action="~/Session/Delete" method="post">
-												<input type="text" name="sessionID" value="@item.ID" style="display:none"/>
+												<input type="text" name="sessionID" value="@item.ID" style="display:none" />
 												<button type="submit">
 													<i class="ti-trash"></i>
 												</button>
@@ -128,7 +130,23 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="generateQRcode" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">QR <strong>Code</strong></h4>
+			</div>
+			<div class="modal-body" id="ModalgenerateQRcode">
 
+			</div>
+		</div>
+		<div class="modal-footer">
+
+		</div>
+	</div>
+</div>
 <script src="~/Content/assets/jquery.min.js"></script>
 <script>
 	function Edit(id) {
@@ -137,7 +155,19 @@
 			$("#myEditSession").modal("show");
 		})
 	}
+	function GenCode(id) {
+		var url = "/Attendance/Generate?id=" + id;
+		$("#ModalgenerateQRcode").load(url, function () {
+			$("#generateQRcode").modal("show");
+		})
+	}
 </script>
+<script>
+	function testSession() {
+		alert(@Session["SessionQRID"]);
+	}
+</script>
+
 <script src="~/Content/assets/moment.js"></script>
 <script src="~/Content/assets/bootstrap-material-datetimepicker.js"></script>
 <!-- Clock Plugin JavaScript -->
@@ -186,15 +216,15 @@
 	$('table').on('click', '[type=submit]', function (e) {
 		e.preventDefault();
 		var form = $(this).parents('form');
-        swal({   
-            title: "Are you sure?",   
-            text: "You will not be able to recover this session",   
-            type: "warning",   
-            showCancelButton: true,   
-            confirmButtonColor: "#DD6B55",   
-            confirmButtonText: "Yes, delete it!",   
-            closeOnConfirm: false 
-		}, function (isConfirm) {   
+		swal({
+			title: "Are you sure?",
+			text: "You will not be able to recover this session",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes, delete it!",
+			closeOnConfirm: false
+		}, function (isConfirm) {
 			if (isConfirm) {
 				swal({
 					title: "Deleted!",
@@ -206,7 +236,7 @@
 						form.submit();
 					}
 				});
-			} 
-        });
-    });
+			}
+		});
+	});
 </script>

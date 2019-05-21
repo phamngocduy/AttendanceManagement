@@ -125,6 +125,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="zxing, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net45\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net45\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
@@ -278,6 +284,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\QRCodeModel.cs" />
     <Compile Include="Models\Session.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -337,12 +344,14 @@
     <Content Include="Content\assets\echarts-all.js" />
     <Content Include="Content\assets\flag-icon.min.css" />
     <Content Include="Content\assets\font-awesome.min.css" />
+    <Content Include="Content\assets\instascan.min.js" />
     <Content Include="Content\assets\jquery-clockpicker.min.css" />
     <Content Include="Content\assets\jquery-clockpicker.min.js" />
     <Content Include="Content\assets\jquery.dataTables.min.js" />
     <Content Include="Content\assets\jquery.min.js" />
     <Content Include="Content\assets\jquery.slimscroll.js" />
     <Content Include="Content\assets\jquery.sparkline.min.js" />
+    <Content Include="Content\assets\jquery.steps.js" />
     <Content Include="Content\assets\jquery.steps.min.js" />
     <Content Include="Content\assets\jQuery.style.switcher.js" />
     <Content Include="Content\assets\jquery.sweet-alert.custom.js" />
@@ -351,7 +360,10 @@
     <Content Include="Content\assets\moment.js" />
     <Content Include="Content\assets\popper.min.js" />
     <Content Include="Content\assets\profile.png" />
+    <Content Include="Content\assets\qr-scanner-worker.min.js" />
+    <Content Include="Content\assets\qr-scanner.min.js" />
     <Content Include="Content\assets\red.css" />
+    <Content Include="Content\assets\scanqr.css" />
     <Content Include="Content\assets\sidebarmenu.js" />
     <Content Include="Content\assets\simple-line-icons.css" />
     <Content Include="Content\assets\spinners.css" />
@@ -365,6 +377,7 @@
     <Content Include="Content\assets\user-info.jpg" />
     <Content Include="Content\assets\waves.js" />
     <Content Include="Content\assets\weather-icons.min.css" />
+    <Content Include="Content\assets\webcam.js" />
     <Content Include="Content\assets\widget-charts.js" />
     <Content Include="Content\Attendance.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
@@ -690,9 +703,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\bootstrap-datepicker.css.map" />
     <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
     <Content Include="Content\bootstrap-datepicker3.css.map" />
@@ -736,7 +746,6 @@
     <Content Include="Content\scss\icons\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\scss\icons\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\scss\icons\font-awesome\fonts\FontAwesome.otf" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="Content\scss\icons\simple-line-icons\fonts\Simple-Line-Icons.ttf" />
     <Content Include="Content\scss\icons\simple-line-icons\fonts\Simple-Line-Icons.woff" />
     <Content Include="Content\scss\icons\simple-line-icons\fonts\Simple-Line-Icons.woff2" />
@@ -747,7 +756,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="ClassDiagram2.cd" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -808,6 +817,10 @@
     <Content Include="Views\Attendance\AttendanceList.cshtml" />
     <Content Include="Views\Attendance\AllAttendance.cshtml" />
     <Content Include="Views\Session\Edit.cshtml" />
+    <Content Include="Views\Attendance\AttendanceByCode.cshtml" />
+    <Content Include="Views\Attendance\CaptureImage.cshtml" />
+    <Content Include="Views\Attendance\ScanQRCode.cshtml" />
+    <Content Include="Views\Attendance\QRCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,37 +14,13 @@
 
 <div class="row page-titles">
 	<div class="col-md-5 col-8 align-self-center">
-		<h3 class="text-themecolor">@AttendanceManagement.Resources.Resource.Mygroup</h3>
+		<h3 class="text-themecolor">Attendance</h3>
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="javascript:void(0)">@AttendanceManagement.Resources.Resource.Group</a></li>
-			<li class="breadcrumb-item active">@AttendanceManagement.Resources.Resource.Mygroup</li>
+			<li class="breadcrumb-item"><a href="javascript:void(0)">Attendance</a></li>
+			<li class="breadcrumb-item active">@ViewBag.Course</li>
 		</ol>
 	</div>
-	<div class="col-md-7 col-4 align-self-center">
-		<div class="d-flex m-t-10 justify-content-end">
-			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
-				<div class="chart-text m-r-10">
-					<h6 class="m-b-0"><small>THIS MONTH</small></h6>
-					<h4 class="m-t-0 text-info">$58,356</h4>
-				</div>
-				<div class="spark-chart">
-					<div id="monthchart"></div>
-				</div>
-			</div>
-			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
-				<div class="chart-text m-r-10">
-					<h6 class="m-b-0"><small>LAST MONTH</small></h6>
-					<h4 class="m-t-0 text-primary">$48,356</h4>
-				</div>
-				<div class="spark-chart">
-					<div id="lastmonthchart"></div>
-				</div>
-			</div>
-			<div class="">
-				<button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
-			</div>
-		</div>
-	</div>
+
 </div>
 <div class="container-fluid">
 	<!-- Basic Example -->
@@ -121,190 +97,7 @@
 								<button class="btn btn-primary" onclick="choice()">Please choice session</button>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-12">
-								<div class="card">
-									<div class="card-body wizard-content">
-										<h4 class="card-title">Step wizard</h4>
-										<h6 class="card-subtitle">You can find the <a href="http://www.jquery-steps.com" target="_blank">offical website</a></h6>
-										<form action="#" class="tab-wizard wizard-circle">
-											<!-- Step 1 -->
-											<h6>Personal Info</h6>
-											<section>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="firstName1">First Name :</label>
-															<input type="text" class="form-control" id="firstName1">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="lastName1">Last Name :</label>
-															<input type="text" class="form-control" id="lastName1">
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="emailAddress1">Email Address :</label>
-															<input type="email" class="form-control" id="emailAddress1">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="phoneNumber1">Phone Number :</label>
-															<input type="tel" class="form-control" id="phoneNumber1">
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="location1">Select City :</label>
-															<select class="custom-select form-control" id="location1" name="location">
-																<option value="">Select City</option>
-																<option value="Amsterdam">India</option>
-																<option value="Berlin">USA</option>
-																<option value="Frankfurt">Dubai</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="date1">Date of Birth :</label>
-															<input type="date" class="form-control" id="date1">
-														</div>
-													</div>
-												</div>
-											</section>
-											<!-- Step 2 -->
-											<h6>Capture Picture</h6>
-											<section>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="jobTitle1">Job Title :</label>
-															<input type="text" class="form-control" id="jobTitle1">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="videoUrl1">Company Name :</label>
-															<input type="text" class="form-control" id="videoUrl1">
-														</div>
-													</div>
-													<div class="col-md-12">
-														<div class="form-group">
-															<label for="shortDescription1">Job Description :</label>
-															<textarea name="shortDescription" id="shortDescription1" rows="6" class="form-control"></textarea>
-														</div>
-													</div>
-												</div>
-											</section>
-											<!-- Step 3 -->
-											<h6>Scan Code</h6>
-											<section>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="int1">Interview For :</label>
-															<input type="text" class="form-control" id="int1">
-														</div>
-														<div class="form-group">
-															<label for="intType1">Interview Type :</label>
-															<select class="custom-select form-control" id="intType1" data-placeholder="Type to search cities" name="intType1">
-																<option value="Banquet">Normal</option>
-																<option value="Fund Raiser">Difficult</option>
-																<option value="Dinner Party">Hard</option>
-															</select>
-														</div>
-														<div class="form-group">
-															<label for="Location1">Location :</label>
-															<select class="custom-select form-control" id="Location1" name="location">
-																<option value="">Select City</option>
-																<option value="India">India</option>
-																<option value="USA">USA</option>
-																<option value="Dubai">Dubai</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="jobTitle2">Interview Date :</label>
-															<input type="date" class="form-control" id="jobTitle2">
-														</div>
-														<div class="form-group">
-															<label>Requirements :</label>
-															<div class="c-inputs-stacked">
-																<label class="inline custom-control custom-checkbox block">
-																	<input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">Employee</span>
-																</label>
-																<label class="inline custom-control custom-checkbox block">
-																	<input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">Contract</span>
-																</label>
-															</div>
-														</div>
-													</div>
-												</div>
-											</section>
-											<!-- Step 4 -->
-											<h6>Check</h6>
-											<section>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="behName1">Behaviour :</label>
-															<input type="text" class="form-control" id="behName1">
-														</div>
-														<div class="form-group">
-															<label for="participants1">Confidance</label>
-															<input type="text" class="form-control" id="participants1">
-														</div>
-														<div class="form-group">
-															<label for="participants1">Result</label>
-															<select class="custom-select form-control" id="participants1" name="location">
-																<option value="">Select Result</option>
-																<option value="Selected">Selected</option>
-																<option value="Rejected">Rejected</option>
-																<option value="Call Second-time">Call Second-time</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="decisions1">Comments</label>
-															<textarea name="decisions" id="decisions1" rows="4" class="form-control"></textarea>
-														</div>
-														<div class="form-group">
-															<label>Rate Interviwer :</label>
-															<div class="c-inputs-stacked">
-																<label class="inline custom-control custom-checkbox block">
-																	<input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">1 star</span>
-																</label>
-																<label class="inline custom-control custom-checkbox block">
-																	<input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">2 star</span>
-																</label>
-																<label class="inline custom-control custom-checkbox block">
-																	<input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">3 star</span>
-																</label>
-																<label class="inline custom-control custom-checkbox block">
-																	<input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">4 star</span>
-																</label>
-																<label class="inline custom-control custom-checkbox block">
-																	<input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">5 star</span>
-																</label>
-															</div>
-														</div>
-													</div>
-												</div>
-											</section>
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
+						@{ Html.RenderPartial("~/Views/Attendance/AttendanceByCode.cshtml"); }
 					</div>
 				</div>
 			}
@@ -334,7 +127,14 @@ $(function () {
 	}
 </script>
 
-
+<script>
+	$(document).ready(function () {
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			$($.fn.dataTable.tables(true)).DataTable()
+				.columns.adjust()
+		});  
+	});
+</script>
 
 
 
