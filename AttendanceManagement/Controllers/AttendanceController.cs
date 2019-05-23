@@ -13,6 +13,8 @@ using System.Drawing;
 using ZXing;
 using ZXing.QrCode;
 using System.Web.Services;
+using System.Data;
+using ClosedXML.Excel;
 
 namespace AttendanceManagement.Controllers
 {
@@ -293,7 +295,7 @@ namespace AttendanceManagement.Controllers
 				return "false";
 			}
 
-			
+
 
 		}
 		public ActionResult Generate(string id)
@@ -323,7 +325,8 @@ namespace AttendanceManagement.Controllers
 				Directory.CreateDirectory(Server.MapPath(folderPath));
 			}
 
-			var barcodeWriter = new BarcodeWriter() {
+			var barcodeWriter = new BarcodeWriter()
+			{
 				Format = BarcodeFormat.QR_CODE,
 				Options = new QrCodeEncodingOptions
 				{
@@ -331,7 +334,7 @@ namespace AttendanceManagement.Controllers
 					Height = 400
 				}
 			};
-		
+
 			var result = barcodeWriter.Write(qrcodeText);
 
 			string barcodePath = Server.MapPath(imagePath);
@@ -347,7 +350,154 @@ namespace AttendanceManagement.Controllers
 			}
 			return imagePath;
 		}
+		public ActionResult ExportExcel()
+		{
+			int id = int.Parse(Session["CourseID"].ToString());
 
+
+			//Codes for the Closed XML
+			var file = Server.MapPath("~/Content/AttendanceExcelTemplate.xlsx");
+			using (XLWorkbook wb = new XLWorkbook(file))
+			{
+				var ws = wb.Worksheet(1);
+				var list = db.Sessions.Where(x => x.CourseID == id).OrderBy(x => x.Date);
+
+				for (int j = 1; j <= 5; j++)
+				{
+					if (j == 1)
+					{
+						ws.Cell(7, j).Style.Font.Bold = true;
+						ws.Cell(7, j).Style.Font.FontSize = 12;
+						ws.Cell(7, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+						ws.Cell(7, j).Style.Border.BottomBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.BottomBorderColor = XLColor.Black;
+
+						ws.Cell(7, j).Style.Border.TopBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.TopBorderColor = XLColor.Black;
+
+						ws.Cell(7, j).Style.Border.LeftBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.LeftBorderColor = XLColor.Black;
+
+						ws.Cell(7, j).Style.Border.RightBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.RightBorderColor = XLColor.Black;
+					}
+					else
+					{
+						ws.Cell(7, j).Style.Font.Bold = true;
+						ws.Cell(7, j).Style.Font.FontSize = 12;
+						ws.Cell(7, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+						ws.Cell(7, j).Style.Border.BottomBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.BottomBorderColor = XLColor.Black;
+
+						ws.Cell(7, j).Style.Border.TopBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.TopBorderColor = XLColor.Black;
+
+
+						ws.Cell(7, j).Style.Border.RightBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.RightBorderColor = XLColor.Black;
+					}
+
+				}
+				int i = 5;
+				foreach (var item in list)
+				{
+
+					ws.Cell(7, i).Style.Font.Bold = true;
+					ws.Cell(7, i).Style.Font.FontSize = 12;
+					ws.Cell(7, i).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+					ws.Cell(7, i).Value = "'" + item.Date.Value.ToShortDateString();
+					ws.Cell(7, i).Style.Border.BottomBorder = XLBorderStyleValues.Medium;
+					ws.Cell(7, i).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(7, i).Style.Border.TopBorder = XLBorderStyleValues.Medium;
+					ws.Cell(7, i).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(7, i).Style.Border.RightBorder = XLBorderStyleValues.Medium;
+					ws.Cell(7, i).Style.Border.RightBorderColor = XLColor.Black;
+					i++;
+				}
+				int iIndex = 1;
+				int iCol = 1;
+				int iRow = 8;
+				var listStudent = db.CourseMembers.Where(x => x.CourseID == id).OrderBy(x => x.Name);
+				foreach (var item in listStudent)
+				{
+					ws.Cell(iRow, iCol).Value = iIndex;
+					ws.Cell(iRow, iCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+					ws.Cell(iRow, iCol).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol).Style.Border.LeftBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol).Style.Border.LeftBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol).Style.Border.RightBorderColor = XLColor.Black;
+
+
+					ws.Cell(iRow, iCol + 1).Value = item.StudentID;
+					ws.Cell(iRow, iCol + 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+					ws.Cell(iRow, iCol + 1).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 1).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 1).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 1).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 1).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 1).Style.Border.RightBorderColor = XLColor.Black;
+
+
+					ws.Cell(iRow, iCol + 2).Value = item.Name;
+					ws.Cell(iRow, iCol + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 2).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 2).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.RightBorderColor = XLColor.Black;
+					for (int k = iCol; k < i; k++)
+					{
+						ws.Cell(iRow, k).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+						ws.Cell(iRow, k).Style.Border.BottomBorderColor = XLColor.Black;
+
+						ws.Cell(iRow, k).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+						ws.Cell(iRow, k).Style.Border.TopBorderColor = XLColor.Black;
+
+						ws.Cell(iRow, k).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+						ws.Cell(iRow, k).Style.Border.RightBorderColor = XLColor.Black;
+					}
+					iRow++;
+					iIndex++;
+				}
+
+				string myName = Server.UrlEncode("AttendanceByExcel" + "_" + db.Courses.FirstOrDefault(x => x.ID == id).CourseName + ".xlsx");
+				MemoryStream stream = GetStream(wb);// The method is defined below
+				Response.Clear();
+				Response.Buffer = true;
+				Response.AddHeader("content-disposition", "attachment; filename=" + myName);
+				Response.ContentType = "application/vnd.ms-excel";
+				Response.BinaryWrite(stream.ToArray());
+				Response.End();
+			}
+
+			return RedirectToAction("Index");
+		}
+
+
+		public MemoryStream GetStream(XLWorkbook excelWorkbook)
+		{
+			MemoryStream fs = new MemoryStream();
+			excelWorkbook.SaveAs(fs);
+			fs.Position = 0;
+			return fs;
+		}
 		//public ActionResult CheckAttendanceByCode()
 		//{
 

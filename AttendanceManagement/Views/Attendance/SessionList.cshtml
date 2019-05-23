@@ -24,6 +24,11 @@
 			<h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-info waves-effect waves-dark" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button></h2>
 			<div class="message-widget contact-widget">
 				<div class="card-body collapse show">
+					<div class="row pull-right">
+						
+						<button type="button" class="btn btn-info waves-effect waves-dark" onclick="location.href = '@Url.Action("ExportExcel", "Attendance")';">Attendance Excel Template</button>
+
+					</div>
 					<div class="table-responsive">
 						<table class="table product-overview">
 							<thead>
@@ -49,7 +54,6 @@
 										<td>
 											<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="location.href = '@Url.Action("CheckAttendance", "Attendance",new { id=item.ID })';">Check Attendance</button>
 											<button type="button" class="btn waves-effect waves-light btn-block btn-danger" onclick="GenCode(@item.ID)">QR Attendance</button>
-											<button type="button" class="btn waves-effect waves-light btn-block btn-danger"  onclick="testSession()">Check Session</button>
 										</td>
 										<td>
 											<button type="button" onclick="Edit(@item.ID)">
@@ -160,11 +164,6 @@
 		$("#ModalgenerateQRcode").load(url, function () {
 			$("#generateQRcode").modal("show");
 		})
-	}
-</script>
-<script>
-	function testSession() {
-		alert(@Session["SessionQRID"]);
 	}
 </script>
 

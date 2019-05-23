@@ -20,11 +20,6 @@ namespace AttendanceManagement
 				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
 			);
 			routes.MapRoute(
-				name: "Default1",
-				url: "AttendanceManagement/{controller}/{action}/{id}",
-				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-			);
-			routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
