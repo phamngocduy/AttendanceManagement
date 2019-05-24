@@ -322,9 +322,8 @@ namespace WebApplication.Tests.Controllers
 
         }
         [TestMethod]
-        public void TestAddGroupSuccessfully()
+        public void TestCreateGroupSuccessfully()
         {
-
             //Arange
             var controller = new GroupController();
             var user = new Group();
@@ -337,17 +336,73 @@ namespace WebApplication.Tests.Controllers
                 GroupDescription = "test",
                 GroupParent = 76,
                 CreatedDate = DateTime.Now
-
             };
-
             db.Groups.Add(group);
             Assert.IsNotNull(group);
-
         }
-
-
+        [TestMethod]
+        public void TestCreateGroupUnSuccessfullyWitEmptyName()
+        {
+            //Arange
+            var controller = new GroupController();
+            var user = new Group();
+            var db = new cap21t4Entities();
+            var group = new Group()
+            {
+                ID = 9999,
+                GroupName = "",
+                GroupType = false,
+                GroupDescription = "test",
+                GroupParent = 76,
+                CreatedDate = DateTime.Now
+            };
+            db.Groups.Add(group);
+            Assert.IsNotNull(group);
+            System.Diagnostics.Trace.WriteLine("Group name cannot be empty!");
+        }
+        [TestMethod]
+        public void TestCreateGroupUnSuccessfullyWithSpecialSymbolName()
+        {
+            //Arange
+            var controller = new GroupController();
+            var user = new Group();
+            var db = new cap21t4Entities();
+            var group = new Group()
+            {
+                ID = 9999,
+                GroupName = "&^%$%$",
+                GroupType = false,
+                GroupDescription = "test",
+                GroupParent = 76,
+                CreatedDate = DateTime.Now
+            };
+            db.Groups.Add(group);
+            Assert.IsNotNull(group);
+            System.Diagnostics.Trace.WriteLine("Error data format, please try again");
+        }
+        [TestMethod]
+        public void TestCreateGroupUnSuccessfullyWithBlankSpaceName()
+        {
+            //Arange
+            var controller = new GroupController();
+            var user = new Group();
+            var db = new cap21t4Entities();
+            var group = new Group()
+            {
+                ID = 9999,
+                GroupName = " ",
+                GroupType = false,
+                GroupDescription = "test",
+                GroupParent = 76,
+                CreatedDate = DateTime.Now
+            };
+            db.Groups.Add(group);
+            Assert.IsNotNull(group);
+            System.Diagnostics.Trace.WriteLine("Group name cannot be empty!");
+        }
     }
 }
+
 
     
 
