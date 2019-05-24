@@ -58,15 +58,14 @@ namespace IdentificationManagement.Controllers
 		[HttpPost]
 		public ActionResult Edit(User user)
 		{
-
 			User nUser = db.Users.FirstOrDefault(x => x.ID == user.ID);
 			if (ModelState.IsValid)
 			{
 				nUser.DoB = user.DoB;
-				
+				nUser.Gender = user.Gender;
+				nUser.PlaceofBirth = user.PlaceofBirth;
 				nUser.PhoneNumber = user.PhoneNumber;
 				db.SaveChanges();
-                TempData["SuccessMessage"] = "Update user profile successfully ! ";
                 return RedirectToAction("Index");
             }
 			return RedirectToAction("Index");

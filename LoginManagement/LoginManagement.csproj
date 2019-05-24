@@ -165,6 +165,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Extension\HtmlRequestHelper.cs" />
+    <Compile Include="Extension\LocalizedControllerActivator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,9 +214,94 @@
     </Compile>
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Resource.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.en.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\1.jpg" />
+    <Content Include="Content\assets\2.jpg" />
+    <Content Include="Content\assets\3.jpg" />
+    <Content Include="Content\assets\4.jpg" />
+    <Content Include="Content\assets\5.jpg" />
+    <Content Include="Content\assets\6.jpg" />
+    <Content Include="Content\assets\7.jpg" />
+    <Content Include="Content\assets\8.jpg" />
+    <Content Include="Content\assets\animate.css" />
+    <Content Include="Content\assets\bootstrap-datepicker.min.css" />
+    <Content Include="Content\assets\bootstrap-datepicker.min.js" />
+    <Content Include="Content\assets\bootstrap-material-datetimepicker.css" />
+    <Content Include="Content\assets\bootstrap-material-datetimepicker.js" />
+    <Content Include="Content\assets\bootstrap-switch.min.css" />
+    <Content Include="Content\assets\bootstrap-switch.min.js" />
+    <Content Include="Content\assets\bootstrap-timepicker.min.css" />
+    <Content Include="Content\assets\bootstrap-timepicker.min.js" />
+    <Content Include="Content\assets\bootstrap.css" />
+    <Content Include="Content\assets\bootstrap.js" />
+    <Content Include="Content\assets\bootstrap.min.css" />
+    <Content Include="Content\assets\c3.min.css" />
+    <Content Include="Content\assets\c3.min.js" />
+    <Content Include="Content\assets\chartist-init.css" />
+    <Content Include="Content\assets\chartist-plugin-tooltip.css" />
+    <Content Include="Content\assets\chartist-plugin-tooltip.min.js" />
+    <Content Include="Content\assets\chartist.css" />
+    <Content Include="Content\assets\chartist.min.js" />
+    <Content Include="Content\assets\css-chart.css" />
+    <Content Include="Content\assets\custom-select.png" />
+    <Content Include="Content\assets\custom.min.js" />
+    <Content Include="Content\assets\d3.min.js" />
+    <Content Include="Content\assets\dataTables.fixedColumns.js" />
+    <Content Include="Content\assets\daterangepicker.css" />
+    <Content Include="Content\assets\daterangepicker.js" />
+    <Content Include="Content\assets\echarts-all.js" />
+    <Content Include="Content\assets\flag-icon.min.css" />
+    <Content Include="Content\assets\font-awesome.min.css" />
+    <Content Include="Content\assets\instascan.min.js" />
+    <Content Include="Content\assets\jquery-clockpicker.min.css" />
+    <Content Include="Content\assets\jquery-clockpicker.min.js" />
+    <Content Include="Content\assets\jquery.dataTables.min.js" />
+    <Content Include="Content\assets\jquery.min.js" />
+    <Content Include="Content\assets\jquery.slimscroll.js" />
+    <Content Include="Content\assets\jquery.sparkline.min.js" />
+    <Content Include="Content\assets\jquery.steps.js" />
+    <Content Include="Content\assets\jquery.steps.min.js" />
+    <Content Include="Content\assets\jQuery.style.switcher.js" />
+    <Content Include="Content\assets\jquery.sweet-alert.custom.js" />
+    <Content Include="Content\assets\jquery.toast.css" />
+    <Content Include="Content\assets\jquery.toast.js" />
+    <Content Include="Content\assets\js.cookie.js" />
+    <Content Include="Content\assets\linea.css" />
+    <Content Include="Content\assets\materialdesignicons.min.css" />
+    <Content Include="Content\assets\moment.js" />
+    <Content Include="Content\assets\popper.min.js" />
+    <Content Include="Content\assets\profile.png" />
+    <Content Include="Content\assets\qr-scanner-worker.min.js" />
+    <Content Include="Content\assets\qr-scanner.min.js" />
+    <Content Include="Content\assets\red.css" />
+    <Content Include="Content\assets\scanqr.css" />
+    <Content Include="Content\assets\sidebarmenu.js" />
+    <Content Include="Content\assets\simple-line-icons.css" />
+    <Content Include="Content\assets\spinners.css" />
+    <Content Include="Content\assets\steps.css" />
+    <Content Include="Content\assets\steps.js" />
+    <Content Include="Content\assets\sticky-kit.min.js" />
+    <Content Include="Content\assets\style.css" />
+    <Content Include="Content\assets\sweetalert.css" />
+    <Content Include="Content\assets\sweetalert.min.js" />
+    <Content Include="Content\assets\themify-icons.css" />
+    <Content Include="Content\assets\user-info.jpg" />
+    <Content Include="Content\assets\waves.js" />
+    <Content Include="Content\assets\weather-icons.min.css" />
+    <Content Include="Content\assets\webcam.js" />
+    <Content Include="Content\assets\widget-charts.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -348,6 +435,7 @@
     <Content Include="Views\Account\Help.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Shared\_MainLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -362,6 +450,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
