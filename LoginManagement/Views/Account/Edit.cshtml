@@ -28,7 +28,7 @@
 
 								<img class="img-fluid" src="@(Model.AvatarLink)" alt="">
 								<a class="light" href="@(Model.AvatarLink)"><img src="" alt=""></a>
-								<button onclick="window.location='/Account/Upload'" class="btn">Change Avatar</button>
+								<button onclick="ChangeAvatar()" class="btn">Change Avatar</button>
 							</div>
 						</div>
 					</div>
@@ -44,7 +44,7 @@
 							<div class="g_img_item">
 								<img class="img-fluid" src="~/img/avatarnull.png" alt="">
 								<a class="light" href="~/img/avatarnull.png"><img src="" alt=""></a>
-								<button onclick="window.location='/Account/Upload'" class="btn">Change Avatar</button>
+								<button onclick="ChangeAvatar()" class="btn">Change Avatar</button>
 							</div>
 						</div>
 					</div>
@@ -151,4 +151,12 @@
 		var form = $(this).parents('form');
 		form.submit();
 	});
+
+
+	function ChangeAvatar() {
+		var url = "/Account/Upload";
+		$("#changeAvatarModalBody").load(url, function () {
+			$("#changeAvatarModal").modal("show");
+		})
+	}
 </script>

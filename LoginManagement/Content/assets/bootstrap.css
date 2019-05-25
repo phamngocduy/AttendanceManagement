@@ -8175,6 +8175,11 @@ a.text-dark:focus, a.text-dark:hover {
   border: 0;
 }
 
+.hidden {
+	display: none !important;
+	visibility: hidden !important;
+}
+
 .visible {
   visibility: visible !important;
 }

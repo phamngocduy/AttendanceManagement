@@ -1,11 +1,12 @@
-﻿@Scripts.Render("~/bundles/jqueryform")
+﻿@Scripts.Render("~/bundles/modernizr")
 @Scripts.Render("~/bundles/jcrop")
-@Scripts.Render("~/bundles/avatar")
-@Styles.Render("~/Content/jcrop")
+@Scripts.Render("~/bundles/jqueryform")
+<script src="~/Scripts/site.avatar.js"></script>
 @Styles.Render("~/Content/avatar")
+@Styles.Render("~/Content/jcrop")
 
 <section id="avatar-upload-box">
-	@using (Ajax.BeginForm("_Upload", "Account",
+	@using (Ajax.BeginForm("_Upload", "Avatar",
 		new AjaxOptions() { HttpMethod = "POST" },
 		new { enctype = "multipart/form-data", id = "avatar-upload-form" }))
 	{
@@ -31,5 +32,5 @@
 	<p><button class="btn btn-default" onclick=" saveAvatar() ">Save Avatar</button></p>
 </section>
 <div id="avatar-result" class="hidden">
-    <img src="" alt="Final Image" />
+	<img src="" alt="Final Image" />
 </div>

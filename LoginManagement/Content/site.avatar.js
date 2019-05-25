@@ -41,12 +41,12 @@ function initAvatarUpload() {
 	$('#avatar-upload-form').ajaxForm({
 		beforeSend: function () {
 			updateProgress(0);
-			$('#avatar-upload-form').addClass('hidden');
 		},
 		uploadProgress: function (event, position, total, percentComplete) {
 			updateProgress(percentComplete);
 		},
 		success: function (data) {
+		
 			updateProgress(100);
 			if (data.success === false) {
 				$('#status').html(data.errorMessage);
@@ -55,11 +55,9 @@ function initAvatarUpload() {
 				var img = $('#crop-avatar-target');
 				img.attr('src', data.fileName);
 
-				if (!keepUploadBox) {
-					$('#avatar-upload-box').addClass('hidden');
-				}
 				$('#avatar-crop-box').removeClass('hidden');
-				initAvatarCrop(img);
+				initAvatarCrop(img, data.fileName);
+
 			}
 		},
 		complete: function (xhr) {
@@ -76,7 +74,8 @@ function updateProgress(percentComplete) {
 	}
 }
 
-function initAvatarCrop(img) {
+function initAvatarCrop(img, fileName) {
+
 	img.Jcrop({
 		onChange: updatePreviewPane,
 		onSelect: updatePreviewPane,
@@ -105,7 +104,9 @@ function initAvatarCrop(img) {
 		ysize = pcnt.height();
 		$('#preview-pane').appendTo(jcrop_api.ui.holder);
 		jcrop_api.focus();
-	});
+		});
+	$('.jcrop-holder img').attr('src', fileName);
+
 }
 
 function updatePreviewPane(c) {
@@ -124,8 +125,6 @@ function updatePreviewPane(c) {
 
 function saveAvatar() {
 	var img = $('#preview-pane .preview-container img');
-	$('#avatar-crop-box button').addClass('disabled');
-
 	$.ajax({
 		type: "POST",
 		url: "/Account/Save",
@@ -135,10 +134,7 @@ function saveAvatar() {
 		}
 	}).done(function (data) {
 		if (data.success === true) {
-			$('#avatar-result img').attr('src', data.avatarFileLocation);
-
-			$('#avatar-result').removeClass('hidden');
-
+			Cookies.set('just_submitted', 'true');
 			window.location.replace("https://localhost:44360/");
 
 			if (!keepCropBox) {

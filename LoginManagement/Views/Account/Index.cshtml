@@ -32,7 +32,7 @@
 
 								<img class="img-fluid" src="@(Model.AvatarLink)" alt="">
 								<a class="light" href="@(Model.AvatarLink)"><img src="" alt=""></a>
-								<button onclick="window.location='/Account/Upload'" class="btn">Change Avatar</button>
+								<button onclick="ChangeAvatar()" class="btn">Change Avatar</button>
 							</div>
 						</div>
 					</div>
@@ -48,7 +48,7 @@
 							<div class="g_img_item">
 								<img class="img-fluid" src="~/img/avatarnull.png" alt="">
 								<a class="light" href="~/img/avatarnull.png"><img src="" alt=""></a>
-								<button onclick="window.location='/Account/Upload'" class="btn">Change Avatar</button>
+								<button onclick="ChangeAvatar()" class="btn">Change Avatar</button>
 							</div>
 						</div>
 					</div>
@@ -91,11 +91,30 @@
 		</div>
 	</div>
 </div>
+
+
+<!--Change Avatar-->
+<div class="modal fade bs-example-modal-lg" id="changeAvatarModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Change Avatar</h4>
+			</div>
+			<div class="modal-body" id="changeAvatarModalBody">
+
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+
+	</div>
+</div>
 <script src="~/Content/assets/jquery.min.js"></script>
 <script src="~/Content/assets/js.cookie.js"></script>
 <script>
 	$(document).ready(function () {
-		var justSubmitted = Cookies.get('just_submitted'); 
+		var justSubmitted = Cookies.get('just_submitted');
 		if (justSubmitted) {
 			$.toast({
 				heading: 'Success',
@@ -110,4 +129,10 @@
 		}
 	});
 
+	function ChangeAvatar() {
+		var url = "/Account/Upload";
+		$("#changeAvatarModalBody").load(url, function () {
+			$("#changeAvatarModal").modal("show");
+		})
+	}
 </script>
