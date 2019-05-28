@@ -25,7 +25,17 @@ namespace WebApplication.Tests.Controllers
         [TestMethod]
         public void TestViewMyGroup()
         {
+            var context = new Mock<HttpContextBase>();
+            var fakeIdentity = new GenericIdentity("User");
+            var principal = new GenericPrincipal(fakeIdentity, null);
+
+            context.Setup(t => t.User).Returns(principal);
+            var controllerContext = new Mock<ControllerContext>();
+            controllerContext.Setup(t => t.HttpContext).Returns(context.Object);
             var controller = new GroupController();
+
+            //controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
+            controller.ControllerContext = controllerContext.Object;
             var result = controller.Index() as ViewResult;
             var db = new cap21t4Entities();
 
