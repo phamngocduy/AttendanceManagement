@@ -120,11 +120,11 @@
   <data name="Attendance" xml:space="preserve">
     <value>Điểm danh</value>
   </data>
+  <data name="CheckCode" xml:space="preserve">
+    <value>Điểm danh bằng code</value>
+  </data>
   <data name="Class" xml:space="preserve">
     <value>Quản lý lớp</value>
-  </data>
-  <data name="Creategroup" xml:space="preserve">
-    <value>Tạo nhóm mới</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>Tiếng Anh</value>

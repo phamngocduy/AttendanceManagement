@@ -329,6 +329,7 @@
     <Content Include="Content\assets\7.jpg" />
     <Content Include="Content\assets\8.jpg" />
     <Content Include="Content\assets\animate.css" />
+    <Content Include="Content\assets\app.js" />
     <Content Include="Content\assets\bootstrap-datepicker.min.css" />
     <Content Include="Content\assets\bootstrap-datepicker.min.js" />
     <Content Include="Content\assets\bootstrap-material-datetimepicker.css" />
@@ -355,9 +356,14 @@
     <Content Include="Content\assets\daterangepicker.css" />
     <Content Include="Content\assets\daterangepicker.js" />
     <Content Include="Content\assets\echarts-all.js" />
+    <Content Include="Content\assets\export.js" />
     <Content Include="Content\assets\flag-icon.min.css" />
     <Content Include="Content\assets\font-awesome.min.css" />
+    <Content Include="Content\assets\gulpfile.js" />
+    <Content Include="Content\assets\index.js" />
+    <Content Include="Content\assets\Instascan.js" />
     <Content Include="Content\assets\instascan.min.js" />
+    <Content Include="Content\assets\jquery-3.4.1.min.js" />
     <Content Include="Content\assets\jquery-clockpicker.min.css" />
     <Content Include="Content\assets\jquery-clockpicker.min.js" />
     <Content Include="Content\assets\jquery.dataTables.min.js" />
@@ -417,6 +423,10 @@
     <Content Include="Content\css\colors\red-dark.css" />
     <Content Include="Content\css\colors\red.css" />
     <Content Include="Content\css\spinners.css" />
+    <Content Include="Content\external\adapter.min.js" />
+    <Content Include="Content\external\instascan.js" />
+    <Content Include="Content\external\jquery.min.js" />
+    <Content Include="Content\external\QrCodeScanner.js" />
     <Content Include="Content\fonts\educate-icon.svg" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -762,6 +772,7 @@
     <Content Include="Content\scss\icons\simple-line-icons\fonts\Simple-Line-Icons.ttf" />
     <Content Include="Content\scss\icons\simple-line-icons\fonts\Simple-Line-Icons.woff" />
     <Content Include="Content\scss\icons\simple-line-icons\fonts\Simple-Line-Icons.woff2" />
+    <Content Include="Content\AttendanceExcelTemplate.xlsx" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -769,7 +780,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\AttendanceExcelTemplate.xlsx" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
@@ -837,6 +847,8 @@
     <Content Include="Views\Attendance\CaptureImage.cshtml" />
     <Content Include="Views\Attendance\ScanQRCode.cshtml" />
     <Content Include="Views\Attendance\QRCode.cshtml" />
+    <Content Include="Views\Attendance\Import.cshtml" />
+    <Content Include="Views\Attendance\CheckByCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

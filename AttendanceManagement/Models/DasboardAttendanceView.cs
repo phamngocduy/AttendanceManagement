@@ -14,7 +14,8 @@ namespace AttendanceManagement.Models
 		}
 		public int memberID { get; set; }
 		public string studentID { get; set; }
-		public string studentName { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
 		public int TotalPresent { get; set; }
 		public int TotalSession { get; set; }
 		public int TotalPoint { get; set; }

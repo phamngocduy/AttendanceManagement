@@ -14,7 +14,12 @@
 			<br />
 			<br />
 			<div class="row pull-left">
-				<button type="button" class="btn btn-info waves-effect waves-dark">Import Excel</button>
+				<div class="col">
+					<button type="button" class="btn waves-effect waves-light btn-block btn-success" onclick="location.href = '@Url.Action("Import", "Attendance")';">Import Excel</button>
+				</div>
+				<div class="col">
+					<button type="button" class="btn waves-effect waves-light btn-block btn-success">Export Excel</button>
+				</div>
 			</div>
 			<div class="row pull-right">
 
@@ -62,7 +67,7 @@
 						{
 							<tr>
 								<td>@item.studentID</td>
-								<td style="text-align:left">@item.studentName</td>
+								<td style="text-align:left">@item.FirstName</td>
 								<td style="width:50px">@item.TotalPresent/@item.TotalSession</td>
 								<td style="width:40px">@item.TotalPoint</td>
 								@foreach (var i in item.Attendance)

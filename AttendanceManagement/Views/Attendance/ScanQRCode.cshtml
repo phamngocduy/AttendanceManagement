@@ -1,84 +1,52 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>QR Scanner Demo</title>
-</head>
-<body>
-	<style>
-		canvas {
-			display: none;
-		}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>QR Code Scanner Example</title>
+  </head>
+  <body class="cont">
+  	<h3 class="txt-cntr mar-top-2">Simple QR Code Scanner Example</h3>
+  	<article class="pad-2">
+  		<section>
+  			<div class="frm-grp txt-cntr">
+  				<label class="disp-blck">Choose camera:</label>
+  				<select id="webcameraChanger" onchange="cameraChange($(this).val());" class="frm-ctrl mar-btm-2"></select>
+  			</div>
+  			<!-- webcamera view component -->
+  			<video id="webcameraPreview" style="width: 100%;"></video>
+  		</section>
+  	</article>
+  	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  	<script src="~/Content/external/adapter.min.js"></script>
+  	<script src="~/Content/external/instascan.js"></script>
+  	<script src="~/Content/external/QrCodeScanner.js"></script>
+  	<script type="text/javascript">
+		  //HTML video component for web camera
+		  var videoComponent = $("#webcameraPreview");
+		  //HTML select component for cameras change
+		  var webcameraChanger = $("#webcameraChanger");
+		  var options = {};
+		  //init options for scanner
+		  options = initVideoObjectOptions("webcameraPreview");
+		  var cameraId = 0;
 
-		hr {
-			margin-top: 32px;
-		}
+		  initScanner(options);
 
-		input[type="file"] {
-			display: block;
-			margin-bottom: 16px;
-		}
-	</style>
-	<h1>Scan from WebCam:</h1>
-	<div>
-		<video muted playsinline id="qr-video" ></video>
-	</div>
-	<div>
-		<select id="inversion-mode-select" style="display:none">
-			<option value="original">Scan original (dark QR code on bright background)</option>
-			<option value="invert">Scan with inverted colors (bright QR code on dark background)</option>
-			<option value="both" selected>Scan both</option>
-		</select>
-		<br>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
-			<b>Detected QR code: </b>
-			<span id="cam-qr-result">None</span>
-			<input id="qr-code" type="text" class="form-control" disabled>
-		</div>
-	</div>
-	<script type="module">
-		import QrScanner from "/Content/assets/qr-scanner.min.js";
-		QrScanner.WORKER_PATH = '/Content/assets/qr-scanner-worker.min.js';
-		const video = document.getElementById('qr-video');
-		const camQrResult = document.getElementById('cam-qr-result');
-		function setResult(label, result) {
-		label.textContent = result;
-		label.style.color = 'teal';
-		clearTimeout(label.highlightTimeout);
-		label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
-		}
-		// ####### Web Cam Scanning #######
-		const scanner = new QrScanner(video, result => setResult(camQrResult, result));
-		scanner.start();
-		document.getElementById('inversion-mode-select').addEventListener('change', event => {
-		scanner.setInversionMode(event.target.value);
-		});
-	</script>
-	<script>
-		$('#cam-qr-result').on('DOMSubtreeModified', function () {
-			alert('changed')
-			var id = document.getElementById('cam-qr-result');
-			alert(id.textContent);
-			$("#qr-code").val(id.textContent);
-			$.ajax({
-				type: "POST",
-				url: "/Attendance/CheckSessionQRCode",
-				data: "{}",
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function (data) {
-					if (data == true) {
-						alert("submit");
-					}
-					else {
-						alert("no session")
-					}
-				}
-			});
-			//document.getElementById('qrform').submit();
-		})
-	</script>
-</body>
+		  initAvaliableCameras(
+			  webcameraChanger,
+			  function () {
+				  cameraId = parseInt(getSelectedCamera(webcameraChanger));
+			  }
+		  );
+
+		  initCamera(cameraId);
+
+		  scanStart(function (data) {
+			  alert(data);
+		  });
+
+  	</script>
+  </body>
 </html>

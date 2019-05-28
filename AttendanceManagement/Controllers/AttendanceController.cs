@@ -15,6 +15,7 @@ using ZXing.QrCode;
 using System.Web.Services;
 using System.Data;
 using ClosedXML.Excel;
+using System.Globalization;
 
 namespace AttendanceManagement.Controllers
 {
@@ -22,7 +23,11 @@ namespace AttendanceManagement.Controllers
 	{
 		AttendanceEntities db = new AttendanceEntities();
 		APIController api = new APIController();
-
+		private static List<string> AttendanceList; 
+		static AttendanceController()
+		{
+			AttendanceList = new List<string>();
+		}
 		// GET: Attendance
 		public ActionResult Index()
 		{
@@ -89,7 +94,7 @@ namespace AttendanceManagement.Controllers
 			}
 			var session = db.Sessions.Where(x => x.CourseID == courseID).OrderBy(x => x.Date).ToList();
 			ViewData["session"] = session;
-			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.Name).ToList();
+			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.FirstName).ToList();
 			ViewData["students"] = student;
 			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
 			foreach (var iten in student)
@@ -97,11 +102,11 @@ namespace AttendanceManagement.Controllers
 				DasboardAttendanceView attendanceview = new DasboardAttendanceView();
 				attendanceview.memberID = iten.ID;
 				attendanceview.studentID = iten.StudentID;
-				attendanceview.studentName = iten.Name;
+				attendanceview.FirstName = iten.FirstName;
+				attendanceview.LastName = iten.LastName;
 				attendanceview.TotalSession = session.Count();
 				int TotalPresent = 0;
 				int TotalPoint = 0;
-				List<DetailAttendance> listAttendance = new List<DetailAttendance>();
 				foreach (var item in session)
 				{
 
@@ -121,11 +126,14 @@ namespace AttendanceManagement.Controllers
 						{
 							TotalPresent++;
 						}
-						TotalPoint = TotalPoint + int.Parse(attendance.Status);
+						if (attendance.Status != "")
+						{
+							TotalPoint = TotalPoint + int.Parse(attendance.Status);
+						}
+						
 						detail.Note = attendance.Note;
 					}
 					attendanceview.Attendance.Add(detail);
-					listAttendance.Add(detail);
 				}
 				attendanceview.TotalPoint = TotalPoint;
 				attendanceview.TotalPresent = TotalPresent;
@@ -187,7 +195,7 @@ namespace AttendanceManagement.Controllers
 					CourseMember newMember = new CourseMember();
 					newMember.CourseID = courseID;
 					newMember.StudentID = student.StID;
-					newMember.Name = student.FullName;
+					newMember.FirstName = student.FullName;
 					newMember.Email = student.Email;
 					newMember.DoB = student.DoB;
 					newMember.Avatar = student.Avatar;
@@ -270,37 +278,11 @@ namespace AttendanceManagement.Controllers
 		{
 			return View();
 		}
-		[HttpPost]
-		public JsonResult ClearYourSessionValue()
-		{
-			// This will leave the key in the Session cache, but clear the value
-			Session["SessionQRID"] = null;
 
-			// This will remove both the key and value from the Session cache
-			Session.Remove("SessionQRID");
-
-			return Json("revove session");
-
-		}
-
-		[HttpPost]
-		public string CheckSessionQRCode()
-		{
-			if (Session["SessionQRID"] != null)
-			{
-				return "true";
-			}
-			else
-			{
-				return "false";
-			}
-
-
-
-		}
+	
 		public ActionResult Generate(string id)
 		{
-			Session["SessionQRID"] = id;
+			AttendanceList.Add(id);
 			QRCodeModel qrcode = new QRCodeModel();
 			qrcode.QRCodeText = id;
 			try
@@ -401,14 +383,17 @@ namespace AttendanceManagement.Controllers
 
 				}
 				int i = 5;
+				int iIndexSession = 1;
 				foreach (var item in list)
 				{
-
+					ws.Column(i).Width = 5;
 					ws.Cell(7, i).Style.Font.Bold = true;
 					ws.Cell(7, i).Style.Font.FontSize = 12;
 					ws.Cell(7, i).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
-					ws.Cell(7, i).Value = "'" + item.Date.Value.ToShortDateString();
+					ws.Cell(7, i).Value = "B" + iIndexSession;
+					ws.Cell(7, i).Comment.Style.Alignment.SetAutomaticSize();
+					ws.Cell(7, i).Comment.AddText(item.Date.Value.ToShortDateString());
 					ws.Cell(7, i).Style.Border.BottomBorder = XLBorderStyleValues.Medium;
 					ws.Cell(7, i).Style.Border.BottomBorderColor = XLColor.Black;
 
@@ -418,11 +403,13 @@ namespace AttendanceManagement.Controllers
 					ws.Cell(7, i).Style.Border.RightBorder = XLBorderStyleValues.Medium;
 					ws.Cell(7, i).Style.Border.RightBorderColor = XLColor.Black;
 					i++;
+					iIndexSession++;
 				}
+
 				int iIndex = 1;
 				int iCol = 1;
 				int iRow = 8;
-				var listStudent = db.CourseMembers.Where(x => x.CourseID == id).OrderBy(x => x.Name);
+				var listStudent = db.CourseMembers.Where(x => x.CourseID == id).OrderBy(x => x.FirstName);
 				foreach (var item in listStudent)
 				{
 					ws.Cell(iRow, iCol).Value = iIndex;
@@ -452,7 +439,7 @@ namespace AttendanceManagement.Controllers
 					ws.Cell(iRow, iCol + 1).Style.Border.RightBorderColor = XLColor.Black;
 
 
-					ws.Cell(iRow, iCol + 2).Value = item.Name;
+					ws.Cell(iRow, iCol + 2).Value = item.LastName;
 					ws.Cell(iRow, iCol + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
 					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
 					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorderColor = XLColor.Black;
@@ -462,6 +449,27 @@ namespace AttendanceManagement.Controllers
 
 					ws.Cell(iRow, iCol + 2).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
 					ws.Cell(iRow, iCol + 2).Style.Border.RightBorderColor = XLColor.Black;
+					ws.Cell(iRow, iCol + 2).Value = item.LastName;
+					ws.Cell(iRow, iCol + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 2).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 2).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.RightBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 3).Value = item.FirstName;
+					ws.Cell(iRow, iCol + 3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+					ws.Cell(iRow, iCol + 3).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 3).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 3).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 3).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 3).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 3).Style.Border.RightBorderColor = XLColor.Black;
 					for (int k = iCol; k < i; k++)
 					{
 						ws.Cell(iRow, k).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
@@ -498,11 +506,171 @@ namespace AttendanceManagement.Controllers
 			fs.Position = 0;
 			return fs;
 		}
-		//public ActionResult CheckAttendanceByCode()
-		//{
+		public ActionResult Import(string id)
+		{
+			TempData.Keep();
+			return View();
+		}
 
-		//}
+		[HttpPost]
+		public ActionResult ReadExcel()
+		{
+			List<DasboardAttendanceView> listAttendance = new List<DasboardAttendanceView>();
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					string filePath = string.Empty;
+					if (Request != null)
+					{
+						HttpPostedFileBase file = Request.Files["fileupload"];
+						if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+						{
+							string fileName = file.FileName;
+							string path = Server.MapPath("~/Uploads/");
+							if (!Directory.Exists(path))
+							{
+								Directory.CreateDirectory(path);
+							}
+							filePath = path + Path.GetFileName(fileName);
+							file.SaveAs(filePath);
+
+							using (XLWorkbook wb = new XLWorkbook(filePath))
+							{
+								var ws = wb.Worksheet(1);
+								int iMaxCol = 1;
+
+								for (int i = 1; i < int.MaxValue; i++)
+								{
+									if (ws.Cell(7, i).IsEmpty())
+									{
+										iMaxCol = i - 1;
+										break;
+									}
+								}
+								for (int i = 8; i < int.MaxValue; i++)
+								{
+									if (ws.Cell(i, 1).IsEmpty())
+									{
+										break;
+									}
+									DasboardAttendanceView attendanceview = new DasboardAttendanceView();
+									attendanceview.studentID = ws.Cell(i, 2).GetValue<string>();
+									attendanceview.LastName = ws.Cell(i, 3).GetValue<string>();
+									attendanceview.FirstName = ws.Cell(i, 4).GetValue<string>();
+									for (int j = 5; j <= iMaxCol; j++)
+									{
+										DetailAttendance detail = new DetailAttendance();
+										detail.Date = DateTime.Parse(ws.Cell(7, j).Comment.Text);
+										detail.Note = ws.Cell(i, j).Comment.Text;
+										detail.Status = ws.Cell(i, j).GetValue<string>();
+										attendanceview.Attendance.Add(detail);
+									}
+									listAttendance.Add(attendanceview);
+								}
+							}
+							//delete the file from physical path after reading 
+							string filedetails = path + fileName;
+							FileInfo fileinfo = new FileInfo(filedetails);
+							if (fileinfo.Exists)
+							{
+								fileinfo.Delete();
+							}
+							TempData["AttendanceExcel"] = listAttendance.OrderBy(x => x.FirstName).ToList();
+
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+				}
+
+			}
+			return RedirectToAction("Import");
+		}
+		public ActionResult InsertExcelData()
+		{
+			int CourseID = int.Parse(Session["CourseID"].ToString());
+			try
+			{
+				if (TempData["AttendanceExcel"] != null)
+				{
+					List<DasboardAttendanceView> listAttendance = (List<DasboardAttendanceView>)TempData["AttendanceExcel"];
+					using (var scope = new TransactionScope())
+					{
+						var listSession = db.Sessions.Where(x => x.CourseID == CourseID);
+						foreach(var item in listSession)
+						{
+							db.Attendances.RemoveRange(db.Attendances.Where(x => x.SessionID == item.ID));
+						}
+						db.SaveChanges();
+
+						db.Sessions.RemoveRange(listSession);
+						db.SaveChanges();
+
+						foreach (var item in listAttendance[1].Attendance)
+						{
+							Session nSession = new Session();
+							nSession.Date = item.Date;
+							nSession.CourseID = CourseID;
+							db.Sessions.Add(nSession);
+						}
+						db.SaveChanges();
+						foreach (var item in listAttendance)
+						{
+							var MemberID = db.CourseMembers.FirstOrDefault(x => x.StudentID == item.studentID && x.CourseID == CourseID).ID;
+
+							foreach (var aItem in item.Attendance)
+							{
+								var SessionID = db.Sessions.FirstOrDefault(x => x.Date == aItem.Date).ID;
+								Attendance nAttendance = new Attendance();
+								nAttendance.MemberID = MemberID;
+								nAttendance.SessionID = SessionID;
+								nAttendance.Status = aItem.Status;
+								nAttendance.Note = aItem.Note;
+								db.Attendances.Add(nAttendance);
+							}
+						}
+						db.SaveChanges();
+						scope.Complete();
+					}
 
 
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ToString();
+			}
+			TempData.Remove("AttendanceExcel");
+			Session["tabactive"] = "tab1";
+
+			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
+		}
+
+		public ActionResult CheckByCode()
+		{
+			return View();
+		}
+		[HttpPost]
+		public string CheckByCode(string id)
+		{
+			if (AttendanceList.Contains(id))
+			{
+				return "true";
+			}
+			else
+			{
+				return "false";
+			}
+		}
+	
+		public ActionResult CloseAttendance(string id)
+		{
+			AttendanceList.Remove(id);
+
+			return View();
+		}
 	}
 }

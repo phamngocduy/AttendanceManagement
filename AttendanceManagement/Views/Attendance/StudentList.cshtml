@@ -45,7 +45,7 @@
 								<img src="data:image/png;base64,@item.Avatar" alt="Avatar" class="avatar" width="10%">
 							</td>
 							<td>@item.StudentID</td>
-							<td>@item.Name</td>
+							<td>@item.FirstName @item.LastName</td>
 							<td>@(item.DoB.HasValue ? item.DoB.Value.ToShortDateString() : string.Empty)</td>
 							<td>@item.Email</td>
 						</tr>

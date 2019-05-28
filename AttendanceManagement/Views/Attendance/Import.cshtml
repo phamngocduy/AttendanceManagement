@@ -1,0 +1,183 @@
+﻿
+@{
+	ViewBag.Title = "Import";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+	var ListStudent = TempData["AttendanceExcel"] as List<AttendanceManagement.Models.DasboardAttendanceView>;
+	int iSession = 1;
+}
+
+
+
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">@AttendanceManagement.Resources.Resource.Group</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">@AttendanceManagement.Resources.Resource.Group</a></li>
+			<li class="breadcrumb-item active">@AttendanceManagement.Resources.Resource.Group</li>
+		</ol>
+	</div>
+	<div class="col-md-7 col-4 align-self-center">
+		<div class="d-flex m-t-10 justify-content-end">
+			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
+				<div class="chart-text m-r-10">
+					<h6 class="m-b-0"><small>THIS MONTH</small></h6>
+					<h4 class="m-t-0 text-info">$58,356</h4>
+				</div>
+				<div class="spark-chart">
+					<div id="monthchart"></div>
+				</div>
+			</div>
+			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
+				<div class="chart-text m-r-10">
+					<h6 class="m-b-0"><small>LAST MONTH</small></h6>
+					<h4 class="m-t-0 text-primary">$48,356</h4>
+				</div>
+				<div class="spark-chart">
+					<div id="lastmonthchart"></div>
+				</div>
+			</div>
+			<div class="">
+				<button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="card card-outline-danger">
+	<div class="card-header" style="color:black">Import Student</div>
+	<div class="card-body">
+		<form action="/Attendance/ReadExcel" method="post" class="form-inline" enctype="multipart/form-data">
+			<div class="col-md-5">
+				<div class="form-control">
+					<input type="file" id="fileupload" name="fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="upload()" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-3">
+						<input type="submit" value="Preview" id="PreviewDiv" class="btn btn-default btn-block" disabled />
+					</div>
+					<div class="col-md-3">
+						@if (ListStudent != null)
+						{
+							<input type="button" value="Import" id="ImportDiv" class="btn btn-default btn-block" onclick="window.location ='/Attendance/InsertExcelData';" />
+						}
+						else
+						{
+							<input type="button" value="Import" id="ImportDiv" class="btn btn-default btn-block" disabled />
+						}
+					</div>
+					<div class="col-md-3">
+
+						<a onclick="location.href = '@Url.Action("ExportExcel", "Attendance")';"class="btn btn-warning" >Template</a>
+					</div>
+					<div class="col-md-3">
+						<input type="button" value="Back" class="btn btn-default btn-block" onclick="window.location='/Attendance/Detailclass/@Session["CourseID"]';" />
+					</div>
+
+				</div>
+			</div>
+		</form>
+	</div>
+	<br />
+	@if (ListStudent != null)
+	{
+		<div class="table-responsive m-t-40">
+			<table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
+				<thead>
+					<tr>
+						<th>MSSV</th>
+						<th>Full Name</th>
+						@{
+							var model = ListStudent[1];
+							foreach (var item in model.Attendance)
+							{
+								<th data-toggle="tooltip" data-placement="top" title="@item.Date.ToShortDateString()">Sesion @(iSession++)</th>
+							}
+						}
+					</tr>
+
+				</thead>
+				<tfoot>
+					<tr>
+						<th>MSSV</th>
+						<th>Full Name</th>
+						@{
+							foreach (var item in model.Attendance)
+							{
+								<th data-toggle="tooltip" data-placement="top" title="@item.Date.ToShortDateString()">Sesion @(iSession++)</th>
+							}
+						}
+					</tr>
+
+				</tfoot>
+				<tbody>
+					@foreach (var item in ListStudent)
+					{
+						<tr>
+							<td>@item.studentID</td>
+							<td style="text-align:left">@item.LastName</td>
+							@foreach (var i in item.Attendance)
+							{
+								<td>
+
+									<div class="Spoint" style="display:none">
+										@i.Status
+									</div>
+									<div class="status">
+										@if (i.Status == "x")
+										{
+											<img src="/Content/image/uncheck.png" style="width:20px;height:20px" />
+										}
+										else if (i.Status == "")
+										{
+										}
+										else
+										{
+											<img src="/Content/image/check.png" style="width:20px;height:20px" />
+										}
+									</div>
+								</td>
+							}
+						</tr>
+					}
+
+				</tbody>
+
+			</table>
+		</div>
+	}
+
+</div>
+
+
+<script src="~/Content/assets/jquery.min.js"></script>
+<script type="text/javascript">
+	function upload() {
+		if (document.getElementById("fileupload").files.length > 0) {
+			document.getElementById("PreviewDiv").disabled = false;
+		}
+		else {
+			document.getElementById("PreviewDiv").disabled = true;
+		}
+	}
+
+	$(document).ready(function () {
+		$('#example23').DataTable({
+			ordering: false,
+			paging: false,
+			dom: 'Bfrtip',
+			autoWidth: true,
+			buttons: [
+				'copy', 'excel', 'pdf', 'print'
+			],
+			columnDefs: [
+				{ "width": "20%", "targets": 0 }
+			],
+		});
+	})
+</script>
+
+

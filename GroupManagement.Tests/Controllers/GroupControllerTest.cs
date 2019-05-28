@@ -47,22 +47,26 @@ namespace WebApplication.Tests.Controllers
         [TestMethod]
         public void TestEditGroupSuccessfully()
         {
-
             //Arange
             var controller = new GroupController();
-            var user = new Group();
             var db = new cap21t4Entities();
-            Group edit = db.Groups.First();
+			//mock .Identity.Name
+			var mock = new Mock<ControllerContext>();
+			mock.SetupGet(p => p.HttpContext.User.Identity.Name).Returns("duykhau1@gmail.com");
+			controller.ControllerContext = mock.Object;
+			//new group
+			Group edit = db.Groups.First();
             edit.GroupName = "Nhóm 1.5";
             edit.GroupDescription = "Mobile App";
-
-            using (var scope = new TransactionScope())
+			
+			using (var scope = new TransactionScope())
             {
-                Assert.IsTrue(edit.GroupName.ToString().Equals("Nhóm 1.5"));
-                Assert.IsTrue(edit.GroupDescription.ToString().Equals("Mobile App"));
-                var result1 = controller.Edit(db.Groups.First().ID.ToString()) as ViewResult;
-                Assert.IsNotNull(result1);
+				var result = controller.Edit(edit) as RedirectToRouteResult;
+				Assert.AreEqual(result.RouteValues["action"], "Index");
 
+				var newGroup = db.Groups.FirstOrDefault(x => x.ID == edit.ID);
+				Assert.IsTrue(newGroup.GroupName.ToString().Equals("Nhóm 1.5"));
+                Assert.IsTrue(newGroup.GroupDescription.ToString().Equals("Mobile App"));
             }
 
         }

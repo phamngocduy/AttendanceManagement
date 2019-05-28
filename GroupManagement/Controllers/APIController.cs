@@ -67,7 +67,8 @@ namespace WebApplication.Controllers
 					UserProfile us = new UserProfile
 					{
 						StID = item.StID,
-						FullName = item.FirstName,
+						FirstName = item.FirstName,
+						LastName = item.LastName,
 						PhoneNumber = item.PhoneNumber,
 						Email = item.Email,
 						DoB = item.DoB,
@@ -96,8 +97,8 @@ namespace WebApplication.Controllers
 				UserProfile us = new UserProfile
 				{
 					StID = user.StID,
-					FullName = user.FirstName,
-					PhoneNumber = user.PhoneNumber,
+					FirstName = user.FirstName,
+					LastName = user.LastName,
 					Email = user.Email,
 					DoB = user.DoB,
 					Avatar = user.AvatarBase64,

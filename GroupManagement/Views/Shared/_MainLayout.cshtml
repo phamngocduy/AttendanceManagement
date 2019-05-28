@@ -20,6 +20,7 @@
 	<title>Student information management system - Văn Lang University </title>
 	<!-- Bootstrap Core CSS -->
 	<link href="~/Content/assets/bootstrap.css" rel="stylesheet" />
+	<link href="~/Content/assets/sweetalert.css" rel="stylesheet" type="text/css">
 	<!--This page css - Morris CSS -->
 	<link href="~/Content/assets/c3.min.css" rel="stylesheet">
 	<!-- Custom CSS -->
@@ -204,19 +205,19 @@
 								<li>@Html.ActionLink(WebApplication.Resources.Resource.Mygroup, "Index", "Group")</li>
 							</ul>
 						</li>
-						@if (User.IsInRole("Admin"))
-						{
-							<li>
-								<a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu"> System Management</span></a>
-								<ul aria-expanded="false" class="collapse">
-									<li>@Html.ActionLink("Majors List", "MajorList", "Attendance")</li>
-									<li>@Html.ActionLink("Facultys List", "FacultyIndex", "Attendance")</li>
-									<li>@Html.ActionLink("Courses List", "CourseList", "Attendance")</li>
-									<li>@Html.ActionLink("All users", "Index", "Users")</li>
-									<li>@Html.ActionLink("Role Management", "UserRole", "Users")</li>
-								</ul>
-							</li>
-						}
+						@*@if (User.IsInRole("Admin"))
+							{
+								<li>
+									<a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu"> System Management</span></a>
+									<ul aria-expanded="false" class="collapse">
+										<li>@Html.ActionLink("Majors List", "MajorList", "Attendance")</li>
+										<li>@Html.ActionLink("Facultys List", "FacultyIndex", "Attendance")</li>
+										<li>@Html.ActionLink("Courses List", "CourseList", "Attendance")</li>
+										<li>@Html.ActionLink("All users", "Index", "Users")</li>
+										<li>@Html.ActionLink("Role Management", "UserRole", "Users")</li>
+									</ul>
+								</li>
+							}*@
 
 					</ul>
 				</nav>
@@ -357,7 +358,8 @@
 
 	<!--Custom JavaScript -->
 	<script src="~/Content/assets/custom.min.js"></script>
-
+	<script src="~/Content/assets/sweetalert.min.js"></script>
+	<script src="~/Content/assets/js.cookie.js"></script>
 	<!-- ============================================================== -->
 	<!-- This page plugins -->
 	<!-- ============================================================== -->

@@ -120,11 +120,11 @@
   <data name="Attendance" xml:space="preserve">
     <value>Attendance</value>
   </data>
+  <data name="CheckCode" xml:space="preserve">
+    <value>Check Attendance by Code</value>
+  </data>
   <data name="Class" xml:space="preserve">
     <value>Class Management</value>
-  </data>
-  <data name="Creategroup" xml:space="preserve">
-    <value>Create new group</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>English</value>

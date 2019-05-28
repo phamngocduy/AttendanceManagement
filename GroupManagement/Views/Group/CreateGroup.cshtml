@@ -2,13 +2,24 @@
 @model WebApplication.Models.Group
 
 @{
-	ViewBag.Title = "Create Group";
-	Layout = "~/Views/Shared/_MainLayout.cshtml";
+				/**/
 
-	var parentID = (int)ViewBag.ParentID;
-	var parentName = (string)ViewBag.ParentName;
-	var grouptype = (bool)ViewBag.GroupType;
+				ViewBag.Title = "Create Group";
+				Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+				var parentID = (int)ViewBag.ParentID;
+				var parentName = (string)ViewBag.ParentName;
+				var grouptype = (bool)ViewBag.GroupType;
 }
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">@WebApplication.Resources.Resource.Mygroup</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">@WebApplication.Resources.Resource.Group</a></li>
+			<li class="breadcrumb-item active">@WebApplication.Resources.Resource.Mygroup</li>
+		</ol>
+	</div>
+</div>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -17,7 +28,7 @@
 				<h4 class="m-b-0 text-white">@WebApplication.Resources.Resource.Group</h4>
 			</div>
 			<div class="card-body">
-				<form action="~/Group/CreateGroup" method="post">
+				<form action="~/Group/CreateGroup" method="post" onsubmit="CreateSucess()">
 					<div class="form-body">
 						<h3 class="card-title">Create new group</h3>
 						<hr>
@@ -39,11 +50,11 @@
 								<select class="form-control" name="GroupType" disabled>
 									@if (grouptype == true)
 									{
-										<option  value="@grouptype">Public Group</option>
+										<option value="@grouptype">Public Group</option>
 									}
 									else
 									{
-										<option  value="@grouptype">Private Group</option>
+										<option value="@grouptype">Private Group</option>
 									}
 								</select>
 							</div>
@@ -52,7 +63,7 @@
 							<div class="form-group">
 								<label>Group parent</label>
 								<select class="form-control" name="GroupParent" disabled>
-									<option  value="@parentID">@parentName</option>
+									<option value="@parentID">@parentName</option>
 								</select>
 							</div>
 						</div>
@@ -68,3 +79,9 @@
 		</div>
 	</div>
 </div>
+<script>
+	function CreateSucess() {
+		Cookies.set('just_create', 'true');
+		alert("cokie")
+	}
+</script>

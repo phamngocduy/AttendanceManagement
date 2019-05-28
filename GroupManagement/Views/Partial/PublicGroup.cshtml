@@ -2,8 +2,11 @@
 @using WebApplication.Models
 
 @{
-	ViewBag.Title = "Index";
-	Layout = null;
+				/**/
+
+				ViewBag.Title = "Index";
+				Layout = null;
+				var user = ViewBag.User as WebApplication.Models.User;
 }
 @section head{
 	@Styles.Render("~/Content/Tree.css")
@@ -24,9 +27,11 @@
 				<li>
 					<div class="parent">
 						<div class="pull-right child">
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
-							@*@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
-								@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })*@
+							@if (User.IsInRole("Admin"))
+							{
+								@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
+							}
+
 						</div>
 						<a class="a-with-children" href="#@ahref" data-toggle="collapse" aria-expanded="false">
 							@Html.CheckBox(@Model[i].GroupName, false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
@@ -49,9 +54,11 @@
 				<li>
 					<div class="parent">
 						<div class="pull-right child">
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
-							@*@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet'></span>", "Sort ascending", "Sort", "Activities", new { id = Model[i].ID, sort = "asc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })
-								@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-sort-by-alphabet-alt'></span>", "Sort descending", "Sort", "Activities", new { id = Model[i].ID, sort = "desc" }, new { data_modal = "", @class = "btn btn-danger btn-lg" })*@
+							@if (User.IsInRole("Admin"))
+							{
+								@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
+							}
+
 						</div>
 						<a>
 							@Html.CheckBox(@Model[i].GroupName ?? "1", false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
@@ -71,13 +78,41 @@
 				<li>
 					<div class="parent">
 						<div class="pull-right child">
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil '></span>", "Edit", "Edit", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-success btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
-							<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
-								<span class='glyphicon glyphicon-trash'></span>
-							</a>
-							</div>
+							@if (Model[i].Users1.Count > 0 || Model[i].Group11.Count > 0)
+							{
+								if (Model[i].Users1.Contains(user))
+								{
+									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
+									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
+									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil '></span>", "Edit", "Edit", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-success btn-lg" })
+									<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
+										<span class='glyphicon glyphicon-trash'></span>
+									</a>
+								}
+								else
+								{
+									foreach (var item in Model[i].Group11)
+									{
+										if (item.Users.Contains(user))
+										{
+											@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
+											@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
+											@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil '></span>", "Edit", "Edit", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-success btn-lg" })
+											<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
+												<span class='glyphicon glyphicon-trash'></span>
+											</a>
+											break;
+										}
+									}
+								}
+							}
+							else
+							{
+								@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
+
+							}
+
+						</div>
 						<a class="a-with-children" href="#@ahref" data-toggle="collapse" aria-expanded="false">
 							@Html.CheckBox(@Model[i].GroupName, false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
 							<label for=@Model[i].ID>
@@ -99,13 +134,40 @@
 				<li>
 					<div class="parent">
 						<div class="pull-right child">
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil '></span>", "Edit", "Edit", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-success btn-lg" })
-							@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
-							<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
-								<span class='glyphicon glyphicon-trash'></span>
-							</a>
-							</div>
+							@if (Model[i].Users1.Count > 0 || Model[i].Group11.Count > 0)
+							{
+								if (Model[i].Users1.Contains(user))
+								{
+									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
+									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
+									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil '></span>", "Edit", "Edit", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-success btn-lg" })
+									<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
+										<span class='glyphicon glyphicon-trash'></span>
+									</a>
+								}
+								else
+								{
+									foreach (var item in Model[i].Group11)
+									{
+										if (item.Users.Contains(user))
+										{
+											@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
+											@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
+											@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil '></span>", "Edit", "Edit", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-success btn-lg" })
+											<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
+												<span class='glyphicon glyphicon-trash'></span>
+											</a>
+											break;
+										}
+									}
+								}
+							}
+							else
+							{
+								@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
+
+							}
+						</div>
 						<a>
 							@Html.CheckBox(@Model[i].GroupName ?? "1", false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
 							<label for=@Model[i].ID>

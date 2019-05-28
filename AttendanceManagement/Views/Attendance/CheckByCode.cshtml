@@ -1,0 +1,221 @@
+﻿
+@{ /**/
+				/**/
+				/**/
+				/**/
+
+				ViewBag.Title = "CheckByCode";
+				Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">Attendance</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">Attendance</a></li>
+			<li class="breadcrumb-item active">@ViewBag.Course</li>
+		</ol>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body wizard-content">
+				<h4 class="card-title">Check Attendance By Code</h4>
+				<form id="qrform" action="/Attendance/CheckTest" method="post" class="tab-wizard wizard-circle">
+					<!-- Step 1 -->
+					<h3>Step 1: Check Personal Info</h3>
+					<section>
+						<div class="row justify-content-center">
+							<img src="~/Content/image/user.png" />
+						</div>
+						<br />
+
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="firstName1">Student ID :</label>
+									<input type="text" class="form-control" disabled>
+								</div>
+							</div>
+						</div>
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="firstName1">Full Name :</label>
+									<input type="text" class="form-control" disabled>
+								</div>
+							</div>
+						</div>
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="firstName1">DoB :</label>
+									<input type="text" class="form-control" disabled>
+								</div>
+							</div>
+						</div>
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="firstName1">Email :</label>
+									<input type="text" class="form-control" disabled>
+								</div>
+							</div>
+						</div>
+						<div class="row justify-content-center">
+							<input type="button" class="btn btn-success" value="OK" id="ok" onClick="Ok()">
+						</div>
+					</section>
+					<!-- Step 2 -->
+					<h3 id="Step2" style="display:none">Step 2: Capture Picture to show you in class</h3>
+					<div class="row justify-content-center">
+						<div class="row justify-content-center" id="results" style="width: 70%;display:none">Your captured Picture will appear here...</div>
+					</div>
+
+					<h3 id="Step3" style="display:none">Step 3: Change rear camera and Scan QR code to check attendance</h3>
+					<section id="setion2" style="display:none">
+						<div class="row justify-content-center ">
+							<div class="col">
+								<div class="row justify-content-center">
+									<div class="form-group">
+										<label class="control-label">Choose camera:</label>
+										<select class="form-control" id="webcameraChanger" onchange="cameraChange($(this).val());"></select>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<video id="webcameraPreview" style="width: 100%;"></video>
+								</div>
+								<div class="row justify-content-center">
+									<input type="button" class="btn btn-success" value="Take Picture" id="take" onClick="take_snapshot()">
+									<input type="button" class="btn btn-success" value="Take Again" id="again" onClick="takeagain()" style="display:none">
+								</div>
+								<br />
+							</div>
+						</div>
+
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="firstName1">Code:</label>
+									<input type="text" class="form-control" id="qrcode"  onchange="change()">
+								</div>
+							</div>
+						</div>
+
+
+					</section>
+					<!-- Step 4 -->
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- First, include the Webcam.js JavaScript Library -->
+<script src="~/Content/assets/webcam.js"></script>
+<!-- Configure a few settings and attach camera -->
+<script>
+	Webcam.set({
+		width: 320,
+		height: 240,
+		image_format: 'jpeg',
+		jpeg_quality: 90
+	});
+	Webcam.attach('#webcameraPreview');
+	
+</script>
+<!-- Code to handle taking the snapshot and displaying it locally -->
+<script>
+	function take_snapshot() {
+		// take snapshot and get image data
+		Webcam.snap(function (data_uri) {
+			// display results in page
+			document.getElementById('results').innerHTML =
+				'<img src="' +
+				data_uri +
+				'"/>';
+			Webcam.upload(data_uri,
+				'/Camera/Capture',
+				function (code, text) {
+					alert('Photo Captured');
+				});
+			Webcam.reset();
+			$('#results').show();
+			$('#Step3').show();
+			$('#again').show();
+			$('#take').hide();
+		});
+	}
+	function takeagain() {
+		Webcam.attach('#webcameraPreview');
+		$('#again').hide();
+		$('#take').show();
+		$('#results').hide();
+		$('#Step3').hide();
+	}
+
+	function Ok() {
+		$('#Step2').show();
+		$('#setion2').show();
+		$('#ok').hide();
+		
+	}
+
+	
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="~/Content/external/adapter.min.js"></script>
+<script src="~/Content/external/instascan.js"></script>
+<script src="~/Content/external/QrCodeScanner.js"></script>
+<script type="text/javascript">
+	//HTML video component for web camera
+	var videoComponent = $("#webcameraPreview");
+	//HTML select component for cameras change
+	var webcameraChanger = $("#webcameraChanger");
+	var options = {};
+	//init options for scanner
+	options = initVideoObjectOptions("webcameraPreview");
+	var cameraId = 0;
+
+	initScanner(options);
+
+	initAvaliableCameras(
+		webcameraChanger,
+		function () {
+			cameraId = parseInt(getSelectedCamera(webcameraChanger));
+		}
+	);
+	initCamera(cameraId);
+	scanStart(function (data) {
+		$('#qrcode').val(data);
+		alert(data);
+	});
+
+	function change() {
+		var id = $('#qrcode').val()
+		var idData = '{ id:' + id + '}';
+		var form = $('#qrform');
+		
+		$.ajax({
+			type: "POST",
+			url: "/Attendance/CheckByCode",
+			contentType: "application/json; charset=utf-8",
+			data: idData,
+			dataType: "json",
+			success: function (data) {
+				if (data == true) {
+					alert("submit");
+					form.submit();
+				}
+				else {
+					alert("no session")
+				}
+			}
+		});
+
+	}
+</script>

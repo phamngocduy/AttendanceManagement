@@ -70,20 +70,20 @@ namespace AttendanceManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Điểm danh bằng code.
+        /// </summary>
+        public static string CheckCode {
+            get {
+                return ResourceManager.GetString("CheckCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quản lý lớp.
         /// </summary>
         public static string Class {
             get {
                 return ResourceManager.GetString("Class", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tạo nhóm mới.
-        /// </summary>
-        public static string Creategroup {
-            get {
-                return ResourceManager.GetString("Creategroup", resourceCulture);
             }
         }
         
