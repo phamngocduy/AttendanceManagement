@@ -77,5 +77,7 @@ namespace AttendanceManagement.Controllers
 			db.SaveChanges();
 			return RedirectToAction("Index");
 		}
+
+
 	}
 }

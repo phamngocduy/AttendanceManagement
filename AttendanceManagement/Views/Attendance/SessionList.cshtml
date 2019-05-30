@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AttendanceManagement.Models.Session>
+﻿@model List<AttendanceManagement.Models.Session>
 @{
 	int i = 1;
 }
@@ -17,66 +17,82 @@
 <div class="card">
 	<div class="card-body bg-success">
 		<h4 class="text-white card-title">Session Management</h4>
-
 	</div>
-	<div class="card-body">
-		<div class="message-box contact-box">
-			<h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-info waves-effect waves-dark" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button></h2>
-			<div class="message-widget contact-widget">
-				<div class="card-body collapse show">
-					<div class="row pull-right">
-						
-						<button type="button" class="btn btn-info waves-effect waves-dark" onclick="location.href = '@Url.Action("ExportExcel", "Attendance")';">Attendance Excel Template</button>
-
-					</div>
-					<div class="table-responsive">
-						<table class="table product-overview">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Date</th>
-									<th>Present</th>
-									<th>Status</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach (var item in Model)
-								{
-									<tr>
-										<td>Buổi @(i++)</td>
-										<td>
-											@item.Time
-											<br />
-											@item.Date.Value.ToShortDateString()
-										</td>
-										<td>20</td>
-										<td>
-											<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="location.href = '@Url.Action("CheckAttendance", "Attendance",new { id=item.ID })';">Check Attendance</button>
-											<button type="button" class="btn waves-effect waves-light btn-block btn-danger" onclick="GenCode(@item.ID)">QR Attendance</button>
-										</td>
-										<td>
-											<button type="button" onclick="Edit(@item.ID)">
-												<i class="ti-marker-alt"></i>
-											</button>
-											<form action="~/Session/Delete" method="post">
-												<input type="text" name="sessionID" value="@item.ID" style="display:none" />
-												<button type="submit">
-													<i class="ti-trash"></i>
-												</button>
-											</form>
-										</td>
-									</tr>
-								}
-
-
-							</tbody>
-						</table>
+	@if (Model.Count == 0)
+	{
+		<div class="card-body">
+			<div class="message-box contact-box">
+				<h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-info waves-effect waves-dark" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button></h2>
+				<div class="message-widget contact-widget">
+					<div class="card-body collapse show">
+						<div class="row" style="text-align:center">
+							<div class="col">
+								<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" >Please create session</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	}
+	else
+	{
+		<div class="card-body">
+			<div class="message-box contact-box">
+				<h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-info waves-effect waves-dark" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button></h2>
+				<div class="message-widget contact-widget">
+					<div class="card-body collapse show">
+						<div class="row pull-right">
+							<button type="button" class="btn btn-info waves-effect waves-dark" onclick="location.href = '@Url.Action("ExportExcel", "Attendance")';">Attendance Excel Template</button>
+						</div>
+						<div class="table-responsive">
+							<table class="table product-overview">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Date</th>
+										<th>Present</th>
+										<th>Status</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in Model)
+									{
+										<tr>
+											<td>Buổi @(i++)</td>
+											<td>
+												@item.Time
+												<br />
+												@item.Date.Value.ToShortDateString()
+											</td>
+											<td>20</td>
+											<td>
+												<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="checkattendance(@item.ID)">Check Attendance</button>
+												<button type="button" class="btn waves-effect waves-light btn-block btn-danger" onclick="GenCode(@item.ID)">QR Attendance</button>
+											</td>
+											<td>
+												<button type="button" onclick="Edit(@item.ID)">
+													<i class="ti-marker-alt"></i>
+												</button>
+												<form action="/AttendanceManagement/Session/Delete" method="post">
+													<input type="text" name="sessionID" value="@item.ID" style="display:none" />
+													<button type="submit">
+														<i class="ti-trash"></i>
+													</button>
+												</form>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+
 </div>
 
 <!-- .modal for add task -->
@@ -88,7 +104,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 			</div>
 			<div class="modal-body">
-				<form action="~/Session/Create" method="post">
+				<form action="/AttendanceManagement/Session/Create" method="post">
 					<label for="total-week">Total Week</label>
 					<div class="form-group">
 						<div class="form-line">
@@ -154,13 +170,13 @@
 <script src="~/Content/assets/jquery.min.js"></script>
 <script>
 	function Edit(id) {
-		var url = "/Session/Edit?id=" + id;
+		var url = "/AttendanceManagement/Session/Edit?id=" + id;
 		$("#ModalEditSession").load(url, function () {
 			$("#myEditSession").modal("show");
 		})
 	}
 	function GenCode(id) {
-		var url = "/Attendance/Generate?id=" + id;
+		var url = "/AttendanceManagement/Attendance/Generate?id=" + id;
 		$("#ModalgenerateQRcode").load(url, function () {
 			$("#generateQRcode").modal("show");
 		})
@@ -210,6 +226,27 @@
 			return false;
 		return true;
 	}
+
+	function checkattendance(id) {
+		$.ajax({
+			type: "POST",
+			url: "/AttendanceManagement/Attendance/GetDateAttendance?id=" + id,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (res) {
+				$("#sessionDate").addClass("hide");
+				$("#listAttendance").removeClass("hide");
+
+				window.onbeforeunload = function () {
+					return 'You have unsaved changes!';
+				}
+
+				$("#thDate").html(res.replace(/"/g, ''));
+				$('[href="#tab4"]').tab('show');
+				window.scrollTo(0, 0);
+			}
+		});
+	}
 </script>
 <script>
 	$('table').on('click', '[type=submit]', function (e) {
@@ -225,16 +262,8 @@
 			closeOnConfirm: false
 		}, function (isConfirm) {
 			if (isConfirm) {
-				swal({
-					title: "Deleted!",
-					text: "This session has been deleted.",
-					type: "success",
-					closeOnConfirm: false
-				}, function (isConfirm) {
-					if (isConfirm) {
-						form.submit();
-					}
-				});
+				Cookies.set('just_delete', 'true');
+				form.submit();
 			}
 		});
 	});

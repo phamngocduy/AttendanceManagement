@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AttendanceManagement.Models.CourseMember>
+﻿@model List<AttendanceManagement.Models.CourseMember>
 @{
 
 	ViewBag.Title = "ManageStudent";
@@ -8,66 +8,79 @@
 
 <div class="card card-outline-danger">
 	<div class="card-header">
-	<h3 style="color:white"><strong> STUDENTS</strong></h3></div>
+		<h3 style="color:white"><strong> STUDENTS</strong></h3>
+	</div>
 	<div class="card-body">
 		<div class="row" style="text-align:left">
 		</div>
-		<div class="table-responsive m-t-40">
-			<table id="tablestudents" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Avatar</th>
-						<th>Student ID</th>
-						<th>Full Name</th>
-						<th>DoB</th>
-						<th>Email</th>
-
-					</tr>
-				</thead>
-				<tfoot>
-					<tr>
-						<th>#</th>
-						<th>Avatar</th>
-						<th>Student ID</th>
-						<th>Full Name</th>
-						<th>DoB</th>
-						<th>Email</th>
-
-					</tr>
-				</tfoot>
-				<tbody>
-					@foreach (var item in Model)
-					{
+		@if (Model.Count == 0)
+		{
+			<div class="row" style="text-align:center">
+				<div class="col">
+					<button class="btn btn-primary" onclick="choice()">Please Add Student</button>
+				</div>
+			</div>
+		}
+		else
+		{
+			<div class="table-responsive m-t-40">
+				<table id="tablestudents" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+					<thead>
 						<tr>
-							<td>@(i++)</td>
-							<td>
-								<img src="data:image/png;base64,@item.Avatar" alt="Avatar" class="avatar" width="10%">
-							</td>
-							<td>@item.StudentID</td>
-							<td>@item.FirstName @item.LastName</td>
-							<td>@(item.DoB.HasValue ? item.DoB.Value.ToShortDateString() : string.Empty)</td>
-							<td>@item.Email</td>
+							<th>#</th>
+							<th>Avatar</th>
+							<th>Student ID</th>
+							<th>Full Name</th>
+							<th>DoB</th>
+							<th>Email</th>
+
 						</tr>
-					}
-				</tbody>
-			</table>
-		</div>
+					</thead>
+					<tfoot>
+						<tr>
+							<th>#</th>
+							<th>Avatar</th>
+							<th>Student ID</th>
+							<th>Full Name</th>
+							<th>DoB</th>
+							<th>Email</th>
+
+						</tr>
+					</tfoot>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>@(i++)</td>
+								<td>
+									<img src="data:image/png;base64,@item.Avatar" alt="Avatar" class="avatar" width="10%">
+								</td>
+								<td>@item.StudentID</td>
+								<td>@item.FirstName @item.LastName</td>
+								<td>@(item.DoB.HasValue ? item.DoB.Value.ToShortDateString() : string.Empty)</td>
+								<td>@item.Email</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		}
+
 	</div>
 </div>
 
 <!--Dialog edit class-->
-<div class="modal fade" id="myAddStudent" role="dialog">
-	<div class="modal-dialog">
+<div class="modal fade bs-example-modal-lg show" id="myAddStudent" role="dialog">
+	<div class="modal-dialog modal-lg">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">Add <strong>Student</strong></h4>
 			</div>
-			<div class="modal-body" id="ModalAddStudent" >
+			<div class="modal-body" id="ModalAddStudent">
 
-			</div >
+			</div>
 		</div>
 		<div class="modal-footer">
 		</div>
@@ -87,7 +100,7 @@
 		var table = $('#tablestudents').DataTable();
 		table.button().add(0, {
 			action: function (e, dt, button, config) {
-				var url = "/Attendance/AddStudent";
+				var url = "/AttendanceManagement/Attendance/AddStudent";
 				$("#ModalAddStudent").load(url, function () {
 					$('.modal-backdrop').remove();
 					$("#myAddStudent").modal("show");

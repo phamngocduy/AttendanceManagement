@@ -19,7 +19,7 @@
 <div class="card card-outline-danger">
 	<div class="card-header" style="color:black">My Group</div>
 	<div class="card-body">
-		<form action="~/Group/Edit" method="post">
+		<form action="~/Group/Edit" method="post" onsubmit="EditSuccess()">
 			<div class="form-body">
 				<h3 class="card-title">Edit group</h3>
 				<div class="col-md-6">
@@ -56,7 +56,7 @@
 						</select>
 					</div>
 				</div>
-
+				@Html.HiddenFor(m => m.ID, new { Value = Model.ID})
 				@Html.HiddenFor(m => m.GroupParent, new { Value = Model.Group2.ID })
 				@Html.HiddenFor(m => m.GroupType, new { Value = Model.GroupType })
 				<div class="form-actions">
@@ -67,3 +67,8 @@
 		</form>
 	</div>
 </div>
+<script>
+	function EditSuccess() {
+		Cookies.set('just_edit', 'true');
+	}
+</script>

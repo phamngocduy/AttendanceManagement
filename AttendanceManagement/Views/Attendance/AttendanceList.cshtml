@@ -1,107 +1,80 @@
 ﻿@model IEnumerable<AttendanceManagement.Models.CourseMember>
 
-@if (TempData["date"] == null)
-{ 
-	<div class="card">
-		<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
-		<div class="card-body">
-			<div class="row" style="text-align:center">
-				<div class="col">
-					<button class="btn btn-primary" onclick="choice()">Please choice session</button>
-				</div>
-			</div>
-
+<div class="card card-outline-warning">
+	<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
+	<div class="card-body">
+		<div class="row pull-left">
+			<button type="button" id="btnCheckAttendance" class="btn waves-effect waves-light btn-block btn-info">Save Change</button>
 		</div>
-	</div>
-}
-else
-{
-	<div class="card card-outline-warning">
-		<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
-		<div class="card-body">
-			<div class="row pull-left">
-				<button type="button" id="btnCheckAttendance" class="btn waves-effect waves-light btn-block btn-info">Save Change</button>
+		<div class="row pull-right">
+			<div class="bt-switch1">
+				<input type="checkbox" checked data-on-color="danger" data-off-color="success" data-on-text="Fixed" data-off-text="Flexible ">
 			</div>
-			<div class="row pull-right">
-				<div class="bt-switch1">
-					<input type="checkbox" checked data-on-color="danger" data-off-color="success" data-on-text="Fixed" data-off-text="Flexible ">
-				</div>
-			</div>
-			<div class="table-responsive m-t-40">
-				<table id="tableattendance" name="atten" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
-					<thead>
+		</div>
+		<div class="table-responsive m-t-40">
+			<table id="tableattendance" name="atten" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
+				<thead>
+					<tr>
+						<th style="display:none"></th>
+						<th style="text-align:center" id="thDate"> </th>
+						<th>Point</th>
+						<th>Name</th>
+						<th>MSSV</th>
+						<th>Birthday</th>
+						<th>Note</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
 						<tr>
-							<th style="display:none"></th>
-							<th style="text-align:center">@TempData["date"] </th>
-							<th>Point</th>
-							<th>Name</th>
-							<th>MSSV</th>
-							<th>Birthday</th>
-							<th>Note</th>
+							<td style="display:none">
+								<input type="text" value="@item.ID" name="memberID" />
+							</td>
+							<td align="center">
+								<input type="checkbox" />
+							</td>
+							<td>
+								<select class="custom-select" style="display:none" name="status">
+									<option value="-9">-9</option>
+									<option value="-8">-8</option>
+									<option value="-7">-7</option>
+									<option value="-6">-6</option>
+									<option value="-5">-5</option>
+									<option value="-4">-4</option>
+									<option value="-3">-3</option>
+									<option value="-2">-2</option>
+									<option value="-1">-1</option>
+									<option value="0" selected>0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+								</select>
+							</td>
+							<td>@item.LastName @item.FirstName</td>
+							<td>@item.StudentID</td>
+							<td>@item.DoB.Value.ToShortDateString()</td>
+							<td>
+								<div class="text" contenteditable="true">
+									<input style="display:none" value="" class="textcontent" type="text" name="note" />
+								</div>
+							</td>
+
 						</tr>
-					</thead>
-					<tbody>
-						@foreach (var item in Model)
-						{
-							<tr>
-								<td style="display:none">
-									<input type="text" value="@item.ID" name="memberID" />
-								</td>
-								<td align="center">
-									<input type="checkbox" />
-								</td>
-								<td>
-									<select class="custom-select" style="display:none" name="status">
-										<option value="-9">-9</option>
-										<option value="-8">-8</option>
-										<option value="-7">-7</option>
-										<option value="-6">-6</option>
-										<option value="-5">-5</option>
-										<option value="-4">-4</option>
-										<option value="-3">-3</option>
-										<option value="-2">-2</option>
-										<option value="-1">-1</option>
-										<option value="0" selected>0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-									</select>
-								</td>
-								<td>@item.Name</td>
-								<td>@item.StudentID</td>
-								<td>@item.DoB.Value.ToShortDateString()</td>
-								<td>
-									<div class="text" contenteditable="true">
-										<input style="display:none" value="" class="textcontent" type="text" name="note" />
-									</div>
-								</td>
-
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
-
+					}
+				</tbody>
+			</table>
 		</div>
-	</div>
-	<script>
-		window.onbeforeunload = function () {
-			return 'You have unsaved changes!';
-		}
-		window.onhashchange = function () {
-			
-			window.onbeforeunload = null;
-		}
-	</script>
 
-}
+	</div>
+</div>
 
 <script>
 	$(document).ready(function () {
@@ -165,7 +138,7 @@ else
 			localStorage.setItem(att.studentID, JSON.stringify(att))
 		});
 		$(document).on('click', "#btnCheckAttendance", function () {
-		
+
 			var attendance = new Array();
 			var table = $("#tableattendance tbody")
 			table.find('tr').each(function (i, el) {
@@ -182,12 +155,11 @@ else
 			localStorage.clear();
 			$.ajax({
 				type: "POST",
-				url: "/Attendance/CheckAttendance",
+				url: "/AttendanceManagement/Attendance/CheckAttendance",
 				data: JSON.stringify(attendance),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (response) {
-					sessionStorage.removeItem("SessionID");
 					window.onbeforeunload = null;
 					var id = @Session["CourseID"];
 					var url = '@Url.Action("Detailclass", "Attendance", new { id = "__id__" })';

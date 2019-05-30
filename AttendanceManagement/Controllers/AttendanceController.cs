@@ -23,7 +23,7 @@ namespace AttendanceManagement.Controllers
 	{
 		AttendanceEntities db = new AttendanceEntities();
 		APIController api = new APIController();
-		private static List<string> AttendanceList; 
+		private static List<string> AttendanceList;
 		static AttendanceController()
 		{
 			AttendanceList = new List<string>();
@@ -85,13 +85,7 @@ namespace AttendanceManagement.Controllers
 				Session.Remove("tabactive");
 
 			}
-			if (Session["SessionID"] != null)
-			{
-				int sessionid = int.Parse(Session["SessionID"].ToString());
-				DateTime? date = db.Sessions.FirstOrDefault(x => x.ID == sessionid).Date;
-				TempData["date"] = date.Value.ToShortDateString();
-				Session.Remove("SessionID");
-			}
+
 			var session = db.Sessions.Where(x => x.CourseID == courseID).OrderBy(x => x.Date).ToList();
 			ViewData["session"] = session;
 			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.FirstName).ToList();
@@ -130,7 +124,7 @@ namespace AttendanceManagement.Controllers
 						{
 							TotalPoint = TotalPoint + int.Parse(attendance.Status);
 						}
-						
+
 						detail.Note = attendance.Note;
 					}
 					attendanceview.Attendance.Add(detail);
@@ -143,46 +137,27 @@ namespace AttendanceManagement.Controllers
 			ViewData["attendance"] = list;
 			return View();
 		}
-		public ActionResult MajorList()
-		{
-			var major = db.Majors.ToList();
-			return View(major);
-		}
-		public void SynMajor()
-		{
-			APIController api = new APIController();
-			string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getMajors");
-			List<MajorsModel> major = JsonConvert.DeserializeObject<List<MajorsModel>>(data);
-			foreach (var item in major)
-			{
-				if (db.Majors.FirstOrDefault(x => x.Code == item.code) == null)
-				{
-					Major newMajor = new Major();
-					newMajor.Code = item.code;
-					newMajor.Name = item.name;
-					db.Majors.Add(newMajor);
-					db.SaveChanges();
-				}
-			}
-		}
+
 		public ActionResult AddStudent(string groupname)
 		{
-			string groupdata = api.ReadData("http://localhost:54325/api/getAllGroups");
+			string groupdata = api.ReadData("https://fitlogin.vanlanguni.edu.vn/GroupManagement/api/getAllGroups");
 			List<GroupModel> group = JsonConvert.DeserializeObject<List<GroupModel>>(groupdata);
 			ViewBag.Group = group;
 			if (groupname != null)
 			{
-				string userdata = api.ReadData("http://localhost:54325/api/getMember?groupname=" + groupname);
+				string userdata = api.ReadData("https://fitlogin.vanlanguni.edu.vn/GroupManagement/api/getMember?groupname=" + groupname);
 				List<UserModel> user = JsonConvert.DeserializeObject<List<UserModel>>(userdata);
 				return View(user);
 			}
-
+		
 			return View();
 
 		}
 		[HttpPost]
 		public ActionResult AddStudent(List<string> studentlist)
 		{
+			int iCountAddStudent = 0;
+			int iCountStudentInCourse = 0;
 			foreach (var item in studentlist)
 			{
 				string studentdata = api.ReadData("http://localhost:54325/api/getUserInfo?searchString=" + item);
@@ -195,59 +170,36 @@ namespace AttendanceManagement.Controllers
 					CourseMember newMember = new CourseMember();
 					newMember.CourseID = courseID;
 					newMember.StudentID = student.StID;
-					newMember.FirstName = student.FullName;
+					newMember.FirstName = student.FirstName;
+					newMember.LastName = student.LastName;
 					newMember.Email = student.Email;
 					newMember.DoB = student.DoB;
 					newMember.Avatar = student.Avatar;
 					course.CourseMembers.Add(newMember);
+					iCountAddStudent++;
 				}
+				iCountStudentInCourse++;
 			}
 			db.SaveChanges();
+
+			HttpCookie cookieCountStudentAdd = new HttpCookie("jusy_CountStudentAdd", iCountAddStudent + "");
+			HttpCookie cookieCountStudentInCourse = new HttpCookie("just_CountStudentInCourse", iCountStudentInCourse + "");
+			HttpContext.Response.Cookies.Add(cookieCountStudentAdd);
+			HttpContext.Response.Cookies.Add(cookieCountStudentInCourse);
+
 			Session["tabactive"] = "tab2";
 
 			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
 		}
 
-		public ActionResult FacultyIndex()
-		{
-			var faculty = db.Faculties.ToList();
-			List<FacultyViewModel> listfaculty = new List<FacultyViewModel>();
-			foreach (var item in faculty)
-			{
-				FacultyViewModel facultyView = new FacultyViewModel();
-				facultyView.ID = item.ID;
-				facultyView.Name = item.Name;
-				facultyView.Description = item.Description;
-				//facultyView.GroupLink = groupdb.Groups.FirstOrDefault(x => x.ID == item.GroupID).GroupName;
-				facultyView.Majors = item.Majors;
-				listfaculty.Add(facultyView);
-			}
-			return View(listfaculty);
-		}
-		[HttpGet]
-		public ActionResult CreateFaculty1()
-		{
-			//	ViewBag.GroupMap = groupdb.Groups.Where(x => x.GroupParent != null).ToList();
-			return View();
-		}
-		[HttpPost]
-		public ActionResult CreateFaculty1(Faculty faculty)
-		{
-			Faculty newfaculty = new Faculty();
-			newfaculty.Name = faculty.Name;
-			newfaculty.Description = faculty.Description;
-			newfaculty.GroupID = faculty.GroupID;
-			db.Faculties.Add(newfaculty);
-			db.SaveChanges();
-			return RedirectToAction("FacultyIndex");
-		}
-		[HttpGet]
-		public ActionResult CheckAttendance(string id)
+		public ActionResult GetDateAttendance(string id)
 		{
 			Session["SessionID"] = id;
-			Session["tabactive"] = "tab4";
+			int sessionid = int.Parse(id);
+			DateTime? date = db.Sessions.FirstOrDefault(x => x.ID == sessionid).Date;
+			string json = JsonConvert.SerializeObject(date.Value.ToShortDateString());
 
-			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
+			return Json(json, JsonRequestBehavior.DenyGet);
 		}
 
 		[HttpPost]
@@ -267,19 +219,13 @@ namespace AttendanceManagement.Controllers
 				}
 				db.SaveChanges();
 				scope.Complete();
-				TempData.Remove("date");
 				Session.Remove("SessionID");
 				Session["tabactive"] = "tab1";
 			}
 
 			return Json("true");
 		}
-		public ActionResult TestQR()
-		{
-			return View();
-		}
 
-	
 		public ActionResult Generate(string id)
 		{
 			AttendanceList.Add(id);
@@ -300,7 +246,7 @@ namespace AttendanceManagement.Controllers
 		private string GenerateQRCode(string qrcodeText)
 		{
 			string folderPath = "~/Images/";
-			string imagePath = "~/Images/QrCode.jpg";
+			string imagePath = "~/Images/QrCode" + qrcodeText + ".jpg";
 			// create new Directory if not exist
 			if (!Directory.Exists(Server.MapPath(folderPath)))
 			{
@@ -600,7 +546,7 @@ namespace AttendanceManagement.Controllers
 					using (var scope = new TransactionScope())
 					{
 						var listSession = db.Sessions.Where(x => x.CourseID == CourseID);
-						foreach(var item in listSession)
+						foreach (var item in listSession)
 						{
 							db.Attendances.RemoveRange(db.Attendances.Where(x => x.SessionID == item.ID));
 						}
@@ -665,12 +611,29 @@ namespace AttendanceManagement.Controllers
 				return "false";
 			}
 		}
-	
-		public ActionResult CloseAttendance(string id)
+
+		[HttpPost]
+		public string CloseAttendance(string id)
 		{
+			string folderPath = "~/Images/";
+			var serverPath= HttpContext.Server.MapPath(folderPath);
+			if (Directory.Exists(Path.GetDirectoryName(serverPath)) == true)
+			{
+				var fileEntries = Directory.GetFiles(serverPath);
+				if (fileEntries != null)
+				{
+					foreach (var fileEntry in fileEntries)
+					{
+						{
+							System.IO.File.Delete(fileEntry);
+						}
+					}
+				}
+			}
 			AttendanceList.Remove(id);
 
-			return View();
+			return "true";
 		}
+
 	}
 }

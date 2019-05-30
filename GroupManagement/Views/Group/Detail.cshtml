@@ -35,7 +35,7 @@
 					@foreach (var item in OwnerModel)
 					{
 						<li>
-							@item.FirstName
+							@item.LastName	@item.FirstName
 						</li>
 					}
 				</ul>
@@ -129,11 +129,20 @@
 			action: function (e, dt, button, config) {
 				window.location = '/GroupManagement/Group/Import/@Session["GroupID"]';
 			},
-			text: 'import'
+			text: 'import Student'
 		});
-
+			table.button().add(0, {
+				action: function (e, dt, button, config) {
+					var url = "/GroupManagement/Group/AddStudent";
+					$("#ModalAddStudent").load(url, function () {
+						$("#myAddStudent").modal("show");
+					})
+				},
+				text: 'Add Student'
+			});
 		}
-		 table.button().add(0, {
+		
+		table.button().add(0, {
 			action: function (e, dt, button, config) {
 				window.location = '/GroupManagement/Group';
 			},
@@ -141,6 +150,25 @@
 		});
 	})
 </script>
+
+
+<!--Add group Owner-->
+<div class="modal fade" id="myAddStudent" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Add Student</h4>
+			</div>
+			<div class="modal-body" id="ModalAddStudent">
+
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+
+	</div>
+</div>
 
 
 
@@ -190,6 +218,103 @@
 				closeOnConfirm: true
 			});
 			Cookies.remove('just_create');
+		}
+
+		var justAddStudent = Cookies.get('just_addStudent');
+		if (justAddStudent == "success") {
+			swal({
+				title: "Add!",
+				text: "Add Student Successful",
+				type: "success",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_addStudent');
+		}
+		else if (justAddStudent =="fail")
+		{
+			swal({
+				title: "Add!",
+				text: "Student is already exist",
+				type: "error",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_addStudent');
+		}
+
+		var justaddOwner = Cookies.get('just_addOwner');
+		if (justaddOwner == "success") {
+			swal({
+				title: "Add!",
+				text: "Add Group Owner Successful",
+				type: "success",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_addOwner');
+		}
+		else if (justaddOwner == "fail"){
+			swal({
+				title: "Add!",
+				text: "Owner is already exist",
+				type: "error",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_addOwner');
+		}
+
+		var justaddGroup = Cookies.get('just_addGroup');
+		if (justaddGroup == "success") {
+			swal({
+				title: "Add!",
+				text: "Add Group Manager Successful",
+				type: "success",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_addGroup');
+		}
+		else if (justaddGroup == "fail"){
+			swal({
+				title: "Add!",
+				text: "Group Manager is already exist",
+				type: "error",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_addGroup');
+		}
+
+
+		var justAddStudent = Cookies.get('jusy_Importstudent');
+		var justExitsStudent = Cookies.get('just_ExitsStudent');
+		if (justAddStudent > 0) {
+			if (justExitsStudent > 0) {
+				swal({
+					title: "Import Student!",
+					text: "Import " + justAddStudent + " student successful and " + justExitsStudent + " student is already exist",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('jusy_Importstudent');
+				Cookies.remove('just_ExitsStudent');
+			} else {
+				swal({
+					title: "Import Student!",
+					text: "Import " + justAddStudent + " student successful",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('jusy_Importstudent');
+				Cookies.remove('just_ExitsStudent');
+			}
+		} else {
+			if (justExitsStudent > 0) {
+				swal({
+					title: "Import Student!",
+					text: "All student is already exist",
+					type: "error",
+					closeOnConfirm: true
+				});
+				Cookies.remove('jusy_Importstudent');
+				Cookies.remove('just_ExitsStudent');
+			}
 		}
 	});
 </script>

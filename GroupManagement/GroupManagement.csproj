@@ -280,11 +280,14 @@
     <Content Include="Content\assets\d3.min.js" />
     <Content Include="Content\assets\flag-icon.min.css" />
     <Content Include="Content\assets\font-awesome.min.css" />
+    <Content Include="Content\assets\icheck.js" />
     <Content Include="Content\assets\jquery.dataTables.min.js" />
     <Content Include="Content\assets\jquery.min.js" />
     <Content Include="Content\assets\jquery.slimscroll.js" />
     <Content Include="Content\assets\jquery.sparkline.min.js" />
     <Content Include="Content\assets\jQuery.style.switcher.js" />
+    <Content Include="Content\assets\jquery.toast.css" />
+    <Content Include="Content\assets\jquery.toast.js" />
     <Content Include="Content\assets\js.cookie.js" />
     <Content Include="Content\assets\linea.css" />
     <Content Include="Content\assets\materialdesignicons.min.css" />
@@ -300,6 +303,7 @@
     <Content Include="Content\assets\sweetalert.min.js" />
     <Content Include="Content\assets\themify-icons.css" />
     <Content Include="Content\assets\user-info.jpg" />
+    <Content Include="Content\assets\validation.js" />
     <Content Include="Content\assets\waves.js" />
     <Content Include="Content\assets\weather-icons.min.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
@@ -822,8 +826,6 @@
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Group\AddNewStudent.cshtml" />
-    <Content Include="Views\Group\AddNewStudentAsync.cshtml" />
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\CreateGroup.cshtml" />
     <Content Include="Views\Group\Detail.cshtml" />
@@ -857,6 +859,7 @@
     <Content Include="Views\Group\Delete.cshtml" />
     <Content Include="Views\Partial\DeleteGroup.cshtml" />
     <Content Include="Views\Partial\groupLink.cshtml" />
+    <Content Include="Views\Group\AddStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,28 +4,10 @@
 
 	var groupModel = ViewBag.Group as List<AttendanceManagement.Models.GroupModel>;
 }
-<!doctype html>
-<html class="no-js" lang="en">
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Dual List | Kiaalap - Kiaalap Admin Template</title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- favicon
-		============================================ -->
-	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-	<!-- Google Fonts
-		============================================ -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
-
-
-	
 	<link href="~/Content/kiaalap/css/bootstrap-duallistbox.min.css" rel="stylesheet" />
-</head>
 
-<body>
 	<div class="all-content-wrapper">
 		<!-- dual list Start -->
 		<div class="dual-list-box-area mg-b-15">
@@ -34,9 +16,9 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="sparkline10-list">
 							<div class="sparkline10-hd">
-								<div class="row">
+								<div class="row justify-content-center">
 									<div class="main-sparkline10-hd">
-										<h1>Add Student</h1>
+										<h1>Please chose group</h1>
 									</div>
 								</div>
 								<div class="row">
@@ -46,32 +28,33 @@
 											<option value="@item.GroupName" selected>@item.GroupName</option>
 										}
 									</select>
-									<div class="row">
-
-									</div>
-
 								</div>
 							</div>
-							<div class="sparkline10-graph">
+							<div class="sparkline10-graph" id="mainBoy" style="display:none">
 								<div class="basic-login-form-ad">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<div class="dual-list-box-inner">
-												<form id="form" action="~/Attendance/AddStudent" method="post" class="wizard-big">
+												<form id="form" action="/AttendanceManagement/Attendance/AddStudent" method="post" class="wizard-big">
 													<div class="row">
 														<select class="form-control dual_select" multiple name="studentlist">
 															@if (Model != null)
 															{
 																foreach (var item in Model)
 																{
-																	<option value="@item.StID">@item.StID      @item.FullName</option>
+																	<option value="@item.StID">@item.StID      @item.FirstName @item.LastName</option>
 																}
 															}
 														</select>
 													</div>
-													<div class="row" style="text-align:center">
-														<button type="reset" class="btn btn-sm btn-primary ui-wizard-content" > Clean</button>
-														<input type="submit" class="btn btn-sm btn-primary ui-wizard-content" value="Add" />
+													<br />
+													<div class="row justify-content-center">
+															<div class="col-2">
+																<button type="button" onclick="hideModal()" class="btn waves-effect waves-light btn-block btn-info"> Close</button>
+															</div>
+															<div class="col-2">
+																<button type="submit" class="btn waves-effect waves-light btn-block btn-danger"> Add </button>
+														</div>
 													</div>
 												</form>
 											</div>
@@ -90,26 +73,24 @@
 
 	<!-- jquery
 		============================================ -->
-	
-
 	<!-- duallistbox JS
 		============================================ -->
 	<script src="~/Content/kiaalap/js/jquery.bootstrap-duallistbox.js"></script>
 	<script src="~/Content/kiaalap/js/duallistbox.active.js"></script>
 
-</body>
-
-</html>
 
 <script>
 	function Chose() {
+		
 		var groupID = $('#groupID').val();
 		var url = '@Url.Action("AddStudent", "Attendance", new { groupname = "_id" })';
 		url = url.replace("_id", encodeURIComponent(groupID));
 		$("#ModalAddStudent").load(url, function () {
-			$('.modal-backdrop').remove();
-			$("#myAddStudent").modal("show");
+			$("#mainBoy").show();
 		})
+	}
+	function hideModal() {
+		$("#myAddStudent").modal("hide");
 	}
 </script>
 

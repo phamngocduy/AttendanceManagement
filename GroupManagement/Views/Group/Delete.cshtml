@@ -48,11 +48,12 @@
 				});
 
 				$.ajax({
-					url: "/Group/Delete",
+					url: "/GroupManagement/Group/Delete",
 					type: "POST",
 					data: { ids: id },
 					traditional: true,
 					success: function () {
+						Cookies.set('just_delete', 'true');
 						window.location = "";
 					}
 				});

@@ -28,14 +28,14 @@
 				<h4 class="m-b-0 text-white">@WebApplication.Resources.Resource.Group</h4>
 			</div>
 			<div class="card-body">
-				<form action="~/Group/CreateGroup" method="post" onsubmit="CreateSucess()">
+				<form action="~/Group/CreateGroup" method="post" onsubmit="return checkGroupNameCreateGroup()">
 					<div class="form-body">
 						<h3 class="card-title">Create new group</h3>
 						<hr>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Group Name</label>
-								<input type="text" name="GroupName" class="form-control">
+								<input type="text" name="GroupName" id="GroupNameCreateGroup"  class="form-control">
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -80,8 +80,20 @@
 	</div>
 </div>
 <script>
-	function CreateSucess() {
-		Cookies.set('just_create', 'true');
-		alert("cokie")
+	function checkGroupNameCreateGroup() {
+		if ($('#GroupNameCreateGroup').val() == "") {
+			$.toast({
+				heading: 'Error',
+				text: 'Please fill group name',
+				position: 'top-right',
+				loaderBg: '#ff6849',
+				icon: 'error',
+				hideAfter: 5000,
+				stack: 6
+			});
+			return false;
+		} else {
+			Cookies.set('just_create', 'true');
+		}
 	}
 </script>

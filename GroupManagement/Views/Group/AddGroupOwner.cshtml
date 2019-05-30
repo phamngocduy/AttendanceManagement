@@ -4,18 +4,20 @@
 	Layout = null;
 }
 
-<script src="~/Content/select2/select2.min.js"></script>
-<link href="~/Content/select2/select2.min.css" rel="stylesheet" />
 <div>
-	<form id="myForm" method="post" action="~/Group/AddGroupOwner">
-
-		<div class="row">
-			<select class="js-example-basic-single" name="email">
-				@foreach (var item in Model)
-				{
-					<option value="@item.Email">@item.Email</option>
-				}
-			</select>
+	<form id="myForm" method="post" action="~/Group/AddGroupOwner" >
+		<div class="row justify-content-center">
+			<div class="col">
+				<div class="form-group">
+					<label class="control-label">Add Member</label>
+					<select class="js-example-basic-single" name="email">
+						@foreach (var item in Model)
+						{
+							<option value="@item.Email">@item.Email</option>
+						}
+					</select>
+				</div>
+			</div>
 		</div>
 		<br />
 		<div class="form-group" style="text-align:center">
@@ -30,4 +32,5 @@
 	$(document).ready(function () {
 		$(".js-example-basic-single").select2({ width: '100%' });
 	});
+
 </script>

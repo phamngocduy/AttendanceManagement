@@ -32,58 +32,61 @@ namespace WebApplication.Controllers
 		[HttpGet]
 		public ActionResult Create()
 		{
-			List<Group> ParentList = db.Groups.OrderByDescending(x => x.ID).ToList();
-			ParentList.RemoveRange(ParentList.Count - 2, 2);
-			ViewBag.Parent = ParentList;
-			return View(ViewBag.Parent);
+			var allUser = db.Users.ToList();
+			return View(allUser);
 		}
 		[HttpPost]
-		public async System.Threading.Tasks.Task<ActionResult> CreateAsync(Group group)
+		public async System.Threading.Tasks.Task<ActionResult> Create(Group group, List<int> MemberUserID)
 		{
-			if (ModelState.IsValid)
+			Group nGroup = new Group();
+			nGroup.GroupName = group.GroupName;
+			nGroup.GroupDescription = group.GroupDescription;
+			nGroup.GroupType = false;
+			nGroup.GroupParent = 1;
+			nGroup.CreatedDate = DateTime.Now.Date;
+			nGroup.CreatedBy = User.Identity.Name;
+			db.Groups.Add(nGroup);
+
+			User nUser = new User();
+			var user = db.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+			if (user == null)
 			{
-				Group nGroup = new Group();
-				nGroup.GroupName = group.GroupName;
-				nGroup.GroupDescription = group.GroupDescription;
-				nGroup.GroupType = group.GroupType;
-				nGroup.GroupParent = group.GroupParent;
-				nGroup.CreatedDate = DateTime.Now.Date;
-				nGroup.CreatedBy = User.Identity.Name;
-				db.Groups.Add(nGroup);
-
-				User nUser = new User();
-				var user = db.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
-				if (user == null)
+				var aspUser = db.AspNetUsers.FirstOrDefault(x => x.Email == User.Identity.Name);
+				if (aspUser == null)
 				{
-					var aspUser = db.AspNetUsers.FirstOrDefault(x => x.Email == User.Identity.Name);
-					if (aspUser == null)
-					{
-						var newuser = new ApplicationUser { UserName = User.Identity.Name, Email = User.Identity.Name };
-						var result = await UserManager.CreateAsync(newuser);
-						aspUser = db.AspNetUsers.FirstOrDefault(x => x.Email == User.Identity.Name);
-					}
-					nUser.UserID = aspUser.Id;
-					db.Users.Add(nUser);
-					db.SaveChanges();
+					var newuser = new ApplicationUser { UserName = User.Identity.Name, Email = User.Identity.Name };
+					var result = await UserManager.CreateAsync(newuser);
+					aspUser = db.AspNetUsers.FirstOrDefault(x => x.Email == User.Identity.Name);
 				}
-				else
-				{
-					nUser = user;
-				}
-				//add owner
-				nGroup.Users1.Add(nUser);
-				//add member
-				nGroup.Users.Add(nUser);
-
+				nUser.UserID = aspUser.Id;
+				db.Users.Add(nUser);
 				db.SaveChanges();
-				TempData["SuccessMessage"] = "Created a new group successfully!";
-				string nGroupID = db.Groups.OrderByDescending(x => x.ID).First().ID.ToString();
-				Session["GroupID"] = nGroupID;
-				return RedirectToAction("Detail", new { id = nGroupID });
 			}
-			TempData["ErrorMessage"] = "Group name cannot be empty!";
-			return RedirectToAction("Create");
+			else
+			{
+				nUser = user;
+			}
+			//add owner
+			nGroup.Users1.Add(nUser);
+			//add member
+			nGroup.Users.Add(nUser);
+			if (MemberUserID != null)
+			{
+				foreach (var item in MemberUserID)
+				{
+					var newMember = db.Users.FirstOrDefault(x => x.ID == item);
+					if (!nGroup.Users.Contains(newMember))
+					{
+						nGroup.Users.Add(newMember);
+					}
+				}
 
+			}
+
+			db.SaveChanges();
+			string nGroupID = db.Groups.OrderByDescending(x => x.ID).First().ID.ToString();
+			Session["GroupID"] = nGroupID;
+			return RedirectToAction("Detail", new { id = nGroupID });
 		}
 		[Authorize]
 		// GET: Groups/Create
@@ -121,7 +124,7 @@ namespace WebApplication.Controllers
 				nGroup.CreatedDate = DateTime.Now.Date;
 				nGroup.CreatedBy = User.Identity.Name;
 				db.Groups.Add(nGroup);
-			
+
 				User nUser = new User();
 				var user = db.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
 				if (user == null)
@@ -143,8 +146,6 @@ namespace WebApplication.Controllers
 				}
 				//add owner
 				nGroup.Users1.Add(nUser);
-				//add member
-				nGroup.Users.Add(nUser);
 
 				db.SaveChanges();
 				string nGroupID = db.Groups.OrderByDescending(x => x.ID).First().ID.ToString();
@@ -162,11 +163,13 @@ namespace WebApplication.Controllers
 			var memberlist = group.Users.ToList().OrderBy(x => x.LastName);
 			List<Group> tempList = GroupParentwithGroup(group);
 			ViewBag.GroupParent = tempList;
+			ViewBag.Owner = group.Users1.ToList();
+
 			var listOwner = group.Users1.ToList();
-			ViewBag.Owner = listOwner;
+		
 			var listGroupOwner = group.Group11.ToList();
 			ViewBag.GroupManager = listGroupOwner;
-			foreach( var item in listGroupOwner)
+			foreach (var item in listGroupOwner)
 			{
 				listOwner.AddRange(item.Users);
 			}
@@ -267,7 +270,8 @@ namespace WebApplication.Controllers
 		public async System.Threading.Tasks.Task<ActionResult> InsertExcelData()
 		{
 			int groupID = int.Parse(Session["GroupID"].ToString());
-			int length = 0;
+			int lengthImport = 0;
+			int lengthExits = 0;
 			try
 			{
 				if (TempData["Excelstudent"] != null)
@@ -295,7 +299,7 @@ namespace WebApplication.Controllers
 								group.Users.Add(s);
 								AddParentGroup(group, s);
 								db.SaveChanges();
-								length++;
+								lengthImport++;
 							}
 							else
 							{
@@ -307,19 +311,29 @@ namespace WebApplication.Controllers
 									group.Users.Add(user);
 									AddParentGroup(group, user);
 									db.SaveChanges();
-									length++;
+									lengthImport++;
+								}
+								else
+								{
+									lengthExits++;
 								}
 							}
 						}
 						db.SaveChanges();
 					}
-				
+
 				}
 			}
 			catch (Exception ex)
 			{
 				ex.ToString();
 			}
+
+			HttpCookie cookieImportstudent = new HttpCookie("jusy_Importstudent", lengthImport + "");
+			HttpCookie cookieExitsStudent = new HttpCookie("just_ExitsStudent", lengthExits + "");
+			HttpContext.Response.Cookies.Add(cookieImportstudent);
+			HttpContext.Response.Cookies.Add(cookieExitsStudent);
+
 			TempData.Remove("Excelstudent");
 			return RedirectToAction("Detail", new { id = Session["GroupID"] });
 		}
@@ -434,6 +448,35 @@ namespace WebApplication.Controllers
 			}
 		}
 
+
+		[HttpGet]
+		public ActionResult AddStudent()
+		{
+			var user = db.Users.ToList();
+			return View(user);
+		}
+		[HttpPost]
+		public ActionResult AddStudent(string email)
+		{
+			var user = db.Users.FirstOrDefault(x => x.Email == email);
+			int groupID = int.Parse(Session["GroupID"].ToString());
+			var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
+			if (!group.Users.Contains(user))
+			{
+				group.Users.Add(user);
+				HttpCookie cookieAddStudent = new HttpCookie("just_addStudent", "success");
+				HttpContext.Response.Cookies.Add(cookieAddStudent);
+			}
+			else
+			{
+				HttpCookie cookieAddStudent = new HttpCookie("just_addStudent", "fail");
+				HttpContext.Response.Cookies.Add(cookieAddStudent);
+			}
+			db.SaveChanges();
+			return RedirectToAction("Detail", new { id = groupID });
+		}
+
+
 		[HttpGet]
 		public ActionResult AddGroupOwner()
 		{
@@ -446,7 +489,17 @@ namespace WebApplication.Controllers
 			var user = db.Users.FirstOrDefault(x => x.Email == email);
 			int groupID = int.Parse(Session["GroupID"].ToString());
 			var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
-			group.Users1.Add(user);
+			if (!group.Users1.Contains(user))
+			{
+				group.Users1.Add(user);
+				HttpCookie cookieaddOwner = new HttpCookie("just_addOwner", "success");
+				HttpContext.Response.Cookies.Add(cookieaddOwner);
+			}
+			else
+			{
+				HttpCookie cookieaddOwner = new HttpCookie("just_addOwner", "fail");
+				HttpContext.Response.Cookies.Add(cookieaddOwner);
+			}
 			db.SaveChanges();
 			return RedirectToAction("Detail", new { id = groupID });
 		}
@@ -463,7 +516,19 @@ namespace WebApplication.Controllers
 			var addGroup = db.Groups.FirstOrDefault(x => x.ID == addgroupID);
 			int editgroupID = int.Parse(Session["GroupID"].ToString());
 			var group = db.Groups.FirstOrDefault(x => x.ID == editgroupID);
-			group.Group11.Add(addGroup);
+			
+			if (!group.Group11.Contains(addGroup))
+			{
+				group.Group11.Add(addGroup);
+				HttpCookie cookieaddGroup = new HttpCookie("just_addGroup", "success");
+				HttpContext.Response.Cookies.Add(cookieaddGroup);
+			}
+			else
+			{
+				HttpCookie cookieaddGroup = new HttpCookie("just_addGroup", "fail");
+				HttpContext.Response.Cookies.Add(cookieaddGroup);
+			}
+
 			db.SaveChanges();
 			return RedirectToAction("Detail", new { id = editgroupID });
 		}

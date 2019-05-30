@@ -17,16 +17,43 @@ namespace AttendanceManagement.Controllers
 		[HttpPost]
 		public ActionResult Create(SessionModel newSession)
 		{
+			int SessionSuccessCount = 0;
+			int SessionExist = 0;
 			int CourseID = int.Parse(Session["CourseID"].ToString());
+			var listSession = db.Sessions.Where(x => x.CourseID == CourseID);
+
 			for (int i = 0; i < newSession.TotalWeek; i++)
 			{
-				Session nSession = new Session();
-				nSession.CourseID = CourseID;
-				nSession.Date = newSession.StartDate.Value.AddDays(i * 7);
-				nSession.Time = newSession.Time;
-				db.Sessions.Add(nSession);
+				Boolean isCreate = true;
+				foreach(var item in listSession)
+				{
+					if(item.Date.Value == newSession.StartDate.Value.AddDays(i * 7) && item.Time == newSession.Time)
+					{
+						isCreate = false;
+						break;
+					}
+				}
+				if (isCreate)
+				{
+					Session nSession = new Session();
+					nSession.CourseID = CourseID;
+					nSession.Date = newSession.StartDate.Value.AddDays(i * 7);
+					nSession.Time = newSession.Time;
+					db.Sessions.Add(nSession);
+					SessionSuccessCount++;
+				}
+				else
+				{
+					SessionExist++;
+				}
 			}
 			db.SaveChanges();
+
+			HttpCookie cookieCreateSuccess = new HttpCookie("just_createSession", SessionSuccessCount+"");
+			HttpCookie cookieSessionExist = new HttpCookie("just_SessionExist", SessionExist + "");
+			HttpContext.Response.Cookies.Add(cookieCreateSuccess);
+			HttpContext.Response.Cookies.Add(cookieSessionExist);
+
 			Session["tabactive"] = "tab3";
 
 			return RedirectToAction("DetailClass", "Attendance",new { id = Session["CourseID"] });

@@ -48,7 +48,7 @@
 <div class="card card-outline-danger">
 	<div class="card-header" style="color:black">Import Student</div>
 	<div class="card-body">
-		<form action="/Attendance/ReadExcel" method="post" class="form-inline" enctype="multipart/form-data">
+		<form action="~/Attendance/ReadExcel" method="post" class="form-inline" enctype="multipart/form-data">
 			<div class="col-md-5">
 				<div class="form-control">
 					<input type="file" id="fileupload" name="fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="upload()" />
@@ -62,7 +62,7 @@
 					<div class="col-md-3">
 						@if (ListStudent != null)
 						{
-							<input type="button" value="Import" id="ImportDiv" class="btn btn-default btn-block" onclick="window.location ='/Attendance/InsertExcelData';" />
+							<input type="button" value="Import" id="ImportDiv" class="btn btn-default btn-block" onclick="window.location ='/AttendanceManagement/Attendance/InsertExcelData';" />
 						}
 						else
 						{
@@ -74,7 +74,7 @@
 						<a onclick="location.href = '@Url.Action("ExportExcel", "Attendance")';"class="btn btn-warning" >Template</a>
 					</div>
 					<div class="col-md-3">
-						<input type="button" value="Back" class="btn btn-default btn-block" onclick="window.location='/Attendance/Detailclass/@Session["CourseID"]';" />
+						<input type="button" value="Back" class="btn btn-default btn-block" onclick="window.location='/AttendanceManagement/Attendance/Detailclass/@Session["CourseID"]';" />
 					</div>
 
 				</div>
@@ -129,14 +129,14 @@
 									<div class="status">
 										@if (i.Status == "x")
 										{
-											<img src="/Content/image/uncheck.png" style="width:20px;height:20px" />
+											<img src="~/Content/image/uncheck.png" style="width:20px;height:20px" />
 										}
 										else if (i.Status == "")
 										{
 										}
 										else
 										{
-											<img src="/Content/image/check.png" style="width:20px;height:20px" />
+											<img src="~/Content/image/check.png" style="width:20px;height:20px" />
 										}
 									</div>
 								</td>

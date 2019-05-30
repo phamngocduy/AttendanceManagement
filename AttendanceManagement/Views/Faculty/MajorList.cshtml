@@ -1,0 +1,103 @@
+﻿@model IEnumerable<AttendanceManagement.Models.Major>
+
+@{
+	ViewBag.Title = "MajorList";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+	int i = 1;
+}
+
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">@AttendanceManagement.Resources.Resource.Mygroup</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">@AttendanceManagement.Resources.Resource.Group</a></li>
+			<li class="breadcrumb-item active">@AttendanceManagement.Resources.Resource.Mygroup</li>
+		</ol>
+	</div>
+	<div class="col-md-7 col-4 align-self-center">
+		<div class="d-flex m-t-10 justify-content-end">
+			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
+				<div class="chart-text m-r-10">
+					<h6 class="m-b-0"><small>THIS MONTH</small></h6>
+					<h4 class="m-t-0 text-info">$58,356</h4>
+				</div>
+				<div class="spark-chart">
+					<div id="monthchart"></div>
+				</div>
+			</div>
+			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
+				<div class="chart-text m-r-10">
+					<h6 class="m-b-0"><small>LAST MONTH</small></h6>
+					<h4 class="m-t-0 text-primary">$48,356</h4>
+				</div>
+				<div class="spark-chart">
+					<div id="lastmonthchart"></div>
+				</div>
+			</div>
+			<div class="">
+				<button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body bg-success">
+		<h4 class="text-white card-title">Major Management</h4>
+	</div>
+	<div class="card-body">
+		<div class="message-box contact-box">
+			<h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-info waves-effect waves-dark" onclick="SynMajor()"><i class="glyphicon glyphicon-refresh"></i></button></h2>
+			<div class="message-widget contact-widget">
+				<div class="card-body collapse show">
+					<div class="table-responsive">
+						<table class="table product-overview">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Code</th>
+									<th>Name</th>
+									<th>Faculty</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>@(i++)</td>
+										<td>@item.Code</td>
+										<td>@item.Name</td>
+										<td>
+											@if (item.Faculty != null)
+											{
+												@item.Faculty.Name
+											}
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function SynMajor() {
+		$.ajax({
+			type: "POST",
+			url: "/Faculty/SynMajor",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (res) {
+				swal({
+					title: "Synchronization successful",
+					text: res + " new major is synchronization ",
+					type: "success",
+					closeOnConfirm: true
+				});
+			}
+		});
+	}
+</script>

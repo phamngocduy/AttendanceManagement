@@ -1,0 +1,134 @@
+﻿@model IEnumerable<AttendanceManagement.Models.FacultyViewModel>
+@{
+	/**/
+
+	ViewBag.Title = "FacultyIndex";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+	int i = 1;
+}
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">@AttendanceManagement.Resources.Resource.Mygroup</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">@AttendanceManagement.Resources.Resource.Group</a></li>
+			<li class="breadcrumb-item active">@AttendanceManagement.Resources.Resource.Mygroup</li>
+		</ol>
+	</div>
+	<div class="col-md-7 col-4 align-self-center">
+		<div class="d-flex m-t-10 justify-content-end">
+			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
+				<div class="chart-text m-r-10">
+					<h6 class="m-b-0"><small>THIS MONTH</small></h6>
+					<h4 class="m-t-0 text-info">$58,356</h4>
+				</div>
+				<div class="spark-chart">
+					<div id="monthchart"></div>
+				</div>
+			</div>
+			<div class="d-flex m-r-20 m-l-10 hidden-md-down">
+				<div class="chart-text m-r-10">
+					<h6 class="m-b-0"><small>LAST MONTH</small></h6>
+					<h4 class="m-t-0 text-primary">$48,356</h4>
+				</div>
+				<div class="spark-chart">
+					<div id="lastmonthchart"></div>
+				</div>
+			</div>
+			<div class="">
+				<button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body bg-success">
+		<h4 class="text-white card-title">Session Management</h4>
+	</div>
+	<div class="card-body">
+		<div class="message-box contact-box">
+			<h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-info waves-effect waves-dark" onclick="Createfaculty()"><i class="fa fa-plus"></i></button></h2>
+			<div class="message-widget contact-widget">
+				<div class="card-body collapse show">
+					<div class="table-responsive">
+						<table class="table product-overview">
+							<thead>
+								<tr>
+									<th style="text-align:center">#</th>
+									<th style="text-align:center">Name</th>
+									<th style="text-align:center">Detail</th>
+									<th style="text-align:center">Major</th>
+									<th style="text-align:center">Description</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>@(i++)</td>
+										<td>@item.Name</td>
+										<td>
+											<ul>
+												<li>
+													Ban chủ nhiệm
+												</li>
+												<li>
+													Giảng Viên
+												</li>
+												<li>
+													CTSV
+												</li>
+												<li>
+													Giáo vụ
+												</li>
+											</ul>
+
+										</td>
+										<td>
+											<ul>
+												@foreach (var major in item.Majors)
+												{
+													<li>
+														@major.Name
+													</li>
+												}
+											</ul>
+										</td>
+										<td style="white-space:unset">@item.Description</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Add group Owner-->
+<div class="modal fade" id="myCreateFaculty" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Create Faculty</h4>
+			</div>
+			<div class="modal-body" id="ModalCreateFaculty">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script>
+	function Createfaculty() {
+		var url = "/Faculty/CreateFaculty1";
+		$("#ModalCreateFaculty").load(url, function () {
+			$("#myCreateFaculty").modal("show");
+		})
+	}
+</script>

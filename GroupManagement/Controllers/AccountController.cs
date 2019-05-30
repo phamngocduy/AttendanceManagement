@@ -92,8 +92,6 @@ namespace WebApplication.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-					var email = loginInfo.Email;
-
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

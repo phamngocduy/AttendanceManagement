@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication.Models.Group>
+﻿@model List<WebApplication.Models.User>
 
 @{
 	ViewBag.Title = "Create";
@@ -15,68 +15,72 @@
 	</div>
 </div>
 
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="card card-outline-danger">
-				<div class="card-header">
-					<h4 class="m-b-0 text-white">@WebApplication.Resources.Resource.Group</h4>
-				</div>
-				<div class="card-body">
-					<form action="~/Group/Create" method="post">
-						<div class="form-body">
-							<h3 class="card-title">Create new group</h3>
-							<hr>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label class="control-label">Group Name</label>
-									<input type="text" name="GroupName" class="form-control">
-								</div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card card-outline-danger">
+			<div class="card-header">
+				<h4 class="m-b-0 text-white">@WebApplication.Resources.Resource.Group</h4>
+			</div>
+			<div class="card-body">
+				<form action="~/Group/Create" method="post" onsubmit="return checkGroupName()">
+					<div class="form-body">
+						<h3 class="card-title">Create new group</h3>
+						<hr>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Group Name</label>
+								<input type="text" name="GroupName" id="groupNameCreate" class="form-control">
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label class="control-label">Group Description</label>
-									<input type="text" name="GroupDescription" class="form-control">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label class="control-label">Group Type</label>
-									<select class="form-control" name="GroupType">
-										<option>--Select Group Type--</option>
-										<option value="true">Public Group</option>
-										<option value="false">Private Group</option>
-									</select>
-								</div>
-							</div><div class="col-md-6">
-								<div class="form-group">
-									<label>Group parent</label>
-									<select class="form-control" name="GroupParent">
-										<option>--Select Group paren--</option>
-										@foreach (var item in Model)
-										{
-											<option value="@item.ID">@item.GroupName</option>
-										}
-									</select>
-								</div>
-							</div>
-								  <div class="form-actions">
-								  	<button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Create</button>
-								  	@Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-inverse" })
-								  </div>
 						</div>
-					</form>
-				</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Group Description</label>
+								<input type="text" name="GroupDescription" class="form-control">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Add Member</label>
+								<select class="js-example-basic-multiple" name="MemberUserID" multiple="multiple">
+									@foreach (var item in Model)
+									{
+										<option value="@item.ID">@item.Email</option>
+									}
+								</select>
+							</div>
+						</div>
+
+						<div class="form-actions">
+							<button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Create</button>
+							@Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-inverse" })
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div>
-		<span class="label label-danger" style="font-size: 15px;color:white">@TempData["ErrorMessage"]</span>
-	</div>
+<script src="~/Content/assets/jquery.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('.js-example-basic-multiple').select2({ width: '100%' });
+	});
 
-
-
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
+	function checkGroupName() {
+		if ($('#groupNameCreate').val() == "") {
+			$.toast({
+				heading: 'Error',
+				text: 'Please fill group name',
+				position: 'top-right',
+				loaderBg: '#ff6849',
+				icon: 'error',
+				hideAfter: 5000,
+				stack: 6
+			});
+			return false;
+		} else {
+			Cookies.set('just_create', 'true');
+		}
+	}
+</script>

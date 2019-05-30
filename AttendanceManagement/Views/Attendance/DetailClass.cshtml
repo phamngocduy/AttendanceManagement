@@ -78,7 +78,7 @@
 	<div class="tab-content">
 		<div id="tab1" class="tab-pane">
 			@{ Html.RenderPartial("~/Views/Attendance/AllAttendance.cshtml", ViewData["attendance"]); }
-		
+
 		</div>
 		<div id="tab2" class="tab-pane ">
 			@{ Html.RenderPartial("~/Views/Attendance/StudentList.cshtml", ViewData["students"]); }
@@ -87,8 +87,7 @@
 			@{ Html.RenderPartial("~/Views/Attendance/SessionList.cshtml", ViewData["session"]); }
 		</div>
 		<div id="tab4" class="tab-pane">
-			@if (TempData["date"] == null)
-			{
+			<div id="sessionDate">
 				<div class="card">
 					<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
 					<div class="card-body">
@@ -97,15 +96,14 @@
 								<button class="btn btn-primary" onclick="choice()">Please choice session</button>
 							</div>
 						</div>
-						@{ Html.RenderPartial("~/Views/Attendance/AttendanceByCode.cshtml"); }
 					</div>
 				</div>
-			}
-			else
-			{
-				Html.RenderPartial("~/Views/Attendance/AttendanceList.cshtml", ViewData["students"]);
-			}
-			
+			</div>
+			<div id="listAttendance" class="hide">
+				@{
+					Html.RenderPartial("~/Views/Attendance/AttendanceList.cshtml", ViewData["students"]);
+				}
+			</div>
 		</div>
 
 
@@ -113,17 +111,109 @@
 </div>
 
 <script src="~/Content/assets/jquery.min.js"></script>
-
+	
 <script>
-$(function () {
-	var selector = '@active';
-	$('[href="#' + selector+'"]').tab('show');
+	$(document).ready(function () {
+		var selector = '@active';
+		$('[href="#tab1"]').tab('show');
+		$('[href="#' + selector + '"]').tab('show');
+
+		var justDelete = Cookies.get('just_delete');
+		if (justDelete) {
+			swal({
+				title: "Deleted!",
+				text: "This session has been deleted.",
+				type: "success",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_delete');
+		}
+
+		var justEdit = Cookies.get('just_edit');
+		if (justEdit) {
+			swal({
+				title: "Edit!",
+				text: "Edit successful",
+				type: "success",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_edit');
+		}
+
+		var justCreate = Cookies.get('just_createSession');
+		var justExist = Cookies.get('just_SessionExist');
+		if (justCreate > 0) {
+			if (justExist > 0) {
+				swal({
+					title: "Create!",
+					text: "Create " + justCreate + " session successful and " + justExist + " session is already exist",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('just_createSession');
+				Cookies.remove('just_SessionExist');
+			} else {
+				swal({
+					title: "Create!",
+					text: "Create " + justCreate + " session successful",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('just_createSession');
+				Cookies.remove('just_SessionExist');
+			}
+		} else {
+			if (justExist > 0) {
+				swal({
+					title: "Create!",
+					text: "All session is already exist",
+					type: "error",
+					closeOnConfirm: true
+				});
+				Cookies.remove('just_createSession');
+				Cookies.remove('just_SessionExist');
+			}
+		}
+
+		var justAddStudent = Cookies.get('jusy_CountStudentAdd');
+		var justExitsStudent = Cookies.get('just_CountStudentInCourse');
+		if (justAddStudent > 0) {
+			if (justExitsStudent > 0) {
+				swal({
+					title: "Add Student!",
+					text: "Add " + justAddStudent + " student successful and " + justExitsStudent + " student is already exist",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('jusy_CountStudentAdd');
+				Cookies.remove('just_CountStudentInCourse');
+			} else {
+				swal({
+					title: "Add Student!",
+					text: "Add " + justAddStudent + " student successful",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('jusy_CountStudentAdd');
+				Cookies.remove('just_CountStudentInCourse');
+			}
+		} else {
+			if (justExitsStudent > 0) {
+				swal({
+					title: "Add Student!",
+					text: "All student is already exist",
+					type: "error",
+					closeOnConfirm: true
+				});
+				Cookies.remove('jusy_CountStudentAdd');
+				Cookies.remove('just_CountStudentInCourse');
+			}
+		}
 });
 </script>
 <script>
 	function choice() {
 		$('[href="#tab3"]').tab('show');
-		window.location.reload();
 	}
 </script>
 
@@ -132,7 +222,96 @@ $(function () {
 		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			$($.fn.dataTable.tables(true)).DataTable()
 				.columns.adjust()
-		});  
+
+			$(function () {
+				"use strict";
+				var chart = new Chartist.Line('.user-analytics', {
+					labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'S15']
+					, series: [
+						[51, 25, 35, 70, 63, 1, 49]
+
+					]
+				}, {
+						high: 125
+						, low: 0
+						, showArea: true
+						, lineSmooth: Chartist.Interpolation.simple({
+							divisor: 10
+						})
+						, fullWidth: true
+						, plugins: [
+							Chartist.plugins.tooltip()
+						], // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
+						axisY: {
+							onlyInteger: true
+							, offset: 20
+							, labelInterpolationFnc: function (value) {
+								return value;
+							}
+						}
+					});
+
+				chart.on('draw', function (ctx) {
+					if (ctx.type === 'area') {
+						ctx.element.attr({
+							x1: ctx.x1 + 0.001
+						});
+					}
+				});
+
+				// Create the gradient definition on created event (always after chart re-render)
+				chart.on('created', function (ctx) {
+					var defs = ctx.svg.elem('defs');
+					defs.elem('linearGradient', {
+						id: 'gradient',
+						x1: 0,
+						y1: 1,
+						x2: 0,
+						y2: 0
+					}).elem('stop', {
+						offset: 0,
+						'stop-color': 'rgba(255, 255, 255, 1)'
+					}).parent().elem('stop', {
+						offset: 1,
+						'stop-color': 'rgba(38, 198, 218, 1)'
+					});
+				});
+				// ==============================================================
+				// This is for the animation
+				// ==============================================================
+				chart.on('draw', function (data) {
+					if (data.type === 'line' || data.type === 'area') {
+						data.element.animate({
+							d: {
+								begin: 500 * data.index,
+								dur: 500,
+								from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+								to: data.path.clone().stringify(),
+								easing: Chartist.Svg.Easing.easeInOutElastic
+							}
+						});
+					}
+					if (data.type === 'bar') {
+						data.element.animate({
+							y2: {
+								dur: 500,
+								from: data.y1,
+								to: data.y2,
+								easing: Chartist.Svg.Easing.easeInOutElastic
+							},
+							opacity: {
+								dur: 500,
+								from: 0,
+								to: 1,
+								easing: Chartist.Svg.Easing.easeInOutElastic
+							}
+						});
+					}
+				});
+			});
+
+
+		});
 	});
 </script>
 

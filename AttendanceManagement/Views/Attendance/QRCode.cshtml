@@ -20,6 +20,27 @@
 	</div>
 
 	<div class="row justify-content-center">
-		<button id="QRCodeClose" type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.href = '@Url.Action("CloseAttendance", "Attendance",new { id=Model.QRCodeText })';">Close Attendance</button>
+		<button id="QRCodeClose" type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseAttendance(@Model.QRCodeText)">Close Attendance</button>
 	</div>
 </div>
+
+<script>
+	function CloseAttendance(id) {
+		var idData = '{ id:' + id + '}';
+		$.ajax({
+			type: "POST",
+			url: "/AttendanceManagement/Attendance/CloseAttendance?id=" + id,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (data) {
+				if (data == true) {
+					$("#generateQRcode").modal("hide");
+				}
+				else {
+					alert("error")
+				}
+			}
+		});
+
+	}
+</script>

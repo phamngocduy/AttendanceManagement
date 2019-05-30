@@ -233,6 +233,7 @@
     <Compile Include="Controllers\APIController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
@@ -374,6 +375,7 @@
     <Content Include="Content\assets\jquery.steps.min.js" />
     <Content Include="Content\assets\jQuery.style.switcher.js" />
     <Content Include="Content\assets\jquery.sweet-alert.custom.js" />
+    <Content Include="Content\assets\js.cookie.js" />
     <Content Include="Content\assets\linea.css" />
     <Content Include="Content\assets\materialdesignicons.min.css" />
     <Content Include="Content\assets\moment.js" />
@@ -817,12 +819,9 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Attendance\AddStudent.cshtml" />
     <Content Include="Views\Attendance\AttendanceExcel.cshtml" />
-    <Content Include="Views\Attendance\CreateFaculty1.cshtml" />
     <Content Include="Views\Attendance\DetailClass.cshtml" />
     <Content Include="Views\Attendance\DetailFaculty.cshtml" />
-    <Content Include="Views\Attendance\FacultyIndex.cshtml" />
     <Content Include="Views\Attendance\Index.cshtml" />
-    <Content Include="Views\Attendance\MajorList.cshtml" />
     <Content Include="Views\Attendance\StudentList.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -849,6 +848,9 @@
     <Content Include="Views\Attendance\QRCode.cshtml" />
     <Content Include="Views\Attendance\Import.cshtml" />
     <Content Include="Views\Attendance\CheckByCode.cshtml" />
+    <Content Include="Views\Faculty\MajorList.cshtml" />
+    <Content Include="Views\Faculty\CreateFaculty1.cshtml" />
+    <Content Include="Views\Faculty\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
