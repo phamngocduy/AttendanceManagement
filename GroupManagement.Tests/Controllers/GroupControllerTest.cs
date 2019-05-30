@@ -545,7 +545,7 @@ namespace WebApplication.Tests.Controllers
             Assert.IsNotNull(result);
         }
         [TestMethod]
-        public void TestViewCreate()
+        public void TestViewCreateGroup()
         {
             GroupController controller = new GroupController();
             var user = new User();
@@ -574,6 +574,15 @@ namespace WebApplication.Tests.Controllers
 
         [TestMethod]
         public void TestViewAddGroupManager()
+        {
+            TestControllerBuilder builder = new TestControllerBuilder();
+            var controller = new GroupController();
+            builder.InitializeController(controller);
+            var result = controller.AddGroupManager() as ViewResult;
+            Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        public void TestViewAddGroupOwner()
         {
             TestControllerBuilder builder = new TestControllerBuilder();
             var controller = new GroupController();
