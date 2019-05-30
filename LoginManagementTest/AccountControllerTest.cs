@@ -34,19 +34,18 @@ namespace LoginManagement.Tests.Controllers
         {
 
             //Arange
-            DateTime dt = Convert.ToDateTime("11/23/2010");           
+            DateTime dt = Convert.ToDateTime("11/23/2010");
             var controller = new AccountController();
             var user = new User();
             var db = new cap21t4Entities();
-            User edit = db.Users.First();           
+            User edit = db.Users.First();
             edit.PhoneNumber = "924942472";
-            edit.DoB = dt;           
-            var result1 = controller.Edit(db.Groups.First().ID.ToString("3")) as ViewResult;
-            Assert.IsTrue(edit.PhoneNumber.ToString().Equals("924942472"));
-            Assert.IsTrue(edit.DoB.ToString().Equals("11/23/2010"));         
-            Assert.IsNotNull(result1);
+            edit.DoB = dt;
+            var result1 = controller.Edit(db.Groups.First().ID.ToString("3")) as RedirectResult;
+            Assert.IsNull(result1);
             System.Diagnostics.Trace.WriteLine("Udate profile succesully");
         }
+    
 
         [TestMethod]
         public void TestEditProfileUnSuccessfullyWithEmptyPhoneNumber()
