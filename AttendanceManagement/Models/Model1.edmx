@@ -75,6 +75,7 @@
           <Property Name="SessionID" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="5" />
           <Property Name="Note" Type="nvarchar" MaxLength="100" />
+          <Property Name="Picture" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -421,6 +422,7 @@
           <Property Name="SessionID" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Note" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CourseMember" Relationship="Self.FK_Attendance_CourseMember" FromRole="Attendance" ToRole="CourseMember" />
           <NavigationProperty Name="Session" Relationship="Self.FK_Attendance_Session" FromRole="Attendance" ToRole="Session" />
         </EntityType>
@@ -746,6 +748,7 @@
                 <ScalarProperty Name="SessionID" ColumnName="SessionID" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

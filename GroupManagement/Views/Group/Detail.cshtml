@@ -58,6 +58,7 @@
 				<thead>
 					<tr>
 						<th>No.</th>
+						<th>Avatar</th>
 						<th>StID</th>
 						<th>Full Name</th>
 						<th>Email</th>
@@ -68,24 +69,27 @@
 				<tbody>
 					@foreach (var item in Model)
 					{
-						<tr>
-							<td>@(i++)</td>
-							<td>
-								@item.StID
-							</td>
-							<td>
-								@item.FirstName  @item.LastName
-							</td>
-							<td>
-								@item.Email
-							</td>
-							<td>
-								@item.DoB.Value.ToShortDateString()
-							</td>
-							<td>
-								@item.Note
-							</td>
-						</tr>
+					<tr>
+						<td>@(i++)</td>
+						<td>
+							<img src="data:image/png;base64,@item.AvatarBase64" alt="Avatar" />
+						</td>
+						<td>
+							@item.StID
+						</td>
+						<td>
+							@item.LastName  @item.FirstName
+						</td>
+						<td>
+							@item.Email
+						</td>
+						<td>
+							@item.DoB.Value.ToShortDateString()
+						</td>
+						<td>
+							@item.Note
+						</td>
+					</tr>
 					}
 				</tbody>
 
@@ -282,13 +286,13 @@
 		}
 
 
-		var justAddStudent = Cookies.get('jusy_Importstudent');
+		var justImportStudent = Cookies.get('jusy_Importstudent');
 		var justExitsStudent = Cookies.get('just_ExitsStudent');
-		if (justAddStudent > 0) {
+		if (justImportStudent > 0) {
 			if (justExitsStudent > 0) {
 				swal({
 					title: "Import Student!",
-					text: "Import " + justAddStudent + " student successful and " + justExitsStudent + " student is already exist",
+					text: "Import " + justImportStudent + " student successful and " + justExitsStudent + " student is already exist",
 					type: "success",
 					closeOnConfirm: true
 				});
@@ -297,7 +301,7 @@
 			} else {
 				swal({
 					title: "Import Student!",
-					text: "Import " + justAddStudent + " student successful",
+					text: "Import " + justImportStudent + " student successful",
 					type: "success",
 					closeOnConfirm: true
 				});

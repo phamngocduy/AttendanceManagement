@@ -127,7 +127,7 @@ function saveAvatar() {
 	var img = $('#preview-pane .preview-container img');
 	$.ajax({
 		type: "POST",
-		url: "/Account/Save",
+		url: "/Loginmanagement/Account/Save",
 		traditional: true,
 		data: {
 			fileName: img.attr('src')
@@ -135,7 +135,7 @@ function saveAvatar() {
 	}).done(function (data) {
 		if (data.success === true) {
 			Cookies.set('just_submitted', 'true');
-			window.location.replace("https://localhost:44360/");
+			window.location.reload();
 
 			if (!keepCropBox) {
 				$('#avatar-crop-box').addClass('hidden');

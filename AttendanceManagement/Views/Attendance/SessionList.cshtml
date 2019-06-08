@@ -176,7 +176,7 @@
 		})
 	}
 	function GenCode(id) {
-		var url = "/AttendanceManagement/Attendance/Generate?id=" + id;
+		var url = "/Attendance/Generate?id=" + id;
 		$("#ModalgenerateQRcode").load(url, function () {
 			$("#generateQRcode").modal("show");
 		})

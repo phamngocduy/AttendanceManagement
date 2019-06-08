@@ -17,7 +17,7 @@
 		{
 			<div class="row" style="text-align:center">
 				<div class="col">
-					<button class="btn btn-primary" onclick="choice()">Please Add Student</button>
+					<button class="btn btn-primary" onclick="addStudent()">Please Add Student</button>
 				</div>
 			</div>
 		}
@@ -115,4 +115,12 @@
 			text: 'back'
 		});
 	})
+
+	function addStudent() {
+		var url = "/AttendanceManagement/Attendance/AddStudent";
+		$("#ModalAddStudent").load(url, function () {
+			$('.modal-backdrop').remove();
+			$("#myAddStudent").modal("show");
+		})
+	}
 </script>

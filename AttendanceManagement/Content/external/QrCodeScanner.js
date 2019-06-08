@@ -41,7 +41,6 @@ function initVideoObjectOptions(id) {
 function initAvaliableCameras(selectObject, callBack) {
 	var max = 0;
 	Instascan.Camera.getCameras().then(function (cameras) {
-		
 		for (var i = 0; i < cameras.length; i++) {
 			var o = $("<option value='" + i + "'selected></option>");
 			if (i == 0) {
@@ -65,15 +64,6 @@ function getSelectedCamera(selectObject) {
 		return parseInt(selectObject.val());
 }
 
-//Init camera
-function initCamera(i) {
-	scanner.stop();
-
-	Instascan.Camera.getCameras().then(function (cameras) {
-		scanner.start(cameras[i]);
-	});
-}
-
 function scanStart(ondetect) {
 	//Emitted when a QR code is scanned using the camera in continuous mode (see scanner.continuous).
 	scanner.addListener('scan', function (content) {
@@ -82,9 +72,7 @@ function scanStart(ondetect) {
 }
 
 //change camera
-function cameraChange(cameraNum) {
-	initCamera(parseInt(cameraNum));
-}
+
 
 //init QrCode scanner
 function initScanner(options) {

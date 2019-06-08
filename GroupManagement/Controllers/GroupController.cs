@@ -13,6 +13,10 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
+using System.Drawing.Imaging;
 
 namespace WebApplication.Controllers
 {
@@ -160,7 +164,7 @@ namespace WebApplication.Controllers
 			int groupID = int.Parse(id);
 			Session["GroupID"] = id;
 			var group = db.Groups.FirstOrDefault(x => x.ID == groupID);
-			var memberlist = group.Users.ToList().OrderBy(x => x.LastName);
+			var memberlist = group.Users.ToList().OrderBy(x => x.FirstName);
 			List<Group> tempList = GroupParentwithGroup(group);
 			ViewBag.GroupParent = tempList;
 			ViewBag.Owner = group.Users1.ToList();
@@ -303,14 +307,23 @@ namespace WebApplication.Controllers
 							}
 							else
 							{
-								user = s;
+								user.AvatarLink = s.AvatarLink;
+								user.AvatarBase64 = s.AvatarBase64;
+								user.DoB = s.DoB;
+								user.Email = s.Email;
+								user.FirstName = s.FirstName;
+								user.LastName = s.LastName;
+								user.Note = s.Note;
+								user.PhoneNumber = s.PhoneNumber;
+								user.PlaceofBirth = s.PlaceofBirth;
+								user.StID = s.StID;
 								user.UserID = aspUser.Id;
+								user.Gender = s.Gender;
 								db.SaveChanges();
 								if ((group.Users.FirstOrDefault(x => x.StID == s.StID)) == null)
 								{
 									group.Users.Add(user);
 									AddParentGroup(group, user);
-									db.SaveChanges();
 									lengthImport++;
 								}
 								else
@@ -340,11 +353,6 @@ namespace WebApplication.Controllers
 		//Users : Sinh vien
 		//User1 : groupowner
 
-		public void AddUser()
-		{
-
-		}
-
 		public void AddParentGroup(Group g, User u)
 		{
 			if (g.Group2 != null && g.Group2.ID != 2 && g.Group2.ID != 1)
@@ -357,7 +365,7 @@ namespace WebApplication.Controllers
 			}
 		}
 
-		private static List<User> ConvertDataTable<T>(DataTable dt)
+		private  List<User> ConvertDataTable<T>(DataTable dt)
 		{
 			List<User> data = new List<User>();
 			dt.Rows.RemoveAt(0);
@@ -388,13 +396,81 @@ namespace WebApplication.Controllers
 				{
 					us.Gender = true;
 				}
-				us.DoB = DateTime.ParseExact(row[5].ToString(), "dd/mm/yyyy", null);
+				us.DoB = DateTime.Parse(row[5].ToString());
 				us.PlaceofBirth = row[6].ToString();
 				us.Email = row[7].ToString();
 				us.Note = row[8].ToString();
+				var image = GenerateDefaultAvatar(row[3].ToString(), row[2].ToString());
+				//save link
+				var avatarPath = "/LoginManagement/Avatars";
+				var newFileName = Path.Combine(avatarPath, row[1].ToString()+".png");
+				var newFileLocation = HttpContext.Server.MapPath(newFileName);
+				if (Directory.Exists(Path.GetDirectoryName(newFileLocation)) == false)
+				{
+					Directory.CreateDirectory(Path.GetDirectoryName(newFileLocation));
+				}
+				Image img = Image.FromStream(image);
+				img.Save(newFileLocation);
+				string filename = newFileName.Replace("~", string.Empty);
+				us.AvatarLink = filename;
+				//resize 32*32 and save
+				Image avatar = resizeImage(img, 32, 32);
+				var Avatarbase64 = ImageToBase64(avatar);
+				us.AvatarBase64 = Avatarbase64;
+
 				data.Add(us);
 			}
 			return data;
+		}
+		public Image resizeImage(Image img, int width, int height)
+		{
+			Bitmap b = new Bitmap(width, height);
+			Graphics g = Graphics.FromImage((Image)b);
+
+			g.DrawImage(img, 0, 0, width, height);
+			g.Dispose();
+
+			return (Image)b;
+		}
+		public MemoryStream GenerateDefaultAvatar(string firstName, string lastName)
+		{
+			var avatarString = string.Format("{0}{1}", firstName[0], lastName[0]).ToUpper();
+			var random = new Random();
+			var bgColour = String.Format("#{0:X6}", random.Next(0x1000000));
+
+			var bmp = new Bitmap(256, 256);
+			var sf = new StringFormat();
+			sf.Alignment = StringAlignment.Center;
+			sf.LineAlignment = StringAlignment.Center;
+
+			var font = new Font("Arial", 120, FontStyle.Bold, GraphicsUnit.Pixel);
+			var graphics = Graphics.FromImage(bmp);
+
+			graphics.Clear(Color.Transparent);
+			graphics.SmoothingMode = SmoothingMode.AntiAlias;
+			graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+			using (Brush b = new SolidBrush(ColorTranslator.FromHtml(bgColour)))
+			{
+				graphics.FillEllipse(b, new Rectangle(0, 0, 256, 256));
+			}
+			graphics.DrawString(avatarString, font, new SolidBrush(Color.WhiteSmoke), 128, 138, sf);
+			graphics.Flush();
+
+			var ms = new MemoryStream();
+			bmp.Save(ms, ImageFormat.Png);
+			return ms;
+		}
+		public string ImageToBase64(Image img)
+		{
+				using (MemoryStream ms = new MemoryStream())
+				{
+					string base64String;
+					img.Save(ms, ImageFormat.Png);
+					byte[] imageBytes = ms.ToArray();
+					base64String = Convert.ToBase64String(imageBytes);
+					return base64String;
+				}
+			
 		}
 
 		private IAuthenticationManager AuthenticationManager

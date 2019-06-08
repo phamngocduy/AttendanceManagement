@@ -29,7 +29,7 @@
 					<div class="btnhover">
 						<div class="h_gallery_item">
 							<div class="g_img_item">
-
+								
 								<img class="img-fluid" src="@(Model.AvatarLink)" alt="">
 								<a class="light" href="@(Model.AvatarLink)"><img src="" alt=""></a>
 								<button onclick="ChangeAvatar()" class="btn">Change Avatar</button>
@@ -57,11 +57,11 @@
 		}
 		<div class="media-body">
 			<div class="personal_text">
-				<h4>WELCOME</h4>
-				<h3>
-					@Model.FirstName @Model.LastName
-				</h3>
-				<h4>@Model.StID</h4>
+				<h5>WELCOME</h5>
+				<h4>
+					@Model.LastName @Model.FirstName
+				</h4>
+				<h5>@Model.StID</h5>
 				<ul class="list basic_info">
 					<li><a><i class="lnr lnr-envelope"></i> @Model.Email</a></li>
 					@if (Model.Gender == false)
@@ -130,7 +130,7 @@
 	});
 
 	function ChangeAvatar() {
-		var url = "/Account/Upload";
+		var url = "/Loginmanagement/Account/Upload";
 		$("#changeAvatarModalBody").load(url, function () {
 			$("#changeAvatarModal").modal("show");
 		})

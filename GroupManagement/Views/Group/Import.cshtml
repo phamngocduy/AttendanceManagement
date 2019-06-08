@@ -14,7 +14,7 @@
 		<h3 class="text-themecolor">@WebApplication.Resources.Resource.Group</h3>
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">@WebApplication.Resources.Resource.Group</a></li>
-			<li class="breadcrumb-item active">@WebApplication.Resources.Resource.Group</li>
+			<li class="breadcrumb-item active">@WebApplication.Resources.Resource.Import</li>
 		</ol>
 	</div>
 </div>
@@ -61,7 +61,7 @@
 	@if (ListStudent != null)
 	{
 		<div class="table-responsive m-t-40">
-			<table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
+			<table id="example23" class="display table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
 				<thead>
 					<tr>
 						<th style="text-align:center">No.</th>
@@ -82,10 +82,10 @@
 								@item.StID
 							</td>
 							<td style="text-align:left"> 
-								@item.FirstName  
+								@item.LastName  
 							</td>
 							<td style="text-align:left">
-								@item.LastName
+								@item.FirstName
 							</td>
 							<td style="text-align:center">
 								@if (item.Gender == true)

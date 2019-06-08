@@ -209,111 +209,110 @@
 				Cookies.remove('just_CountStudentInCourse');
 			}
 		}
-});
-</script>
-<script>
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			$($.fn.dataTable.tables(true)).DataTable()
+				.columns.adjust()
+			$.ajax({
+				type: "GET",
+				url: "/AttendanceManagement/Attendance/GetAttendanceData",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (res) {
+					var label = [];
+					var data = []
+					$.each(res, function (index, value) {
+						label.push("S" + (index + 1));
+						data.push(value);
+					});
+					$(function () {
+						"use strict";
+						var chart = new Chartist.Line('.user-analytics', {
+							labels: label
+							, series: [data]
+						}, {
+								high: 125
+								, low: 0
+								, showArea: true
+								, lineSmooth: Chartist.Interpolation.simple({
+									divisor: 10
+								})
+								, fullWidth: true
+								, plugins: [
+									Chartist.plugins.tooltip()
+								], // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
+								axisY: {
+									onlyInteger: true
+									, offset: 20
+									, labelInterpolationFnc: function (value) {
+										return value;
+									}
+								}
+							});
+
+						chart.on('draw', function (ctx) {
+							if (ctx.type === 'area') {
+								ctx.element.attr({
+									x1: ctx.x1 + 0.001
+								});
+							}
+						});
+
+						// Create the gradient definition on created event (always after chart re-render)
+						chart.on('created', function (ctx) {
+							var defs = ctx.svg.elem('defs');
+							defs.elem('linearGradient', {
+								id: 'gradient',
+								x1: 0,
+								y1: 1,
+								x2: 0,
+								y2: 0
+							}).elem('stop', {
+								offset: 0,
+								'stop-color': 'rgba(255, 255, 255, 1)'
+							}).parent().elem('stop', {
+								offset: 1,
+								'stop-color': 'rgba(38, 198, 218, 1)'
+							});
+						});
+						// ==============================================================
+						// This is for the animation
+						// ==============================================================
+						chart.on('draw', function (data) {
+							if (data.type === 'line' || data.type === 'area') {
+								data.element.animate({
+									d: {
+										begin: 500 * data.index,
+										dur: 500,
+										from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+										to: data.path.clone().stringify(),
+										easing: Chartist.Svg.Easing.easeInOutElastic
+									}
+								});
+							}
+							if (data.type === 'bar') {
+								data.element.animate({
+									y2: {
+										dur: 500,
+										from: data.y1,
+										to: data.y2,
+										easing: Chartist.Svg.Easing.easeInOutElastic
+									},
+									opacity: {
+										dur: 500,
+										from: 0,
+										to: 1,
+										easing: Chartist.Svg.Easing.easeInOutElastic
+									}
+								});
+							}
+						});
+					});
+				}
+			});
+		});
+	});
+
 	function choice() {
 		$('[href="#tab3"]').tab('show');
 	}
 </script>
-
-<script>
-	$(document).ready(function () {
-		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-			$($.fn.dataTable.tables(true)).DataTable()
-				.columns.adjust()
-
-			$(function () {
-				"use strict";
-				var chart = new Chartist.Line('.user-analytics', {
-					labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'S15']
-					, series: [
-						[51, 25, 35, 70, 63, 1, 49]
-
-					]
-				}, {
-						high: 125
-						, low: 0
-						, showArea: true
-						, lineSmooth: Chartist.Interpolation.simple({
-							divisor: 10
-						})
-						, fullWidth: true
-						, plugins: [
-							Chartist.plugins.tooltip()
-						], // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
-						axisY: {
-							onlyInteger: true
-							, offset: 20
-							, labelInterpolationFnc: function (value) {
-								return value;
-							}
-						}
-					});
-
-				chart.on('draw', function (ctx) {
-					if (ctx.type === 'area') {
-						ctx.element.attr({
-							x1: ctx.x1 + 0.001
-						});
-					}
-				});
-
-				// Create the gradient definition on created event (always after chart re-render)
-				chart.on('created', function (ctx) {
-					var defs = ctx.svg.elem('defs');
-					defs.elem('linearGradient', {
-						id: 'gradient',
-						x1: 0,
-						y1: 1,
-						x2: 0,
-						y2: 0
-					}).elem('stop', {
-						offset: 0,
-						'stop-color': 'rgba(255, 255, 255, 1)'
-					}).parent().elem('stop', {
-						offset: 1,
-						'stop-color': 'rgba(38, 198, 218, 1)'
-					});
-				});
-				// ==============================================================
-				// This is for the animation
-				// ==============================================================
-				chart.on('draw', function (data) {
-					if (data.type === 'line' || data.type === 'area') {
-						data.element.animate({
-							d: {
-								begin: 500 * data.index,
-								dur: 500,
-								from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-								to: data.path.clone().stringify(),
-								easing: Chartist.Svg.Easing.easeInOutElastic
-							}
-						});
-					}
-					if (data.type === 'bar') {
-						data.element.animate({
-							y2: {
-								dur: 500,
-								from: data.y1,
-								to: data.y2,
-								easing: Chartist.Svg.Easing.easeInOutElastic
-							},
-							opacity: {
-								dur: 500,
-								from: 0,
-								to: 1,
-								easing: Chartist.Svg.Easing.easeInOutElastic
-							}
-						});
-					}
-				});
-			});
-
-
-		});
-	});
-</script>
-
-
-

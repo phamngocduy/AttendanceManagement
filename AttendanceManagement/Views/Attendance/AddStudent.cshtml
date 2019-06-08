@@ -5,59 +5,59 @@
 	var groupModel = ViewBag.Group as List<AttendanceManagement.Models.GroupModel>;
 }
 
-	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
-	<link href="~/Content/kiaalap/css/bootstrap-duallistbox.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+<link href="~/Content/kiaalap/css/bootstrap-duallistbox.min.css" rel="stylesheet" />
 
-	<div class="all-content-wrapper">
-		<!-- dual list Start -->
-		<div class="dual-list-box-area mg-b-15">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="sparkline10-list">
-							<div class="sparkline10-hd">
-								<div class="row justify-content-center">
-									<div class="main-sparkline10-hd">
-										<h1>Please chose group</h1>
-									</div>
-								</div>
-								<div class="row">
-									<select class="form-control" name="groupID" id="groupID" onchange=Chose()>
-										@foreach (var item in groupModel)
-										{
-											<option value="@item.GroupName" selected>@item.GroupName</option>
-										}
-									</select>
+<div class="all-content-wrapper">
+	<!-- dual list Start -->
+	<div class="dual-list-box-area mg-b-15">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="sparkline10-list">
+						<div class="sparkline10-hd">
+							<div class="row justify-content-center">
+								<div class="main-sparkline10-hd">
+									<br />
+									<h1>Please chose group</h1>
 								</div>
 							</div>
-							<div class="sparkline10-graph" id="mainBoy" style="display:none">
-								<div class="basic-login-form-ad">
-									<div class="row">
-										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-											<div class="dual-list-box-inner">
-												<form id="form" action="/AttendanceManagement/Attendance/AddStudent" method="post" class="wizard-big">
-													<div class="row">
-														<select class="form-control dual_select" multiple name="studentlist">
-															@if (Model != null)
+							<div class="row">
+								<select class="form-control" name="groupID" id="groupID" onchange=Chose()>
+									@foreach (var item in groupModel)
+									{
+										<option value="@item.GroupName" selected>@item.GroupName</option>
+									}
+								</select>
+							</div>
+						</div>
+						<div class="sparkline10-graph" id="mainBoy" style="display:none">
+							<div class="basic-login-form-ad">
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div class="dual-list-box-inner">
+											<form id="form" action="/AttendanceManagement/Attendance/AddStudent" method="post" class="wizard-big">
+												<div class="row">
+													<select class="form-control dual_select" multiple name="studentlist">
+														@if (Model != null)
+														{
+															foreach (var item in Model)
 															{
-																foreach (var item in Model)
-																{
-																	<option value="@item.StID">@item.StID      @item.FirstName @item.LastName</option>
-																}
+																<option value="@item.StID">@item.StID      @item.FirstName @item.LastName</option>
 															}
-														</select>
+														}
+													</select>
+												</div>
+												<br />
+												<div class="row justify-content-center">
+													<div class="col-2">
+														<button type="button" onclick="hideModal()" class="btn waves-effect waves-light btn-block btn-info"> Close</button>
 													</div>
-													<br />
-													<div class="row justify-content-center">
-															<div class="col-2">
-																<button type="button" onclick="hideModal()" class="btn waves-effect waves-light btn-block btn-info"> Close</button>
-															</div>
-															<div class="col-2">
-																<button type="submit" class="btn waves-effect waves-light btn-block btn-danger"> Add </button>
-														</div>
+													<div class="col-2">
+														<button type="submit" class="btn waves-effect waves-light btn-block btn-danger"> Add </button>
 													</div>
-												</form>
-											</div>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
@@ -67,21 +67,19 @@
 				</div>
 			</div>
 		</div>
-		<!-- dual list End-->
-
 	</div>
-
-	<!-- jquery
-		============================================ -->
-	<!-- duallistbox JS
-		============================================ -->
-	<script src="~/Content/kiaalap/js/jquery.bootstrap-duallistbox.js"></script>
-	<script src="~/Content/kiaalap/js/duallistbox.active.js"></script>
+	<!-- dual list End-->
+</div>
+<!-- jquery
+	============================================ -->
+<!-- duallistbox JS
+	============================================ -->
+<script src="~/Content/kiaalap/js/jquery.bootstrap-duallistbox.js"></script>
+<script src="~/Content/kiaalap/js/duallistbox.active.js"></script>
 
 
 <script>
 	function Chose() {
-		
 		var groupID = $('#groupID').val();
 		var url = '@Url.Action("AddStudent", "Attendance", new { groupname = "_id" })';
 		url = url.replace("_id", encodeURIComponent(groupID));

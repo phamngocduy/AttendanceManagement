@@ -317,6 +317,18 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\animate.css" />
+    <Content Include="Content\css\colors\blue-dark.css" />
+    <Content Include="Content\css\colors\blue.css" />
+    <Content Include="Content\css\colors\default-dark.css" />
+    <Content Include="Content\css\colors\default.css" />
+    <Content Include="Content\css\colors\green-dark.css" />
+    <Content Include="Content\css\colors\green.css" />
+    <Content Include="Content\css\colors\megna-dark.css" />
+    <Content Include="Content\css\colors\megna.css" />
+    <Content Include="Content\css\colors\purple-dark.css" />
+    <Content Include="Content\css\colors\purple.css" />
+    <Content Include="Content\css\colors\red-dark.css" />
+    <Content Include="Content\css\colors\red.css" />
     <Content Include="Content\css\spinners.css" />
     <Content Include="Content\fonts\educate-icon.svg" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
@@ -660,6 +672,7 @@
     <Content Include="Content\scss\icons\themify-icons\fonts\themify.eot" />
     <Content Include="Content\scss\icons\themify-icons\fonts\themify.ttf" />
     <Content Include="Content\scss\icons\themify-icons\fonts\themify.woff" />
+    <Content Include="Content\ImportExcelTemplate.xlsx" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -667,7 +680,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\ImportExcelTemplate.xlsx" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -812,7 +824,9 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

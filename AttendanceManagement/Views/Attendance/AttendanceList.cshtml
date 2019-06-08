@@ -76,6 +76,8 @@
 	</div>
 </div>
 
+<script src="~/Content/assets/jquery.min.js"></script>
+<script src="~/Content/assets/bootstrap-switch.min.js"></script>
 <script>
 	$(document).ready(function () {
 		var table = $("#tableattendance tbody")
@@ -178,17 +180,9 @@
 	}
 </script>
 
-
-
-<script src="~/Content/assets/jquery.min.js"></script>
-
-<script src="~/Content/assets/bootstrap-switch.min.js"></script>
-<script type="text/javascript">
-	$(".bt-switch1 input[type='checkbox']").bootstrapSwitch();
-</script>
-
-<!--move lines-->
 <script>
+	$(".bt-switch1 input[type='checkbox']").bootstrapSwitch();
+
 	$('table').on('click', '[type=checkbox]', function () {
 		var $this = $(this);
 		var row = $this.closest('tr');
@@ -213,4 +207,3 @@
 	});
 
 </script>
-

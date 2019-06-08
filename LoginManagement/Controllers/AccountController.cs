@@ -41,10 +41,10 @@ namespace IdentificationManagement.Controllers
 		{
 			return View();
 		}
-		[AllowAnonymous]
+		[Authorize]
 		public ActionResult Index()
 		{
-			user = db.Users.First(x => x.Email == "duykhau1@vanlanguni.vn");
+			user = db.Users.First(x => x.Email == User.Identity.Name);
 			return View(user);
 		}
 		[AllowAnonymous]
@@ -76,7 +76,7 @@ namespace IdentificationManagement.Controllers
 		/// </summary>
 
 		private const string _tempFolder = "/Temp";
-		private const string _mapTempFolder = "~" + _tempFolder;
+		private const string _mapTempFolder = _tempFolder;
 		private  string _avatarPath = "~/Avatars";
 
 		private readonly string[] _imageFileExtensions = { ".jpg", ".png", ".gif", ".jpeg" };
@@ -116,47 +116,20 @@ namespace IdentificationManagement.Controllers
 		{
 			try
 			{
-				// Get file from temporary folder, ...
 				var fn = Path.Combine(Server.MapPath(_mapTempFolder), Path.GetFileName(fileName));
-
-				// ... get the image, ...
 				var img = new WebImage(fn);
-
-				// ... scale it, ...
 				img.Resize(256, 256);
-
-				// ... delete the temporary file,...
 				System.IO.File.Delete(fn);
-
-				_avatarPath = _avatarPath + "/Avatars" + user.StID.ToString();
-				var serverPath = HttpContext.Server.MapPath(_avatarPath);
-				//...delte all file in folder
-				if (Directory.Exists(Path.GetDirectoryName(serverPath)) == true)
-				{
-					var fileEntries = Directory.GetFiles(serverPath);
-					if (fileEntries != null)
-					{
-						foreach (var fileEntry in fileEntries)
-						{
-							{
-								System.IO.File.Delete(fileEntry);
-							}
-						}
-					}
-				}
-				
 				
 				// ... and save the new one.
-				var newFileName = Path.Combine(_avatarPath, Path.GetFileName(fn));
+				var newFileName = Path.Combine(_avatarPath, user.StID.ToString());
 
 				var newFileLocation = HttpContext.Server.MapPath(newFileName);
 				if (Directory.Exists(Path.GetDirectoryName(newFileLocation)) == false)
 				{
 					Directory.CreateDirectory(Path.GetDirectoryName(newFileLocation));
 				}
-				
 				img.Save(newFileLocation);
-
 				img.Resize(32, 32);
 				string base64String = Convert.ToBase64String(img.GetBytes());
 
@@ -357,8 +330,8 @@ namespace IdentificationManagement.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
+			return new ChallengeResult("Microsoft", Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+		}
 
         //
         // POST: /Account/Login
@@ -462,7 +435,7 @@ namespace IdentificationManagement.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Account");
                 }
                 AddErrors(result);
             }
@@ -671,47 +644,62 @@ namespace IdentificationManagement.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Manage");
-            }
+		public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+		{
+			if (User.Identity.IsAuthenticated)
+			{
+				return RedirectToAction("Index", "Manage");
+			}
 
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
+			if (ModelState.IsValid)
+			{
+				// Get the information about the user from the external login provider
+				var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+				if (info == null)
+				{
 
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
-        }
+					return View("ExternalLoginFailure");
+				}
+				var user1 = await UserManager.FindByNameAsync(info.Email);
+				if (user1 != null)
+				{
+					var addLoginResult = await UserManager.AddLoginAsync(user1.Id, info.Login);
+					if (addLoginResult.Succeeded)
+					{
+						await SignInManager.SignInAsync(user1, isPersistent: false, rememberBrowser: false);
+						return RedirectToLocal(returnUrl);
+					}
+				}
+				else
+				{
+					var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+					var result = await UserManager.CreateAsync(user);
+					if (result.Succeeded)
+					{
+						result = await UserManager.AddLoginAsync(user.Id, info.Login);
+						if (result.Succeeded)
+						{
+							await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+							return RedirectToLocal(returnUrl);
+						}
+					}
+					AddErrors(result);
+				}
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
+			}
+
+			ViewBag.ReturnUrl = returnUrl;
+			return View(model);
+		}
+
+		//
+		// POST: /Account/LogOff
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Account");
         }
 
         //
@@ -768,7 +756,7 @@ namespace IdentificationManagement.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Accounr");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

@@ -126,6 +126,9 @@
   <data name="Creategroup" xml:space="preserve">
     <value>Create new group</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit group</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import student</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>

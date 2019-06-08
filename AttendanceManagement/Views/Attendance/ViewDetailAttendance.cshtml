@@ -1,0 +1,8 @@
+﻿
+@{
+	ViewBag.Title = "ViewDetailAttendance";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@{
+	Html.RenderPartial("~/Views/Attendance/AttendanceList.cshtml", ViewData["student"]);
+}

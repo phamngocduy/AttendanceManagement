@@ -59,7 +59,7 @@
 				<!-- Logo -->
 				<!-- ============================================================== -->
 				<div class="navbar-header" style="align-content:center">
-					<a class="navbar-brand" href="index.html">
+					<a class="navbar-brand" href="">
 						<!-- Logo icon --><b>
 							<!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
 							<!-- Dark Logo icon -->
@@ -180,7 +180,6 @@
 				<!-- User profile -->
 				<div class="user-profile" style="background: url(/GroupManagement/Content/assets/user-info.jpg) no-repeat;">
 					<!-- User profile image -->
-
 					<div class="profile-img"> <img src="~/Content/assets/profile.png" alt="user" /> </div>
 					<!-- User profile text-->
 					<div class="profile-text">
@@ -208,18 +207,18 @@
 							</ul>
 						</li>
 						@*@if (User.IsInRole("Admin"))
-							{
-								<li>
-									<a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu"> System Management</span></a>
-									<ul aria-expanded="false" class="collapse">
-										<li>@Html.ActionLink("Majors List", "MajorList", "Attendance")</li>
-										<li>@Html.ActionLink("Facultys List", "FacultyIndex", "Attendance")</li>
-										<li>@Html.ActionLink("Courses List", "CourseList", "Attendance")</li>
-										<li>@Html.ActionLink("All users", "Index", "Users")</li>
-										<li>@Html.ActionLink("Role Management", "UserRole", "Users")</li>
-									</ul>
-								</li>
-							}*@
+					{
+						<li>
+							<a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu"> System Management</span></a>
+							<ul aria-expanded="false" class="collapse">
+								<li>@Html.ActionLink("Majors List", "MajorList", "Attendance")</li>
+								<li>@Html.ActionLink("Facultys List", "FacultyIndex", "Attendance")</li>
+								<li>@Html.ActionLink("Courses List", "CourseList", "Attendance")</li>
+								<li>@Html.ActionLink("All users", "Index", "Users")</li>
+								<li>@Html.ActionLink("Role Management", "UserRole", "Users")</li>
+							</ul>
+						</li>
+					}*@
 
 					</ul>
 				</nav>
@@ -228,9 +227,13 @@
 			<!-- End Sidebar scroll-->
 			<!-- Bottom points-->
 			<div class="sidebar-footer">
-				<!-- item--><a href="" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
-				<!-- item--><a href="" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
-				<!-- item--><a href="" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+				<!-- item--><a class="right-side-toggle " data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
+				<!-- item--><a href="http://mail.vanlanguni.vn" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
+				<!-- item-->
+				@if (Request.IsAuthenticated)
+				{
+					<a href="@Url.Action("LogOff","Account")" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+				}
 			</div>
 			<!-- End Bottom points-->
 		</aside>
@@ -256,7 +259,7 @@
 				<!-- ============================================================== -->
 				<!-- Row -->
 				@*<div class="content"></div>
-					@RenderBody()*@
+		@RenderBody()*@
 				<section class="content">
 					@RenderBody()
 				</section>
@@ -268,16 +271,17 @@
 				<!-- Right sidebar -->
 				<!-- ============================================================== -->
 				<!-- .right-sidebar -->
+				
 				<div class="right-sidebar">
 					<div class="slimscrollright">
-						<div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+						<div class="rpanel-title"> Sidebar color setting <span><i class="ti-close right-side-toggle"></i></span> </div>
 						<div class="r-panel-body">
 							<ul id="themecolors" class="m-t-20">
 								<li><b>With Light sidebar</b></li>
 								<li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
 								<li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
-								<li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
-								<li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
+								<li><a href="javascript:void(0)" data-theme="red" class="red-theme working">3</a></li>
+								<li><a href="javascript:void(0)" data-theme="blue" class="blue-theme ">4</a></li>
 								<li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
 								<li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
 								<li class="d-block m-t-30"><b>With Dark sidebar</b></li>
@@ -288,33 +292,7 @@
 								<li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
 								<li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
 							</ul>
-							<ul class="m-t-20 chatonline">
-								<li><b>Chat option</b></li>
-								<li>
-									<a href="javascript:void(0)"><img src="~/Content/assets/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
-								</li>
-								<li>
-									<a href="javascript:void(0)"><img src="~/Content/assets/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
-								</li>
-								<li>
-									<a href="javascript:void(0)"><img src="~/Content/assets/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
-								</li>
-								<li>
-									<a href="javascript:void(0)"><img src="~/Content/assets/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
-								</li>
-								<li>
-									<a href="javascript:void(0)"><img src="~/Content/assets/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
-								</li>
-								<li>
-									<a href="javascript:void(0)"><img src="~/Content/assets/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
-								</li>
-								<li>
-									<a href="javascript:void(0)"><img src="~/Content/assets/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
-								</li>
-								<li>
-									<a href="javascript:void(0)"><img src="~/Content/assets/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
-								</li>
-							</ul>
+							
 						</div>
 					</div>
 				</div>

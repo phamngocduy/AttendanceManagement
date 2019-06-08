@@ -88,6 +88,15 @@ namespace WebApplication.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chĩnh sữa nhóm.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tiếng Anh.
         /// </summary>
         public static string English {
@@ -111,6 +120,15 @@ namespace WebApplication.Resources {
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhập danh sách sinh viên.
+        /// </summary>
+        public static string Import {
+            get {
+                return ResourceManager.GetString("Import", resourceCulture);
             }
         }
         

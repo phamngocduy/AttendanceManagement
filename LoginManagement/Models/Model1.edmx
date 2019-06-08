@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="cap21t4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="LoginManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -128,11 +128,11 @@
           <Property Name="Gender" Type="bit" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
           <Property Name="Email" Type="nvarchar" MaxLength="200" />
-          <Property Name="PlaceofBirth" Type="nvarchar" MaxLength="200" />
           <Property Name="DoB" Type="date" />
           <Property Name="AvatarLink" Type="nvarchar" MaxLength="500" />
           <Property Name="AvatarBase64" Type="varchar(max)" />
           <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="PlaceofBirth" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -190,7 +190,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Group_Group2">
+        <Association Name="FK_Group_Group">
           <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
           <End Role="Group1" Type="Self.Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -202,7 +202,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_GroupManager_Group3">
+        <Association Name="FK_GroupManager_Group">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="GroupManager" Type="Self.GroupManager" Multiplicity="*" />
           <ReferentialConstraint>
@@ -214,7 +214,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_GroupManager_Group4">
+        <Association Name="FK_GroupManager_Group1">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="GroupManager" Type="Self.GroupManager" Multiplicity="*" />
           <ReferentialConstraint>
@@ -286,7 +286,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="cap21t4ModelStoreContainer">
+        <EntityContainer Name="LoginManagementModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -315,15 +315,15 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Group_Group2" Association="Self.FK_Group_Group2">
+          <AssociationSet Name="FK_Group_Group" Association="Self.FK_Group_Group">
             <End Role="Group" EntitySet="Group" />
             <End Role="Group1" EntitySet="Group" />
           </AssociationSet>
-          <AssociationSet Name="FK_GroupManager_Group3" Association="Self.FK_GroupManager_Group3">
+          <AssociationSet Name="FK_GroupManager_Group" Association="Self.FK_GroupManager_Group">
             <End Role="Group" EntitySet="Group" />
             <End Role="GroupManager" EntitySet="GroupManager" />
           </AssociationSet>
-          <AssociationSet Name="FK_GroupManager_Group4" Association="Self.FK_GroupManager_Group4">
+          <AssociationSet Name="FK_GroupManager_Group1" Association="Self.FK_GroupManager_Group1">
             <End Role="Group" EntitySet="Group" />
             <End Role="GroupManager" EntitySet="GroupManager" />
           </AssociationSet>
@@ -352,7 +352,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="cap21t4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="LoginManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -428,8 +428,8 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="0" />
           <Property Name="DeletedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DeletedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Group1" Relationship="Self.FK_Group_Group2" FromRole="Group" ToRole="Group1" />
-          <NavigationProperty Name="Group2" Relationship="Self.FK_Group_Group2" FromRole="Group1" ToRole="Group" />
+          <NavigationProperty Name="Group1" Relationship="Self.FK_Group_Group" FromRole="Group" ToRole="Group1" />
+          <NavigationProperty Name="Group2" Relationship="Self.FK_Group_Group" FromRole="Group1" ToRole="Group" />
           <NavigationProperty Name="Group11" Relationship="Self.GroupManager" FromRole="Group" ToRole="Group1" />
           <NavigationProperty Name="Groups" Relationship="Self.GroupManager" FromRole="Group1" ToRole="Group" />
           <NavigationProperty Name="Users" Relationship="Self.GroupMember" FromRole="Group" ToRole="User" />
@@ -457,11 +457,11 @@
           <Property Name="Gender" Type="Boolean" />
           <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PlaceofBirth" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DoB" Type="DateTime" Precision="0" />
           <Property Name="AvatarLink" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="AvatarBase64" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PlaceofBirth" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_User_AspNetUsers" FromRole="User" ToRole="AspNetUsers" />
           <NavigationProperty Name="Groups" Relationship="Self.GroupMember" FromRole="User" ToRole="Group" />
           <NavigationProperty Name="Groups1" Relationship="Self.GroupOwner" FromRole="User" ToRole="Group" />
@@ -506,7 +506,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Group_Group2">
+        <Association Name="FK_Group_Group">
           <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
           <End Role="Group1" Type="Self.Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -555,7 +555,7 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_Group_Group2" Association="Self.FK_Group_Group2">
+          <AssociationSet Name="FK_Group_Group" Association="Self.FK_Group_Group">
             <End Role="Group" EntitySet="Groups" />
             <End Role="Group1" EntitySet="Groups" />
           </AssociationSet>
@@ -581,9 +581,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="cap21t4ModelStoreContainer" CdmEntityContainer="cap21t4Entities">
+        <EntityContainerMapping StorageEntityContainer="LoginManagementModelStoreContainer" CdmEntityContainer="cap21t4Entities">
           <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="cap21t4Model.C__MigrationHistory">
+            <EntityTypeMapping TypeName="LoginManagementModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
@@ -593,7 +593,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="cap21t4Model.AspNetRole">
+            <EntityTypeMapping TypeName="LoginManagementModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -601,7 +601,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="cap21t4Model.AspNetUserClaim">
+            <EntityTypeMapping TypeName="LoginManagementModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -611,7 +611,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="cap21t4Model.AspNetUserLogin">
+            <EntityTypeMapping TypeName="LoginManagementModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -620,7 +620,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="cap21t4Model.AspNetUser">
+            <EntityTypeMapping TypeName="LoginManagementModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -638,7 +638,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Groups">
-            <EntityTypeMapping TypeName="cap21t4Model.Group">
+            <EntityTypeMapping TypeName="LoginManagementModel.Group">
               <MappingFragment StoreEntitySet="Group">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="GroupName" ColumnName="GroupName" />
@@ -655,7 +655,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="cap21t4Model.sysdiagram">
+            <EntityTypeMapping TypeName="LoginManagementModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -666,7 +666,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="cap21t4Model.User">
+            <EntityTypeMapping TypeName="LoginManagementModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -676,15 +676,15 @@
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PlaceofBirth" ColumnName="PlaceofBirth" />
                 <ScalarProperty Name="DoB" ColumnName="DoB" />
                 <ScalarProperty Name="AvatarLink" ColumnName="AvatarLink" />
                 <ScalarProperty Name="AvatarBase64" ColumnName="AvatarBase64" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="PlaceofBirth" ColumnName="PlaceofBirth" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="cap21t4Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="LoginManagementModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -692,7 +692,7 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="GroupManager" TypeName="cap21t4Model.GroupManager" StoreEntitySet="GroupManager">
+          <AssociationSetMapping Name="GroupManager" TypeName="LoginManagementModel.GroupManager" StoreEntitySet="GroupManager">
             <EndProperty Name="Group">
               <ScalarProperty Name="ID" ColumnName="GroupID" />
             </EndProperty>
@@ -700,7 +700,7 @@
               <ScalarProperty Name="ID" ColumnName="GroupManagerID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="GroupMember" TypeName="cap21t4Model.GroupMember" StoreEntitySet="GroupMember">
+          <AssociationSetMapping Name="GroupMember" TypeName="LoginManagementModel.GroupMember" StoreEntitySet="GroupMember">
             <EndProperty Name="Group">
               <ScalarProperty Name="ID" ColumnName="GroupID" />
             </EndProperty>
@@ -708,7 +708,7 @@
               <ScalarProperty Name="ID" ColumnName="MemberID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="GroupOwner" TypeName="cap21t4Model.GroupOwner" StoreEntitySet="GroupOwner">
+          <AssociationSetMapping Name="GroupOwner" TypeName="LoginManagementModel.GroupOwner" StoreEntitySet="GroupOwner">
             <EndProperty Name="Group">
               <ScalarProperty Name="ID" ColumnName="GroupID" />
             </EndProperty>

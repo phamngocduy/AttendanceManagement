@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d207c676e84c4d8db8146babe3e386f4" Name="Diagram1">
-        <EntityTypeShape EntityType="cap21t4Model.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetRole" Width="1.5" PointX="1.5" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUserClaim" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUserLogin" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.AspNetUser" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.Group" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.sysdiagram" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cap21t4Model.User" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_User_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.FK_Group_Group2" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.GroupManager" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.GroupMember" ManuallyRouted="false" />
-        <AssociationConnector Association="cap21t4Model.GroupOwner" ManuallyRouted="false" />
+      <Diagram DiagramId="e30532baf7b7417ab6b25a06caea4f51" Name="Diagram1">
+        <EntityTypeShape EntityType="LoginManagementModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.AspNetRole" Width="1.5" PointX="1.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.AspNetUser" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.Group" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.sysdiagram" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.User" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="LoginManagementModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="LoginManagementModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="LoginManagementModel.FK_User_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="LoginManagementModel.FK_Group_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="LoginManagementModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="LoginManagementModel.GroupManager" ManuallyRouted="false" />
+        <AssociationConnector Association="LoginManagementModel.GroupMember" ManuallyRouted="false" />
+        <AssociationConnector Association="LoginManagementModel.GroupOwner" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

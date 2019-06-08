@@ -126,6 +126,9 @@
   <data name="Creategroup" xml:space="preserve">
     <value>Tạo nhóm mới</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Chĩnh sữa nhóm</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>Tiếng Anh</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="Home" xml:space="preserve">
     <value>Trang chủ</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Nhập danh sách sinh viên</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Ngôn Ngữ</value>

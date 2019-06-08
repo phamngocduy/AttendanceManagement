@@ -26,15 +26,16 @@
 
 <script>
 	function CloseAttendance(id) {
-		var idData = '{ id:' + id + '}';
 		$.ajax({
 			type: "POST",
 			url: "/AttendanceManagement/Attendance/CloseAttendance?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (data) {
+				
 				if (data == true) {
 					$("#generateQRcode").modal("hide");
+					window.location.href = "/AttendanceManagement/Attendance/ViewDetailAttendance/?id=" + id;
 				}
 				else {
 					alert("error")

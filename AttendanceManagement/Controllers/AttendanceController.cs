@@ -83,7 +83,6 @@ namespace AttendanceManagement.Controllers
 			{
 				ViewBag.tab = Session["tabactive"].ToString();
 				Session.Remove("tabactive");
-
 			}
 
 			var session = db.Sessions.Where(x => x.CourseID == courseID).OrderBy(x => x.Date).ToList();
@@ -103,16 +102,10 @@ namespace AttendanceManagement.Controllers
 				int TotalPoint = 0;
 				foreach (var item in session)
 				{
-
 					DetailAttendance detail = new DetailAttendance();
 					detail.Date = (DateTime)item.Date;
 					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
-					if (attendance == null)
-					{
-						detail.Status = "N/A";
-						detail.Note = "";
-					}
-					else
+					if (attendance != null)
 					{
 						detail.Status = attendance.Status;
 
@@ -120,7 +113,7 @@ namespace AttendanceManagement.Controllers
 						{
 							TotalPresent++;
 						}
-						if (attendance.Status != "")
+						if (attendance.Status != "0")
 						{
 							TotalPoint = TotalPoint + int.Parse(attendance.Status);
 						}
@@ -160,7 +153,7 @@ namespace AttendanceManagement.Controllers
 			int iCountStudentInCourse = 0;
 			foreach (var item in studentlist)
 			{
-				string studentdata = api.ReadData("http://localhost:54325/api/getUserInfo?searchString=" + item);
+				string studentdata = api.ReadData("https://fitlogin.vanlanguni.edu.vn/GroupManagement/api/getUserInfo?searchString=" + item);
 				UserModel student = JsonConvert.DeserializeObject<UserModel>(studentdata);
 				var courseID = int.Parse(Session["CourseID"].ToString());
 				var course = db.Courses.FirstOrDefault(x => x.ID == courseID);
@@ -178,7 +171,11 @@ namespace AttendanceManagement.Controllers
 					course.CourseMembers.Add(newMember);
 					iCountAddStudent++;
 				}
-				iCountStudentInCourse++;
+				else
+				{
+					iCountStudentInCourse++;
+				}
+				
 			}
 			db.SaveChanges();
 
@@ -281,7 +278,6 @@ namespace AttendanceManagement.Controllers
 		public ActionResult ExportExcel()
 		{
 			int id = int.Parse(Session["CourseID"].ToString());
-
 
 			//Codes for the Closed XML
 			var file = Server.MapPath("~/Content/AttendanceExcelTemplate.xlsx");
@@ -444,6 +440,217 @@ namespace AttendanceManagement.Controllers
 			return RedirectToAction("Index");
 		}
 
+		public ActionResult Export()
+		{
+			int id = int.Parse(Session["CourseID"].ToString());
+
+			var session = db.Sessions.Where(x => x.CourseID == id).OrderBy(x => x.Date).ToList();
+			var student = db.CourseMembers.Where(x => x.CourseID == id).OrderBy(x => x.FirstName).ToList();
+			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
+			foreach (var iten in student)
+			{
+				DasboardAttendanceView attendanceview = new DasboardAttendanceView();
+				attendanceview.memberID = iten.ID;
+				attendanceview.studentID = iten.StudentID;
+				attendanceview.FirstName = iten.FirstName;
+				attendanceview.LastName = iten.LastName;
+				attendanceview.TotalSession = session.Count();
+				int TotalPresent = 0;
+				int TotalPoint = 0;
+				foreach (var item in session)
+				{
+					DetailAttendance detail = new DetailAttendance();
+					detail.Date = (DateTime)item.Date;
+					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
+					if (attendance != null)
+					{
+						if (attendance.Status != "0" && attendance.Status != null && attendance.Status!="")
+						{
+							detail.Status = "x";
+						}
+						else
+						{
+							detail.Status = "";
+						}
+						//if (attendance.Status !=null || attendance.Status!="")
+						//{
+							
+						//	TotalPresent++;
+						//	TotalPoint = TotalPoint + int.Parse(attendance.Status);
+						//}
+						//else
+						//{
+						//	detail.Status = "";
+						//}
+						detail.Note = attendance.Note;
+					}
+					attendanceview.Attendance.Add(detail);
+				}
+				attendanceview.TotalPoint = TotalPoint;
+				attendanceview.TotalPresent = TotalPresent;
+				list.Add(attendanceview);
+			}
+			//Codes for the Closed XML
+			var file = Server.MapPath("~/Content/AttendanceExcelTemplate.xlsx");
+			using (XLWorkbook wb = new XLWorkbook(file))
+			{
+				var ws = wb.Worksheet(1);
+
+				for (int j = 1; j < 5; j++)
+				{
+					if (j == 1)
+					{
+						ws.Cell(7, j).Style.Font.Bold = true;
+						ws.Cell(7, j).Style.Font.FontSize = 12;
+						ws.Cell(7, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+						ws.Cell(7, j).Style.Border.BottomBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.BottomBorderColor = XLColor.Black;
+
+						ws.Cell(7, j).Style.Border.TopBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.TopBorderColor = XLColor.Black;
+
+						ws.Cell(7, j).Style.Border.LeftBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.LeftBorderColor = XLColor.Black;
+
+						ws.Cell(7, j).Style.Border.RightBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.RightBorderColor = XLColor.Black;
+					}
+					else
+					{
+						ws.Cell(7, j).Style.Font.Bold = true;
+						ws.Cell(7, j).Style.Font.FontSize = 12;
+						ws.Cell(7, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+						ws.Cell(7, j).Style.Border.BottomBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.BottomBorderColor = XLColor.Black;
+
+						ws.Cell(7, j).Style.Border.TopBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.TopBorderColor = XLColor.Black;
+
+
+						ws.Cell(7, j).Style.Border.RightBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, j).Style.Border.RightBorderColor = XLColor.Black;
+					}
+
+				}
+				int i = 5;
+				int iIndexSession = 1;
+					foreach(var date in list[1].Attendance)
+					{
+						ws.Column(i).Width = 5;
+						ws.Cell(7, i).Style.Font.Bold = true;
+						ws.Cell(7, i).Style.Font.FontSize = 12;
+						ws.Cell(7, i).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+						ws.Cell(7, i).Value = "B" + iIndexSession;
+						ws.Cell(7, i).Comment.Style.Alignment.SetAutomaticSize();
+						ws.Cell(7, i).Comment.AddText(date.Date.ToShortDateString());
+						ws.Cell(7, i).Style.Border.BottomBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, i).Style.Border.BottomBorderColor = XLColor.Black;
+
+						ws.Cell(7, i).Style.Border.TopBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, i).Style.Border.TopBorderColor = XLColor.Black;
+
+						ws.Cell(7, i).Style.Border.RightBorder = XLBorderStyleValues.Medium;
+						ws.Cell(7, i).Style.Border.RightBorderColor = XLColor.Black;
+						i++;
+						iIndexSession++;
+					}
+				int iIndex = 1;
+				int iRow = 8;
+				foreach (var item in list)
+				{
+					int iCol = 1;
+					ws.Cell(iRow, iCol).Value = iIndex;
+					ws.Cell(iRow, iCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+					ws.Cell(iRow, iCol).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol).Style.Border.LeftBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol).Style.Border.LeftBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol).Style.Border.RightBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 1).Value = item.studentID;
+					ws.Cell(iRow, iCol + 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+					ws.Cell(iRow, iCol + 1).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 1).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 1).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 1).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 1).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 1).Style.Border.RightBorderColor = XLColor.Black;
+
+
+					ws.Cell(iRow, iCol + 2).Value = item.LastName;
+					ws.Cell(iRow, iCol + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 2).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 2).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.RightBorderColor = XLColor.Black;
+					ws.Cell(iRow, iCol + 2).Value = item.LastName;
+					ws.Cell(iRow, iCol + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 2).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 2).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 2).Style.Border.RightBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 3).Value = item.FirstName;
+					ws.Cell(iRow, iCol + 3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+					ws.Cell(iRow, iCol + 3).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 3).Style.Border.BottomBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 3).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 3).Style.Border.TopBorderColor = XLColor.Black;
+
+					ws.Cell(iRow, iCol + 3).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+					ws.Cell(iRow, iCol + 3).Style.Border.RightBorderColor = XLColor.Black;
+					iCol = iCol + 4;
+					foreach(var attendance in item.Attendance)
+					{
+						ws.Cell(iRow, iCol ).Value = attendance.Status;
+						ws.Cell(iRow, iCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+						ws.Cell(iRow, iCol).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
+						ws.Cell(iRow, iCol).Style.Border.BottomBorderColor = XLColor.Black;
+
+						ws.Cell(iRow, iCol).Style.Border.TopBorder = XLBorderStyleValues.Dotted;
+						ws.Cell(iRow, iCol).Style.Border.TopBorderColor = XLColor.Black;
+
+						ws.Cell(iRow, iCol).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
+						ws.Cell(iRow, iCol).Style.Border.RightBorderColor = XLColor.Black;
+						iCol++;
+					}
+					iRow++;
+					iIndex++;
+
+				}
+				string myName = Server.UrlEncode("AttendanceByExcel" + "_" + db.Courses.FirstOrDefault(x => x.ID == id).CourseName + ".xlsx");
+				MemoryStream stream = GetStream(wb);// The method is defined below
+				Response.Clear();
+				Response.Buffer = true;
+				Response.AddHeader("content-disposition", "attachment; filename=" + myName);
+				Response.ContentType = "application/vnd.ms-excel";
+				Response.BinaryWrite(stream.ToArray());
+				Response.End();
+			}
+
+			return RedirectToAction("Index");
+		}
+
 
 		public MemoryStream GetStream(XLWorkbook excelWorkbook)
 		{
@@ -509,7 +716,14 @@ namespace AttendanceManagement.Controllers
 										DetailAttendance detail = new DetailAttendance();
 										detail.Date = DateTime.Parse(ws.Cell(7, j).Comment.Text);
 										detail.Note = ws.Cell(i, j).Comment.Text;
-										detail.Status = ws.Cell(i, j).GetValue<string>();
+										if(ws.Cell(i, j).GetValue<string>().ToLower() == "x")
+										{
+											detail.Status = "10";
+										}else
+										{
+											detail.Status = "0";
+										}
+										 
 										attendanceview.Attendance.Add(detail);
 									}
 									listAttendance.Add(attendanceview);
@@ -569,7 +783,7 @@ namespace AttendanceManagement.Controllers
 
 							foreach (var aItem in item.Attendance)
 							{
-								var SessionID = db.Sessions.FirstOrDefault(x => x.Date == aItem.Date).ID;
+								var SessionID = db.Sessions.FirstOrDefault(x => x.Date == aItem.Date && x.CourseID==CourseID).ID;
 								Attendance nAttendance = new Attendance();
 								nAttendance.MemberID = MemberID;
 								nAttendance.SessionID = SessionID;
@@ -581,8 +795,6 @@ namespace AttendanceManagement.Controllers
 						db.SaveChanges();
 						scope.Complete();
 					}
-
-
 				}
 			}
 			catch (Exception ex)
@@ -597,7 +809,9 @@ namespace AttendanceManagement.Controllers
 
 		public ActionResult CheckByCode()
 		{
-			return View();
+			var student = db.CourseMembers.FirstOrDefault(x => x.Email == "duykhau1@vanlanguni.vn");
+
+			return View(student);
 		}
 		[HttpPost]
 		public string CheckByCode(string id)
@@ -611,9 +825,15 @@ namespace AttendanceManagement.Controllers
 				return "false";
 			}
 		}
+		[HttpPost]
+		public ActionResult CheckAttendanceQRcode(CheckQRCodeModel model)
+		{
+
+			return View();
+		}
 
 		[HttpPost]
-		public string CloseAttendance(string id)
+		public String CloseAttendance(string id)
 		{
 			string folderPath = "~/Images/";
 			var serverPath= HttpContext.Server.MapPath(folderPath);
@@ -631,8 +851,36 @@ namespace AttendanceManagement.Controllers
 				}
 			}
 			AttendanceList.Remove(id);
-
 			return "true";
+		}
+
+		[HttpGet]
+		public JsonResult GetAttendanceData()
+		{
+			int CourseID = int.Parse(Session["CourseID"].ToString());
+			var listSession = db.Sessions.Where(x => x.CourseID == CourseID).OrderBy(x=>x.Date);
+			List<string> itemList = new List<string>();
+			foreach (var item in listSession)
+			{
+				var attendanceCount = item.Attendances.Where(x => x.Status != "0").Count();
+				itemList.Add(attendanceCount.ToString());
+			}
+			return Json(itemList, JsonRequestBehavior.AllowGet);
+		}
+		public ActionResult ViewDetailAttendance(string id)
+		{
+			var courseID = int.Parse(Session["CourseID"].ToString());
+
+			int SessionID = int.Parse(id.ToString());
+			var attendance = db.Attendances.FirstOrDefault(x => x.SessionID == SessionID);
+			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.FirstName).ToList();
+			ViewData["student"] = student;
+			return View(attendance);
+}
+		public ActionResult EditAttendance()
+		{
+			return View();
+
 		}
 
 	}

@@ -29,11 +29,11 @@ namespace LoginManagement.Models
         public Nullable<bool> Gender { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string PlaceofBirth { get; set; }
         public Nullable<System.DateTime> DoB { get; set; }
         public string AvatarLink { get; set; }
         public string AvatarBase64 { get; set; }
         public string Note { get; set; }
+        public string PlaceofBirth { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
