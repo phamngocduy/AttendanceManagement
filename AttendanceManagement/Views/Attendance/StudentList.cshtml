@@ -53,7 +53,7 @@
 							<tr>
 								<td>@(i++)</td>
 								<td>
-									<img src="data:image/png;base64,@item.Avatar" alt="Avatar" class="avatar" width="10%">
+									<img src="data:image/png;base64,@item.Avatar" alt="Avatar" class="avatar" width="70%">
 								</td>
 								<td>@item.StudentID</td>
 								<td>@item.FirstName @item.LastName</td>
@@ -100,7 +100,7 @@
 		var table = $('#tablestudents').DataTable();
 		table.button().add(0, {
 			action: function (e, dt, button, config) {
-				var url = "/AttendanceManagement/Attendance/AddStudent";
+				var url = "/Attendance/AddStudent";
 				$("#ModalAddStudent").load(url, function () {
 					$('.modal-backdrop').remove();
 					$("#myAddStudent").modal("show");
@@ -117,7 +117,7 @@
 	})
 
 	function addStudent() {
-		var url = "/AttendanceManagement/Attendance/AddStudent";
+		var url = "/Attendance/AddStudent";
 		$("#ModalAddStudent").load(url, function () {
 			$('.modal-backdrop').remove();
 			$("#myAddStudent").modal("show");

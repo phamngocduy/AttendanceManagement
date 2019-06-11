@@ -105,10 +105,10 @@
           <Property Name="CourseID" Type="int" />
           <Property Name="StudentID" Type="varchar" MaxLength="20" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="20" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
           <Property Name="DoB" Type="date" />
-          <Property Name="Avatar" Type="nvarchar" MaxLength="500" />
+          <Property Name="Avatar" Type="nvarchar(max)" />
           <Property Name="UserID" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="Faculty">
@@ -457,10 +457,10 @@
           <Property Name="CourseID" Type="Int32" />
           <Property Name="StudentID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DoB" Type="DateTime" Precision="0" />
-          <Property Name="Avatar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_CourseMember_AspNetUsers" FromRole="CourseMember" ToRole="AspNetUsers" />
           <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_CourseMember" FromRole="CourseMember" ToRole="Attendance" />

@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="005f9c39c50043cfabb68f87f57786eb" Name="Diagram1">
+      <Diagram DiagramId="6c3e9364bda6435a8fb1c4327dbcff74" Name="Diagram1">
         <EntityTypeShape EntityType="LoginManagementModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LoginManagementModel.AspNetRole" Width="1.5" PointX="1.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.AspNetRole" Width="1.5" PointX="1.5" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LoginManagementModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="LoginManagementModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LoginManagementModel.AspNetUser" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoginManagementModel.AspNetUser" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="LoginManagementModel.Group" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="LoginManagementModel.sysdiagram" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LoginManagementModel.User" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />

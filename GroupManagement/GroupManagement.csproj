@@ -333,6 +333,7 @@
     <Content Include="Content\fonts\educate-icon.svg" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\image\anh-co-so-3.jpg" />
     <Content Include="Content\image\logo-vlu-2018-transparent.png" />
     <Content Include="Content\image\logovl.png" />
     <Content Include="Content\image\user.png" />

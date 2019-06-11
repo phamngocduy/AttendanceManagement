@@ -1,8 +1,124 @@
 ﻿
+@model List<AttendanceManagement.Models.EditAttendanceView>
 @{
-	ViewBag.Title = "ViewDetailAttendance";
-	Layout = "~/Views/Shared/_MainLayout.cshtml";
+		Layout = "~/Views/Shared/_Layout.cshtml";
+		ViewBag.Title = "ViewDetailAttendance";
 }
-@{
-	Html.RenderPartial("~/Views/Attendance/AttendanceList.cshtml", ViewData["student"]);
-}
+
+
+<div class="card card-outline-warning">
+	<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
+	<div class="card-body">
+		<div class="table-responsive m-t-40">
+			<table id="tableEditAttendance" name="atten" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
+				<thead>
+					<tr>
+						<th style="display:none"></th>
+						<th style="text-align:center" id="thEditDate"> </th>
+						<th style="text-align:center">Point</th>
+						<th style="text-align:center">Name</th>
+						<th style="text-align:center">MSSV</th>
+						<th style="text-align:center">Picture</th>
+						<th style="text-align:center">Birthday</th>
+						<th style="text-align:center">Note</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+					<tr>
+						<td style="display:none">
+							<input type="text" value="@item.MemberID" name="memberID" />
+						</td>
+						<td align="center">
+							@if (item.Status != "0" && item.Status != null)
+							{
+								<input type="checkbox" checked  disabled/>
+							}
+							else
+							{
+								<input type="checkbox" disabled />
+							}
+						</td>
+						<td>
+							@if (item.Status == "0")
+							{
+								<select class="custom-select" name="status" style="display:none" disabled>
+									@for (int i = -9; i <= 10; i++)
+									{
+										if (i.ToString() == item.Status)
+										{
+											<option value="@i" selected >@i</option>
+										}
+										else
+										{
+											<option value="@i">@i</option>
+
+										}
+									}
+								</select>
+							}
+							else if (item.Status == null)
+							{
+								<select class="custom-select" name="status">
+									@for (int i = -9; i <= 10; i++)
+									{
+										if (i.ToString() == "0")
+										{
+											<option value="@i" selected>@i</option>
+										}
+										else
+										{
+											<option value="@i">@i</option>
+
+										}
+									}
+								</select>
+							}
+							else
+							{
+								<select class="custom-select" name="status">
+									@for (int i = -9; i <= 10; i++)
+									{
+										if (i.ToString() == item.Status)
+										{
+											<option value="@i" selected>@i</option>
+										}
+										else
+										{
+											<option value="@i">@i</option>
+
+										}
+									}
+								</select>
+							}
+
+						</td>
+						<td>@item.StudentName</td>
+						<td>@item.StudentID</td>
+						<td>
+							@if (item.Picture != null)
+							{
+							<span class="mytooltip tooltip-effect-5">
+								<span class="tooltip-item">Picture</span> <span class="tooltip-content clearfix">
+									<img src="@item.Picture" width="180" /><br />
+								</span>
+							</span>
+							}
+						</td>
+
+						<td>@item.DoB.Value.ToShortDateString()</td>
+						<td>
+							<div class="text" contenteditable="true">
+								<input style="display:none" value="@item.Note" class="textcontent" type="text" name="note" />
+							</div>
+						</td>
+
+					</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>

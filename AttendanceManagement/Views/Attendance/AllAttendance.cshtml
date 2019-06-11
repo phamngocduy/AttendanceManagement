@@ -155,14 +155,25 @@
 
 	<script>
 		$(document).ready(function () {
+			var maxAttendance = 0;
 			$.ajax({
 				type: "GET",
-				url: "/AttendanceManagement/Attendance/GetAttendanceData",
+				url: "/Attendance/getMaxStudent",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (res) {
+					maxAttendance = res;
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "/Attendance/GetAttendanceData",
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (res) {
 					var label = [];
 					var data = []
+					
 					$.each(res, function (index, value) {
 						label.push("S" + (index+1));
 						data.push(value);
@@ -173,7 +184,7 @@
 							labels: label
 							, series: [data]
 						}, {
-								high: 125
+								high: maxAttendance
 								, low: 0
 								, showArea: true
 								, lineSmooth: Chartist.Interpolation.simple({
@@ -252,11 +263,7 @@
 					});
 				}	
 			});
-
-		
 		});
-		
-
 	</script>
 
 }

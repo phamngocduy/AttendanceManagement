@@ -1,5 +1,6 @@
 ﻿
 @using Microsoft.AspNet.Identity
+@using WebApplication.Models
 @{
 	/**/
 
@@ -132,13 +133,13 @@
 							@if (Request.IsAuthenticated)
 							{
 								<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<img src="~/Content/assets/1.jpg" alt="user" class="profile-pic" />
+									<img src="data:image/png;base64,@User.Identity.GetAvatar()" alt="user" class="profile-pic" />
 								</a>
 								<div class="dropdown-menu dropdown-menu-right scale-up">
 									<ul class="dropdown-user">
 										<li>
 											<div class="dw-user-box">
-												<div class="u-img"><img src="~/Content/assets/1.jpg" alt="user"></div>
+												<div class="u-img"><img src="data:image/png;base64,@User.Identity.GetAvatar()"alt="user"></div>
 												<div class="u-text">
 													<h4>@User.Identity.GetUserName()</h4>
 													<a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
@@ -180,7 +181,13 @@
 				<!-- User profile -->
 				<div class="user-profile" style="background: url(/GroupManagement/Content/assets/user-info.jpg) no-repeat;">
 					<!-- User profile image -->
-					<div class="profile-img"> <img src="~/Content/assets/profile.png" alt="user" /> </div>
+					<div class="profile-img">
+						@if (Request.IsAuthenticated)
+						{
+							<img src="data:image/png;base64,@User.Identity.GetAvatar()" alt="user" />
+
+						}
+					</div>
 					<!-- User profile text-->
 					<div class="profile-text">
 						<a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">@User.Identity.GetUserName()</a>

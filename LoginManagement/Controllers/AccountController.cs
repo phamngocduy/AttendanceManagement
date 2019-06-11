@@ -33,6 +33,7 @@ namespace IdentificationManagement.Controllers
 
 		static AccountController()
         {
+		
             Hashtable = new Hashtable();
 			user  = new User();
 		}
@@ -79,7 +80,7 @@ namespace IdentificationManagement.Controllers
 		private const string _mapTempFolder = _tempFolder;
 		private  string _avatarPath = "~/Avatars";
 
-		private readonly string[] _imageFileExtensions = { ".jpg", ".png", ".gif", ".jpeg" };
+		private readonly string[] _imageFileExtensions = {".png"};
 		[AllowAnonymous]
 		[HttpGet]
 		public ActionResult Upload()
@@ -118,11 +119,12 @@ namespace IdentificationManagement.Controllers
 			{
 				var fn = Path.Combine(Server.MapPath(_mapTempFolder), Path.GetFileName(fileName));
 				var img = new WebImage(fn);
+
 				img.Resize(256, 256);
 				System.IO.File.Delete(fn);
 				
 				// ... and save the new one.
-				var newFileName = Path.Combine(_avatarPath, user.StID.ToString());
+				var newFileName = Path.Combine(_avatarPath, user.StID.ToString()+".png");
 
 				var newFileLocation = HttpContext.Server.MapPath(newFileName);
 				if (Directory.Exists(Path.GetDirectoryName(newFileLocation)) == false)
@@ -136,7 +138,7 @@ namespace IdentificationManagement.Controllers
 				string filename = newFileName.Replace("~", string.Empty);
 				User editUser = db.Users.FirstOrDefault(x => x.ID == user.ID);
 				editUser.AvatarBase64 = base64String;
-				editUser.AvatarLink = filename;
+				editUser.AvatarLink = "/Loginmanagement/"+filename;
 				db.SaveChanges();
 				return Json(new { success = true, avatarFileLocation = newFileName });				
 			}
@@ -694,8 +696,6 @@ namespace IdentificationManagement.Controllers
 
 		//
 		// POST: /Account/LogOff
-		[HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

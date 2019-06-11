@@ -19,6 +19,7 @@ using System.Globalization;
 
 namespace AttendanceManagement.Controllers
 {
+
 	public class AttendanceController : Controller
 	{
 		AttendanceEntities db = new AttendanceEntities();
@@ -89,6 +90,7 @@ namespace AttendanceManagement.Controllers
 			ViewData["session"] = session;
 			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.FirstName).ToList();
 			ViewData["students"] = student;
+			ViewBag.StudentCount = student.Count;
 			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
 			foreach (var iten in student)
 			{
@@ -142,7 +144,7 @@ namespace AttendanceManagement.Controllers
 				List<UserModel> user = JsonConvert.DeserializeObject<List<UserModel>>(userdata);
 				return View(user);
 			}
-		
+
 			return View();
 
 		}
@@ -175,7 +177,7 @@ namespace AttendanceManagement.Controllers
 				{
 					iCountStudentInCourse++;
 				}
-				
+
 			}
 			db.SaveChanges();
 
@@ -205,6 +207,7 @@ namespace AttendanceManagement.Controllers
 			using (var scope = new TransactionScope())
 			{
 				int sessionID = int.Parse(Session["SessionID"].ToString());
+				db.Attendances.RemoveRange(db.Attendances.Where(x => x.SessionID == sessionID));
 				foreach (var item in attendance)
 				{
 					Attendance att = new Attendance();
@@ -215,6 +218,27 @@ namespace AttendanceManagement.Controllers
 					db.Attendances.Add(att);
 				}
 				db.SaveChanges();
+				scope.Complete();
+				Session.Remove("SessionID");
+				Session["tabactive"] = "tab1";
+			}
+
+			return Json("true");
+		}
+
+		[HttpPost]
+		public JsonResult EditAttendance(List<AttendanceModel> attendance)
+		{
+			using (var scope = new TransactionScope())
+			{
+				int sessionID = int.Parse(Session["SessionID"].ToString());
+				foreach (var item in attendance)
+				{
+					var editAttendance = db.Attendances.FirstOrDefault(x => x.MemberID == item.memberID && x.SessionID ==sessionID);
+					editAttendance.Status = item.status;
+					editAttendance.Note = item.note;
+					db.SaveChanges();
+				}
 				scope.Complete();
 				Session.Remove("SessionID");
 				Session["tabactive"] = "tab1";
@@ -464,7 +488,7 @@ namespace AttendanceManagement.Controllers
 					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
 					if (attendance != null)
 					{
-						if (attendance.Status != "0" && attendance.Status != null && attendance.Status!="")
+						if (attendance.Status != "0" && attendance.Status != null && attendance.Status != "")
 						{
 							detail.Status = "x";
 						}
@@ -474,7 +498,7 @@ namespace AttendanceManagement.Controllers
 						}
 						//if (attendance.Status !=null || attendance.Status!="")
 						//{
-							
+
 						//	TotalPresent++;
 						//	TotalPoint = TotalPoint + int.Parse(attendance.Status);
 						//}
@@ -536,27 +560,27 @@ namespace AttendanceManagement.Controllers
 				}
 				int i = 5;
 				int iIndexSession = 1;
-					foreach(var date in list[1].Attendance)
-					{
-						ws.Column(i).Width = 5;
-						ws.Cell(7, i).Style.Font.Bold = true;
-						ws.Cell(7, i).Style.Font.FontSize = 12;
-						ws.Cell(7, i).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+				foreach (var date in list[1].Attendance)
+				{
+					ws.Column(i).Width = 5;
+					ws.Cell(7, i).Style.Font.Bold = true;
+					ws.Cell(7, i).Style.Font.FontSize = 12;
+					ws.Cell(7, i).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
-						ws.Cell(7, i).Value = "B" + iIndexSession;
-						ws.Cell(7, i).Comment.Style.Alignment.SetAutomaticSize();
-						ws.Cell(7, i).Comment.AddText(date.Date.ToShortDateString());
-						ws.Cell(7, i).Style.Border.BottomBorder = XLBorderStyleValues.Medium;
-						ws.Cell(7, i).Style.Border.BottomBorderColor = XLColor.Black;
+					ws.Cell(7, i).Value = "B" + iIndexSession;
+					ws.Cell(7, i).Comment.Style.Alignment.SetAutomaticSize();
+					ws.Cell(7, i).Comment.AddText(date.Date.ToShortDateString());
+					ws.Cell(7, i).Style.Border.BottomBorder = XLBorderStyleValues.Medium;
+					ws.Cell(7, i).Style.Border.BottomBorderColor = XLColor.Black;
 
-						ws.Cell(7, i).Style.Border.TopBorder = XLBorderStyleValues.Medium;
-						ws.Cell(7, i).Style.Border.TopBorderColor = XLColor.Black;
+					ws.Cell(7, i).Style.Border.TopBorder = XLBorderStyleValues.Medium;
+					ws.Cell(7, i).Style.Border.TopBorderColor = XLColor.Black;
 
-						ws.Cell(7, i).Style.Border.RightBorder = XLBorderStyleValues.Medium;
-						ws.Cell(7, i).Style.Border.RightBorderColor = XLColor.Black;
-						i++;
-						iIndexSession++;
-					}
+					ws.Cell(7, i).Style.Border.RightBorder = XLBorderStyleValues.Medium;
+					ws.Cell(7, i).Style.Border.RightBorderColor = XLColor.Black;
+					i++;
+					iIndexSession++;
+				}
 				int iIndex = 1;
 				int iRow = 8;
 				foreach (var item in list)
@@ -620,9 +644,9 @@ namespace AttendanceManagement.Controllers
 					ws.Cell(iRow, iCol + 3).Style.Border.RightBorder = XLBorderStyleValues.Dotted;
 					ws.Cell(iRow, iCol + 3).Style.Border.RightBorderColor = XLColor.Black;
 					iCol = iCol + 4;
-					foreach(var attendance in item.Attendance)
+					foreach (var attendance in item.Attendance)
 					{
-						ws.Cell(iRow, iCol ).Value = attendance.Status;
+						ws.Cell(iRow, iCol).Value = attendance.Status;
 						ws.Cell(iRow, iCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 						ws.Cell(iRow, iCol).Style.Border.BottomBorder = XLBorderStyleValues.Dotted;
 						ws.Cell(iRow, iCol).Style.Border.BottomBorderColor = XLColor.Black;
@@ -716,14 +740,15 @@ namespace AttendanceManagement.Controllers
 										DetailAttendance detail = new DetailAttendance();
 										detail.Date = DateTime.Parse(ws.Cell(7, j).Comment.Text);
 										detail.Note = ws.Cell(i, j).Comment.Text;
-										if(ws.Cell(i, j).GetValue<string>().ToLower() == "x")
+										if (ws.Cell(i, j).GetValue<string>().ToLower() == "x")
 										{
 											detail.Status = "10";
-										}else
+										}
+										else
 										{
 											detail.Status = "0";
 										}
-										 
+
 										attendanceview.Attendance.Add(detail);
 									}
 									listAttendance.Add(attendanceview);
@@ -736,6 +761,8 @@ namespace AttendanceManagement.Controllers
 							{
 								fileinfo.Delete();
 							}
+							//delete session not attendance
+
 							TempData["AttendanceExcel"] = listAttendance.OrderBy(x => x.FirstName).ToList();
 
 						}
@@ -783,7 +810,7 @@ namespace AttendanceManagement.Controllers
 
 							foreach (var aItem in item.Attendance)
 							{
-								var SessionID = db.Sessions.FirstOrDefault(x => x.Date == aItem.Date && x.CourseID==CourseID).ID;
+								var SessionID = db.Sessions.FirstOrDefault(x => x.Date == aItem.Date && x.CourseID == CourseID).ID;
 								Attendance nAttendance = new Attendance();
 								nAttendance.MemberID = MemberID;
 								nAttendance.SessionID = SessionID;
@@ -809,9 +836,18 @@ namespace AttendanceManagement.Controllers
 
 		public ActionResult CheckByCode()
 		{
-			var student = db.CourseMembers.FirstOrDefault(x => x.Email == "duykhau1@vanlanguni.vn");
+			var student = db.CourseMembers.FirstOrDefault(x => x.Email == User.Identity.Name);
+			if (student == null)
+			{
+				HttpCookie cookieNotStudent = new HttpCookie("notStudent", "true");
+				HttpContext.Response.Cookies.Add(cookieNotStudent);
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				return View(student);
+			}
 
-			return View(student);
 		}
 		[HttpPost]
 		public string CheckByCode(string id)
@@ -828,15 +864,56 @@ namespace AttendanceManagement.Controllers
 		[HttpPost]
 		public ActionResult CheckAttendanceQRcode(CheckQRCodeModel model)
 		{
+			int QrCodeID = int.Parse(model.QRcode.ToString());
+			var session = db.Sessions.FirstOrDefault(x => x.ID == QrCodeID);
+			var sessionID = session.ID;
+			var member = db.CourseMembers.FirstOrDefault(x => x.StudentID == model.StudentID && x.CourseID == session.CourseID);
+			if (member != null)
+			{
 
-			return View();
+
+				var memberID = member.ID;
+				using (var scope = new TransactionScope())
+				{
+					var Attendance = db.Attendances.FirstOrDefault(x => x.MemberID == memberID && x.SessionID == sessionID);
+					if (Attendance == null)
+					{
+						Attendance newAttendance = new Attendance();
+						newAttendance.MemberID = memberID;
+						newAttendance.Picture = model.PictureBase64;
+						newAttendance.SessionID = sessionID;
+						newAttendance.Status = "10";
+						db.Attendances.Add(newAttendance);
+						db.SaveChanges();
+					}
+					else
+					{
+						Attendance.MemberID = memberID;
+						Attendance.Picture = model.PictureBase64;
+						Attendance.SessionID = sessionID;
+						Attendance.Status = "10";
+						db.SaveChanges();
+					}
+					scope.Complete();
+				}
+				HttpCookie cookieCheckAttendanceSuccess = new HttpCookie("cookieCheckAttendanceSuccess", "true");
+				HttpContext.Response.Cookies.Add(cookieCheckAttendanceSuccess);
+				return RedirectToAction("CheckByCode");
+			}
+			else
+			{
+
+				HttpCookie cookieNotStudentInCourse = new HttpCookie("cookieNotStudentInCourse", "true");
+				HttpContext.Response.Cookies.Add(cookieNotStudentInCourse);
+				return RedirectToAction("CheckByCode");
+			}
 		}
 
 		[HttpPost]
 		public String CloseAttendance(string id)
 		{
 			string folderPath = "~/Images/";
-			var serverPath= HttpContext.Server.MapPath(folderPath);
+			var serverPath = HttpContext.Server.MapPath(folderPath);
 			if (Directory.Exists(Path.GetDirectoryName(serverPath)) == true)
 			{
 				var fileEntries = Directory.GetFiles(serverPath);
@@ -858,7 +935,7 @@ namespace AttendanceManagement.Controllers
 		public JsonResult GetAttendanceData()
 		{
 			int CourseID = int.Parse(Session["CourseID"].ToString());
-			var listSession = db.Sessions.Where(x => x.CourseID == CourseID).OrderBy(x=>x.Date);
+			var listSession = db.Sessions.Where(x => x.CourseID == CourseID).OrderBy(x => x.Date);
 			List<string> itemList = new List<string>();
 			foreach (var item in listSession)
 			{
@@ -867,16 +944,85 @@ namespace AttendanceManagement.Controllers
 			}
 			return Json(itemList, JsonRequestBehavior.AllowGet);
 		}
+
+		[HttpGet]
+		public JsonResult getMaxStudent()
+		{
+			int CourseID = int.Parse(Session["CourseID"].ToString());
+			var maxStudent = db.CourseMembers.Where(x => x.CourseID == CourseID).Count();
+			return Json(maxStudent, JsonRequestBehavior.AllowGet);
+		}
+		[HttpGet]
 		public ActionResult ViewDetailAttendance(string id)
 		{
 			var courseID = int.Parse(Session["CourseID"].ToString());
 
 			int SessionID = int.Parse(id.ToString());
-			var attendance = db.Attendances.FirstOrDefault(x => x.SessionID == SessionID);
+
+			var attendance = db.Attendances.Where(x => x.SessionID == SessionID);
+
 			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.FirstName).ToList();
-			ViewData["student"] = student;
-			return View(attendance);
-}
+			List<EditAttendanceView> list = new List<EditAttendanceView>();
+			foreach (var item in student)
+			{
+				EditAttendanceView newEditView = new EditAttendanceView();
+				newEditView.MemberID = item.ID;
+				newEditView.DoB = item.DoB;
+				newEditView.StudentID = item.StudentID;
+				newEditView.StudentName = item.LastName + item.FirstName;
+				
+				if (attendance.Count() > 0)
+				{
+					var detailAttendance = attendance.FirstOrDefault(x => x.MemberID == item.ID);
+					if(detailAttendance != null)
+					{
+						newEditView.Date = attendance.First().Session.Date;
+						newEditView.Note = attendance.FirstOrDefault(x => x.MemberID == item.ID).Note;
+						newEditView.Picture = attendance.FirstOrDefault(x => x.MemberID == item.ID).Picture;
+						newEditView.Status = attendance.FirstOrDefault(x => x.MemberID == item.ID).Status;
+					}
+					
+				}
+				list.Add(newEditView);
+			}
+			return View(list);
+		}
+
+		[HttpGet]
+		public ActionResult ViewEditAttendance(string id)
+		{
+			var courseID = int.Parse(Session["CourseID"].ToString());
+
+			int SessionID = int.Parse(id.ToString());
+
+			var attendance = db.Attendances.Where(x => x.SessionID == SessionID);
+
+			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.FirstName).ToList();
+			List<EditAttendanceView> list = new List<EditAttendanceView>();
+			foreach (var item in student)
+			{
+				EditAttendanceView newEditView = new EditAttendanceView();
+				newEditView.MemberID = item.ID;
+				newEditView.DoB = item.DoB;
+				newEditView.StudentID = item.StudentID;
+				newEditView.StudentName = item.LastName + item.FirstName;
+
+				if (attendance.Count() > 0)
+				{
+					var detailAttendance = attendance.FirstOrDefault(x => x.MemberID == item.ID);
+					if (detailAttendance != null)
+					{
+						newEditView.Date = attendance.First().Session.Date;
+						newEditView.Note = attendance.FirstOrDefault(x => x.MemberID == item.ID).Note;
+						newEditView.Picture = attendance.FirstOrDefault(x => x.MemberID == item.ID).Picture;
+						newEditView.Status = attendance.FirstOrDefault(x => x.MemberID == item.ID).Status;
+					}
+
+				}
+				list.Add(newEditView);
+			}
+			return View(list);
+		}
 		public ActionResult EditAttendance()
 		{
 			return View();

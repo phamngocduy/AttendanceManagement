@@ -8,7 +8,7 @@
 		<h3 class="text-themecolor">Attendance</h3>
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">Attendance</a></li>
-			<li class="breadcrumb-item active">@ViewBag.Course</li>
+			@*<li class="breadcrumb-item active">@ViewBag.Course</li>*@
 		</ol>
 	</div>
 
@@ -32,7 +32,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Student ID :</label>
-									<input type="text" name="StudentID" value="@Model.StudentID" class="form-control" readonly>
+									<input type="text" name="StudentID" value="@Model.StudentID" id="member" class="form-control" readonly>
 								</div>
 							</div>
 						</div>
@@ -157,6 +157,8 @@
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="~/Content/assets/sweetalert.min.js"></script>
+<script src="~/Content/assets/js.cookie.js"></script>
 <script src="~/Content/external/adapter.min.js"></script>
 <script src="~/Content/external/instascan.js"></script>
 <script>
@@ -212,6 +214,28 @@
 				}
 			}
 		});
+	}
+
+	var justCheckAttendance = Cookies.get('cookieCheckAttendanceSuccess');
+	if (justCheckAttendance) {
+		swal({
+			title: "Message!",
+			text: "Check attendance successfully",
+			type: "success",
+			closeOnConfirm: true
+		});
+		Cookies.remove('cookieCheckAttendanceSuccess');
+	}
+
+	var justCheckAttendance = Cookies.get('cookieNotStudentInCourse');
+	if (justCheckAttendance) {
+		swal({
+			title: "Message!",
+			text: "Not found student in courses",
+			type: "error",
+			closeOnConfirm: true
+		});
+		Cookies.remove('cookieNotStudentInCourse');
 	}
 
 </script>

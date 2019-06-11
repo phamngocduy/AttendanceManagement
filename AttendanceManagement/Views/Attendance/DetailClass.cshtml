@@ -74,6 +74,7 @@
 				</a>
 			</div>
 		</li>
+
 	</ul>
 	<div class="tab-content">
 		<div id="tab1" class="tab-pane">
@@ -105,8 +106,7 @@
 				}
 			</div>
 		</div>
-
-
+	
 	</div>
 </div>
 
@@ -115,7 +115,6 @@
 <script>
 	$(document).ready(function () {
 		var selector = '@active';
-		$('[href="#tab1"]').tab('show');
 		$('[href="#' + selector + '"]').tab('show');
 
 		var justDelete = Cookies.get('just_delete');
@@ -211,10 +210,21 @@
 		}
 		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			$($.fn.dataTable.tables(true)).DataTable()
-				.columns.adjust()
+				.columns.adjust();
+
+			var maxAttendance = 0;
 			$.ajax({
 				type: "GET",
-				url: "/AttendanceManagement/Attendance/GetAttendanceData",
+				url: "/Attendance/getMaxStudent",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (res) {
+					maxAttendance = res;
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "/Attendance/GetAttendanceData",
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (res) {
@@ -230,7 +240,7 @@
 							labels: label
 							, series: [data]
 						}, {
-								high: 125
+								high: maxAttendance
 								, low: 0
 								, showArea: true
 								, lineSmooth: Chartist.Interpolation.simple({

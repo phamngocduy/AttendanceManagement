@@ -1,6 +1,7 @@
 ﻿@model List<AttendanceManagement.Models.Session>
 @{
 	int i = 1;
+	int atten = 0;
 }
 <link href="~/Content/assets/bootstrap-material-datetimepicker.css" rel="stylesheet">
 <!-- Page plugins css -->
@@ -49,29 +50,49 @@
 							<table class="table product-overview">
 								<thead>
 									<tr>
-										<th>#</th>
-										<th>Date</th>
-										<th>Present</th>
-										<th>Status</th>
-										<th>Actions</th>
+										<th  style="text-align:center">#</th>
+										<th style="text-align:center">Date</th>
+										<th style="text-align:center">Present</th>
+										<th style="text-align:center">Status</th>
+										<th style="text-align:center">Actions</th>
 									</tr>
 								</thead>
 								<tbody>
 									@foreach (var item in Model)
 									{
 										<tr>
-											<td>Buổi @(i++)</td>
-											<td>
+											<td style="text-align:center;white-space:unset">Buổi @(i++)</td>
+											<td style="text-align:center;white-space:unset">
 												@item.Time
 												<br />
 												@item.Date.Value.ToShortDateString()
 											</td>
-											<td>20</td>
-											<td>
-												<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="checkattendance(@item.ID)">Check Attendance</button>
-												<button type="button" class="btn waves-effect waves-light btn-block btn-danger" onclick="GenCode(@item.ID)">QR Attendance</button>
+											<td style="text-align:center;white-space:unset">
+												@{
+													atten = 0;
+													foreach (var attendance in item.Attendances)
+													{
+														if (attendance.Status != "0")
+														{
+															atten++;
+														}
+													}
+												}
+												@atten/@ViewBag.StudentCount
 											</td>
-											<td>
+											<td style="text-align:left;white-space:unset">
+												@if (atten == 0)
+												{
+													<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="checkattendance(@item.ID)">Check Attendance</button>
+													<button type="button" class="btn waves-effect waves-light btn-block btn-danger" onclick="GenCode(@item.ID)">QR Attendance</button>
+												}
+												else
+												{
+													<button type="button" class="btn waves-effect waves-light btn-block btn-warning" onclick="editAttendance(@item.ID)">Edit Attendance</button>
+												}
+
+											</td>
+											<td style="text-align:center;white-space:unset">
 												<button type="button" onclick="Edit(@item.ID)">
 													<i class="ti-marker-alt"></i>
 												</button>
@@ -230,7 +251,7 @@
 	function checkattendance(id) {
 		$.ajax({
 			type: "POST",
-			url: "/AttendanceManagement/Attendance/GetDateAttendance?id=" + id,
+			url: "/Attendance/GetDateAttendance?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (res) {
@@ -244,6 +265,35 @@
 				$("#thDate").html(res.replace(/"/g, ''));
 				$('[href="#tab4"]').tab('show');
 				window.scrollTo(0, 0);
+			}
+		});
+	} 
+	function setDate(id) {
+		$.ajax({
+			type: "POST",
+			url: "/Attendance/GetDateAttendance?id=" + id,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (res) {
+				alert(res)
+				$("#thEditDate").html(res.replace(/"/g, ''));
+			}
+		});
+	}
+	function editAttendance(id) {
+	
+		$.ajax({
+			type: "GET",
+			url: "/Attendance/ViewEditAttendance?id=" + id,
+			contentType: "application/json; charset=utf-8",
+			dataType: "html",
+			success: function (data) {
+				$("#sessionDate").html(data);
+				setDate(id);
+				$('[href="#tab4"]').tab('show');
+				window.onbeforeunload = function () {
+					return 'You have unsaved changes!';
+				}
 			}
 		});
 	}

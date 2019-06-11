@@ -19,6 +19,7 @@ namespace AttendanceManagement.Controllers
 			int semester= (int) listSemester.Max();
 			ViewBag.SemesterSelected = semester;
 			var courselist = db.Courses.Where(x => x.Semester == semester).ToList();
+			var lectureCourse = courselist.Where(x => x.Lecturer == User.Identity.Name);
 			return View(courselist);
 		}
 		[HttpPost]
