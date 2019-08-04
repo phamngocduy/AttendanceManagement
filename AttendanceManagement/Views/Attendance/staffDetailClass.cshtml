@@ -24,9 +24,9 @@
 </div>
 <div class="container-fluid">
 	<!-- Basic Example -->
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs justify-content-center">
 		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12 active">
-			<div class="card" style="text-align:center;">
+			<div class="card card-block" style="text-align:center">
 				<a data-toggle="tab" href="#tab1" id="a" style="background-color:#7460ee">
 					<h2 style="color:white">
 						<span>
@@ -39,7 +39,7 @@
 
 		</li>
 		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-			<div class="card" style="text-align:center">
+			<div class="card card-block" style="text-align:center">
 				<a data-toggle="tab" href="#tab2" id="b" style="background-color:#fc4b6c">
 					<h2 style="color:white">
 						<span>
@@ -51,7 +51,7 @@
 			</div>
 		</li>
 		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-			<div class="card" style="text-align:center">
+			<div class="card card-block" style="text-align:center">
 				<a data-toggle="tab" href="#tab3" id="c" style="background-color:#26c6da">
 					<h2 style="color:white">
 						<span>
@@ -61,19 +61,7 @@
 					</h2>
 				</a>
 			</div>
-		</li>
-		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-			<div class="card" style="text-align:center">
-				<a data-toggle="tab" href="#tab4" id="d" style="background-color:#ffb22b">
-					<h2 style="color:white">
-						<span>
-							<i class="fa fa-pencil-square-o"></i>
-						</span>
-						ATTENDANCE
-					</h2>
-				</a>
-			</div>
-		</li>
+
 
 	</ul>
 	<div class="tab-content">
@@ -87,31 +75,11 @@
 		<div id="tab3" class="tab-pane ">
 			@{ Html.RenderPartial("~/Views/Attendance/SessionList.cshtml", ViewData["session"]); }
 		</div>
-		<div id="tab4" class="tab-pane">
-			<div id="sessionDate">
-				<div class="card">
-					<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
-					<div class="card-body">
-						<div class="row" style="text-align:center">
-							<div class="col">
-								<button class="btn btn-primary" onclick="choice()">Please choice session</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id="listAttendance" class="hide">
-				@{
-					Html.RenderPartial("~/Views/Attendance/AttendanceList.cshtml", ViewData["students"]);
-				}
-			</div>
-		</div>
-	
 	</div>
 </div>
 
 <script src="~/Content/assets/jquery.min.js"></script>
-	
+
 <script>
 	$(document).ready(function () {
 		var selector = '@active';
@@ -215,7 +183,7 @@
 			var maxAttendance = 0;
 			$.ajax({
 				type: "GET",
-				url: "/Attendance/getMaxStudent",
+				url:'@Url.Action("getMaxStudent", "Attendance")',
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (res) {
@@ -224,7 +192,7 @@
 			});
 			$.ajax({
 				type: "GET",
-				url: "/Attendance/GetAttendanceData",
+				url: '@Url.Action("GetAttendanceData", "Attendance")',
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (res) {
@@ -240,7 +208,7 @@
 							labels: label
 							, series: [data]
 						}, {
-								high: maxAttendance
+								high: 60
 								, low: 0
 								, showArea: true
 								, lineSmooth: Chartist.Interpolation.simple({

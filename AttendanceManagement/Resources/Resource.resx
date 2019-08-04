@@ -129,8 +129,14 @@
   <data name="English" xml:space="preserve">
     <value>Tiếng Anh</value>
   </data>
+  <data name="FS" xml:space="preserve">
+    <value>Giáo vụ khoa/ BCN Khoa</value>
+  </data>
   <data name="Group" xml:space="preserve">
     <value>Quản lý nhóm</value>
+  </data>
+  <data name="GV" xml:space="preserve">
+    <value>Giảng viên</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Trang chủ</value>
@@ -142,12 +148,30 @@
     <value>Đăng Nhập</value>
   </data>
   <data name="MyCourse" xml:space="preserve">
-    <value>Lớp</value>
+    <value>Lớp của tôi</value>
   </data>
   <data name="Mygroup" xml:space="preserve">
     <value>Nhóm của tôi</value>
   </data>
+  <data name="SV" xml:space="preserve">
+    <value>Sinh viên</value>
+  </data>
   <data name="Viet" xml:space="preserve">
     <value>Tiếng Việt</value>
+  </data>
+  <data name="Faculty" xml:space="preserve">
+    <value>Danh sách khoa</value>
+  </data>
+  <data name="Major" xml:space="preserve">
+    <value>Danh sách ngành</value>
+  </data>
+  <data name="SystemManagement" xml:space="preserve">
+    <value>Quản lý hệ thống</value>
+  </data>
+  <data name="Semester" xml:space="preserve">
+    <value>Học Kỳ</value>
+  </data>
+  <data name="CourseManagement" xml:space="preserve">
+    <value>Quản lý khóa học</value>
   </data>
 </root>

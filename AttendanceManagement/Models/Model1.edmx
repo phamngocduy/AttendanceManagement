@@ -84,8 +84,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="varchar" MaxLength="10" />
           <Property Name="CourseName" Type="nvarchar" MaxLength="200" />
-          <Property Name="Type1" Type="varchar" MaxLength="10" />
-          <Property Name="Type2" Type="varchar" MaxLength="10" />
+          <Property Name="Type1" Type="varchar" MaxLength="50" />
+          <Property Name="Type2" Type="varchar" MaxLength="50" />
           <Property Name="Major" Type="int" />
           <Property Name="Lecturer" Type="varchar" MaxLength="200" />
           <Property Name="Credit" Type="int" />
@@ -128,6 +128,7 @@
           <Property Name="Code" Type="varchar" MaxLength="10" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
           <Property Name="FacultyID" Type="int" />
+          <Property Name="GroupID" Type="int" />
         </EntityType>
         <EntityType Name="Session">
           <Key>
@@ -433,8 +434,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CourseName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Type1" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Type2" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Type1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Major" Type="Int32" />
           <Property Name="Lecturer" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Credit" Type="Int32" />
@@ -484,6 +485,7 @@
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="FacultyID" Type="Int32" />
+          <Property Name="GroupID" Type="Int32" />
           <NavigationProperty Name="Courses" Relationship="Self.FK_Course_Major" FromRole="Major" ToRole="Course" />
           <NavigationProperty Name="Faculty" Relationship="Self.FK_Major_Faculty" FromRole="Major" ToRole="Faculty" />
         </EntityType>
@@ -805,6 +807,7 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="FacultyID" ColumnName="FacultyID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

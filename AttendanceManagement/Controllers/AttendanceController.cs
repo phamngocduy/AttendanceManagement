@@ -19,7 +19,7 @@ using System.Globalization;
 
 namespace AttendanceManagement.Controllers
 {
-
+	[Authorize]
 	public class AttendanceController : Controller
 	{
 		AttendanceEntities db = new AttendanceEntities();
@@ -74,7 +74,9 @@ namespace AttendanceManagement.Controllers
 		{
 			return View();
 		}
-		public ActionResult DetailClass(string id)
+		
+
+		public ActionResult studentDetailClass(string id)
 		{
 			Session["CourseID"] = id;
 			int courseID = int.Parse(id);
@@ -128,11 +130,143 @@ namespace AttendanceManagement.Controllers
 				attendanceview.TotalPresent = TotalPresent;
 				list.Add(attendanceview);
 			}
-
+			list = list.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
 			ViewData["attendance"] = list;
+			var topAttendance = list.OrderByDescending(x => x.TotalPresent).Take(10).ToList();
+			ViewBag.topAttendance = topAttendance;
+			var lastAttendance = list.OrderBy(x => x.TotalPresent).Take(10).ToList();
+			ViewBag.lastAttendance = lastAttendance;
+
 			return View();
 		}
 
+		public ActionResult lecturerDetailClass(string id)
+		{
+			Session["CourseID"] = id;
+			int courseID = int.Parse(id);
+			ViewBag.Course = db.Courses.FirstOrDefault(x => x.ID == courseID).CourseName;
+			ViewBag.tab = "tab1";
+			if (Session["tabactive"] != null)
+			{
+				ViewBag.tab = Session["tabactive"].ToString();
+				Session.Remove("tabactive");
+			}
+
+			var session = db.Sessions.Where(x => x.CourseID == courseID).OrderBy(x => x.Date).ToList();
+			ViewData["session"] = session;
+			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.FirstName).ToList();
+			ViewData["students"] = student;
+			ViewBag.StudentCount = student.Count;
+			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
+			foreach (var iten in student)
+			{
+				DasboardAttendanceView attendanceview = new DasboardAttendanceView();
+				attendanceview.memberID = iten.ID;
+				attendanceview.studentID = iten.StudentID;
+				attendanceview.FirstName = iten.FirstName;
+				attendanceview.LastName = iten.LastName;
+				attendanceview.TotalSession = session.Count();
+				int TotalPresent = 0;
+				int TotalPoint = 0;
+				foreach (var item in session)
+				{
+					DetailAttendance detail = new DetailAttendance();
+					detail.Date = (DateTime)item.Date;
+					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
+					if (attendance != null)
+					{
+						detail.Status = attendance.Status;
+
+						if (attendance.Status != "0")
+						{
+							TotalPresent++;
+						}
+						if (attendance.Status != "0")
+						{
+							TotalPoint = TotalPoint + int.Parse(attendance.Status);
+						}
+
+						detail.Note = attendance.Note;
+					}
+					attendanceview.Attendance.Add(detail);
+				}
+				attendanceview.TotalPoint = TotalPoint;
+				attendanceview.TotalPresent = TotalPresent;
+				list.Add(attendanceview);
+			}
+			list = list.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
+			ViewData["attendance"] = list;
+			var topAttendance = list.OrderByDescending(x => x.TotalPresent).Take(10).ToList();
+			ViewBag.topAttendance = topAttendance;
+			var lastAttendance = list.OrderBy(x => x.TotalPresent).Take(10).ToList();
+			ViewBag.lastAttendance = lastAttendance;
+
+			return View();
+		}
+
+		public ActionResult staffDetailClass(string id)
+		{
+			Session["CourseID"] = id;
+			int courseID = int.Parse(id);
+			ViewBag.Course = db.Courses.FirstOrDefault(x => x.ID == courseID).CourseName;
+			ViewBag.tab = "tab1";
+			if (Session["tabactive"] != null)
+			{
+				ViewBag.tab = Session["tabactive"].ToString();
+				Session.Remove("tabactive");
+			}
+
+			var session = db.Sessions.Where(x => x.CourseID == courseID).OrderBy(x => x.Date).ToList();
+			ViewData["session"] = session;
+			var student = db.CourseMembers.Where(x => x.CourseID == courseID).OrderBy(x => x.FirstName).ToList();
+			ViewData["students"] = student;
+			ViewBag.StudentCount = student.Count;
+			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
+			foreach (var iten in student)
+			{
+				DasboardAttendanceView attendanceview = new DasboardAttendanceView();
+				attendanceview.memberID = iten.ID;
+				attendanceview.studentID = iten.StudentID;
+				attendanceview.FirstName = iten.FirstName;
+				attendanceview.LastName = iten.LastName;
+				attendanceview.TotalSession = session.Count();
+				int TotalPresent = 0;
+				int TotalPoint = 0;
+				foreach (var item in session)
+				{
+					DetailAttendance detail = new DetailAttendance();
+					detail.Date = (DateTime)item.Date;
+					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
+					if (attendance != null)
+					{
+						detail.Status = attendance.Status;
+
+						if (attendance.Status != "0")
+						{
+							TotalPresent++;
+						}
+						if (attendance.Status != "0")
+						{
+							TotalPoint = TotalPoint + int.Parse(attendance.Status);
+						}
+
+						detail.Note = attendance.Note;
+					}
+					attendanceview.Attendance.Add(detail);
+				}
+				attendanceview.TotalPoint = TotalPoint;
+				attendanceview.TotalPresent = TotalPresent;
+				list.Add(attendanceview);
+			}
+			list = list.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
+			ViewData["attendance"] = list;
+			var topAttendance = list.OrderByDescending(x => x.TotalPresent).Take(10).ToList();
+			ViewBag.topAttendance = topAttendance;
+			var lastAttendance = list.OrderBy(x => x.TotalPresent).Take(10).ToList();
+			ViewBag.lastAttendance = lastAttendance;
+
+			return View();
+		}
 		public ActionResult AddStudent(string groupname)
 		{
 			string groupdata = api.ReadData("https://fitlogin.vanlanguni.edu.vn/GroupManagement/api/getAllGroups");
@@ -234,7 +368,7 @@ namespace AttendanceManagement.Controllers
 				int sessionID = int.Parse(Session["SessionID"].ToString());
 				foreach (var item in attendance)
 				{
-					var editAttendance = db.Attendances.FirstOrDefault(x => x.MemberID == item.memberID && x.SessionID ==sessionID);
+					var editAttendance = db.Attendances.FirstOrDefault(x => x.MemberID == item.memberID && x.SessionID == sessionID);
 					editAttendance.Status = item.status;
 					editAttendance.Note = item.note;
 					db.SaveChanges();
@@ -256,6 +390,20 @@ namespace AttendanceManagement.Controllers
 			{
 				qrcode.QRCodeImagePath = GenerateQRCode(id);
 				ViewBag.Message = "QR Code Generated successfully";
+				int CourseID = int.Parse(Session["CourseID"].ToString());
+				int SessionID = int.Parse(id);
+				var courseMemberList = db.CourseMembers.Where(x => x.CourseID == CourseID);
+				db.Attendances.RemoveRange(db.Attendances.Where(x => x.SessionID == SessionID));
+				foreach (var item in courseMemberList)
+				{
+					Attendance newAttendance = new Attendance();
+					newAttendance.MemberID = item.ID;
+					newAttendance.SessionID = SessionID;
+					newAttendance.Status = "0";
+					db.Attendances.Add(newAttendance);
+				}
+				db.SaveChanges();
+
 			}
 			catch (Exception ex)
 			{
@@ -740,6 +888,7 @@ namespace AttendanceManagement.Controllers
 										DetailAttendance detail = new DetailAttendance();
 										detail.Date = DateTime.Parse(ws.Cell(7, j).Comment.Text);
 										detail.Note = ws.Cell(i, j).Comment.Text;
+										//TO DO
 										if (ws.Cell(i, j).GetValue<string>().ToLower() == "x")
 										{
 											detail.Status = "10";
@@ -870,8 +1019,6 @@ namespace AttendanceManagement.Controllers
 			var member = db.CourseMembers.FirstOrDefault(x => x.StudentID == model.StudentID && x.CourseID == session.CourseID);
 			if (member != null)
 			{
-
-
 				var memberID = member.ID;
 				using (var scope = new TransactionScope())
 				{
@@ -970,18 +1117,18 @@ namespace AttendanceManagement.Controllers
 				newEditView.DoB = item.DoB;
 				newEditView.StudentID = item.StudentID;
 				newEditView.StudentName = item.LastName + item.FirstName;
-				
+
 				if (attendance.Count() > 0)
 				{
 					var detailAttendance = attendance.FirstOrDefault(x => x.MemberID == item.ID);
-					if(detailAttendance != null)
+					if (detailAttendance != null)
 					{
 						newEditView.Date = attendance.First().Session.Date;
 						newEditView.Note = attendance.FirstOrDefault(x => x.MemberID == item.ID).Note;
 						newEditView.Picture = attendance.FirstOrDefault(x => x.MemberID == item.ID).Picture;
 						newEditView.Status = attendance.FirstOrDefault(x => x.MemberID == item.ID).Status;
 					}
-					
+
 				}
 				list.Add(newEditView);
 			}

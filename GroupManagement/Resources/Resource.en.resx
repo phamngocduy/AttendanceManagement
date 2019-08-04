@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddMember" xml:space="preserve">
+    <value>Add Members</value>
+  </data>
   <data name="Attendance" xml:space="preserve">
     <value>Attendance</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="Class" xml:space="preserve">
     <value>Class Management</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
   </data>
   <data name="Creategroup" xml:space="preserve">
     <value>Create new group</value>
@@ -134,6 +143,27 @@
   </data>
   <data name="Group" xml:space="preserve">
     <value>Group Management</value>
+  </data>
+  <data name="GroupDes" xml:space="preserve">
+    <value>Group Description</value>
+  </data>
+  <data name="GroupDetail" xml:space="preserve">
+    <value>Group Detail</value>
+  </data>
+  <data name="GroupManager" xml:space="preserve">
+    <value>Group Manager</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Group Name</value>
+  </data>
+  <data name="GroupOwner" xml:space="preserve">
+    <value>Group Owner</value>
+  </data>
+  <data name="GroupParent" xml:space="preserve">
+    <value>Group Parent</value>
+  </data>
+  <data name="GroupType" xml:space="preserve">
+    <value>Group Type</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>

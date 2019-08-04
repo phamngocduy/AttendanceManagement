@@ -2,11 +2,11 @@
 @using WebApplication.Models
 
 @{
-				/**/
+	/**/
 
-				ViewBag.Title = "Index";
-				Layout = null;
-				var user = ViewBag.User as WebApplication.Models.User;
+	ViewBag.Title = "Index";
+	Layout = null;
+	var user = ViewBag.User as WebApplication.Models.User;
 }
 @section head{
 	@Styles.Render("~/Content/Tree.css")
@@ -78,8 +78,8 @@
 				<li>
 					<div class="parent">
 						<div class="pull-right child">
-							@if (Model[i].Users1.Count > 0 || Model[i].Group11.Count > 0)
-							{
+							@{
+								var isOwner = false;
 								if (Model[i].Users1.Contains(user))
 								{
 									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
@@ -88,6 +88,7 @@
 									<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
 										<span class='glyphicon glyphicon-trash'></span>
 									</a>
+									isOwner = true;
 								}
 								else
 								{
@@ -101,17 +102,16 @@
 											<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
 												<span class='glyphicon glyphicon-trash'></span>
 											</a>
+											isOwner = true;
 											break;
 										}
 									}
 								}
+								if (!isOwner)
+								{
+									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
+								}
 							}
-							else
-							{
-								@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
-
-							}
-
 						</div>
 						<a class="a-with-children" href="#@ahref" data-toggle="collapse" aria-expanded="false">
 							@Html.CheckBox(@Model[i].GroupName, false, new { @value = Model[i].ID, @class = "tree-checkbox parent" })
@@ -134,8 +134,8 @@
 				<li>
 					<div class="parent">
 						<div class="pull-right child">
-							@if (Model[i].Users1.Count > 0 || Model[i].Group11.Count > 0)
-							{
+							@{
+								var isOwner = false;
 								if (Model[i].Users1.Contains(user))
 								{
 									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Create", "CreateGroup", "Group", new { id = Model[i].ID }, new { @class = "btn btn-primary btn-lg" })
@@ -144,6 +144,7 @@
 									<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
 										<span class='glyphicon glyphicon-trash'></span>
 									</a>
+									isOwner = true;
 								}
 								else
 								{
@@ -157,15 +158,15 @@
 											<a class="btn btn-warning btn-lg" title="Delete" onclick="deletegroup(@Model[i].ID)">
 												<span class='glyphicon glyphicon-trash'></span>
 											</a>
+											isOwner = true;
 											break;
 										}
 									}
 								}
-							}
-							else
-							{
-								@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
-
+								if (!isOwner)
+								{
+									@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detail", "Detail", "Group", new { id = Model[i].ID }, new { data_modal = "", @class = "btn btn-info btn-lg" })
+								}
 							}
 						</div>
 						<a>

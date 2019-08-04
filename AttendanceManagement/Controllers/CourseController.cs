@@ -8,31 +8,94 @@ using Newtonsoft.Json;
 
 namespace AttendanceManagement.Controllers
 {
-    public class CourseController : Controller
-    {
+	[Authorize]
+	public class CourseController : Controller
+	{
 		AttendanceEntities db = new AttendanceEntities();
 		// GET: Course
-		public ActionResult Index()
-        {
-			var listSemester = db.Courses.Select(x=>x.Semester).Distinct().OrderByDescending(x=>x.Value).ToList();
-			ViewBag.Semester = listSemester;
-			int semester= (int) listSemester.Max();
-			ViewBag.SemesterSelected = semester;
-			var courselist = db.Courses.Where(x => x.Semester == semester).ToList();
-			var lectureCourse = courselist.Where(x => x.Lecturer == User.Identity.Name);
-			return View(courselist);
-		}
-		[HttpPost]
-		public ActionResult Index(string SemeterID)
+		[AllowAnonymous]
+		public void setSemester(int semester)
 		{
-			int semester = int.Parse(SemeterID);
-			var listSemester = db.Courses.Select(x => x.Semester).Distinct().OrderByDescending(x => x.Value).ToList();
-			ViewBag.Semester = listSemester;
-			ViewBag.SemesterSelected = semester;
-			var courselist = db.Courses.Where(x=>x.Semester== semester).ToList();
-			return View(courselist);
+
+			Session["Semester"] = semester;
 		}
-		public ActionResult SynCourse()
+		[AllowAnonymous]
+		public int getSemester(AttendanceEntities db)
+		{
+			var listSemester = db.Courses.Select(x => x.Semester).Distinct().OrderByDescending(x => x.Value).ToList();
+			int semester = (int)listSemester.Max();
+			return (int)(Session["Semester"] ?? semester);
+		}
+
+		public ActionResult Index()
+		{
+			var semester = this.getSemester(db);
+			var courseList = db.Courses.Where(x => x.Semester == semester).ToList();
+
+			var lectureCourse = courseList.Where(x => x.Lecturer == User.Identity.Name);
+			if(lectureCourse.Count() > 0)
+			{
+				return View(lectureCourse);
+			}
+			else
+			{
+				var studentCourse = courseList.Where(c => c.CourseMembers.Count(m => m.Email == User.Identity.Name) > 0);
+				return View("StudentCourse", studentCourse.Distinct().ToList());
+			}
+		}
+		public ActionResult StaffsCourses()
+		{
+			var semester = this.getSemester(db);
+
+			var courseList = db.Courses.Where(x => x.Semester == semester).ToList();
+
+			List<Major> majorOfUser = new List<Major>();
+			var majorList = db.Majors.ToList();
+
+			APIController api = new APIController();
+			string groupdata = api.ReadData("https://fitlogin.vanlanguni.edu.vn/GroupManagement/api/getAllGroupID?email=" + User.Identity.Name);
+			List<GroupModel> group = JsonConvert.DeserializeObject<List<GroupModel>>(groupdata);
+			foreach (var majorItem in majorList)
+			{
+				foreach (var groupItem in group)
+				{
+					if (groupItem.ID == majorItem.GroupID)
+					{
+						majorOfUser.Add(majorItem);
+					}
+				}
+			}
+			List<Course> staffList = new List<Course>();
+			foreach (var item in majorOfUser)
+			{
+				var listCourse = courseList.Where(x => x.Major == item.ID);
+				foreach (var course in listCourse)
+				{
+					staffList.Add(course);
+				}
+			}
+
+			return View(staffList);
+		}
+		public ActionResult studentSynCourse()
+		{
+			SynCourse();
+			return RedirectToAction("StudentCourse");
+		}
+
+		public ActionResult lecturerSynCourse()
+		{
+			SynCourse();
+			return RedirectToAction("LecturerCourses");
+		}
+
+		public ActionResult staffSynCourse()
+		{
+			SynCourse();
+			return RedirectToAction("StaffsCourses");
+		}
+
+		public void SynCourse()
 		{
 			APIController api = new APIController();
 			string data = api.ReadData("https://sodaubai.vanlanguni.edu.vn/API/getCourses");
@@ -57,6 +120,7 @@ namespace AttendanceManagement.Controllers
 					newCourse.Room = item.Room;
 					newCourse.Semester = course.Semester;
 					db.Courses.Add(newCourse);
+
 				}
 				else
 				{
@@ -76,9 +140,6 @@ namespace AttendanceManagement.Controllers
 				}
 			}
 			db.SaveChanges();
-			return RedirectToAction("Index");
 		}
-
-
 	}
 }

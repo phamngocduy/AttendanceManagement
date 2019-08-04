@@ -17,8 +17,9 @@
 
 <div class="card">
 	<div class="card-body bg-success">
-		<h4 class="text-white card-title">Session Management</h4>
+		<h3 class="text-white card-title">Session Management</h3>
 	</div>
+
 	@if (Model.Count == 0)
 	{
 		<div class="card-body">
@@ -197,7 +198,7 @@
 		})
 	}
 	function GenCode(id) {
-		var url = "/Attendance/Generate?id=" + id;
+		var url = "/AttendanceManagement/Attendance/Generate?id=" + id;
 		$("#ModalgenerateQRcode").load(url, function () {
 			$("#generateQRcode").modal("show");
 		})
@@ -251,7 +252,7 @@
 	function checkattendance(id) {
 		$.ajax({
 			type: "POST",
-			url: "/Attendance/GetDateAttendance?id=" + id,
+			url: "/AttendanceManagement/Attendance/GetDateAttendance?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (res) {
@@ -271,11 +272,10 @@
 	function setDate(id) {
 		$.ajax({
 			type: "POST",
-			url: "/Attendance/GetDateAttendance?id=" + id,
+			url: "/AttendanceManagement/Attendance/GetDateAttendance?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (res) {
-				alert(res)
 				$("#thEditDate").html(res.replace(/"/g, ''));
 			}
 		});
@@ -284,7 +284,7 @@
 	
 		$.ajax({
 			type: "GET",
-			url: "/Attendance/ViewEditAttendance?id=" + id,
+			url: "/AttendanceManagement/Attendance/ViewEditAttendance?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "html",
 			success: function (data) {

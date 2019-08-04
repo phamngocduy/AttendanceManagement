@@ -1,0 +1,328 @@
+﻿@{
+	ViewBag.Title = "DetailClass";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+	string active = ViewBag.tab.ToString();
+	string date = "nulldate";
+	if (ViewBag.date != null)
+	{
+		date = ViewBag.date.ToString();
+	}
+
+
+}
+
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">Attendance</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">Attendance</a></li>
+			<li class="breadcrumb-item active">@ViewBag.Course</li>
+		</ol>
+	</div>
+
+</div>
+<div class="container-fluid">
+	<!-- Basic Example -->
+	<ul class="nav nav-tabs">
+		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12 active">
+			<div class="card" style="text-align:center;">
+				<a data-toggle="tab" href="#tab1" id="a" style="background-color:#7460ee">
+					<h2 style="color:white">
+						<span>
+							<i class="fa fa-book"></i>
+						</span>
+						DASHBOARD
+					</h2>
+				</a>
+			</div>
+
+		</li>
+		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="card" style="text-align:center">
+				<a data-toggle="tab" href="#tab2" id="b" style="background-color:#fc4b6c">
+					<h2 style="color:white">
+						<span>
+							<i class="fa fa-user"></i>
+						</span>
+						STUDENTS
+					</h2>
+				</a>
+			</div>
+		</li>
+		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="card" style="text-align:center">
+				<a data-toggle="tab" href="#tab3" id="c" style="background-color:#26c6da">
+					<h2 style="color:white">
+						<span>
+							<i class="fa fa-check-square-o"></i>
+						</span>
+						SESSION
+					</h2>
+				</a>
+			</div>
+		</li>
+		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="card" style="text-align:center">
+				<a data-toggle="tab" href="#tab4" id="d" style="background-color:#ffb22b">
+					<h2 style="color:white">
+						<span>
+							<i class="fa fa-pencil-square-o"></i>
+						</span>
+						ATTENDANCE
+					</h2>
+				</a>
+			</div>
+		</li>
+
+	</ul>
+	<div class="tab-content">
+		<div id="tab1" class="tab-pane">
+			@{ Html.RenderPartial("~/Views/Attendance/AllAttendance.cshtml", ViewData["attendance"]); }
+
+		</div>
+		<div id="tab2" class="tab-pane ">
+			@{ Html.RenderPartial("~/Views/Attendance/StudentList.cshtml", ViewData["students"]); }
+		</div>
+		<div id="tab3" class="tab-pane ">
+			@{ Html.RenderPartial("~/Views/Attendance/SessionList.cshtml", ViewData["session"]); }
+		</div>
+		<div id="tab4" class="tab-pane">
+			<div id="sessionDate">
+				<div class="card">
+					<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
+					<div class="card-body">
+						<div class="row" style="text-align:center">
+							<div class="col">
+								<button class="btn btn-primary" onclick="choice()">Please choice session</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="listAttendance" class="hide">
+				@{
+					Html.RenderPartial("~/Views/Attendance/AttendanceList.cshtml", ViewData["students"]);
+				}
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script src="~/Content/assets/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function () {
+		var selector = '@active';
+		$('[href="#' + selector + '"]').tab('show');
+
+		var justDelete = Cookies.get('just_delete');
+		if (justDelete) {
+			swal({
+				title: "Deleted!",
+				text: "This session has been deleted.",
+				type: "success",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_delete');
+		}
+
+		var justEdit = Cookies.get('just_edit');
+		if (justEdit) {
+			swal({
+				title: "Edit!",
+				text: "Edit successful",
+				type: "success",
+				closeOnConfirm: true
+			});
+			Cookies.remove('just_edit');
+		}
+
+		var justCreate = Cookies.get('just_createSession');
+		var justExist = Cookies.get('just_SessionExist');
+		if (justCreate > 0) {
+			if (justExist > 0) {
+				swal({
+					title: "Create!",
+					text: "Create " + justCreate + " session successful and " + justExist + " session is already exist",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('just_createSession');
+				Cookies.remove('just_SessionExist');
+			} else {
+				swal({
+					title: "Create!",
+					text: "Create " + justCreate + " session successful",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('just_createSession');
+				Cookies.remove('just_SessionExist');
+			}
+		} else {
+			if (justExist > 0) {
+				swal({
+					title: "Create!",
+					text: "All session is already exist",
+					type: "error",
+					closeOnConfirm: true
+				});
+				Cookies.remove('just_createSession');
+				Cookies.remove('just_SessionExist');
+			}
+		}
+
+		var justAddStudent = Cookies.get('jusy_CountStudentAdd');
+		var justExitsStudent = Cookies.get('just_CountStudentInCourse');
+		if (justAddStudent > 0) {
+			if (justExitsStudent > 0) {
+				swal({
+					title: "Add Student!",
+					text: "Add " + justAddStudent + " student successful and " + justExitsStudent + " student is already exist",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('jusy_CountStudentAdd');
+				Cookies.remove('just_CountStudentInCourse');
+			} else {
+				swal({
+					title: "Add Student!",
+					text: "Add " + justAddStudent + " student successful",
+					type: "success",
+					closeOnConfirm: true
+				});
+				Cookies.remove('jusy_CountStudentAdd');
+				Cookies.remove('just_CountStudentInCourse');
+			}
+		} else {
+			if (justExitsStudent > 0) {
+				swal({
+					title: "Add Student!",
+					text: "All student is already exist",
+					type: "error",
+					closeOnConfirm: true
+				});
+				Cookies.remove('jusy_CountStudentAdd');
+				Cookies.remove('just_CountStudentInCourse');
+			}
+		}
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			$($.fn.dataTable.tables(true)).DataTable()
+				.columns.adjust();
+
+			var maxAttendance = 0;
+			$.ajax({
+				type: "GET",
+				url:'@Url.Action("getMaxStudent", "Attendance")',
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (res) {
+					maxAttendance = res;
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: '@Url.Action("GetAttendanceData", "Attendance")',
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (res) {
+					var label = [];
+					var data = []
+					$.each(res, function (index, value) {
+						label.push("S" + (index + 1));
+						data.push(value);
+					});
+					$(function () {
+						"use strict";
+						var chart = new Chartist.Line('.user-analytics', {
+							labels: label
+							, series: [data]
+						}, {
+								high: 60
+								, low: 0
+								, showArea: true
+								, lineSmooth: Chartist.Interpolation.simple({
+									divisor: 10
+								})
+								, fullWidth: true
+								, plugins: [
+									Chartist.plugins.tooltip()
+								], // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
+								axisY: {
+									onlyInteger: true
+									, offset: 20
+									, labelInterpolationFnc: function (value) {
+										return value;
+									}
+								}
+							});
+
+						chart.on('draw', function (ctx) {
+							if (ctx.type === 'area') {
+								ctx.element.attr({
+									x1: ctx.x1 + 0.001
+								});
+							}
+						});
+
+						// Create the gradient definition on created event (always after chart re-render)
+						chart.on('created', function (ctx) {
+							var defs = ctx.svg.elem('defs');
+							defs.elem('linearGradient', {
+								id: 'gradient',
+								x1: 0,
+								y1: 1,
+								x2: 0,
+								y2: 0
+							}).elem('stop', {
+								offset: 0,
+								'stop-color': 'rgba(255, 255, 255, 1)'
+							}).parent().elem('stop', {
+								offset: 1,
+								'stop-color': 'rgba(38, 198, 218, 1)'
+							});
+						});
+						// ==============================================================
+						// This is for the animation
+						// ==============================================================
+						chart.on('draw', function (data) {
+							if (data.type === 'line' || data.type === 'area') {
+								data.element.animate({
+									d: {
+										begin: 500 * data.index,
+										dur: 500,
+										from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+										to: data.path.clone().stringify(),
+										easing: Chartist.Svg.Easing.easeInOutElastic
+									}
+								});
+							}
+							if (data.type === 'bar') {
+								data.element.animate({
+									y2: {
+										dur: 500,
+										from: data.y1,
+										to: data.y2,
+										easing: Chartist.Svg.Easing.easeInOutElastic
+									},
+									opacity: {
+										dur: 500,
+										from: 0,
+										to: 1,
+										easing: Chartist.Svg.Easing.easeInOutElastic
+									}
+								});
+							}
+						});
+					});
+				}
+			});
+		});
+	});
+
+	function choice() {
+		$('[href="#tab3"]').tab('show');
+	}
+</script>

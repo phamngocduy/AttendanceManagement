@@ -1,17 +1,147 @@
 ﻿@model List<AttendanceManagement.Models.DasboardAttendanceView>
 @{
 	int iSession = 1;
+	var topAttendanceModel = ViewBag.topAttendance as List<AttendanceManagement.Models.DasboardAttendanceView>;
+	var lastAttendanceModel = ViewBag.lastAttendance as List<AttendanceManagement.Models.DasboardAttendanceView>;
 }
 
 @if (Model.Count > 0)
 {
-	<div class="card card-outline-primary">
-		<div class="card-header"><h3 style="color:white"><strong> TOTAL ATTENDANCE</strong></h3></div>
+	<div class="card">
+		<div class="card-body bg-primary">
+			<h3 class="text-white card-title">Session Management</h3>
+		</div>
 		<div class="card-body">
 			<div class="col-lg-12 col-xlg-12 col-md-7">
 				<div class="user-analytics chartist-chart" style="height: 250px;"></div>
 			</div>
 			<br />
+			@{
+
+				<div class="row justify-content-center">
+					<div class="col">
+						Top 10 attendance
+						<div class="row">
+							<div class="col-8" style="text-align:center">
+								Name
+							</div>
+							<div class="col-4" style="text-align:center">
+								Totol present
+							</div>
+						</div>
+						<ul>
+							@{
+								if (topAttendanceModel.Count > 0)
+								{
+									int i = 1;
+									foreach (var item in topAttendanceModel)
+									{
+										if (item.TotalPresent > 0)
+										{
+											<li>
+												<div class="row">
+													<div class="col-2" style="text-align:center;padding-right:0px">
+														@if (i == 1)
+														{
+
+															string top = "Top " + i + ":      ";
+															<strong style="  font-weight: bold; font-size:20px;">@top  </strong>
+														}
+														else if (i == 2)
+														{
+															string top = "Top " + i + ": ";
+															<strong style="  font-weight: bold; font-size:19px;">@top  </strong>
+														}
+														else if (i == 3)
+														{
+															string top = "Top " + i + ": ";
+															<strong style="  font-weight: bold; font-size:18px;">@top  </strong>
+														}
+														else
+														{
+															string top = "Top	" + i + ": ";
+															<strong style="  font-weight: bold; font-size:16px;">@top  </strong>
+														}
+													</div>
+													<div class="col-6" style="text-align:left;padding-left:10px;padding-right:0px">
+														@item.LastName @item.FirstName
+													</div>
+													<div class="col-4" style="text-align:center">
+														@item.TotalPresent
+													</div>
+												</div>
+											</li>
+											i++;
+										}
+									}
+								}
+							}
+
+						</ul>
+					</div>
+					<hr style="   border-right: 1px dashed #333; height: 250px;" />
+					<div class="col pull-right">
+						Last 10 attendance
+
+						<div class="row">
+							<div class="col-8" style="text-align:center">
+								Name
+							</div>
+							<div class="col-4" style="text-align:left">
+								Totol present
+							</div>
+						</div>
+						<ul>
+							@{
+								if (lastAttendanceModel.Count > 0)
+								{
+									int i = 1;
+									foreach (var item in lastAttendanceModel)
+									{
+										<li>
+											<div class="row">
+												<div class="col-2" style="text-align:center;padding-right:0px">
+													@if (i == 1)
+													{
+
+														string top = "Top " + i + ":      ";
+														<strong style="  font-weight: bold; font-size:20px;">@top  </strong>
+													}
+													else if (i == 2)
+													{
+														string top = "Top " + i + ": ";
+														<strong style="  font-weight: bold; font-size:19px;">@top  </strong>
+													}
+													else if (i == 3)
+													{
+														string top = "Top " + i + ": ";
+														<strong style="  font-weight: bold; font-size:18px;">@top  </strong>
+													}
+													else
+													{
+														string top = "Top	" + i + ": ";
+														<strong style="  font-weight: bold; font-size:16px;">@top  </strong>
+													}
+												</div>
+												<div class="col-6" style="text-align:left;padding-left:10px;padding-right:0px">
+													@item.LastName @item.FirstName
+												</div>
+												<div class="col-4" style="text-align:center">
+													@item.TotalPresent
+												</div>
+											</div>
+										</li>
+										i++;
+
+									}
+								}
+							}
+
+						</ul>
+					</div>
+				</div>
+
+			}
 			<br />
 			<div class="row pull-left">
 				<div class="col">
@@ -65,8 +195,8 @@
 						@foreach (var item in Model)
 						{
 							<tr>
-								<td>@item.studentID</td>
-								<td style="text-align:left">@item.LastName @item.FirstName </td>
+								<td style="width:61.6px">@item.studentID</td>
+								<td style="text-align:left;width:220.8px">@item.LastName @item.FirstName </td>
 								<td style="width:50px">@item.TotalPresent/@item.TotalSession</td>
 								<td style="width:40px">@item.TotalPoint</td>
 								@foreach (var i in item.Attendance)
@@ -158,7 +288,7 @@
 			var maxAttendance = 0;
 			$.ajax({
 				type: "GET",
-				url: "/Attendance/getMaxStudent",
+				url:'@Url.Action("getMaxStudent", "Attendance")',
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (res) {
@@ -167,13 +297,13 @@
 			});
 			$.ajax({
 				type: "GET",
-				url: "/Attendance/GetAttendanceData",
+				url: '@Url.Action("GetAttendanceData", "Attendance")',
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (res) {
 					var label = [];
 					var data = []
-					
+
 					$.each(res, function (index, value) {
 						label.push("S" + (index+1));
 						data.push(value);
@@ -184,7 +314,7 @@
 							labels: label
 							, series: [data]
 						}, {
-								high: maxAttendance
+								high: 60
 								, low: 0
 								, showArea: true
 								, lineSmooth: Chartist.Interpolation.simple({
@@ -261,7 +391,7 @@
 							}
 						});
 					});
-				}	
+				}
 			});
 		});
 	</script>

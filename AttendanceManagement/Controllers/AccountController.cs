@@ -81,6 +81,7 @@ namespace AttendanceManagement.Controllers
 		public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
 		{
 			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+			loginInfo = loginInfo ?? Session["ExternalLoginInfo"] as ExternalLoginInfo;
 			if (loginInfo == null)
 			{
 				return RedirectToAction("Login");

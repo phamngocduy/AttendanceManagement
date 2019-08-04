@@ -39,5 +39,14 @@ namespace AttendanceManagement.Extension
 
 			return string.Empty;
 		}
+		public static string getIDUrl(this HtmlHelper htmlHelper)
+		{
+			var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
+
+			if (routeValues.ContainsKey("id"))
+				return (string)routeValues["id"];
+
+			return string.Empty;
+		}
 	}
 }

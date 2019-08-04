@@ -24,7 +24,7 @@
 	</div>
 </div>
 <div class="card card-outline-danger">
-		<div class="card-header" style="color:black">My Group </div>
+	<div class="card-header" style="color:black">@WebApplication.Resources.Resource.Mygroup </div>
 		<div id="frm-author" class="panel-body">
 			<div class="tree">
 				@{ Html.RenderPartial("~/Views/Partial/PublicGroup.cshtml", Model); }
@@ -42,7 +42,7 @@
 		if (justSubmitted) {
 			swal({
 				title: "Deleted!",
-				text: "This session has been deleted.",
+				text: "This group has been deleted.",
 				type: "success",
 				closeOnConfirm: true
 			});

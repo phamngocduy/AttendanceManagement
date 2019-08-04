@@ -6,9 +6,9 @@
 }
 
 
-<div class="card card-outline-danger">
-	<div class="card-header">
-		<h3 style="color:white"><strong> STUDENTS</strong></h3>
+<div class="card">
+	<div class="card-body bg-danger">
+		<h3 class="text-white card-title">Student Management</h3>
 	</div>
 	<div class="card-body">
 		<div class="row" style="text-align:left">
@@ -112,7 +112,13 @@
 			action: function (e, dt, button, config) {
 				window.location = '/Course';
 			},
-			text: 'back'
+			text: 'Import'
+		});
+		table.button().add(0, {
+			action: function (e, dt, button, config) {
+				window.location = '/Course';
+			},
+			text: 'Back'
 		});
 	})
 

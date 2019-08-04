@@ -64,7 +64,7 @@ namespace WebApplication
 			//    ClientSecret = ""
 			//});
 
-			app.UseVanLangAuthentication("https://cntttest.vanlanguni.edu.vn:18081/Cap21T4/LoginManagement/");
+			app.UseVanLangAuthentication("https://fitlogin.vanlanguni.edu.vn/Loginmanagement/");
 		}
     }
 }

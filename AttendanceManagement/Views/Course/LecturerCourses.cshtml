@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AttendanceManagement.Models.Course>
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">@AttendanceManagement.Resources.Resource.Mygroup</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">@AttendanceManagement.Resources.Resource.Group</a></li>
+			<li class="breadcrumb-item active">@AttendanceManagement.Resources.Resource.Mygroup</li>
+		</ol>
+	</div>
+</div>
+
+
+<div class="card">
+	<div class="card-body bg-info">
+		<h4 class="text-white card-title">My Course</h4>
+	</div>
+	<div class="card-body">
+		<div class="message-box contact-box">
+			<h2 class="add-ct-btn">
+				<button type="button" class="btn btn-circle btn-lg btn-success waves-effect waves-dark" onclick="location.href = '@Url.Action("lecturerSynCourse", "Course")';"><i class="mdi mdi-autorenew"></i></button>
+			</h2>
+			<div class="row">
+					<div class="nav-item hidden-sm-down search-box">
+						<a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+						<form class="app-search">
+							<input type="text" class="form-control" id="myInput" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a>
+						</form>
+					</div>
+			</div>
+			<hr />
+			<div class="row" id="myList">
+				@if (Model != null)
+				{
+					foreach (var item in Model)
+					{
+						<div class="col-sm-6 col-md-6">
+							<div class="card card-outline-success ">
+								<div class="card-header">
+									<h2 class="m-b-0 text-white">@item.CourseName</h2>
+								</div>
+								<div class="card-body">
+									<h5 class="card-title">Lecturer: @item.Lecturer</h5>
+									<p class="card-text">Time:  @item.DayOfWeek @item.TimeSpan</p>
+									<p class="card-text">Room:  @item.Room</p>
+									<p class="card-text">Semester:  @item.Semester</p>
+									<a href="@Url.Action("lecturerDetailClass","Attendance",new { id = item.ID })" class="btn btn-inverse">Detail </a>
+								</div>
+							</div>
+						</div>
+					}
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!--search class-->
+<script>
+	$(document).ready(function () {
+		$("#myInput").on("keyup", function () {
+			var value = $(this).val().toLowerCase();
+			$("#myList *").filter(function () {
+				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		});
+	});
+</script>
+
+
+
+
+

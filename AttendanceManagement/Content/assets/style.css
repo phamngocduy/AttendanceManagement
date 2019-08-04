@@ -720,7 +720,7 @@ Table Cell
 .table-responsive {
   display: block;
   width: 100%;
-  overflow-x: auto;
+  /*overflow-x: auto;*/
   -ms-overflow-style: -ms-autohiding-scrollbar; }
 
 th.dt-center, td.dt-center {
@@ -728,7 +728,7 @@ th.dt-center, td.dt-center {
 }
 
 th, td {
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 	padding:0;
 }
 div.container{
@@ -1641,9 +1641,9 @@ dropdown-item
 /*******************
 Custom-select
 ******************/
-.custom-select {
+/*.custom-select {
 	background: url(../assets/custom-select.png) right 0.75rem center no-repeat;
-}
+}*/
 
 /*******************
 textarea

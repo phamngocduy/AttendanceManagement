@@ -1,57 +1,19 @@
-﻿
-@using Microsoft.AspNet.Identity
+﻿@using Microsoft.AspNet.Identity
 @{
 	/**/
 
 	String icontroler = Html.Controller();
 	String iaction = Html.Action();
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<!-- Tell the browser to be responsive to screen width -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<!-- Favicon icon -->
-	<link rel="icon" type="image/png" sizes="16x16" href="~/Content/image/logo-vlu-2018-transparent.png">
-	<title>Student information management system - Văn Lang University </title>
-	<!-- Bootstrap Core CSS -->
-	<link href="~/Content/assets/bootstrap.css" rel="stylesheet" />
-	<link href="~/Content/assets/bootstrap-switch.min.css" rel="stylesheet">
-	<link href="~/Content/assets/sweetalert.css" rel="stylesheet" type="text/css">
-	<link href="~/Content/assets/chartist-init.css" rel="stylesheet" />
-	<link href="~/Content/assets/chartist-plugin-tooltip.css" rel="stylesheet" />
-	<link href="~/Content/assets/chartist.css" rel="stylesheet" />
-	<link href="~/Content/assets/css-chart.css" rel="stylesheet" />
-	<link href="~/Content/assets/steps.css" rel="stylesheet" />
-	<!--This page css - Morris CSS -->
-	<link href="~/Content/assets/c3.min.css" rel="stylesheet">
-	<!-- Custom CSS -->
-	<link href="~/Content/assets/style.css" rel="stylesheet">
-	<!-- You can change the theme colors from here -->
-	<link href="~/Content/assets/red.css" id="theme" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
 
-
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-</head>
-<body>
-	@RenderBody();
+@RenderBody()
 	<script src="~/Content/assets/jquery.min.js"></script>
 	<!-- Bootstrap tether Core JavaScript -->
 	<script src="~/Content/assets/popper.min.js"></script>
 	<script src="~/Content/assets/bootstrap.js"></script>
 
 	<!-- slimscrollbar scrollbar JavaScript -->
-	<script src="~/Content/assets/jquery.slimscroll.js"></script>
+	@*<script src="~/Content/assets/jquery.slimscroll.js"></script>*@
 	<!--Wave Effects -->
 	<script src="~/Content/assets/waves.js"></script>
 	<!--Menu sidebar -->
@@ -61,7 +23,7 @@
 	<script src="~/Content/assets/jquery.sparkline.min.js"></script>
 
 	<!--Custom JavaScript -->
-	<script src="~/Content/assets/custom.min.js"></script>
+	@*<script src="~/Content/assets/custom.min.js"></script>*@
 	<!-- Sweet-Alert  -->
 	<script src="~/Content/assets/sweetalert.min.js"></script>
 	<script src="~/Content/assets/js.cookie.js"></script>
@@ -97,6 +59,3 @@
 	@RenderSection("head", required: false)
 	@RenderSection("scripts", required: false)
 
-
-</body>
-</html>

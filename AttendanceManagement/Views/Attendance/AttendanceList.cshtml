@@ -157,7 +157,7 @@
 			localStorage.clear();
 			$.ajax({
 				type: "POST",
-				url: "/AttendanceManagement/Attendance/CheckAttendance",
+				url: '@Url.Action("CheckAttendance", "Attendance")',
 				data: JSON.stringify(attendance),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",

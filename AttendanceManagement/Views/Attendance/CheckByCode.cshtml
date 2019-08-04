@@ -19,12 +19,12 @@
 		<div class="card">
 			<div class="card-body wizard-content">
 				<h4 class="card-title">Check Attendance By Code</h4>
-				<form id="qrform" action="/Attendance/CheckAttendanceQRcode" method="post" class="tab-wizard wizard-circle">
+				<form id="qrform" action="/AttendanceManagement/Attendance/CheckAttendanceQRcode" method="post" class="tab-wizard wizard-circle">
 					<!-- Step 1 -->
 					<h3>Step 1: Check Personal Info</h3>
 					<section>
 						<div class="row justify-content-center">
-							<img src="~/Content/image/user.png" />
+							<img src="data:image/png;base64,@Model.Avatar" />
 						</div>
 						<br />
 
@@ -125,11 +125,7 @@
 				data_uri +
 				'"style="height:240px;width:320px"/>';
 			$('#picture').val(data_uri);
-			Webcam.upload(data_uri,
-				'/Camera/Capture',
-				function (code, text) {
-					alert('Photo Captured');
-				});
+			
 			Webcam.reset();
 			$('#results').show();
 			$('#Step3').show();
@@ -174,7 +170,6 @@
 	});
 
 	scanner.addListener('scan', function (content) {
-		alert(content);
 		checkSession(content);
 	});
 	scanner.addListener('inactive', function (content) {
@@ -185,7 +180,7 @@
 	});
 	Instascan.Camera.getCameras().then(function (cameras) {
 		if (cameras.length > 0) {
-			scanner.start(cameras[0]);
+			scanner.start(cameras[1]);
 		} else {
 			console.error('No cameras found.');
 		}
@@ -196,7 +191,7 @@
 	function checkSession(id) {
 		$.ajax({
 			type: "POST",
-			url: "/Attendance/CheckByCode?id=" + id,
+			url: "/AttendanceManagement/Attendance/CheckByCode?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (data) {

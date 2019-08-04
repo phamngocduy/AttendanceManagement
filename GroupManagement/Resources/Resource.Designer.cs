@@ -61,6 +61,15 @@ namespace WebApplication.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thêm thành viên.
+        /// </summary>
+        public static string AddMember {
+            get {
+                return ResourceManager.GetString("AddMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Điểm danh.
         /// </summary>
         public static string Attendance {
@@ -70,11 +79,29 @@ namespace WebApplication.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hủy.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quản lý lớp.
         /// </summary>
         public static string Class {
             get {
                 return ResourceManager.GetString("Class", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tạo.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
             }
         }
         
@@ -111,6 +138,69 @@ namespace WebApplication.Resources {
         public static string Group {
             get {
                 return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chi tiết nhóm.
+        /// </summary>
+        public static string GroupDes {
+            get {
+                return ResourceManager.GetString("GroupDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chi tiết nhóm.
+        /// </summary>
+        public static string GroupDetail {
+            get {
+                return ResourceManager.GetString("GroupDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhóm quản lý.
+        /// </summary>
+        public static string GroupManager {
+            get {
+                return ResourceManager.GetString("GroupManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên nhóm.
+        /// </summary>
+        public static string GroupName {
+            get {
+                return ResourceManager.GetString("GroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Người quản lý.
+        /// </summary>
+        public static string GroupOwner {
+            get {
+                return ResourceManager.GetString("GroupOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhóm cha.
+        /// </summary>
+        public static string GroupParent {
+            get {
+                return ResourceManager.GetString("GroupParent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loại nhóm.
+        /// </summary>
+        public static string GroupType {
+            get {
+                return ResourceManager.GetString("GroupType", resourceCulture);
             }
         }
         

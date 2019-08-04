@@ -10,7 +10,7 @@
 		<h3 class="text-themecolor">@WebApplication.Resources.Resource.Mygroup</h3>
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">@WebApplication.Resources.Resource.Group</a></li>
-			<li class="breadcrumb-item active">@WebApplication.Resources.Resource.Mygroup</li>
+			<li class="breadcrumb-item active">@WebApplication.Resources.Resource.Creategroup</li>
 		</ol>
 	</div>
 </div>
@@ -24,23 +24,23 @@
 			<div class="card-body">
 				<form action="~/Group/Create" method="post" onsubmit="return checkGroupName()">
 					<div class="form-body">
-						<h3 class="card-title">Create new group</h3>
+						<h3 class="card-title">@WebApplication.Resources.Resource.Creategroup</h3>
 						<hr>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Group Name</label>
+								<label class="control-label">@WebApplication.Resources.Resource.GroupName</label>
 								<input type="text" name="GroupName" id="groupNameCreate" class="form-control">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Group Description</label>
+								<label class="control-label">@WebApplication.Resources.Resource.GroupDes</label>
 								<input type="text" name="GroupDescription" class="form-control">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Add Member</label>
+								<label class="control-label">@WebApplication.Resources.Resource.AddMember</label>
 								<select class="js-example-basic-multiple" name="MemberUserID" multiple="multiple">
 									@foreach (var item in Model)
 									{
@@ -51,8 +51,8 @@
 						</div>
 
 						<div class="form-actions">
-							<button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Create</button>
-							@Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-inverse" })
+							<button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> @WebApplication.Resources.Resource.Create</button>
+							@Html.ActionLink(@WebApplication.Resources.Resource.Cancel, "Index", null, new { @class = "btn btn-inverse" })
 						</div>
 					</div>
 				</form>

@@ -28,7 +28,7 @@
 	function CloseAttendance(id) {
 		$.ajax({
 			type: "POST",
-			url: "/Attendance/CloseAttendance?id=" + id,
+			url: "/AttendanceManagement/Attendance/CloseAttendance?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (data) {
@@ -45,29 +45,24 @@
 	function setDate(id) {
 		$.ajax({
 			type: "POST",
-			url: "/Attendance/GetDateAttendance?id=" + id,
+			url: "/AttendanceManagement/Attendance/GetDateAttendance?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (res) {
-				alert(res)
 				$("#thEditDate").html(res.replace(/"/g, ''));
 			}
 		});
 	}
 	function ViewDetailAttendance(id) {
-
 		$.ajax({
 			type: "GET",
-			url: "/Attendance/ViewDetailAttendance?id=" + id,
+			url: "/AttendanceManagement/Attendance/ViewDetailAttendance?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "html",
 			success: function (data) {
 				$("#sessionDate").html(data);
 				setDate(id);
 				$('[href="#tab4"]').tab('show');
-				window.onbeforeunload = function () {
-					return 'You have unsaved changes!';
-				}
 			}
 		});
 	}

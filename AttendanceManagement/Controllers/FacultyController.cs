@@ -8,15 +8,15 @@ using System.Web.Mvc;
 
 namespace AttendanceManagement.Controllers
 {
-    public class FacultyController : Controller
-    {
+	public class FacultyController : Controller
+	{
 		AttendanceEntities db = new AttendanceEntities();
 		APIController api = new APIController();
 		// GET: Faculty
 
 
 		public ActionResult Index()
-        {
+		{
 			var faculty = db.Faculties.ToList();
 			List<FacultyViewModel> listfaculty = new List<FacultyViewModel>();
 			foreach (var item in faculty)
@@ -34,19 +34,33 @@ namespace AttendanceManagement.Controllers
 		[HttpGet]
 		public ActionResult CreateFaculty1()
 		{
-			//	ViewBag.GroupMap = groupdb.Groups.Where(x => x.GroupParent != null).ToList();
+			string groupdata = api.ReadData("https://fitlogin.vanlanguni.edu.vn/GroupManagement/api/getAllGroups");
+			List<GroupModel> group = JsonConvert.DeserializeObject<List<GroupModel>>(groupdata);
+			ViewBag.GroupMap = group.ToList();
+			ViewBag.MajorList = db.Majors.ToList();
+
 			return View();
 		}
 		[HttpPost]
-		public ActionResult CreateFaculty1(Faculty faculty)
+		public ActionResult CreateFaculty1(Faculty faculty, List<int> MajorID)
 		{
 			Faculty newfaculty = new Faculty();
 			newfaculty.Name = faculty.Name;
 			newfaculty.Description = faculty.Description;
 			newfaculty.GroupID = faculty.GroupID;
+			if (MajorID != null)
+			{
+				foreach (var item in MajorID)
+				{
+					var major = db.Majors.FirstOrDefault(x => x.ID == item);
+					newfaculty.Majors.Add(major);
+				}
+
+			}
+
 			db.Faculties.Add(newfaculty);
 			db.SaveChanges();
-			return RedirectToAction("FacultyIndex");
+			return RedirectToAction("Index");
 		}
 		public ActionResult MajorList()
 		{
@@ -56,9 +70,9 @@ namespace AttendanceManagement.Controllers
 		[HttpPost]
 		public int SynMajor()
 		{
-			int newMajorCount = 0; 
+			int newMajorCount = 0;
 			APIController api = new APIController();
-			string data = api.ReadData("https://cntttest.vanlanguni.edu.vn:18081/SoDauBai/API/getMajors");
+			string data = api.ReadData("https://sodaubai.vanlanguni.edu.vn/API/getMajors");
 			List<MajorsModel> major = JsonConvert.DeserializeObject<List<MajorsModel>>(data);
 			foreach (var item in major)
 			{

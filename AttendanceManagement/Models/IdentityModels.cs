@@ -1,8 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AttendanceManagement.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 
 namespace AttendanceManagement.Models
 {
@@ -17,8 +19,20 @@ namespace AttendanceManagement.Models
             return userIdentity;
         }
     }
+	public static class IdentityExtensions
+	{
+		public static string GetAvatar(this System.Security.Principal.IIdentity user)
+		{
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+			APIController api = new APIController();
+			string avatarData = api.ReadData("https://fitlogin.vanlanguni.edu.vn/GroupManagement/api/getUserImage?searchString=" + user.Name);
+			AvatarBase64 ava = JsonConvert.DeserializeObject<AvatarBase64>(avatarData);
+			return ava.Avatar;
+		}
+
+	}
+
+	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

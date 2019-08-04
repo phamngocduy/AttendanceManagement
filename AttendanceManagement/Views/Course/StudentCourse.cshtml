@@ -1,0 +1,130 @@
+﻿@model IEnumerable<AttendanceManagement.Models.Course>
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">@AttendanceManagement.Resources.Resource.Mygroup</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">@AttendanceManagement.Resources.Resource.Group</a></li>
+			<li class="breadcrumb-item active">@AttendanceManagement.Resources.Resource.Mygroup</li>
+		</ol>
+	</div>
+</div>
+
+
+<div class="card">
+	<div class="card-body bg-info">
+		<h4 class="text-white card-title">My Course</h4>
+	</div>
+	<div class="card-body">
+		<div class="message-box contact-box">
+			<h2 class="add-ct-btn">
+				<button type="button" class="btn btn-circle btn-lg btn-success waves-effect waves-dark" onclick="location.href = '@Url.Action("studentSynCourse", "Course")';"><i class="mdi mdi-autorenew"></i></button>
+			</h2>
+			<div class="row justify-content-center">
+				<div class="col">
+					<div class="row"><h2> Name: Khấu Thành Duy </h2> </div>
+					<div class="row"><h3> Student ID: T151451 </h3></div>
+					<div class="row"><h3> DoB: 25/10/1997</h3> </div>
+				</div>
+			</div>
+			<hr />
+			<div class="row" id="myList">
+				@if (Model != null)
+				{
+					<table id="demo-foo-row-toggler" class="table toggle-circle table-hover">
+						<thead>
+							<tr>
+								<th data-toggle="true"> # </th>
+								<th>Course Name</th>
+								<th>Attend</th>
+								<th>Point</th>
+								<th data-hide="all">Buổi 1</th>
+								<th data-hide="all">Buổi 2</th>
+								<th data-hide="all">Buổi 3</th>
+								<th data-hide="all">Buổi 4</th>
+								<th data-hide="all">Buổi 5</th>
+								<th data-hide="all">Buổi 6</th>
+								<th data-hide="all">Buổi 7</th>
+								<th data-hide="all">Buổi 8</th>
+								<th data-hide="all">Buổi 9</th>
+								<th data-hide="all">Buổi 10</th>
+								<th data-hide="all">Buổi 11</th>
+								<th data-hide="all">Buổi 12</th>
+								<th data-hide="all">Buổi 13</th>
+								<th data-hide="all">Buổi 14</th>
+								<th data-hide="all">Buổi 15</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>Anh Văn 2</td>
+								<td>10</td>
+								<td>100</td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Anh Văn 2</td>
+								<td>10</td>
+								<td>100</td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
+							</tr>
+						</tbody>
+					</table>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--search class-->
+<script>
+	$(document).ready(function () {
+		$("#myInput").on("keyup", function () {
+			var value = $(this).val().toLowerCase();
+			$("#myList *").filter(function () {
+				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		});
+	});
+</script>
+
+
+
+
+

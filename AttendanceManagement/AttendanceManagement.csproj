@@ -58,8 +58,11 @@
       <HintPath>..\packages\FastMember.1.3.0\lib\net45\FastMember.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Owin.Security.VanLangAccount, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vanlanguni.Authentication.VanlangAccount.1.0.0\lib\Microsoft.Owin.Security.VanLangAccount.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security.VanLang, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanlanguni.Authentication.VanlangAccount.3.0.0\lib\net452\Microsoft.Owin.Security.VanLang.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -125,9 +128,6 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -259,6 +259,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AttendanceModel.cs" />
+    <Compile Include="Models\AvatarBase64.cs" />
     <Compile Include="Models\CheckQRCodeModel.cs" />
     <Compile Include="Models\Course.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -337,6 +338,8 @@
     <Content Include="Content\assets\bootstrap-datepicker.min.js" />
     <Content Include="Content\assets\bootstrap-material-datetimepicker.css" />
     <Content Include="Content\assets\bootstrap-material-datetimepicker.js" />
+    <Content Include="Content\assets\bootstrap-select.min.css" />
+    <Content Include="Content\assets\bootstrap-select.min.js" />
     <Content Include="Content\assets\bootstrap-switch.min.css" />
     <Content Include="Content\assets\bootstrap-switch.min.js" />
     <Content Include="Content\assets\bootstrap-timepicker.min.css" />
@@ -362,6 +365,9 @@
     <Content Include="Content\assets\export.js" />
     <Content Include="Content\assets\flag-icon.min.css" />
     <Content Include="Content\assets\font-awesome.min.css" />
+    <Content Include="Content\assets\footable-init.js" />
+    <Content Include="Content\assets\footable.all.min.js" />
+    <Content Include="Content\assets\footable.core.css" />
     <Content Include="Content\assets\gulpfile.js" />
     <Content Include="Content\assets\index.js" />
     <Content Include="Content\assets\Instascan.js" />
@@ -786,6 +792,9 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\fonts\footable.ttf" />
+    <Content Include="Content\fonts\footable.woff" />
+    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
@@ -822,8 +831,6 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Attendance\AddStudent.cshtml" />
-    <Content Include="Views\Attendance\AttendanceExcel.cshtml" />
-    <Content Include="Views\Attendance\DetailClass.cshtml" />
     <Content Include="Views\Attendance\DetailFaculty.cshtml" />
     <Content Include="Views\Attendance\Index.cshtml" />
     <Content Include="Views\Attendance\StudentList.cshtml" />
@@ -846,9 +853,6 @@
     <Content Include="Views\Attendance\AttendanceList.cshtml" />
     <Content Include="Views\Attendance\AllAttendance.cshtml" />
     <Content Include="Views\Session\Edit.cshtml" />
-    <Content Include="Views\Attendance\AttendanceByCode.cshtml" />
-    <Content Include="Views\Attendance\CaptureImage.cshtml" />
-    <Content Include="Views\Attendance\ScanQRCode.cshtml" />
     <Content Include="Views\Attendance\QRCode.cshtml" />
     <Content Include="Views\Attendance\Import.cshtml" />
     <Content Include="Views\Attendance\CheckByCode.cshtml" />
@@ -857,6 +861,12 @@
     <Content Include="Views\Faculty\Index.cshtml" />
     <Content Include="Views\Attendance\ViewDetailAttendance.cshtml" />
     <Content Include="Views\Attendance\ViewEditAttendance.cshtml" />
+    <Content Include="Views\Course\StudentCourse.cshtml" />
+    <Content Include="Views\Course\LecturerCourses.cshtml" />
+    <Content Include="Views\Course\StaffsCourses.cshtml" />
+    <Content Include="Views\Attendance\studentDetailClass.cshtml" />
+    <Content Include="Views\Attendance\lecturerDetailClass.cshtml" />
+    <Content Include="Views\Attendance\staffDetailClass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

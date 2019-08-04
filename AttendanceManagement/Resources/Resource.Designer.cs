@@ -88,6 +88,15 @@ namespace AttendanceManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quản lý khóa học.
+        /// </summary>
+        public static string CourseManagement {
+            get {
+                return ResourceManager.GetString("CourseManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tiếng Anh.
         /// </summary>
         public static string English {
@@ -97,11 +106,38 @@ namespace AttendanceManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Danh sách khoa.
+        /// </summary>
+        public static string Faculty {
+            get {
+                return ResourceManager.GetString("Faculty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Giáo vụ khoa/ BCN Khoa.
+        /// </summary>
+        public static string FS {
+            get {
+                return ResourceManager.GetString("FS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quản lý nhóm.
         /// </summary>
         public static string Group {
             get {
                 return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Giảng viên.
+        /// </summary>
+        public static string GV {
+            get {
+                return ResourceManager.GetString("GV", resourceCulture);
             }
         }
         
@@ -133,7 +169,16 @@ namespace AttendanceManagement.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lớp.
+        ///   Looks up a localized string similar to Danh sách ngành.
+        /// </summary>
+        public static string Major {
+            get {
+                return ResourceManager.GetString("Major", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lớp của tôi.
         /// </summary>
         public static string MyCourse {
             get {
@@ -147,6 +192,33 @@ namespace AttendanceManagement.Resources {
         public static string Mygroup {
             get {
                 return ResourceManager.GetString("Mygroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Học Kỳ.
+        /// </summary>
+        public static string Semester {
+            get {
+                return ResourceManager.GetString("Semester", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sinh viên.
+        /// </summary>
+        public static string SV {
+            get {
+                return ResourceManager.GetString("SV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quản lý hệ thống.
+        /// </summary>
+        public static string SystemManagement {
+            get {
+                return ResourceManager.GetString("SystemManagement", resourceCulture);
             }
         }
         

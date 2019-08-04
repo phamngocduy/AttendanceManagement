@@ -9,6 +9,9 @@
 <div class="card card-outline-warning">
 	<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
 	<div class="card-body">
+			<div class="row pull-left">
+			<button type="button" class="btn waves-effect waves-light btn-block btn-info" onclick="ReloadOK()">OK</button>
+		</div>
 		<div class="table-responsive m-t-40">
 			<table id="tableEditAttendance" name="atten" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100%">
 				<thead>
@@ -122,3 +125,9 @@
 
 	</div>
 </div>
+
+<script>
+	function ReloadOK() {
+		location.reload();
+	}
+</script>

@@ -21,7 +21,7 @@
 </div>
 
 <div class="card card-outline-danger">
-	<div class="card-header" style="color:black">Group Detail</div>
+	<div class="card-header" style="color:black">@WebApplication.Resources.Resource.GroupDetail</div>
 	<div class="card-body">
 		<div class="row">
 			@{ Html.RenderPartial("~/Views/Partial/groupLink.cshtml", GroupParent); }
@@ -30,7 +30,7 @@
 
 		<div class="row">
 			<div class="col-lg-6">
-				<h4><strong>Group Owner:</strong></h4>
+				<h4><strong>@WebApplication.Resources.Resource.GroupOwner</strong></h4>
 				<ul>
 					@foreach (var item in OwnerModel)
 					{
@@ -41,7 +41,7 @@
 				</ul>
 			</div>
 			<div class="col-lg-6">
-				<h4><strong>Group Manager:</strong></h4>
+				<h4><strong>@WebApplication.Resources.Resource.GroupManager</strong></h4>
 				<ul>
 					@foreach (var item in GroupManagerModel)
 					{

@@ -36,7 +36,7 @@
 								<div class="row">
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<div class="dual-list-box-inner">
-											<form id="form" action="/Attendance/AddStudent" method="post" class="wizard-big">
+											<form id="form" action='@Url.Action("AddStudent", "Attendance")' method="post" class="wizard-big">
 												<div class="row">
 													<select class="form-control dual_select" multiple name="studentlist">
 														@if (Model != null)
