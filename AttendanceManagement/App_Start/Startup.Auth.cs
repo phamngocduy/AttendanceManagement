@@ -45,6 +45,8 @@ namespace AttendanceManagement
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
+            app.MapSignalR();
+
 			app.UseVanLangAuthentication("https://cntttest.vanlanguni.edu.vn:18081/Cap21T4/LoginManagement/");
 			// Uncomment the following lines to enable logging in with third party login providers
 			//app.UseMicrosoftAccountAuthentication(

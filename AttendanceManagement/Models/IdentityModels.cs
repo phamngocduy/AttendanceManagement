@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AttendanceManagement.Controllers;
@@ -23,11 +23,16 @@ namespace AttendanceManagement.Models
 	{
 		public static string GetAvatar(this System.Security.Principal.IIdentity user)
 		{
-
-			APIController api = new APIController();
-			string avatarData = api.ReadData("https://fitlogin.vanlanguni.edu.vn/GroupManagement/api/getUserImage?searchString=" + user.Name);
-			AvatarBase64 ava = JsonConvert.DeserializeObject<AvatarBase64>(avatarData);
-			return ava.Avatar;
+            try
+            {
+                APIController api = new APIController();
+                string avatarData = api.ReadData("https://fitlogin.vanlanguni.edu.vn/GroupManagement/api/getUserImage?searchString=" + user.Name);
+                AvatarBase64 ava = JsonConvert.DeserializeObject<AvatarBase64>(avatarData);
+                return ava.Avatar;
+            } catch (Exception)
+            {
+                return null;
+            }
 		}
 
 	}

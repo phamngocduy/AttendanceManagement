@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Chat";
+}
+
+<h2 id="label">Security code is @ViewBag.Random</h2>
+<div class="container">
+    <div id="email">
+        API example ~/AddAttendance?code=@(ViewBag.Random)&courseID=&sessionID=&attendance=[MSSV1,MSS2]
+    </div>
+    <pre id="attendance"></pre>
+</div>
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.2.min.js")"></script>
+    <script src="@Url.Content("~/signalr/hubs")"></script>
+    <script>
+        $(function () {
+            var chat = $.connection.jsonHub;
+            chat.client.addAttendance = function (email, attendance) {
+                $('#label').text('Data received');
+                $('#email').text(email);
+                $('#attendance').text(attendance);
+            }
+            $.connection.hub.start();
+        })
+    </script>
+}

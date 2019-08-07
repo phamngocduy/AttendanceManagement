@@ -16,7 +16,6 @@ namespace AttendanceManagement.Controllers
 		[AllowAnonymous]
 		public void setSemester(int semester)
 		{
-
 			Session["Semester"] = semester;
 		}
 		[AllowAnonymous]
