@@ -33,14 +33,73 @@ namespace AttendanceManagement.Controllers
 			var courseList = db.Courses.Where(x => x.Semester == semester).ToList();
 
 			var lectureCourse = courseList.Where(x => x.Lecturer == User.Identity.Name);
-			if(lectureCourse.Count() > 0)
+			if (lectureCourse.Count() > 0)
 			{
 				return View(lectureCourse);
 			}
 			else
 			{
-				var studentCourse = courseList.Where(c => c.CourseMembers.Count(m => m.Email == User.Identity.Name) > 0);
-				return View("StudentCourse", studentCourse.Distinct().ToList());
+				// process data for student course
+				var studentCourse = (from course in courseList
+									 join courseMember in db.CourseMembers on course.ID equals courseMember.CourseID
+									 where course.ID == courseMember.CourseID
+									 where courseMember.Email == User.Identity.Name
+									 select new { course, courseMember }).Distinct().ToList();
+
+
+				if (studentCourse.Count() > 0)
+				{
+					List<studentCourseView> studentCourseModel = new List<studentCourseView>();
+					foreach (var item in studentCourse)
+					{
+						studentCourseView studentView = new studentCourseView();
+						studentView.studentName = item.courseMember.LastName + " " + item.courseMember.FirstName;
+						studentView.studentID = item.courseMember.StudentID;
+						studentView.studentDoB = (DateTime)item.courseMember.DoB;
+						studentView.courseName = item.course.CourseName;
+						var iAttendanceCount = 0;
+						var iAttendancePointCount = 0;
+						var sessionList = db.Sessions.Where(x => x.CourseID == item.course.ID);
+						studentView.totalSession = sessionList.Count();
+						foreach (var session in sessionList)
+						{
+							var attendanceDetail = new DetailAttendance();
+							var attendanceInformation = session.Attendances.FirstOrDefault(x => x.MemberID == item.courseMember.ID);
+							if (attendanceInformation != null)
+							{
+								attendanceDetail.Date = (DateTime)session.Date;
+								attendanceDetail.Note = attendanceInformation.Note;
+								attendanceDetail.Status = attendanceInformation.Status;
+								if (attendanceDetail.Status != "0" && attendanceDetail.Status != null)
+								{
+									iAttendanceCount++;
+									iAttendancePointCount = iAttendancePointCount + int.Parse(attendanceDetail.Status);
+								}
+							}
+							studentView.attendanceCount = iAttendanceCount;
+							studentView.attendancePoint = iAttendancePointCount;
+							studentView.attendanceList.Add(attendanceDetail);
+						}
+						studentCourseModel.Add(studentView);
+					}
+					return View("StudentCourse", studentCourseModel);
+				}
+				else
+				{
+					var studentInfo = db.CourseMembers.FirstOrDefault(x => x.Email == User.Identity.Name);
+					List<studentCourseView> studentCourseModel = new List<studentCourseView>();
+					studentCourseView studentCourseItem = new studentCourseView();
+
+					studentCourseItem.studentName = studentInfo.LastName + " " + studentInfo.FirstName;
+					studentCourseItem.studentID = studentInfo.StudentID;
+					studentCourseItem.studentDoB = (DateTime)studentInfo.DoB;
+
+					studentCourseModel.Add(studentCourseItem);
+
+					return View("StudentCourse", studentCourseModel);
+				}
+
+
 			}
 		}
 		public ActionResult StaffsCourses()

@@ -74,7 +74,7 @@ namespace AttendanceManagement.Controllers
 		{
 			return View();
 		}
-		
+
 
 		public ActionResult studentDetailClass(string id)
 		{

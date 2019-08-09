@@ -1,5 +1,6 @@
-﻿@model IEnumerable<AttendanceManagement.Models.Course>
+﻿@model List<AttendanceManagement.Models.studentCourseView>
 @{
+	int iSession = 1;
 	ViewBag.Title = "Index";
 	Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
@@ -23,19 +24,16 @@
 	</div>
 	<div class="card-body">
 		<div class="message-box contact-box">
-			<h2 class="add-ct-btn">
-				<button type="button" class="btn btn-circle btn-lg btn-success waves-effect waves-dark" onclick="location.href = '@Url.Action("studentSynCourse", "Course")';"><i class="mdi mdi-autorenew"></i></button>
-			</h2>
 			<div class="row justify-content-center">
 				<div class="col">
-					<div class="row"><h2> Name: Khấu Thành Duy </h2> </div>
-					<div class="row"><h3> Student ID: T151451 </h3></div>
-					<div class="row"><h3> DoB: 25/10/1997</h3> </div>
+					<div class="row"><h2> Name: @Model[0].studentName </h2> </div>
+					<div class="row"><h3> Student ID: @Model[0].studentID </h3></div>
+					<div class="row"><h3> DoB: @Model[0].studentDoB.ToShortDateString()</h3> </div>
 				</div>
 			</div>
 			<hr />
 			<div class="row" id="myList">
-				@if (Model != null)
+				@if (Model != null && Model[0].courseName != null)
 				{
 					<table id="demo-foo-row-toggler" class="table toggle-circle table-hover">
 						<thead>
@@ -44,68 +42,56 @@
 								<th>Course Name</th>
 								<th>Attend</th>
 								<th>Point</th>
-								<th data-hide="all">Buổi 1</th>
-								<th data-hide="all">Buổi 2</th>
-								<th data-hide="all">Buổi 3</th>
-								<th data-hide="all">Buổi 4</th>
-								<th data-hide="all">Buổi 5</th>
-								<th data-hide="all">Buổi 6</th>
-								<th data-hide="all">Buổi 7</th>
-								<th data-hide="all">Buổi 8</th>
-								<th data-hide="all">Buổi 9</th>
-								<th data-hide="all">Buổi 10</th>
-								<th data-hide="all">Buổi 11</th>
-								<th data-hide="all">Buổi 12</th>
-								<th data-hide="all">Buổi 13</th>
-								<th data-hide="all">Buổi 14</th>
-								<th data-hide="all">Buổi 15</th>
+								@foreach (var attendance in Model[0].attendanceList)
+								{
+									<th data-hide="all" data-toggle="tooltip" data-placement="top" title="@attendance.Date.ToShortDateString()">Sesion @(iSession++)</th>
+
+								}
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Anh Văn 2</td>
-								<td>10</td>
-								<td>100</td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Anh Văn 2</td>
-								<td>10</td>
-								<td>100</td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/check.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-								<td> <img src="~/Content/image/uncheck.png" style="width:20px;height:20px" /></td>
-							</tr>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td>1</td>
+									<td>@item.courseName</td>
+									<td>@item.attendanceCount</td>
+									<td>@item.attendancePoint</td>
+									@foreach (var i in item.attendanceList)
+									{
+										<td>
+											@if (i.Status == "0")
+											{
+												if (i.Note != null)
+												{
+													<img data-toggle="tooltip" data-placement="top" title="@i.Note" src="~/Content/image/uncheck.png" style="width:20px;height:20px" />
+												}
+												else
+												{
+													<img src="~/Content/image/uncheck.png" style="width:20px;height:20px" />
+												}
+											}
+											else if (i.Status != null)
+											{
+												if (i.Note != null)
+												{
+													<img data-toggle="tooltip" data-placement="top" title="@i.Note" src="~/Content/image/check.png" style="width:20px;height:20px" />
+												}
+												else
+												{
+													<img src="~/Content/image/check.png" style="width:20px;height:20px" />
+												}
+											}
+										</td>
+									}
+								</tr>
+							}
 						</tbody>
 					</table>
+				}
+				else
+				{
+					<div>No Course</div>
 				}
 			</div>
 		</div>
