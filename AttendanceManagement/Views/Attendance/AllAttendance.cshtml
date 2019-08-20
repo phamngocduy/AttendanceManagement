@@ -9,9 +9,14 @@
 {
 	<div class="card">
 		<div class="card-body bg-primary">
-			<h3 class="text-white card-title">Session Management</h3>
+			<h3 class="text-white card-title">DASHBOARD</h3>
 		</div>
 		<div class="card-body">
+			<div class="row pull-right">
+				<a href="@Url.Action("Index", "Course")">Back To Lick</a>
+			</div>
+			<br />
+			<br />
 			<div class="col-lg-12 col-xlg-12 col-md-7">
 				<div class="user-analytics chartist-chart" style="height: 250px;"></div>
 			</div>
@@ -144,9 +149,13 @@
 			}
 			<br />
 			<div class="row pull-left">
-				<div class="col">
-					<button type="button" class="btn waves-effect waves-light btn-block btn-success" onclick="location.href = '@Url.Action("Import", "Attendance")';">Import Excel</button>
-				</div>
+				@if (Session["UserType"].ToString() == "Lecturer")
+				{
+					<div class="col">
+						<button type="button" class="btn waves-effect waves-light btn-block btn-success" onclick="location.href = '@Url.Action("Import", "Attendance")';">Import Excel</button>
+					</div>
+				}
+
 				<div class="col">
 					<button type="button" class="btn btn-info waves-effect waves-dark" onclick="location.href = '@Url.Action("Export", "Attendance")';">Export Excel</button>
 				</div>

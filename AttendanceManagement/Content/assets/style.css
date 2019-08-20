@@ -726,13 +726,17 @@ Table Cell
 th.dt-center, td.dt-center {
 	text-align: center;
 }
-
+#demo-foo-row-toggler td, #demo-foo-row-toggler th, #example23 td, #example23 th{
+	white-space: unset;
+}
 th, td {
-	/*white-space: nowrap;*/
+	white-space: nowrap;
 	padding:0;
 }
-div.container{
-	width:80%;
+
+
+div.container {
+	width: 80%;
 }
 
 div.dataTables_wrapper {

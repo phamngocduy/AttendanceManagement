@@ -19,16 +19,13 @@
 
 
 <div class="card">
-	<div class="card-body bg-info">
-		<h4 class="text-white card-title">My Course</h4>
-	</div>
 	<div class="card-body">
 		<div class="message-box contact-box">
 			<div class="row justify-content-center">
 				<div class="col">
-					<div class="row"><h2> Name: @Model[0].studentName </h2> </div>
-					<div class="row"><h3> Student ID: @Model[0].studentID </h3></div>
-					<div class="row"><h3> DoB: @Model[0].studentDoB.ToShortDateString()</h3> </div>
+					<div class="row justify-content-center" style="text-align:center;font-family:serif;font-size:30px"><h2><b> Name:@Model[0].studentName </b></h2> </div>
+					<div class="row justify-content-center" style="text-align:center;font-family:serif"><h3> ID: @Model[0].studentID </h3></div>
+					<div class="row justify-content-center" style="text-align:center;font-family:serif"><h3> DoB: @Model[0].studentDoB.ToShortDateString()</h3> </div>
 				</div>
 			</div>
 			<hr />
@@ -42,10 +39,10 @@
 								<th>Course Name</th>
 								<th>Attend</th>
 								<th>Point</th>
+								<th>Action</th>
 								@foreach (var attendance in Model[0].attendanceList)
 								{
 									<th data-hide="all" data-toggle="tooltip" data-placement="top" title="@attendance.Date.ToShortDateString()">Sesion @(iSession++)</th>
-
 								}
 							</tr>
 						</thead>
@@ -57,6 +54,9 @@
 									<td>@item.courseName</td>
 									<td>@item.attendanceCount</td>
 									<td>@item.attendancePoint</td>
+									<td>
+										<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" onclick="location.href='@Url.Action("studentDetailClass","Attendance",new { id = item.courseID })'"  data-toggle="tooltip" data-original-title="Detail"><i class="mdi mdi-information" aria-hidden="true"></i></button>
+									</td>
 									@foreach (var i in item.attendanceList)
 									{
 										<td>

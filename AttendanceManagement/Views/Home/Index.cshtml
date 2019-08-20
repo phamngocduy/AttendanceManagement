@@ -8,8 +8,9 @@
 <div class="card">
 	<div class="form-group">
 		<label>search student </label>
-		<input type="text" class="form-control" placeholder="type & enter">
+		<input type="text" id="SearchAttendance" class="form-control" placeholder="type & enter">
 	</div>
+	<div id="result"></div>
 </div>
 <img src="~/Content/image/anh-co-so-3.jpg" style="max-width:100%" />
 <script>
@@ -23,5 +24,13 @@
 		});
 		Cookies.remove('notStudent');
 	}
+	var input = document.getElementById("SearchAttendance");
 
+	input.addEventListener("keyup", function (event) {
+		if (event.keyCode === 13) {
+			$.get('@Url.Action("SearchAttendance", "Attendance")?searchString=' + $('#SearchAttendance').val()).done(function (data) {
+				$('#result').html(data);
+		});
+		}
+	});
 </script>

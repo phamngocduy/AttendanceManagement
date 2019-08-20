@@ -5,12 +5,15 @@
 	int i = 1;
 }
 
-
+<input type="hidden" id="UserType" data-value="@Request.RequestContext.HttpContext.Session["UserType"]" />
 <div class="card">
 	<div class="card-body bg-danger">
-		<h3 class="text-white card-title">Student Management</h3>
+		<h3 class="text-white card-title">STUDENTS</h3>
 	</div>
 	<div class="card-body">
+		<div class="row pull-right">
+			<a href="@Url.Action("Index", "Course")">Back To Lick</a>
+		</div>
 		<div class="row" style="text-align:left">
 		</div>
 		@if (Model.Count == 0)
@@ -98,22 +101,24 @@
 			]
 		});
 		var table = $('#tablestudents').DataTable();
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				var url = "/Attendance/AddStudent";
-				$("#ModalAddStudent").load(url, function () {
-					$('.modal-backdrop').remove();
-					$("#myAddStudent").modal("show");
-				})
-			},
-			text: 'Add',
-		});
-		table.button().add(0, {
-			action: function (e, dt, button, config) {
-				window.location = '/Course';
-			},
-			text: 'Import'
-		});
+		if ($("#UserType").data('value') == "Lecturer") {
+			table.button().add(0, {
+				action: function (e, dt, button, config) {
+					var url = "/Attendance/AddStudent";
+					$("#ModalAddStudent").load(url, function () {
+						$('.modal-backdrop').remove();
+						$("#myAddStudent").modal("show");
+					})
+				},
+				text: 'Add',
+			});
+			table.button().add(0, {
+				action: function (e, dt, button, config) {
+					window.location = '/Course';
+				},
+				text: 'Import'
+			});
+		}
 		table.button().add(0, {
 			action: function (e, dt, button, config) {
 				window.location = '/Course';

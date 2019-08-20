@@ -36,49 +36,11 @@ namespace AttendanceManagement.Controllers
 			return View(courselist);
 
 		}
-		public ActionResult CreateFaculty()
-		{
-			return View();
-		}
-
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult CreateFaculty([Bind(Include = "Id,FacultyName,Description")] Faculty faculty)
-		{
-			if (ModelState.IsValid)
-			{
-				db.Faculties.Add(faculty);
-				db.SaveChanges();
-				return RedirectToAction("ManageFaculty");
-			}
-
-			return View(faculty);
-		}
-
-		public ActionResult ManageFaculty()
-		{
-			return View();
-		}
-
-		public ActionResult DetailFaculty()
-		{
-			return View();
-		}
-
-		public ActionResult EditClass1()
-		{
-			return View();
-		}
-
-		public ActionResult CreateClass1()
-		{
-			return View();
-		}
-
 
 		public ActionResult studentDetailClass(string id)
 		{
 			Session["CourseID"] = id;
+			Session["UserType"] = "Student";
 			int courseID = int.Parse(id);
 			ViewBag.Course = db.Courses.FirstOrDefault(x => x.ID == courseID).CourseName;
 			ViewBag.tab = "tab1";
@@ -96,39 +58,35 @@ namespace AttendanceManagement.Controllers
 			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
 			foreach (var iten in student)
 			{
-				DasboardAttendanceView attendanceview = new DasboardAttendanceView();
-				attendanceview.memberID = iten.ID;
-				attendanceview.studentID = iten.StudentID;
-				attendanceview.FirstName = iten.FirstName;
-				attendanceview.LastName = iten.LastName;
-				attendanceview.TotalSession = session.Count();
-				int TotalPresent = 0;
-				int TotalPoint = 0;
+				DasboardAttendanceView attendanceView = new DasboardAttendanceView();
+				attendanceView.memberID = iten.ID;
+				attendanceView.studentID = iten.StudentID;
+				attendanceView.FirstName = iten.FirstName;
+				attendanceView.LastName = iten.LastName;
+				attendanceView.TotalSession = session.Count();
+				int iTotalPresent = 0;
+				int iTotalPoint = 0;
 				foreach (var item in session)
 				{
-					DetailAttendance detail = new DetailAttendance();
-					detail.Date = (DateTime)item.Date;
+					DetailAttendance attendanceDetail = new DetailAttendance();
+					attendanceDetail.Date = (DateTime)item.Date;
 					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
 					if (attendance != null)
 					{
-						detail.Status = attendance.Status;
+						attendanceDetail.Status = attendance.Status;
 
 						if (attendance.Status != "0")
 						{
-							TotalPresent++;
+							iTotalPresent++;
+							iTotalPoint = iTotalPoint + int.Parse(attendance.Status);
 						}
-						if (attendance.Status != "0")
-						{
-							TotalPoint = TotalPoint + int.Parse(attendance.Status);
-						}
-
-						detail.Note = attendance.Note;
+						attendanceDetail.Note = attendance.Note;
 					}
-					attendanceview.Attendance.Add(detail);
+					attendanceView.Attendance.Add(attendanceDetail);
 				}
-				attendanceview.TotalPoint = TotalPoint;
-				attendanceview.TotalPresent = TotalPresent;
-				list.Add(attendanceview);
+				attendanceView.TotalPoint = iTotalPoint;
+				attendanceView.TotalPresent = iTotalPresent;
+				list.Add(attendanceView);
 			}
 			list = list.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
 			ViewData["attendance"] = list;
@@ -142,7 +100,9 @@ namespace AttendanceManagement.Controllers
 
 		public ActionResult lecturerDetailClass(string id)
 		{
+			TempData.Remove("AttendanceExcel");
 			Session["CourseID"] = id;
+			Session["UserType"] = "Lecturer";
 			int courseID = int.Parse(id);
 			ViewBag.Course = db.Courses.FirstOrDefault(x => x.ID == courseID).CourseName;
 			ViewBag.tab = "tab1";
@@ -160,39 +120,35 @@ namespace AttendanceManagement.Controllers
 			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
 			foreach (var iten in student)
 			{
-				DasboardAttendanceView attendanceview = new DasboardAttendanceView();
-				attendanceview.memberID = iten.ID;
-				attendanceview.studentID = iten.StudentID;
-				attendanceview.FirstName = iten.FirstName;
-				attendanceview.LastName = iten.LastName;
-				attendanceview.TotalSession = session.Count();
-				int TotalPresent = 0;
-				int TotalPoint = 0;
+				DasboardAttendanceView attendanceView = new DasboardAttendanceView();
+				attendanceView.memberID = iten.ID;
+				attendanceView.studentID = iten.StudentID;
+				attendanceView.FirstName = iten.FirstName;
+				attendanceView.LastName = iten.LastName;
+				attendanceView.TotalSession = session.Count();
+				int iTotalPresent = 0;
+				int iTotalPoint = 0;
 				foreach (var item in session)
 				{
-					DetailAttendance detail = new DetailAttendance();
-					detail.Date = (DateTime)item.Date;
+					DetailAttendance attendanceDetail = new DetailAttendance();
+					attendanceDetail.Date = (DateTime)item.Date;
 					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
 					if (attendance != null)
 					{
-						detail.Status = attendance.Status;
+						attendanceDetail.Status = attendance.Status;
 
 						if (attendance.Status != "0")
 						{
-							TotalPresent++;
+							iTotalPresent++;
+							iTotalPoint = iTotalPoint + int.Parse(attendance.Status);
 						}
-						if (attendance.Status != "0")
-						{
-							TotalPoint = TotalPoint + int.Parse(attendance.Status);
-						}
-
-						detail.Note = attendance.Note;
+						attendanceDetail.Note = attendance.Note;
 					}
-					attendanceview.Attendance.Add(detail);
+					attendanceView.Attendance.Add(attendanceDetail);
 				}
-				attendanceview.TotalPoint = TotalPoint;
-				attendanceview.TotalPresent = TotalPresent;
-				list.Add(attendanceview);
+				attendanceView.TotalPoint = iTotalPoint;
+				attendanceView.TotalPresent = iTotalPresent;
+				list.Add(attendanceView);
 			}
 			list = list.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
 			ViewData["attendance"] = list;
@@ -207,6 +163,7 @@ namespace AttendanceManagement.Controllers
 		public ActionResult staffDetailClass(string id)
 		{
 			Session["CourseID"] = id;
+			Session["UserType"] = "Staff";
 			int courseID = int.Parse(id);
 			ViewBag.Course = db.Courses.FirstOrDefault(x => x.ID == courseID).CourseName;
 			ViewBag.tab = "tab1";
@@ -224,39 +181,35 @@ namespace AttendanceManagement.Controllers
 			List<DasboardAttendanceView> list = new List<DasboardAttendanceView>();
 			foreach (var iten in student)
 			{
-				DasboardAttendanceView attendanceview = new DasboardAttendanceView();
-				attendanceview.memberID = iten.ID;
-				attendanceview.studentID = iten.StudentID;
-				attendanceview.FirstName = iten.FirstName;
-				attendanceview.LastName = iten.LastName;
-				attendanceview.TotalSession = session.Count();
-				int TotalPresent = 0;
-				int TotalPoint = 0;
+				DasboardAttendanceView attendanceView = new DasboardAttendanceView();
+				attendanceView.memberID = iten.ID;
+				attendanceView.studentID = iten.StudentID;
+				attendanceView.FirstName = iten.FirstName;
+				attendanceView.LastName = iten.LastName;
+				attendanceView.TotalSession = session.Count();
+				int iTotalPresent = 0;
+				int iTotalPoint = 0;
 				foreach (var item in session)
 				{
-					DetailAttendance detail = new DetailAttendance();
-					detail.Date = (DateTime)item.Date;
+					DetailAttendance attendanceDetail = new DetailAttendance();
+					attendanceDetail.Date = (DateTime)item.Date;
 					var attendance = item.Attendances.FirstOrDefault(x => x.MemberID == iten.ID);
 					if (attendance != null)
 					{
-						detail.Status = attendance.Status;
+						attendanceDetail.Status = attendance.Status;
 
 						if (attendance.Status != "0")
 						{
-							TotalPresent++;
+							iTotalPresent++;
+							iTotalPoint = iTotalPoint + int.Parse(attendance.Status);
 						}
-						if (attendance.Status != "0")
-						{
-							TotalPoint = TotalPoint + int.Parse(attendance.Status);
-						}
-
-						detail.Note = attendance.Note;
+						attendanceDetail.Note = attendance.Note;
 					}
-					attendanceview.Attendance.Add(detail);
+					attendanceView.Attendance.Add(attendanceDetail);
 				}
-				attendanceview.TotalPoint = TotalPoint;
-				attendanceview.TotalPresent = TotalPresent;
-				list.Add(attendanceview);
+				attendanceView.TotalPoint = iTotalPoint;
+				attendanceView.TotalPresent = iTotalPresent;
+				list.Add(attendanceView);
 			}
 			list = list.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
 			ViewData["attendance"] = list;
@@ -889,9 +842,18 @@ namespace AttendanceManagement.Controllers
 										detail.Date = DateTime.Parse(ws.Cell(7, j).Comment.Text);
 										detail.Note = ws.Cell(i, j).Comment.Text;
 										//TO DO
-										if (ws.Cell(i, j).GetValue<string>().ToLower() == "x")
+										if (ws.Cell(i, j).GetValue<string>().ToLower() != "")
 										{
-											detail.Status = "10";
+											var isNumeric = int.TryParse(ws.Cell(i, j).GetValue<string>().ToLower(), out int n);
+											if (isNumeric)
+											{
+												detail.Status = ws.Cell(i, j).GetValue<string>().ToLower();
+											}
+											else
+											{
+												detail.Status = "1";
+											}
+
 										}
 										else
 										{
@@ -980,7 +942,7 @@ namespace AttendanceManagement.Controllers
 			TempData.Remove("AttendanceExcel");
 			Session["tabactive"] = "tab1";
 
-			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
+			return RedirectToAction("lecturerDetailClass", "Attendance", new { id = Session["CourseID"] });
 		}
 
 		public ActionResult CheckByCode()
@@ -1174,6 +1136,70 @@ namespace AttendanceManagement.Controllers
 		{
 			return View();
 
+		}
+		[HttpGet, AllowAnonymous]
+		public ActionResult SearchAttendance(string searchString)
+		{
+			var semester = 182;
+			var courseList = db.Courses.Where(x => x.Semester == semester).ToList();
+			var studentCourse = (from course in courseList
+								 join courseMember in db.CourseMembers on course.ID equals courseMember.CourseID
+								 where course.ID == courseMember.CourseID
+								 where (courseMember.Email == searchString || courseMember.StudentID == searchString)
+								 select new { course, courseMember }).Distinct().ToList();
+			if (studentCourse.Count() > 0)
+			{
+				List<studentCourseView> studentCourseModel = new List<studentCourseView>();
+				foreach (var item in studentCourse)
+				{
+					studentCourseView studentView = new studentCourseView();
+					studentView.studentName = item.courseMember.LastName + " " + item.courseMember.FirstName;
+					studentView.studentID = item.courseMember.StudentID;
+					studentView.studentDoB = (DateTime)item.courseMember.DoB;
+					studentView.courseName = item.course.CourseName;
+					studentView.courseID = item.course.ID.ToString();
+					var iAttendanceCount = 0;
+					var iAttendancePointCount = 0;
+					var sessionList = db.Sessions.Where(x => x.CourseID == item.course.ID);
+					studentView.totalSession = sessionList.Count();
+					foreach (var session in sessionList)
+					{
+						var attendanceDetail = new DetailAttendance();
+						var attendanceInformation = session.Attendances.FirstOrDefault(x => x.MemberID == item.courseMember.ID);
+						if (attendanceInformation != null)
+						{
+							attendanceDetail.Date = (DateTime)session.Date;
+							attendanceDetail.Note = attendanceInformation.Note;
+							attendanceDetail.Status = attendanceInformation.Status;
+							if (attendanceDetail.Status != "0" && attendanceDetail.Status != null)
+							{
+								iAttendanceCount++;
+								iAttendancePointCount = iAttendancePointCount + int.Parse(attendanceDetail.Status);
+							}
+						}
+						studentView.attendanceCount = iAttendanceCount;
+						studentView.attendancePoint = iAttendancePointCount;
+						studentView.attendanceList.Add(attendanceDetail);
+					}
+					studentCourseModel.Add(studentView);
+				}
+				return View(studentCourseModel);
+			}
+			else
+			{
+				var studentInfo = db.CourseMembers.FirstOrDefault(x => x.Email == searchString);
+				List<studentCourseView> studentCourseModel = new List<studentCourseView>();
+				studentCourseView studentCourseItem = new studentCourseView();
+				if (studentInfo != null)
+				{
+					studentCourseItem.studentName = studentInfo.LastName + " " + studentInfo.FirstName;
+					studentCourseItem.studentID = studentInfo.StudentID;
+					studentCourseItem.studentDoB = (DateTime)studentInfo.DoB;
+
+					studentCourseModel.Add(studentCourseItem);
+				}
+				return View(studentCourseModel);
+			}
 		}
 
 	}

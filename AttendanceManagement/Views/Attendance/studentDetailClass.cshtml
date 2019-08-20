@@ -24,7 +24,7 @@
 </div>
 <div class="container-fluid">
 	<!-- Basic Example -->
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs justify-content-center">
 		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12 active">
 			<div class="card" style="text-align:center;">
 				<a data-toggle="tab" href="#tab1" id="a" style="background-color:#7460ee">
@@ -50,31 +50,6 @@
 				</a>
 			</div>
 		</li>
-		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-			<div class="card" style="text-align:center">
-				<a data-toggle="tab" href="#tab3" id="c" style="background-color:#26c6da">
-					<h2 style="color:white">
-						<span>
-							<i class="fa fa-check-square-o"></i>
-						</span>
-						SESSION
-					</h2>
-				</a>
-			</div>
-		</li>
-		<li class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-			<div class="card" style="text-align:center">
-				<a data-toggle="tab" href="#tab4" id="d" style="background-color:#ffb22b">
-					<h2 style="color:white">
-						<span>
-							<i class="fa fa-pencil-square-o"></i>
-						</span>
-						ATTENDANCE
-					</h2>
-				</a>
-			</div>
-		</li>
-
 	</ul>
 	<div class="tab-content">
 		<div id="tab1" class="tab-pane">
@@ -84,29 +59,6 @@
 		<div id="tab2" class="tab-pane ">
 			@{ Html.RenderPartial("~/Views/Attendance/StudentList.cshtml", ViewData["students"]); }
 		</div>
-		<div id="tab3" class="tab-pane ">
-			@{ Html.RenderPartial("~/Views/Attendance/SessionList.cshtml", ViewData["session"]); }
-		</div>
-		<div id="tab4" class="tab-pane">
-			<div id="sessionDate">
-				<div class="card">
-					<div class="card-header"><h3 style="color:white"><strong> Check Attendance</strong></h3></div>
-					<div class="card-body">
-						<div class="row" style="text-align:center">
-							<div class="col">
-								<button class="btn btn-primary" onclick="choice()">Please choice session</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id="listAttendance" class="hide">
-				@{
-					Html.RenderPartial("~/Views/Attendance/AttendanceList.cshtml", ViewData["students"]);
-				}
-			</div>
-		</div>
-
 	</div>
 </div>
 

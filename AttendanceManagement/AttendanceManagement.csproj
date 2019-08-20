@@ -877,6 +877,7 @@
     <Content Include="Views\Attendance\lecturerDetailClass.cshtml" />
     <Content Include="Views\Attendance\staffDetailClass.cshtml" />
     <Content Include="Views\JSON\Attendance.cshtml" />
+    <Content Include="Views\Attendance\SearchAttendance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

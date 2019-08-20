@@ -12,6 +12,7 @@ namespace AttendanceManagement.Controllers
 	public class CourseController : Controller
 	{
 		AttendanceEntities db = new AttendanceEntities();
+		APIController api = new APIController();
 		// GET: Course
 		[AllowAnonymous]
 		public void setSemester(int semester)
@@ -29,16 +30,18 @@ namespace AttendanceManagement.Controllers
 		public ActionResult Index()
 		{
 			var semester = this.getSemester(db);
-			var courseList = db.Courses.Where(x => x.Semester == semester).ToList();
-
-			var lectureCourse = courseList.Where(x => x.Lecturer == User.Identity.Name);
-			if (lectureCourse.Count() > 0)
+			var allCourses = db.Courses.ToList();
+			var courseList = allCourses.Where(x => x.Semester == semester).ToList();
+			var allLecturerCourses = allCourses.Where(x => x.Lecturer == User.Identity.Name);
+			if (allLecturerCourses.Count() > 0)
 			{
+				var lectureCourse = courseList.Where(x => x.Lecturer == User.Identity.Name);
 				return View(lectureCourse);
 			}
 			else
 			{
 				// process data for student course
+
 				var studentCourse = (from course in courseList
 									 join courseMember in db.CourseMembers on course.ID equals courseMember.CourseID
 									 where course.ID == courseMember.CourseID
@@ -56,6 +59,7 @@ namespace AttendanceManagement.Controllers
 						studentView.studentID = item.courseMember.StudentID;
 						studentView.studentDoB = (DateTime)item.courseMember.DoB;
 						studentView.courseName = item.course.CourseName;
+						studentView.courseID = item.course.ID.ToString();
 						var iAttendanceCount = 0;
 						var iAttendancePointCount = 0;
 						var sessionList = db.Sessions.Where(x => x.CourseID == item.course.ID);
@@ -137,27 +141,44 @@ namespace AttendanceManagement.Controllers
 		}
 		public ActionResult studentSynCourse()
 		{
+			SynMajor();
 			SynCourse();
 			return RedirectToAction("StudentCourse");
 		}
 
 		public ActionResult lecturerSynCourse()
 		{
+			SynMajor();
 			SynCourse();
 			return RedirectToAction("LecturerCourses");
 		}
 
 		public ActionResult staffSynCourse()
 		{
+			SynMajor();
 			SynCourse();
 			return RedirectToAction("StaffsCourses");
 		}
 
+		public void SynMajor()
+		{
+			var majors = api.getMajors();
+			foreach (var item in majors)
+			{
+				if (db.Majors.FirstOrDefault(x => x.Code == item.code) == null)
+				{
+					Major newMajor = new Major();
+					newMajor.Code = item.code;
+					newMajor.Name = item.name;
+					db.Majors.Add(newMajor);
+				}
+			}
+			db.SaveChanges();
+		}
+
 		public void SynCourse()
 		{
-			APIController api = new APIController();
-			string data = api.ReadData("https://sodaubai.vanlanguni.edu.vn/API/getCourses");
-			CourseModel course = JsonConvert.DeserializeObject<CourseModel>(data);
+			var course = api.getCourses();
 			foreach (var item in course.Courses)
 			{
 				var SynCourse = db.Courses.FirstOrDefault(x => x.Code == item.Code && x.Type1 == item.Type1 && x.Type2 == item.Type2 && x.Semester == course.Semester);

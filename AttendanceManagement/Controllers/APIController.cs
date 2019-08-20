@@ -11,6 +11,7 @@ using AttendanceManagement.Models;
 using Microsoft.AspNet.SignalR.Hubs;
 using System.Collections.Generic;
 using System.Collections;
+using Newtonsoft.Json;
 
 namespace AttendanceManagement.Controllers
 {
@@ -28,6 +29,20 @@ namespace AttendanceManagement.Controllers
 			response.Close();
 			readStream.Close();
 			return data;
+		}
+
+		public List<MajorsModel> getMajors()
+		{
+			string data = ReadData("https://sodaubai.vanlanguni.edu.vn/API/getMajors");
+			List<MajorsModel> returnData = JsonConvert.DeserializeObject<List<MajorsModel>>(data);
+			return returnData;
+		}
+
+		public CourseModel getCourses()
+		{
+			string data = ReadData("https://sodaubai.vanlanguni.edu.vn/API/getCourses");
+			CourseModel returnData = JsonConvert.DeserializeObject<CourseModel>(data);
+			return returnData;
 		}
 	}
 

@@ -16,6 +16,7 @@ namespace AttendanceManagement.Models
 		public string studentID { get; set; }
 		public DateTime studentDoB { get; set; }
 		public string courseName { get; set; }
+		public string courseID { get; set; }
 
 		public int totalSession { get; set; }
 		public int attendanceCount { get; set; }
