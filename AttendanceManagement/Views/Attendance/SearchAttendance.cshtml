@@ -24,106 +24,105 @@
 
 <div class="card">
 	<div class="card-body">
-		<div class="message-box contact-box">
-			<div class="row justify-content-center">
-				<div class="col">
-					<div class="row justify-content-center" style="text-align:center;font-family:serif;font-size:30px"><h2><b> Name:@Model[0].studentName </b></h2> </div>
-					<div class="row justify-content-center" style="text-align:center;font-family:serif"><h3> ID: @Model[0].studentID </h3></div>
-					<div class="row justify-content-center" style="text-align:center;font-family:serif"><h3> DoB: @Model[0].studentDoB.ToShortDateString()</h3> </div>
+		@if (Model.Count > 0)
+		{
+			<div class="message-box contact-box">
+				<div class="row justify-content-center">
+					<div class="col">
+						<div class="row justify-content-center" style="text-align:center;font-family:serif;font-size:30px"><h2><b> Họ và Tên:@Model[0].studentName </b></h2> </div>
+						<div class="row justify-content-center" style="text-align:center;font-family:serif"><h3> MSSV: @Model[0].studentID </h3></div>
+						<div class="row justify-content-center" style="text-align:center;font-family:serif"><h3> Ngày sinh: @Model[0].studentDoB.ToShortDateString()</h3> </div>
+					</div>
+
 				</div>
-			</div>
-			<hr />
-			<div class="row" id="myList">
-				@if (Model != null && Model[0].courseName != null)
-				{
-					<table id="demo-foo-row-toggler1" class="table toggle-circle table-hover">
-						<thead>
-							<tr>
-								<th data-toggle="true"> # </th>
-								<th>Course Name</th>
-								<th>Attend</th>
-								<th>Point</th>
-								<th>Action</th>
-								@foreach (var attendance in Model[0].attendanceList)
-								{
-									<th data-hide="all" data-toggle="tooltip" data-placement="top" title="@attendance.Date.ToShortDateString()">Sesion @(iSession++)</th>
-								}
-							</tr>
-						</thead>
-						<tbody>
-							@foreach (var item in Model)
-							{
+				<hr />
+				<div class="row" id="myList">
+					@if (Model[0].courseName != null)
+					{
+						<table id="demo-foo-row-toggler1" class="table toggle-circle table-hover">
+							<thead>
 								<tr>
-									<td>1</td>
-									<td>@item.courseName</td>
-									<td>@item.attendanceCount</td>
-									<td>@item.attendancePoint</td>
-									<td>
-										<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" onclick="location.href='@Url.Action("studentDetailClass","Attendance",new { id = item.courseID })'" data-toggle="tooltip" data-original-title="Detail"><i class="mdi mdi-information" aria-hidden="true"></i></button>
-									</td>
-									@foreach (var i in item.attendanceList)
+									<th data-toggle="true"> # </th>
+									<th>Course Name</th>
+									<th>Attend</th>
+									<th>Point</th>
+									@foreach (var attendance in Model[0].attendanceList)
 									{
-										<td>
-											@if (i.Status == "0")
-											{
-												if (i.Note != null)
-												{
-													<img data-toggle="tooltip" data-placement="top" title="@i.Note" src="~/Content/image/uncheck.png" style="width:20px;height:20px" />
-												}
-												else
-												{
-													<img src="~/Content/image/uncheck.png" style="width:20px;height:20px" />
-												}
-											}
-											else if (i.Status != null)
-											{
-												if (i.Note != null)
-												{
-													<img data-toggle="tooltip" data-placement="top" title="@i.Note" src="~/Content/image/check.png" style="width:20px;height:20px" />
-												}
-												else
-												{
-													<img src="~/Content/image/check.png" style="width:20px;height:20px" />
-												}
-											}
-										</td>
+										<th data-hide="all" data-toggle="tooltip" data-placement="top" title="@attendance.Date.ToShortDateString()">Sesion @(iSession++)</th>
 									}
 								</tr>
-							}
-						</tbody>
-					</table>
-				}
-				else
-				{
-					<div>No Course</div>
-				}
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>1</td>
+										<td>@item.courseName</td>
+										<td>@item.attendanceCount</td>
+										<td>@item.attendancePoint</td>
+										@foreach (var i in item.attendanceList)
+										{
+											<td>
+												@if (i.Status == "0" || i.Status == null)
+												{
+													if (i.Note != null)
+													{
+														<img data-toggle="tooltip" data-placement="top" title="@i.Note" src="~/Content/image/uncheck.png" style="width:20px;height:20px" />
+													}
+													else
+													{
+														<img src="~/Content/image/uncheck.png" style="width:20px;height:20px" />
+													}
+												}
+												else
+												{
+													if (i.Note != null)
+													{
+														<img data-toggle="tooltip" data-placement="top" title="@i.Note" src="~/Content/image/check.png" style="width:20px;height:20px" />
+													}
+													else
+													{
+														<img src="~/Content/image/check.png" style="width:20px;height:20px" />
+													}
+												}
+											</td>
+										}
+									</tr>
+								}
+							</tbody>
+						</table>
+					}
+					else
+					{
+						<div>Không tìm thấy khóa học nào!</div>
+					
+					}
+				</div>
 			</div>
-		</div>
+		}
+		else
+		{
+			<div>Không tìm thấy thông tin sinh viên!</div>
+			<div>Vui lòng nhập chính xác thông tin sinh viên</div>
+		}
 	</div>
 </div>
-<script src="~/Content/assets/jquery.min.js"></script>
-<!-- Bootstrap tether Core JavaScript -->
+<script src="~/Content/assets/jquery.min.js"></script><!-- Bootstrap tether Core JavaScript -->
 <script src="~/Content/assets/popper.min.js"></script>
-<script src="~/Content/assets/bootstrap.js"></script>
-<!-- ============================================================== -->
-<!-- Style switcher -->
-<!-- ============================================================== -->
+<script src="~/Content/assets/bootstrap.js"></script><!-- ============================================================== --><!-- Style switcher --><!-- ============================================================== -->
 <script src="~/Content/assets/jQuery.style.switcher.js"></script>
 <script src="~/Content/assets/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
-<!-- start - This is for export functionality only -->
+<script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script><!-- start - This is for export functionality only -->
 <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
 <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
 <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
-<!-- Footable -->
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script><!-- Footable -->
 <script src="~/Content/assets/footable.all.min.js"></script>
-<script src="~/Content/assets/bootstrap-select.min.js" type="text/javascript"></script>
-<!--FooTable init-->
+<script src="~/Content/assets/bootstrap-select.min.js" type="text/javascript"></script><!--FooTable init-->
 <script>
 	$('#demo-foo-row-toggler1').footable();
 </script>

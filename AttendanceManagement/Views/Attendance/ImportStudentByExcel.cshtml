@@ -1,0 +1,137 @@
+﻿
+@{
+	ViewBag.Title = "Import";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+	var ListStudent = TempData["ImportExcell"] as List<AttendanceManagement.Models.CourseMember>;
+	int iSession = 1;
+	int i = 0;
+}
+
+
+
+<div class="row page-titles">
+	<div class="col-md-5 col-8 align-self-center">
+		<h3 class="text-themecolor">@AttendanceManagement.Resources.Resource.Group</h3>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">@AttendanceManagement.Resources.Resource.Group</a></li>
+			<li class="breadcrumb-item active">@AttendanceManagement.Resources.Resource.Group</li>
+		</ol>
+	</div>
+</div>
+
+
+<div class="card card-outline-danger">
+	<div class="card-header" style="color:black">Import Student</div>
+	<div class="card-body">
+		<form action="@Url.Action("ReadExcelImport", "Attendance")" method="post" class="form-inline" enctype="multipart/form-data">
+			<div class="col-md-5">
+				<div class="form-control">
+					<input type="file" id="fileupload" name="fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="upload()" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-3">
+						<input type="submit" value="Preview" id="PreviewDiv" class="btn btn-default btn-block" disabled />
+					</div>
+					<div class="col-md-3">
+						@if (ListStudent != null)
+						{
+							<input type="button" value="Import" id="ImportDiv" class="btn btn-default btn-block" onclick="window.location ='@Url.Action("InsertExcelStudent", "Attendance")';" />
+						}
+						else
+						{
+							<input type="button" value="Import" id="ImportDiv" class="btn btn-default btn-block" disabled />
+						}
+					</div>
+					<div class="col-md-3">
+
+						<a onclick="location.href = '@Url.Action("ExportExcel", "Attendance")';"class="btn btn-warning" >Template</a>
+					</div>
+					<div class="col-md-3">
+						<input type="button" value="Back" class="btn btn-default btn-block"  onclick="location.href = '@Url.Action("lecturerDetailClass", "Attendance", new { id = @Session["CourseID"] } )';" />
+					</div>
+
+				</div>
+			</div>
+		</form>
+	</div>
+	<br />
+	@if (ListStudent != null)
+	{
+	<div class="table-responsive m-t-40">
+		<table id="tablestudents" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Avatar</th>
+					<th>Student ID</th>
+					<th>Full Name</th>
+					<th>DoB</th>
+					<th>Email</th>
+
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th>#</th>
+					<th>Avatar</th>
+					<th>Student ID</th>
+					<th>Full Name</th>
+					<th>DoB</th>
+					<th>Email</th>
+
+				</tr>
+			</tfoot>
+			<tbody>
+				@foreach (var item in ListStudent)
+				{
+					<tr>
+						<td>@(i++)</td>
+						<td>
+							<img src="data:image/png;base64,@item.Avatar" alt="Avatar" class="avatar" width="70%">
+						</td>
+						<td>@item.StudentID</td>
+						<td>@item.FirstName @item.LastName</td>
+						<td>@(item.DoB.HasValue ? item.DoB.Value.ToShortDateString() : string.Empty)</td>
+						<td>@item.Email</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+	}
+
+</div>
+
+
+<script src="~/Content/assets/jquery.min.js"></script>
+<script type="text/javascript">
+	function upload() {
+		if (document.getElementById("fileupload").files.length > 0) {
+			document.getElementById("PreviewDiv").disabled = false;
+		}
+		else {
+			document.getElementById("PreviewDiv").disabled = true;
+		}
+	}
+
+	$(document).ready(function () {
+		$('#example23').DataTable({
+			ordering: false,
+			paging: false,
+			dom: 'Bfrtip',
+			autoWidth: true,
+			buttons: [
+				'copy', 'excel', 'pdf', 'print'
+			],
+			columnDefs: [
+				{ "width": "20%", "targets": 0 }
+			],
+		});
+	})
+</script>
+
+
+

@@ -1,0 +1,53 @@
+﻿@model List<AttendanceManagement.Models.CourseMember>
+
+<div class="card">
+	<div class="card-body bg-danger">
+		<h3 class="text-white card-title">STUDENTS</h3>
+	</div>
+	<div class="card-body">
+
+		<div class="row" style="text-align:left">
+		</div>
+			<div class="table-responsive m-t-40">
+				<table id="tablestudents" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Avatar</th>
+							<th>Student ID</th>
+							<th>Full Name</th>
+							<th>DoB</th>
+							<th>Email</th>
+
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th>#</th>
+							<th>Avatar</th>
+							<th>Student ID</th>
+							<th>Full Name</th>
+							<th>DoB</th>
+							<th>Email</th>
+
+						</tr>
+					</tfoot>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>@(i++)</td>
+								<td>
+									<img src="data:image/png;base64,@item.Avatar" alt="Avatar" class="avatar" width="70%">
+								</td>
+								<td>@item.StudentID</td>
+								<td>@item.FirstName @item.LastName</td>
+								<td>@(item.DoB.HasValue ? item.DoB.Value.ToShortDateString() : string.Empty)</td>
+								<td>@item.Email</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+	</div>
+</div>

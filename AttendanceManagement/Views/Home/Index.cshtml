@@ -6,10 +6,18 @@
 	</div>
 </div>
 <div class="card">
+	<br />
 	<div class="form-group">
-		<label>search student </label>
-		<input type="text" id="SearchAttendance" class="form-control" placeholder="type & enter">
+		<div class="row justify-content-center">
+			<h2><strong>Tìm kiếm thông tin điểm danh sinh viên</strong> </h2>
+		</div>
+		<input type="text" id="SearchAttendance" class="form-control" placeholder="Nhập mã số sinh viên hoặc email">
 	</div>
+	<div class="row justify-content-center">
+		<div class="loader" id="loader" style="display:none"></div>
+	</div>
+	<br />
+
 	<div id="result"></div>
 </div>
 <img src="~/Content/image/anh-co-so-3.jpg" style="max-width:100%" />
@@ -28,7 +36,10 @@
 
 	input.addEventListener("keyup", function (event) {
 		if (event.keyCode === 13) {
+			$('#result').html("");
+			$('#loader').show();
 			$.get('@Url.Action("SearchAttendance", "Attendance")?searchString=' + $('#SearchAttendance').val()).done(function (data) {
+				$('#loader').hide();
 				$('#result').html(data);
 		});
 		}

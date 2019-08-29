@@ -56,13 +56,13 @@ namespace AttendanceManagement.Controllers
 
 			Session["tabactive"] = "tab3";
 
-			return RedirectToAction("DetailClass", "Attendance",new { id = Session["CourseID"] });
+			return RedirectToAction("lecturerDetailClass", "Attendance",new { id = Session["CourseID"] });
 		}
 		[HttpGet]
 		public ActionResult ChangeToSession()
 		{
 			Session["tabactive"] = "tab3";
-			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
+			return RedirectToAction("lecturerDetailClass", "Attendance", new { id = Session["CourseID"] });
 		}
 
 		public ActionResult Edit(string id)
@@ -81,7 +81,7 @@ namespace AttendanceManagement.Controllers
 			session.Note = session.Note;
 			db.SaveChanges();
 			Session["tabactive"] = "tab3";
-			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
+			return RedirectToAction("lecturerDetailClass", "Attendance", new { id = Session["CourseID"] });
 
 		}
 
@@ -94,7 +94,7 @@ namespace AttendanceManagement.Controllers
 			db.SaveChanges();
 		
 			Session["tabactive"] = "tab3";
-			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
+			return RedirectToAction("lecturerDetailClass", "Attendance", new { id = Session["CourseID"] });
 
 		}
 

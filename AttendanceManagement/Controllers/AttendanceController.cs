@@ -275,7 +275,7 @@ namespace AttendanceManagement.Controllers
 
 			Session["tabactive"] = "tab2";
 
-			return RedirectToAction("DetailClass", "Attendance", new { id = Session["CourseID"] });
+			return RedirectToAction("lecturerDetailClass", "Attendance", new { id = Session["CourseID"] });
 		}
 
 		public ActionResult GetDateAttendance(string id)
@@ -945,6 +945,117 @@ namespace AttendanceManagement.Controllers
 			return RedirectToAction("lecturerDetailClass", "Attendance", new { id = Session["CourseID"] });
 		}
 
+		public ActionResult ImportStudentByExcel()
+		{
+			TempData.Keep();
+			return View();
+		}
+		public ActionResult ReadExcelImport()
+		{
+			List<CourseMember> listStudent = new List<CourseMember>();
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					string filePath = string.Empty;
+					if (Request != null)
+					{
+						HttpPostedFileBase file = Request.Files["fileupload"];
+						if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+						{
+							string fileName = file.FileName;
+							string path = Server.MapPath("~/Uploads/");
+							if (!Directory.Exists(path))
+							{
+								Directory.CreateDirectory(path);
+							}
+							filePath = path + Path.GetFileName(fileName);
+							file.SaveAs(filePath);
+
+							using (XLWorkbook wb = new XLWorkbook(filePath))
+							{
+								var ws = wb.Worksheet(1);
+
+								int iRow = 8;
+							
+								for (int i = iRow; i < int.MaxValue; i++)
+								{
+									if (ws.Cell(i, 1).IsEmpty())
+									{
+										break;
+									}
+									CourseMember newItem = new CourseMember();
+									newItem.StudentID = ws.Cell(i, 2).GetValue<string>() ;
+									newItem.LastName = ws.Cell(i, 3).GetValue<string>();
+									newItem.FirstName = ws.Cell(i, 4).GetValue<string>();
+									newItem.DoB = DateTime.Parse(ws.Cell(i, 6).GetValue<string>());
+									newItem.Email= ws.Cell(i, 8).GetValue<string>();
+									listStudent.Add(newItem);
+								}
+								
+							}
+							//delete the file from physical path after reading 
+							string filedetails = path + fileName;
+							FileInfo fileinfo = new FileInfo(filedetails);
+							if (fileinfo.Exists)
+							{
+								fileinfo.Delete();
+							}
+							//delete session not attendance
+
+							TempData["ImportExcell"] = listStudent.OrderBy(x => x.FirstName).ToList();
+
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+				}
+
+			}
+			return RedirectToAction("ImportStudentByExcel");
+		}
+
+		public ActionResult InsertExcelStudent()
+		{
+			int CourseID = int.Parse(Session["CourseID"].ToString());
+			var course = db.Courses.FirstOrDefault(x => x.ID == CourseID);
+			try
+			{
+				if (TempData["ImportExcell"] != null)
+				{
+					List<CourseMember> listSutdent = (List<CourseMember>)TempData["ImportExcell"];
+					using (var scope = new TransactionScope())
+					{
+						
+						foreach (var item in listSutdent)
+						{
+							CourseMember newMember = new CourseMember();
+							newMember.CourseID = CourseID;
+							newMember.StudentID = item.StudentID;
+							newMember.FirstName = item.FirstName;
+							newMember.LastName = item.LastName;
+							newMember.Email = item.Email;
+							newMember.DoB = item.DoB;
+							newMember.Avatar = item.Avatar;
+							course.CourseMembers.Add(newMember);
+						}
+						db.SaveChanges();
+						scope.Complete();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.ToString();
+			}
+			TempData.Remove("AttendanceExcel");
+			Session["tabactive"] = "tab1";
+
+			return RedirectToAction("lecturerDetailClass", "Attendance", new { id = Session["CourseID"] });
+		}
+
 		public ActionResult CheckByCode()
 		{
 			var student = db.CourseMembers.FirstOrDefault(x => x.Email == User.Identity.Name);
@@ -1137,10 +1248,19 @@ namespace AttendanceManagement.Controllers
 			return View();
 
 		}
+		
+
+		public int getSemester(AttendanceEntities db)
+		{
+			var listSemester = db.Courses.Select(x => x.Semester).Distinct().OrderByDescending(x => x.Value).ToList();
+			int semester = (int)listSemester.Max();
+			return (int)(Session["Semester"] ?? semester);
+		}
+
 		[HttpGet, AllowAnonymous]
 		public ActionResult SearchAttendance(string searchString)
 		{
-			var semester = 182;
+			var semester = this.getSemester(db);
 			var courseList = db.Courses.Where(x => x.Semester == semester).ToList();
 			var studentCourse = (from course in courseList
 								 join courseMember in db.CourseMembers on course.ID equals courseMember.CourseID
@@ -1187,7 +1307,7 @@ namespace AttendanceManagement.Controllers
 			}
 			else
 			{
-				var studentInfo = db.CourseMembers.FirstOrDefault(x => x.Email == searchString);
+				var studentInfo = db.CourseMembers.FirstOrDefault(x => x.Email == searchString || x.StudentID ==searchString);
 				List<studentCourseView> studentCourseModel = new List<studentCourseView>();
 				studentCourseView studentCourseItem = new studentCourseView();
 				if (studentInfo != null)

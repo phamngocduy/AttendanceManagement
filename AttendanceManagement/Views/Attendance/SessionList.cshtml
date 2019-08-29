@@ -29,7 +29,7 @@
 					<div class="card-body collapse show">
 						<div class="row" style="text-align:center">
 							<div class="col">
-								<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" >Please create session</button>
+								<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Please create session</button>
 							</div>
 						</div>
 					</div>
@@ -51,7 +51,7 @@
 							<table class="table product-overview">
 								<thead>
 									<tr>
-										<th  style="text-align:center">#</th>
+										<th style="text-align:center">#</th>
 										<th style="text-align:center">Date</th>
 										<th style="text-align:center">Present</th>
 										<th style="text-align:center">Status</th>
@@ -126,7 +126,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 			</div>
 			<div class="modal-body">
-				<form action="/AttendanceManagement/Session/Create" method="post">
+				<form action="@Url.Action("Create","Session")" method="post">
 					<label for="total-week">Total Week</label>
 					<div class="form-group">
 						<div class="form-line">
@@ -198,7 +198,8 @@
 		})
 	}
 	function GenCode(id) {
-		var url = "/AttendanceManagement/Attendance/Generate?id=" + id;
+
+		var url = "	@Url.Action("Generate", "Attendance")?id=" + id;
 		$("#ModalgenerateQRcode").load(url, function () {
 			$("#generateQRcode").modal("show");
 		})
@@ -252,51 +253,52 @@
 	function checkattendance(id) {
 		$.ajax({
 			type: "POST",
-			url: "/AttendanceManagement/Attendance/GetDateAttendance?id=" + id,
+			url: "@Url.Action("GetDateAttendance", "Attendance")?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (res) {
 				$("#sessionDate").addClass("hide");
 				$("#listAttendance").removeClass("hide");
 
-				window.onbeforeunload = function () {
-					return 'You have unsaved changes!';
-				}
+						window.onbeforeunload = function () {
+							return 'You have unsaved changes!';
+						}
 
 				$("#thDate").html(res.replace(/"/g, ''));
 				$('[href="#tab4"]').tab('show');
-				window.scrollTo(0, 0);
-			}
-		});
-	} 
-	function setDate(id) {
+						window.scrollTo(0, 0);
+					}
+				});
+	}
+			function setDate(id) {
 		$.ajax({
 			type: "POST",
-			url: "/AttendanceManagement/Attendance/GetDateAttendance?id=" + id,
+			
+			url: "@Url.Action("GetDateAttendance", "Attendance")?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (res) {
 				$("#thEditDate").html(res.replace(/"/g, ''));
 			}
-		});
-	}
-	function editAttendance(id) {
-	
+				});
+			}
+			function editAttendance(id) {
+
 		$.ajax({
 			type: "GET",
-			url: "/AttendanceManagement/Attendance/ViewEditAttendance?id=" + id,
+			url: "	@Url.Action("ViewEditAttendance", "Attendance")?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "html",
 			success: function (data) {
 				$("#sessionDate").html(data);
-				setDate(id);
+						setDate(id);
 				$('[href="#tab4"]').tab('show');
-				window.onbeforeunload = function () {
-					return 'You have unsaved changes!';
-				}
+						window.onbeforeunload = function () {
+							return 'You have unsaved changes!';
+						}
+					}
+				});
 			}
-		});
-	}
 </script>
 <script>
 	$('table').on('click', '[type=submit]', function (e) {

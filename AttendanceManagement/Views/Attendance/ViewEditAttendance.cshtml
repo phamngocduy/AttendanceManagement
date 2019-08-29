@@ -211,14 +211,15 @@
 			localStorage.clear();
 			$.ajax({
 				type: "POST",
-				url: "/AttendanceManagement/Attendance/EditAttendance",
+				
+				url: "	@Url.Action("EditAttendance", "Attendance")",
 				data: JSON.stringify(attendance),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (response) {
 					window.onbeforeunload = null;
 					var id = @Session["CourseID"];
-					var url = '@Url.Action("Detailclass", "Attendance", new { id = "__id__" })';
+					var url = '@Url.Action("lecturerDetailClass", "Attendance", new { id = "__id__" })';
 					window.location.href = url.replace('__id__', id);
 
 				}

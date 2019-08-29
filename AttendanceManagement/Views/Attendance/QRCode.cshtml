@@ -28,7 +28,7 @@
 	function CloseAttendance(id) {
 		$.ajax({
 			type: "POST",
-			url: "/AttendanceManagement/Attendance/CloseAttendance?id=" + id,
+			url: "@Url.Action("CloseAttendance", "Attendance")?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (data) {
@@ -45,7 +45,7 @@
 	function setDate(id) {
 		$.ajax({
 			type: "POST",
-			url: "/AttendanceManagement/Attendance/GetDateAttendance?id=" + id,
+			url: "	@Url.Action("GetDateAttendance", "Attendance")?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (res) {
@@ -56,7 +56,7 @@
 	function ViewDetailAttendance(id) {
 		$.ajax({
 			type: "GET",
-			url: "/AttendanceManagement/Attendance/ViewDetailAttendance?id=" + id,
+			url: "	@Url.Action("ViewDetailAttendance", "Attendance")?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "html",
 			success: function (data) {

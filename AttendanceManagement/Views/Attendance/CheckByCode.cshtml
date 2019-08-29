@@ -19,7 +19,7 @@
 		<div class="card">
 			<div class="card-body wizard-content">
 				<h4 class="card-title">Check Attendance By Code</h4>
-				<form id="qrform" action="/AttendanceManagement/Attendance/CheckAttendanceQRcode" method="post" class="tab-wizard wizard-circle">
+				<form id="qrform" action="@Url.Action("CheckAttendanceQRcode", "Attendance")" method="post" class="tab-wizard wizard-circle">
 					<!-- Step 1 -->
 					<h3>Step 1: Check Personal Info</h3>
 					<section>
@@ -191,7 +191,7 @@
 	function checkSession(id) {
 		$.ajax({
 			type: "POST",
-			url: "/AttendanceManagement/Attendance/CheckByCode?id=" + id,
+			url: "	@Url.Action("CheckByCode", "Attendance")?id=" + id,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (data) {

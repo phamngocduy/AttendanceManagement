@@ -802,6 +802,7 @@
     <Content Include="Content\fonts\footable.ttf" />
     <Content Include="Content\fonts\footable.woff" />
     <Content Include="libman.json" />
+    <Content Include="Content\ImportExcelTemplate.xlsx" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
@@ -878,6 +879,8 @@
     <Content Include="Views\Attendance\staffDetailClass.cshtml" />
     <Content Include="Views\JSON\Attendance.cshtml" />
     <Content Include="Views\Attendance\SearchAttendance.cshtml" />
+    <Content Include="Views\Attendance\ImportStudentByExcel.cshtml" />
+    <Content Include="Views\Attendance\ReadExcelImport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
