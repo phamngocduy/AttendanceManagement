@@ -21,6 +21,7 @@
         <AssociationConnector Association="LoginManagementModel.GroupManager" ManuallyRouted="false" />
         <AssociationConnector Association="LoginManagementModel.GroupMember" ManuallyRouted="false" />
         <AssociationConnector Association="LoginManagementModel.GroupOwner" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LoginManagementModel.LoginLog" Width="1.5" PointX="5.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

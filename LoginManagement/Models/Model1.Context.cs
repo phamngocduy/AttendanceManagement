@@ -33,5 +33,6 @@ namespace LoginManagement.Models
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<LoginLog> LoginLogs { get; set; }
     }
 }

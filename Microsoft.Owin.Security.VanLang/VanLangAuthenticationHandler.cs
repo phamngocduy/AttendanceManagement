@@ -9,6 +9,9 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Helpers;
 using Microsoft.Owin.Infrastructure;
 using Microsoft.Owin.Logging;
@@ -108,6 +111,16 @@ namespace Microsoft.Owin.Security.VanLang
                 {
                     context.Identity.AddClaim(new Claim(ClaimTypes.Email, email, XmlSchemaString, Options.AuthenticationType));
                 }
+
+                var idClaim = context.Identity.FindFirst(ClaimTypes.NameIdentifier);
+                HttpContext.Current.Session["ExternalLoginInfo"] = new ExternalLoginInfo
+                {
+                    ExternalIdentity = context.Identity,
+                    Login = new UserLoginInfo(idClaim.Issuer, idClaim.Value),
+                    DefaultUserName = defaultUserName,
+                    Email = email
+                };
+
                 context.Properties = properties;
 
                 await Options.Provider.Authenticated(context);

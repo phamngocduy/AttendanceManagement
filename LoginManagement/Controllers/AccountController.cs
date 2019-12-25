@@ -262,13 +262,21 @@ namespace IdentificationManagement.Controllers
 		[AllowAnonymous]
 		public ActionResult LoginVL(string redirect_uri, string state)
 		{
-			if (state != null)
-				Hashtable[state] = redirect_uri;
+			Hashtable[state] = redirect_uri;
 			ViewBag.ReturnUrl = state;
 			string provider = "Microsoft";
 			string returnUrl = state;
 			ControllerContext.HttpContext.Session.RemoveAll();
-			return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+
+            db.LoginLogs.Add(new LoginLog
+            {
+                State = state,
+                ReturnUrl = redirect_uri,
+                date = DateTime.Now
+            });
+            db.SaveChanges();
+			
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
 		}
 
 
@@ -276,6 +284,17 @@ namespace IdentificationManagement.Controllers
         public JsonResult GetInfo(string code)
         {
             var loginInfo = Hashtable[code] as ExternalLoginInfo;
+            if (loginInfo == null)
+            try
+            {
+                var loginLog = db.LoginLogs.OrderByDescending(l => l.id).FirstOrDefault(l => l.Code == code);
+                loginInfo = new ExternalLoginInfo
+                {
+                    Email = loginLog.Email,
+                    DefaultUserName = loginLog.DefaultUserName
+                };
+            }
+            catch (Exception) { }
             if (loginInfo != null)
                 return Json(new
                 {
@@ -598,7 +617,7 @@ namespace IdentificationManagement.Controllers
         {
             ApplicationUser user = null;
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-			
+            loginInfo = loginInfo ?? Session["ExternalLoginInfo"] as ExternalLoginInfo;
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
@@ -609,16 +628,29 @@ namespace IdentificationManagement.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    LoginLog loginLog = null;
+                    if (returnUrl != null)
+                    {
+                        loginLog = db.LoginLogs.OrderByDescending(l => l.id).FirstOrDefault(l => l.State == returnUrl);
+                        if (loginLog != null)
+                            Hashtable[returnUrl] = loginLog.ReturnUrl;
+                    }
                     if (returnUrl != null && Hashtable[returnUrl] != null)
                     {
                         var state = returnUrl;
                         var redirect_uri = Hashtable[state];
                         user = await UserManager.FindByEmailAsync(loginInfo.Email);
                         Hashtable[user.Id] = loginInfo;
+
+                        loginLog.Code = user.Id;
+                        loginLog.Email = loginInfo.Email;
+                        loginLog.DefaultUserName = loginInfo.DefaultUserName;
+                        db.SaveChanges();
+
                         AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                         return Redirect(string.Format("{0}?state={1}&code={2}", redirect_uri, state, user.Id));
                     }
-                    else return RedirectToLocal(returnUrl);
+                    else return String.IsNullOrEmpty(returnUrl) ? RedirectToAction("Loggedin") : RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -639,6 +671,12 @@ namespace IdentificationManagement.Controllers
                     //ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
+        }
+
+        [AllowAnonymous]
+        public ViewResult Loggedin()
+        {
+            return View();
         }
 
         //
