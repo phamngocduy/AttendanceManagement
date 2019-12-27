@@ -9,5 +9,6 @@ namespace Microsoft.Owin.Security.VanLang
         public const string DefaultAuthenticationName = "Văn Lang";
         internal const string AuthorizationEndpoint = "/Account/LoginVL";
         internal const string UserInformationEndpoint = "/Account/GetInfo";
+        internal const string ExternalLoginInfo = "ExternalLoginInfo";
     }
 }

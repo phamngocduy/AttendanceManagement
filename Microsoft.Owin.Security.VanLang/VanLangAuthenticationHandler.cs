@@ -113,7 +113,7 @@ namespace Microsoft.Owin.Security.VanLang
                 }
 
                 var idClaim = context.Identity.FindFirst(ClaimTypes.NameIdentifier);
-                HttpContext.Current.Session["ExternalLoginInfo"] = new ExternalLoginInfo
+                HttpContext.Current.Session[Constants.ExternalLoginInfo] = new ExternalLoginInfo
                 {
                     ExternalIdentity = context.Identity,
                     Login = new UserLoginInfo(idClaim.Issuer, idClaim.Value),

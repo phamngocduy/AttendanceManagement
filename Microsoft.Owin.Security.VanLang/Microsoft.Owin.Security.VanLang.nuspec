@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Capstone.Owin.Security.VanLang</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Duy_abu</authors>
+    <owners>Duy_abu</owners>
+    <licenseUrl>https://fitlogin.vanlanguni.edu.vn/LoginManagement</licenseUrl>
+    <projectUrl>https://github.com/phamngocduy/AttendanceManagement</projectUrl>
+    <iconUrl>http://cntttest.vanlanguni.edu.vn:18080/</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Middleware that enables an application to support the VanLang authentication workflow.</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>VanLang Authentication</tags>
+  </metadata>
+</package>
