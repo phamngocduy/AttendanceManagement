@@ -19,7 +19,7 @@ using System.Net;
 using System.Web.Helpers;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Drawing;
+using System.Data.Entity;
 
 namespace IdentificationManagement.Controllers
 {
@@ -628,6 +628,17 @@ namespace IdentificationManagement.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    if (loginInfo.Email != User.Identity.Name && // convert @vanlanguni to @vlu
+                        !String.IsNullOrEmpty(loginInfo.Email) && !String.IsNullOrEmpty(User.Identity.Name))
+                    {
+                        var aspNetUser = db.AspNetUsers.SingleOrDefault(u => u.Email == User.Identity.Name);
+                        if (aspNetUser != null)
+                        {
+                            aspNetUser.Email = aspNetUser.UserName = loginInfo.Email;
+                            db.Entry(aspNetUser).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
                     LoginLog loginLog = null;
                     if (returnUrl != null)
                     {
@@ -639,7 +650,8 @@ namespace IdentificationManagement.Controllers
                     {
                         var state = returnUrl;
                         var redirect_uri = Hashtable[state];
-                        user = await UserManager.FindByEmailAsync(loginInfo.Email);
+                        user = await UserManager.FindByEmailAsync(loginInfo.Email)
+                                    ?? UserManager.FindByName(User.Identity.Name);
                         Hashtable[user.Id] = loginInfo;
 
                         loginLog.Code = user.Id;
